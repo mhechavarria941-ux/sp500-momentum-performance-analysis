@@ -1,0 +1,8 @@
+MYVENV/
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+.env
+
+# Temporary/intermediate datasets
+data/interim/
