@@ -641,10 +641,153 @@ Perform a full-history integrity audit and then construct the Python membership-
 
 The reconstruction engine will begin with the 2026-08-10 constituent anchor and reverse historical membership actions according to their effective dates to generate membership states and security membership intervals for the 2021–2025 analytical period.
 
+## 2.10 Full-History Membership Integrity Audit
 
-# Current Status
+### Objective
 
-Completed:
+Validate that the historical S&P 500 membership-action ledger can be reconciled with the verified 2026-08-10 constituent anchor before generating point-in-time membership intervals.
+
+Structural validation alone is not sufficient because ticker changes, corporate identity changes, missing membership events, or inconsistent security identifiers can produce logically incorrect historical membership even when the source CSV is correctly formatted.
+
+### Audit Script
+
+Integrity audit:
+
+`src/ingestion/audit_membership_history.py`
+
+The audit begins with the verified:
+
+`2026-08-10`
+
+constituent anchor containing:
+
+`503 securities`
+
+and processes the historical membership actions in reverse chronological order.
+
+### Security Identity Reference
+
+During the initial integrity audit, two ticker-continuity issues were identified.
+
+#### Ceridian / Dayforce
+
+Historical ticker:
+
+`CDAY`
+
+Current ticker:
+
+`DAY`
+
+Ceridian HCM changed its corporate identity and ticker to Dayforce while remaining an S&P 500 constituent.
+
+#### EchoStar
+
+Historical ticker:
+
+`SATS`
+
+Current ticker:
+
+`ECHO`
+
+EchoStar changed its ticker while remaining the same constituent security.
+
+These events are not S&P 500 additions or deletions and therefore are maintained separately in:
+
+`data/reference/securities/security_aliases.csv`
+
+This separation preserves the distinction between:
+
+- index membership events;
+- security identity/ticker events;
+- future market-price observations.
+
+### Reverse-Reconstruction Logic
+
+The integrity audit processes three event types on a shared chronological timeline:
+
+1. Reverse historical additions by removing the added security.
+2. Reverse historical deletions by restoring the deleted security.
+3. Reverse ticker aliases by replacing the newer ticker with its historical ticker.
+
+Ticker changes do not alter the number of constituent securities.
+
+### Validation Result
+
+Verified anchor:
+
+`503 securities as of 2026-08-10`
+
+Historical membership actions:
+
+`202`
+
+Historical additions:
+
+`100`
+
+Historical deletions:
+
+`102`
+
+Expected constituent-security count at:
+
+`2021-01-01 = 505`
+
+Reverse reconstruction result:
+
+`505 securities`
+
+Security-identity conflicts:
+
+`0`
+
+Final result:
+
+`FULL-HISTORY INTEGRITY AUDIT PASSED`
+
+### Checkpoint Counts
+
+The action ledger implies the following constituent-security counts:
+
+`2021-01-01: 505`
+
+`2021-12-31: 505`
+
+`2022-12-31: 503`
+
+`2023-12-31: 503`
+
+`2024-12-31: 503`
+
+`2025-12-31: 503`
+
+`2026-08-10: 503`
+
+The difference between 500 companies and the number of constituent securities is retained rather than artificially forcing the historical universe to exactly 500 rows.
+
+### Generated Audit Outputs
+
+The audit generates reproducible interim outputs:
+
+`data/interim/membership_count_checkpoints.csv`
+
+and, only when problems are detected:
+
+`data/interim/membership_integrity_issues.csv`
+
+These outputs remain excluded from Git because they can be regenerated from committed reference data and project code.
+
+### Result
+
+The verified anchor, historical membership-action ledger, and security-alias reference are now logically compatible.
+
+The project can therefore proceed to generate point-in-time S&P 500 membership intervals for the 2021–2025 analytical period.
+
+### Next Step
+
+Build the historical membership reconstruction pipeline and generate security-level membership intervals containing each constituent's valid-from and valid-to dates.
 
 # Current Status
 
@@ -670,11 +813,11 @@ Critical validation errors:
 
 Current phase:
 
-**Full-history integrity validation and point-in-time membership reconstruction**
+**Point-in-time S&P 500 membership interval construction**
 
 Next objective:
 
-Validate the historical change sequence against the 2026-08-10 anchor and construct the reproducible Python algorithm that reverses membership actions to generate point-in-time S&P 500 membership and membership intervals throughout January 2021 through December 2025.
+Generate a reproducible security-level membership table containing the valid membership periods for every S&P 500 security appearing between January 1, 2021 and December 31, 2025.
 
 
 ---

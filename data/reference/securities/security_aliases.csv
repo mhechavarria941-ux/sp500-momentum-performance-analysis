@@ -1,0 +1,3 @@
+effective_date,old_ticker,new_ticker,old_company_name,new_company_name,event_type,source_type,source_url,notes
+2024-02-01,CDAY,DAY,Ceridian HCM Holding Inc.,Dayforce Inc.,ticker_and_name_change,SEC Filing,https://www.sec.gov/Archives/edgar/data/1725057/000095017024050892/day-20240331.htm,"Corporate name changed January 31 2024; ticker changed from CDAY to DAY effective February 1 2024"
+2026-06-24,SATS,ECHO,EchoStar Corporation,EchoStar Corporation,ticker_change,Company Investor Relations,https://ir.echostar.com/news-releases/news-release-details/echostar-changing-stocker-ticker-sats-echo-marking-companys-next,"Ticker changed from SATS to ECHO; company states CUSIP was unchanged"
