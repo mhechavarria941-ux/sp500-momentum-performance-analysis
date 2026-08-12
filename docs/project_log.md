@@ -430,19 +430,252 @@ This file is derived from the untouched State Street source workbook and can the
 
 ---
 
+## 2.8 Derived Data and Version-Control Policy
+
+### Decision
+
+Generated intermediate datasets will not be committed to GitHub when they can be fully reproduced from documented source data and committed project code.
+
+The directory:
+
+`data/interim/`
+
+will therefore remain excluded from Git version control through `.gitignore`.
+
+For example, the generated constituent anchor:
+
+`data/interim/sp500_constituent_anchor_2026-08-10.csv`
+
+is not stored in GitHub because it can be recreated by running:
+
+`src/ingestion/build_sp500_membership.py`
+
+against the preserved State Street SPY source workbook.
+
+### Rationale
+
+This approach keeps the repository focused on reproducibility rather than storing unnecessary generated copies of data. GitHub will primarily preserve the code, documentation, configuration, SQL, analytical logic, and appropriate source-reference files required to reconstruct the project's outputs.
+
+Large datasets, temporary transformation outputs, and reproducible intermediate datasets will remain outside Git unless there is a specific analytical or documentation reason to version them.
+
+### Reproducibility Requirement
+
+Any dataset excluded from Git must have:
+
+* A documented original source.
+* A documented acquisition or generation method.
+* Committed code capable of reproducing it.
+* Relevant transformation and filtering decisions recorded in this project log.
+* Validation checks sufficient to confirm that the reproduced dataset matches the expected result.
+
+For the current constituent anchor, the expected validation result is:
+
+**503 S&P 500 constituent securities as of 2026-08-10.**
+
+## 2.9 Historical S&P 500 Constituent Change Reference
+
+### Objective
+
+Construct a documented historical record of S&P 500 constituent additions and deletions covering the entire period necessary to reconstruct point-in-time membership for the project's 2021–2025 analytical window.
+
+Because the constituent anchor is dated:
+
+`2026-08-10`
+
+the historical change record extends beyond the primary analysis period and includes all identified membership changes from January 2021 through the anchor date in August 2026.
+
+The reconstruction process will therefore be able to begin with the verified 2026 anchor and roll membership backward through every recorded index action.
+
+### Reference Dataset
+
+Historical constituent actions are stored in:
+
+`data/reference/membership/sp500_official_changes.csv`
+
+Unlike generated files under `data/interim/`, this reference dataset is maintained in Git because it contains manually curated source records and source provenance required to reproduce the historical membership model.
+
+### Source Strategy
+
+The primary source for constituent changes is:
+
+**S&P Dow Jones Indices / S&P Global official index announcements and press releases.**
+
+Each reference record preserves its associated S&P Global source URL.
+
+A secondary historical change source was used selectively as a completeness check when reviewing yearly sequences, but the reference table is based primarily on documented S&P Global index actions.
+
+### Data Model
+
+Each membership action is stored as an independent row rather than storing an addition and deletion together in a single record.
+
+Fields include:
+
+`announcement_date`
+
+`effective_date`
+
+`index_name`
+
+`action`
+
+`company_name`
+
+`ticker`
+
+`gics_sector`
+
+`source_type`
+
+`source_url`
+
+`notes`
+
+This action-level structure was selected because additions and deletions do not always occur on the same effective date.
+
+Examples identified during source construction include spin-offs and corporate actions in which a new security entered the index on one trading date and the corresponding deletion occurred on a later trading date.
+
+### Historical Coverage
+
+Membership-change records were collected for:
+
+`2021`
+
+`2022`
+
+`2023`
+
+`2024`
+
+`2025`
+
+and:
+
+`2026 through 2026-08-10`
+
+Events announced before January 1, 2021 were included when their **effective date** occurred within the reconstruction period.
+
+For example, the Enphase Energy / Tiffany & Co. change was announced in December 2020 but became effective in January 2021 and is therefore included.
+
+### Important Security-Level Events
+
+The historical audit identified several cases demonstrating why the project must model securities rather than assume a simple 500-company replacement structure.
+
+Examples include:
+
+* Multiple share classes.
+* Share-class consolidation.
+* Corporate spin-offs.
+* Temporary S&P 500 membership.
+* Additions and deletions occurring on different effective dates.
+* Securities entering the index briefly before subsequently moving to another S&P index.
+* Corporate acquisitions causing immediate or off-cycle deletions.
+
+Examples observed during the historical review include Warner Bros. Discovery, Under Armour share classes, MasterBrand, Fortrea, PHINIA, Solventum, GE Vernova, Amentum, and other spin-off-related securities.
+
+### Validation
+
+Validation script:
+
+`src/ingestion/validate_membership_changes.py`
+
+The validator checks:
+
+* Required column structure.
+* Missing required values.
+* Date formatting.
+* Announcement/effective-date ordering.
+* Index-name consistency.
+* Valid action values.
+* Ticker formatting.
+* Duplicate membership actions.
+* Approved S&P Global source domains.
+* GICS sector terminology.
+* Addition and deletion counts.
+* Effective-date distributions.
+* Chronological ordering.
+
+Final historical reference validation:
+
+`202 total membership actions`
+
+`100 additions`
+
+`102 deletions`
+
+`Net security-count change: -2`
+
+`Critical validation errors: 0`
+
+`VALIDATION PASSED`
+
+The difference between additions and deletions is not treated as a data-quality error because the S&P 500 constituent-security count can change as a result of multiple share classes, security consolidation, spin-offs, and related index-maintenance events.
+
+### Known Data Standardization Issue
+
+At least one official source uses:
+
+`Information Technologies`
+
+rather than the canonical GICS sector name:
+
+`Information Technology`
+
+The reference dataset currently preserves the source wording rather than silently modifying it.
+
+Sector terminology will be standardized later in the staging layer while preserving the original source value for provenance.
+
+### Result
+
+The project now contains:
+
+1. A verified **503-security S&P 500 constituent anchor as of 2026-08-10**.
+2. A documented historical membership-action dataset extending backward through January 2021.
+3. Source provenance for individual historical membership actions.
+4. Automated structural and logical validation of the historical reference dataset.
+
+Together, these components provide the inputs required to reconstruct point-in-time S&P 500 membership throughout the 2021–2025 analysis period.
+
+### Next Step
+
+Perform a full-history integrity audit and then construct the Python membership-reconstruction engine.
+
+The reconstruction engine will begin with the 2026-08-10 constituent anchor and reverse historical membership actions according to their effective dates to generate membership states and security membership intervals for the 2021–2025 analytical period.
+
+
 # Current Status
 
 Completed:
 
-`Development environment → GitHub → Azure SQL → Python/Azure connection → raw SPY acquisition → workbook audit → constituent filtering → 503-security anchor`
+# Current Status
+
+Completed:
+
+`Development environment → GitHub → Azure SQL → Python/Azure connection → raw SPY acquisition → workbook audit → constituent filtering → 503-security anchor → historical S&P 500 change-source construction → historical change validation`
+
+Historical membership reference:
+
+`202 membership actions`
+
+`100 additions`
+
+`102 deletions`
+
+Coverage:
+
+`2021-01 through 2026-08-10`
+
+Critical validation errors:
+
+`0`
 
 Current phase:
 
-**Historical S&P 500 membership reconstruction**
+**Full-history integrity validation and point-in-time membership reconstruction**
 
 Next objective:
 
-Identify and document S&P 500 constituent additions and removals from the anchor date backward through the analytical period so that membership can be reconstructed for January 2021 through December 2025.
+Validate the historical change sequence against the 2026-08-10 anchor and construct the reproducible Python algorithm that reverses membership actions to generate point-in-time S&P 500 membership and membership intervals throughout January 2021 through December 2025.
+
 
 ---
 
