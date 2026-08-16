@@ -1330,6 +1330,721 @@ The repository preserves:
 
 without redistributing provider market-price datasets.
 
+## 3.9 Raw Market-Price Integrity Audit
+
+### Objective
+
+Validate every acquired historical price file before standardization, return calculation, momentum feature engineering, or database loading.
+
+The audit intentionally treated successful acquisition and analytical readiness as separate concepts.
+
+Audit script:
+
+`src/ingestion/audit_market_price_integrity.py`
+
+Generated outputs:
+
+- `data/interim/market_price_integrity_audit.csv`
+- `data/interim/market_price_integrity_issues.csv`
+- `data/interim/market_price_calendar_gaps.csv`
+
+The audit evaluated:
+
+- provider schema integrity
+- row-count reconciliation
+- first/last-date consistency
+- duplicate dates
+- invalid dates
+- required OHLCV nulls
+- adjusted-close availability
+- nonpositive prices
+- negative volume
+- impossible OHLC relationships
+- corporate-action fields
+- requested-range violations
+- U.S. trading-calendar continuity using SPY
+- beginning-of-history coverage
+- internal trading-session coverage
+- end-of-history coverage
+
+Initial result:
+
+- Total requests audited: 596
+- Critical integrity PASS: 595
+- Critical integrity FAIL: 1
+- Blocking coverage review: 18
+- Non-blocking review: 2
+- Completely clean: 575
+
+The critical failure was:
+
+`UA — INVALID_LOW`
+
+The blocking coverage cases were primarily newly created securities whose requested momentum lookback extended into periods before the independent security existed.
+
+One major exception was:
+
+`DISCA`
+
+Tiingo direct coverage contained only three observations:
+
+- 2022-04-06
+- 2022-04-07
+- 2022-04-08
+
+This left 570 requested SPY sessions before the first returned observation and was correctly classified as a genuine provider-history problem rather than an inception exception.
+
+Non-blocking review items were:
+
+- `INFO` — adjusted-price reconstruction pending
+- `FISV` — one internal missing trading session on 2025-11-12
+
+The audit therefore successfully prevented structurally present but analytically incomplete data from entering the standardized analytical layer.
+
+---
+
+## 3.10 Market-Price Exception Investigation
+
+### UA Invalid Low
+
+Diagnostic script:
+
+`src/ingestion/diagnose_market_integrity_exceptions.py`
+
+Yahoo Finance contained the following UA observation on 2021-05-05:
+
+- Open: approximately 20.87
+- High: approximately 21.825
+- Low: 21.00
+- Close: approximately 21.13
+
+Because the reported Low exceeded the Open by approximately $0.13, the observation violated the OHLC relationship:
+
+`Low <= min(Open, High, Close)`
+
+The difference was approximately 62.29 basis points and was therefore too large to classify as floating-point noise.
+
+No dividend or split occurred around the affected observation.
+
+Independent Tiingo verification returned:
+
+- Open: 20.87
+- High: 21.825
+- Low: 20.57
+- Close: 21.13
+- Volume: 9,649,700
+
+The independently verified Tiingo observation preserved Yahoo's Open, High, and Close while providing a logically valid Low of 20.57.
+
+Resolution:
+
+- Preserve the original Yahoo raw file unchanged.
+- During standardization, override only the defective Yahoo `Low` field for 2021-05-05 using the independently verified Tiingo value.
+- Do not replace Yahoo volume or the entire Yahoo row because provider volume differed materially.
+
+Resolution type:
+
+`FIELD_OVERRIDE`
+
+---
+
+## 3.11 FISV Internal Trading-Session Resolution
+
+The original integrity audit identified one missing internal U.S. trading session for FISV:
+
+`2025-11-12`
+
+Independent Tiingo verification was performed using both provider symbols:
+
+- `FISV`
+- `FI`
+
+Both symbols returned the same 2025-11-12 observation:
+
+- Open: 64.20
+- High: 64.87
+- Low: 63.11
+- Close: 64.38
+- Adjusted Close: 64.38
+- Volume: 6,244,651
+
+This independently confirmed that the missing date was a legitimate trading session omitted from the Yahoo history.
+
+Resolution:
+
+- Preserve the original Yahoo file unchanged.
+- Insert the validated Tiingo observation during construction of the analysis-ready series.
+
+Resolution type:
+
+`ROW_INSERT`
+
+The Fiserv ticker history also requires explicit identity documentation because the security transitioned:
+
+`FISV -> FI -> FISV`
+
+Provider symbol continuity must not be treated as a substitute for the project's corporate-security identity model.
+
+---
+
+## 3.12 DISCA Historical Source Resolution
+
+Direct Tiingo metadata for `DISCA` began only on:
+
+`2022-04-06`
+
+This explained why the direct fallback returned only three observations.
+
+A Tiingo permanent-identity search identified historical Discovery Class A continuity under permanent identifier:
+
+`US000000000527`
+
+This permanent identity returned historical observations beginning:
+
+`2020-01-02`
+
+and extending through:
+
+`2022-04-08`
+
+The permanent-identity series was validated against the direct `DISCA` observations in their overlapping period.
+
+A source-preserving historical composite was then constructed:
+
+- permanent-identity Tiingo history for the earlier period
+- direct Tiingo `DISCA` observations where available
+- direct DISCA observations receive precedence on overlapping dates
+
+Resolution script:
+
+`src/ingestion/resolve_market_price_exceptions.py`
+
+Derived composite:
+
+`data/interim/disca_tiingo_identity_composite.csv`
+
+The composite was required to pass:
+
+- duplicate-date validation
+- required-value validation
+- OHLC validation
+- price positivity
+- split-factor validation
+- complete requested SPY-session coverage
+
+The original direct Tiingo raw source remained unchanged.
+
+Resolution type:
+
+`SOURCE_COMPOSITE`
+
+---
+
+## 3.13 Price Exception Resolution Reference
+
+Validated exceptional price transformations are documented in:
+
+`data/reference/market_data/price_exception_resolutions.csv`
+
+Current validated price exceptions:
+
+### UA
+
+Resolution:
+
+`FIELD_OVERRIDE`
+
+Action:
+
+Replace only the 2021-05-05 Low during standardization with independently verified Tiingo Low = 20.57.
+
+### FISV
+
+Resolution:
+
+`ROW_INSERT`
+
+Action:
+
+Insert independently verified Tiingo observation for 2025-11-12.
+
+### DISCA
+
+Resolution:
+
+`SOURCE_COMPOSITE`
+
+Action:
+
+Use validated Tiingo historical permanent-identity history plus direct DISCA observations.
+
+All raw provider files remain immutable.
+
+The reference table records methodology and provenance and is version-controlled.
+
+---
+
+## 3.14 Independent-Security Market Inception Model
+
+### Problem
+
+The price manifest intentionally requested approximately 400 calendar days of historical lookback for momentum construction.
+
+For securities created through IPOs or corporate spin-offs, part of the requested lookback can occur before the independent security existed.
+
+Those dates must not be interpreted as missing market data.
+
+Importantly:
+
+- historical parent-company prices are not substituted
+- pre-inception prices are not fabricated
+- business-operating history is not treated as independent-security trading history
+
+### Reference
+
+Builder:
+
+`src/ingestion/build_security_market_inceptions.py`
+
+Authoritative reference:
+
+`data/reference/securities/security_market_inceptions.csv`
+
+Validation:
+
+`data/interim/security_market_inception_validation.csv`
+
+The reference contains 17 independent-security inception cases:
+
+- AMTM
+- CARR
+- CEG
+- FTRE
+- GEHC
+- GEV
+- KVUE
+- MBC
+- OGN
+- OTIS
+- PHIN
+- Q
+- SNDK
+- SOLS
+- SOLV
+- VLTO
+- VNT
+
+Each reference record preserves information such as:
+
+- security identity
+- company name
+- market inception date
+- regular-way trading date
+- event type
+- parent company
+- when-issued versus regular-way market
+- date basis
+- evidence status
+- source type
+- primary source
+- secondary source
+- methodological notes
+
+The effective price-coverage start is defined conceptually as:
+
+`max(requested_lookback_start, independent_security_market_inception)`
+
+This prevents the audit from demanding prices for dates on which the independent security could not yet have traded.
+
+### Validation Result
+
+Reference rows: 17
+
+Evidence status:
+
+- VERIFIED: 16
+- CORROBORATED: 1
+
+Thirteen securities aligned directly with their documented independent-market inception.
+
+A total of:
+
+`3,779 SPY trading sessions`
+
+were correctly reclassified from apparent missing-history requirements to legitimate pre-inception periods.
+
+Four cases required additional investigation:
+
+- CARR
+- OTIS
+- GEHC
+- VLTO
+
+---
+
+## 3.15 Market-Inception Boundary Resolution
+
+Boundary verification script:
+
+`src/ingestion/verify_market_inception_boundaries.py`
+
+Authoritative resolution reference:
+
+`data/reference/market_data/market_inception_boundary_resolutions.csv`
+
+### CARR
+
+Official expected when-issued boundary:
+
+`2020-03-18`
+
+Yahoo first observation:
+
+`2020-03-19`
+
+Tiingo first observation:
+
+`2020-03-19`
+
+Because the official announcement used an approximate expected boundary and two independent providers begin on 2020-03-19, the project accepts 2020-03-19 as the first independently observed trading session.
+
+No synthetic 2020-03-18 price is created.
+
+Resolution:
+
+`CROSS_PROVIDER_OBSERVED_BOUNDARY`
+
+### OTIS
+
+Official expected when-issued boundary:
+
+`2020-03-18`
+
+Yahoo first observation:
+
+`2020-03-19`
+
+Tiingo first observation:
+
+`2020-03-19`
+
+Treatment matches CARR.
+
+Resolution:
+
+`CROSS_PROVIDER_OBSERVED_BOUNDARY`
+
+### GEHC
+
+Official independent-market inception:
+
+`2022-12-16`
+
+Yahoo contained one observation dated:
+
+`2022-12-15`
+
+Independent Tiingo verification contained no pre-inception observation.
+
+The Yahoo 2022-12-15 observation is therefore treated as a provider artifact.
+
+Resolution:
+
+`EXCLUDE_PRE_INCEPTION_PROVIDER_ROW`
+
+The raw Yahoo file remains unchanged.
+
+The analysis-ready GEHC series begins on 2022-12-16.
+
+### VLTO
+
+Official when-issued inception:
+
+`2023-09-27`
+
+Regular-way trading start:
+
+`2023-10-02`
+
+Yahoo history began:
+
+`2023-10-04`
+
+Tiingo regular `VLTO` recovered:
+
+- 2023-10-02
+- 2023-10-03
+
+A Tiingo asset search identified:
+
+`VLTO-W — Veralto Corp WhenIssued`
+
+The `VLTO-W` historical series recovered all three missing when-issued sessions:
+
+- 2023-09-27
+- 2023-09-28
+- 2023-09-29
+
+The final VLTO boundary history therefore uses:
+
+- Tiingo `VLTO-W`: 2023-09-27 through 2023-09-29
+- Tiingo `VLTO`: 2023-10-02 through 2023-10-03
+- Yahoo Finance `VLTO`: beginning 2023-10-04
+
+Derived composite:
+
+`data/interim/vlto_market_boundary_composite.csv`
+
+Validation:
+
+- Composite rows: 568
+- Expected sessions from market inception: 568
+- Actual sessions: 568
+- Missing sessions: 0
+- Extra sessions: 0
+- Duplicate dates: 0
+- Required null values: 0
+- Invalid HIGH rows: 0
+- Invalid LOW rows: 0
+- Nonpositive prices: 0
+- Negative volume: 0
+- Invalid split factors: 0
+
+Result:
+
+`VLTO COMPLETE MARKET-BOUNDARY COVERAGE PASSED`
+
+Resolution:
+
+`SOURCE_COMPOSITE`
+
+All four previously unresolved inception-boundary cases are now explicitly documented and resolved.
+
+---
+
+## 3.16 Transformation-Aware Analysis-Ready Integrity Audit
+
+### Objective
+
+Re-audit all 596 historical price requests after applying only documented and independently validated transformations.
+
+Audit script:
+
+`src/ingestion/audit_analysis_ready_price_integrity.py`
+
+The audit creates a temporary analysis-ready representation rather than modifying source-native raw data.
+
+Validated transformations applied:
+
+- UA — verified Low override
+- FISV — verified missing-row insert
+- DISCA — validated historical source composite
+- GEHC — documented pre-inception-row exclusion
+- VLTO — validated when-issued + regular-way + Yahoo composite
+- CARR — validated observed market boundary
+- OTIS — validated observed market boundary
+- 17 market-inception cases — pre-inception periods removed from coverage expectations
+
+### Result
+
+Total requests audited:
+
+`596`
+
+Status:
+
+- PASS: 586
+- FAIL: 10
+
+Source-level result:
+
+- Yahoo Finance: 553 PASS / 0 FAIL
+- Tiingo: 33 PASS / 9 FAIL
+- Investing.com: 0 PASS / 1 FAIL
+
+All remaining failures were caused exclusively by:
+
+`UNEXPLAINED_MISSING_SESSIONS`
+
+No remaining failures involved:
+
+- duplicate dates
+- invalid dates
+- invalid HIGH values
+- invalid LOW values
+- required OHLCV nulls
+- extra trading sessions
+
+Global remaining discrepancy:
+
+`18 missing SPY sessions`
+
+The ten affected historical securities were:
+
+- INFO
+- ATVI
+- CTLT
+- CXO
+- HES
+- JNPR
+- MRO
+- PXD
+- TWTR
+- VAR
+
+The pattern suggested that the analysis-ready audit was still requiring prices after certain securities had ceased independent public trading.
+
+This identified the need for a security-market-termination model analogous to the previously implemented security-market-inception model.
+
+---
+
+## 3.17 Terminal Market-Boundary Diagnostic
+
+Diagnostic script:
+
+`src/ingestion/diagnose_analysis_ready_terminal_boundaries.py`
+
+Generated output:
+
+`data/interim/analysis_ready_terminal_boundary_diagnostic.csv`
+
+The diagnostic tested whether each of the 18 unexplained missing sessions occurred:
+
+- before the first observation
+- internally within an active trading history
+- or strictly after the final observed security price
+
+### Result
+
+All 10 failed securities were classified:
+
+`TERMINAL_ONLY`
+
+Breakdown:
+
+| Security | Last Observed Date | Missing Terminal Sessions |
+|---|---:|---:|
+| CXO | 2021-01-15 | 2 |
+| VAR | 2021-04-16 | 1 |
+| INFO | 2022-02-25 | 2 |
+| TWTR | 2022-10-28 | 1 |
+| ATVI | 2023-10-13 | 2 |
+| PXD | 2024-05-03 | 2 |
+| MRO | 2024-11-22 | 1 |
+| CTLT | 2024-12-18 | 2 |
+| JNPR | 2025-07-02 | 3 |
+| HES | 2025-07-18 | 2 |
+
+Totals:
+
+- Terminal missing sessions: 18
+- Start missing sessions: 0
+- Internal/other missing sessions: 0
+
+Result:
+
+`ALL 10 FAILURES ARE PURE TERMINAL-BOUNDARY CASES`
+
+This establishes that the remaining coverage discrepancy is not an internal price-history failure.
+
+The next required methodological layer is an independent-security market-termination reference.
+
+The future expected price interval will therefore be bounded by both independent-security inception and independent-security termination.
+
+Conceptually:
+
+`effective_expected_start = max(requested_start, security_market_inception)`
+
+and:
+
+`effective_expected_end_exclusive = min(requested_end_exclusive, security_market_termination)`
+
+No post-merger, post-delisting, or post-privatization prices will be fabricated.
+
+Index-membership timing and independent-security tradability remain separate concepts.
+
+---
+
+# Current Status
+
+Current phase:
+
+**Historical market-data termination-boundary modeling**
+
+Completed:
+
+- Project architecture and reproducibility framework
+- Azure SQL analytical database foundation
+- Current S&P 500 constituent anchor
+- Historical S&P 500 membership reconstruction
+- Historical security identity reconciliation
+- Point-in-time membership interval construction
+- Price-download manifest
+- Yahoo Finance availability audit
+- Tiingo fallback validation
+- Historical provider-symbol resolution
+- Historical INFO raw-price resolution
+- Complete 596-request acquisition
+- Raw provider-file integrity audit
+- UA defective-price diagnosis and resolution
+- FISV missing-session diagnosis and resolution
+- DISCA historical source reconstruction
+- Independent-security market-inception reference
+- 17 inception-boundary validations
+- CARR / OTIS observed-boundary resolution
+- GEHC pre-inception provider-artifact resolution
+- Complete VLTO when-issued and regular-way boundary recovery
+- Transformation-aware 596-request integrity audit
+- Terminal-boundary diagnostic
+
+Current analytical audit state:
+
+- Total requests: 596
+- Structurally valid after validated transformations: 596
+- Completely passing current calendar expectation: 586
+- Remaining terminal-boundary cases: 10
+- Remaining apparent missing sessions: 18
+- Internal missing sessions among those cases: 0
+- All 10 remaining failures: `TERMINAL_ONLY`
+
+Next objective:
+
+Build and validate:
+
+`data/reference/securities/security_market_terminations.csv`
+
+for:
+
+- INFO
+- ATVI
+- CTLT
+- CXO
+- HES
+- JNPR
+- MRO
+- PXD
+- TWTR
+- VAR
+
+The termination reference must distinguish:
+
+- transaction/completion date
+- last legitimate independent trading date
+- accepted analysis-ready end-exclusive date
+- merger / acquisition / privatization / delisting reason
+- primary evidence
+- provider-specific date anomalies
+
+Special attention remains required for:
+
+- `TWTR`
+- `VAR`
+
+because their provider terminal observations may not align cleanly with documented trading suspension dates.
+
+Historical INFO also still requires dividend-adjusted price reconstruction after terminal-boundary resolution.
+
+The project must not yet standardize the final price table or calculate returns.
 
 # Current Status
 
