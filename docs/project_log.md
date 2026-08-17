@@ -1965,119 +1965,578 @@ Index-membership timing and independent-security tradability remain separate con
 
 ---
 
+## 3.18 Independent-Security Market-Termination Reference
+
+### Objective
+
+Define the legitimate end of independent public trading for the ten historical securities identified by the terminal-boundary diagnostic.
+
+The termination model is maintained separately from S&P 500 membership because a security can leave the index before it stops trading, or it can remain in the index until a merger, acquisition, privatization, or other corporate event terminates independent trading.
+
+### Builder and Reference
+
+Builder:
+
+`src/ingestion/build_security_market_terminations.py`
+
+Authoritative reference:
+
+`data/reference/securities/security_market_terminations.csv`
+
+The reference contains one record for each diagnosed terminal case and preserves:
+
+- `security_key`
+- `project_ticker`
+- company name
+- corporate-event date
+- last valid trading date
+- accepted end-exclusive date
+- event type
+- acquirer
+- trading-suspension date
+- termination basis
+- evidence status
+- provider terminal date
+- provider terminal action
+- source URL
+- methodological notes
+
+### End-Exclusive Convention
+
+The accepted market-termination boundary is stored as:
+
+`accepted_effective_end_exclusive`
+
+A price observation is eligible only when:
+
+`date < accepted_effective_end_exclusive`
+
+The expected analytical interval is therefore bounded by:
+
+`effective_expected_end_exclusive = min(requested_end_exclusive, accepted_effective_end_exclusive)`
+
+### Validated Terminal Cases
+
+| Security | Last Valid Trading Date | Accepted End Exclusive | Provider Terminal Action |
+|---|---:|---:|---|
+| CXO | 2021-01-15 | 2021-01-19 | KEEP |
+| VAR | 2021-04-15 | 2021-04-16 | EXCLUDE_PROVIDER_ARTIFACT |
+| INFO | 2022-02-25 | 2022-02-28 | KEEP |
+| TWTR | 2022-10-27 | 2022-10-28 | EXCLUDE_PROVIDER_ARTIFACT |
+| ATVI | 2023-10-12 | 2023-10-13 | EXCLUDE_PROVIDER_ARTIFACT |
+| PXD | 2024-05-02 | 2024-05-03 | EXCLUDE_PROVIDER_ARTIFACT |
+| MRO | 2024-11-21 | 2024-11-22 | EXCLUDE_PROVIDER_ARTIFACT |
+| CTLT | 2024-12-17 | 2024-12-18 | EXCLUDE_PROVIDER_ARTIFACT |
+| JNPR | 2025-07-01 | 2025-07-02 | EXCLUDE_PROVIDER_ARTIFACT |
+| HES | 2025-07-17 | 2025-07-18 | EXCLUDE_PROVIDER_ARTIFACT |
+
+### Provider Terminal-Row Determination
+
+The earlier terminal diagnostic proved that the remaining expected-session gaps occurred after each provider's final returned observation.
+
+It did not, by itself, prove that every provider terminal observation represented a legitimate independent trading session.
+
+Independent corporate-event and trading-suspension evidence established the following treatment:
+
+- 8 provider terminal rows are excluded as provider artifacts.
+- 2 provider terminal rows are retained.
+- CXO and INFO are the only retained provider tails.
+- VAR's provider row dated 2021-04-16 is excluded; its last valid trading date is 2021-04-15.
+
+Raw provider files remain unchanged. Exclusions occur only in the temporary analysis-ready representation.
+
+### Validation Result
+
+Reference rows:
+
+`10`
+
+Evidence statuses:
+
+- `VERIFIED`
+- `CORROBORATED`
+
+Provider terminal actions:
+
+- `EXCLUDE_PROVIDER_ARTIFACT: 8`
+- `KEEP: 2`
+
+Result:
+
+`SECURITY MARKET-TERMINATION REFERENCE PASSED`
+
+---
+
+## 3.19 INFO Corporate Actions and Adjusted-Price Reconstruction
+
+### Objective
+
+Construct a validated adjusted-close history for historical IHS Markit (`INFO`) without modifying the archived Investing.com OHLCV source file.
+
+### Corporate-Action Reference
+
+Builder:
+
+`src/ingestion/build_info_corporate_actions.py`
+
+Reference:
+
+`data/reference/market_data/info_corporate_actions.csv`
+
+The reference documents nine historical cash dividends with:
+
+- declaration date
+- ex-dividend date
+- record date
+- payment date
+- cash amount
+- split factor
+- published close anchor
+- published adjusted-close anchor
+- evidence status
+- resolution status
+- source provenance
+
+### Dividend Validation
+
+Validated dividend events:
+
+`9`
+
+Total cash dividends:
+
+`$1.68 per share`
+
+Split events:
+
+`0`
+
+Every action is classified:
+
+`CASH_DIVIDEND`
+
+with:
+
+`resolution_status = VALIDATED`
+
+and:
+
+`evidence_status = CORROBORATED`
+
+### Reconstruction Method
+
+Reconstruction script:
+
+`src/ingestion/resolve_info_adjusted_prices.py`
+
+For each ex-dividend event, the backward adjustment factor is calculated from the prior trading-session close:
+
+`event_factor = (prior_close - cash_dividend) / prior_close`
+
+The factor is applied only to observations before the corresponding ex-dividend date.
+
+Multiple event factors accumulate backward through time.
+
+The final adjusted close is calculated as:
+
+`adjusted_close = close × cumulative_adjustment_factor`
+
+The terminal adjustment factor equals 1.0, so the final adjusted close equals the final unadjusted close.
+
+### Generated Outputs
+
+Reconstructed series:
+
+`data/interim/info_adjusted_price_reconstruction.csv`
+
+Validation table:
+
+`data/interim/info_adjusted_price_validation.csv`
+
+Both are reproducible interim outputs and remain outside Git.
+
+### Validation Result
+
+Rows reconstructed:
+
+`543`
+
+Coverage:
+
+`2020-01-02 through 2022-02-25`
+
+Dividend events applied:
+
+`9`
+
+Total dividends applied:
+
+`$1.68`
+
+Published adjusted-price anchors:
+
+`9 / 9 PASS`
+
+Additional validation confirmed:
+
+- no duplicate dates
+- no missing required OHLCV values
+- no missing adjusted closes
+- no nonpositive reconstructed prices
+- cumulative adjustment factors remain within `(0, 1]`
+- adjustment factors do not decrease moving forward
+- final adjustment factor equals 1.0
+- final adjusted close equals final close
+- no stock splits occurred during the reconstruction period
+
+Result:
+
+`INFO ADJUSTED-PRICE RECONSTRUCTION PASSED`
+
+The raw Investing.com file remains unchanged.
+
+---
+
+## 3.20 Final Analysis-Ready Price Integrity Audit
+
+### Objective
+
+Perform the final 596-request integrity audit after applying every documented and validated market-data resolution.
+
+The audit continues to preserve raw provider files and constructs transformations only in the temporary analysis-ready representation.
+
+### Reference Control Gate
+
+The final control gate requires:
+
+- 596 download requests
+- 17 security-market-inception records
+- 10 security-market-termination records
+- 8 excluded provider terminal artifacts
+- 2 retained terminal provider rows
+- 3 validated price exceptions: UA, FISV, and DISCA
+- 4 validated market-boundary resolutions: CARR, OTIS, GEHC, and VLTO
+- 9 validated INFO cash dividends totaling $1.68
+
+The audit refuses to continue when any required reference file, expected population, evidence status, resolution status, or date boundary changes unexpectedly.
+
+### Applied Transformations
+
+The final analysis-ready representation includes only documented transformations:
+
+- UA verified Low override
+- FISV verified row insertion
+- DISCA permanent-identity/direct-symbol composite
+- CARR observed inception boundary
+- OTIS observed inception boundary
+- GEHC pre-inception provider-row exclusion
+- VLTO when-issued/regular-way/Yahoo composite
+- 17 independent-security inception boundaries
+- 10 independent-security termination boundaries
+- 8 provider terminal-row exclusions
+- INFO dividend-adjusted price reconstruction
+
+### Final Result
+
+Total requests audited:
+
+`596`
+
+Status counts:
+
+- `PASS: 596`
+- `REVIEW_KNOWN: 0`
+- `FAIL: 0`
+
+Source-level result by original acquisition source:
+
+- Yahoo Finance: 553 PASS
+- Tiingo: 42 PASS
+- Investing.com: 1 PASS
+
+Global validation totals:
+
+- unexplained missing sessions: 0
+- unexplained extra sessions: 0
+- duplicate dates: 0
+- invalid dates: 0
+- required OHLCV nulls: 0
+- adjusted-close nulls: 0
+- nonpositive prices: 0
+- negative volume: 0
+- invalid HIGH rows: 0
+- invalid LOW rows: 0
+- known review items: 0
+- critical failures: 0
+
+Final result:
+
+`ANALYSIS-READY PRICE INTEGRITY AUDIT PASSED`
+
+and:
+
+`RAW / ACQUISITION QUALITY GATE COMPLETE`
+
+The market-price layer is now approved for standardized analytical output.
+
+---
+
+## 3.21 Standardized Price-History Layer
+
+### Objective
+
+Export one canonical long-format daily price history from the exact transformation path validated by the final integrity audit.
+
+The export is attached to the successful final audit path so that a failed or incomplete audit cannot overwrite the last valid standardized dataset.
+
+### Canonical Schema
+
+The standardized history contains:
+
+`security_key`
+
+`project_ticker`
+
+`provider_symbol`
+
+`date`
+
+`open`
+
+`high`
+
+`low`
+
+`close`
+
+`adjusted_close`
+
+`volume`
+
+`dividend`
+
+`split_factor`
+
+`source`
+
+### Identity Model
+
+The canonical observation key is:
+
+`security_key + project_ticker + date`
+
+`security_key` preserves corporate-security identity independently from the displayed or provider ticker.
+
+`project_ticker` preserves the historical ticker segment requested by the project.
+
+`provider_symbol` preserves the acquisition symbol used by the approved provider route.
+
+### Generated Outputs
+
+Standardized history:
+
+`data/interim/standardized_price_history.csv.gz`
+
+Request-level manifest:
+
+`data/interim/standardized_price_history_manifest.csv`
+
+Both outputs remain excluded from Git because they are reproducible from committed code, reference controls, and preserved raw inputs.
+
+### Validation Result
+
+Standardized requests:
+
+`596`
+
+Standardized observations:
+
+`783,086`
+
+Canonical-key duplicates:
+
+`0`
+
+Additional validation confirmed:
+
+- exact reconciliation with all 596 audit row counts
+- exact reconciliation with audited first and last dates
+- canonical column order preserved
+- no canonical numeric nulls
+- positive price values
+- nonnegative volume
+- positive split factors
+- complete row-level source labels
+
+Result:
+
+`STANDARDIZED_PRICE_HISTORY_PASSED`
+
+---
+
+## 3.22 Membership-to-Price Integration Input Inspection
+
+### Objective
+
+Inspect the existing membership and standardized-price inputs before joining point-in-time S&P 500 membership to daily prices.
+
+The inspection is read-only and does not modify membership references, generated membership intervals, standardized prices, or manifests.
+
+### Inspection Script
+
+`src/ingestion/inspect_membership_join_inputs.py`
+
+### Inspection Report
+
+`reports/data_quality/membership_inspection.txt`
+
+Unlike generated analytical datasets under `data/interim/`, this report is retained as version-controlled data-quality documentation for the membership-integration checkpoint.
+
+### Membership Inputs Identified
+
+Current constituent anchor:
+
+`data/interim/sp500_constituent_anchor_2026-08-10.csv`
+
+Official membership actions:
+
+`data/reference/membership/sp500_official_changes.csv`
+
+Point-in-time membership intervals:
+
+`data/interim/sp500_membership_intervals_2021_2025.csv`
+
+Membership-count checkpoints:
+
+`data/interim/membership_count_checkpoints.csv`
+
+### Inspection Results
+
+Current SPY anchor:
+
+- 503 rows
+- 503 unique tickers
+- anchor date: 2026-08-10
+
+Official membership-change reference:
+
+- 202 action rows
+- 188 unique tickers
+- 100 additions
+- 102 deletions
+- earliest effective date: 2021-01-07
+- latest effective date: 2026-08-05
+
+Standardized price manifest:
+
+- 596 request rows
+- 596 unique project tickers
+- 595 unique security keys
+- 595 unique provider symbols
+
+Standardized price history:
+
+- 13 canonical columns
+- 783,086 validated observations
+
+### Remaining Membership Validation Requirement
+
+The existing interval and checkpoint files were identified by the inventory but were not yet examined by the initial inspection script.
+
+Before any membership-to-price join, the project must explicitly validate:
+
+- interval column structure
+- inclusive `valid_from` semantics
+- exclusive `valid_to_exclusive` semantics
+- unique security identity mapping
+- ticker-history mapping to `security_key`
+- absence of overlapping intervals for the same security
+- checkpoint constituent counts
+- price availability during valid membership intervals
+- absence of membership rows outside the 2021–2025 analytical window
+
+No return, momentum, or forward-performance calculation should begin until this membership-integration gate passes.
+
+---
+
 # Current Status
 
 Current phase:
 
-**Historical market-data termination-boundary modeling**
+**Point-in-time membership and standardized-price integration preparation**
 
 Completed:
 
 - Project architecture and reproducibility framework
 - Azure SQL analytical database foundation
-- Current S&P 500 constituent anchor
-- Historical S&P 500 membership reconstruction
-- Historical security identity reconciliation
+- Current 503-security S&P 500 constituent anchor
+- Historical S&P 500 membership-action reference
+- Full-history membership integrity audit
 - Point-in-time membership interval construction
-- Price-download manifest
-- Yahoo Finance availability audit
-- Tiingo fallback validation
-- Historical provider-symbol resolution
-- Historical INFO raw-price resolution
-- Complete 596-request acquisition
+- Historical security identity reconciliation
+- 596-request price-download manifest
+- Yahoo Finance primary-source acquisition
+- Tiingo fallback acquisition and validation
+- Investing.com historical INFO raw-price validation
+- Complete 596-request historical acquisition
 - Raw provider-file integrity audit
-- UA defective-price diagnosis and resolution
-- FISV missing-session diagnosis and resolution
+- UA defective-price resolution
+- FISV missing-session resolution
 - DISCA historical source reconstruction
-- Independent-security market-inception reference
-- 17 inception-boundary validations
-- CARR / OTIS observed-boundary resolution
+- 17 independent-security market-inception references
+- CARR and OTIS observed-boundary resolutions
 - GEHC pre-inception provider-artifact resolution
-- Complete VLTO when-issued and regular-way boundary recovery
-- Transformation-aware 596-request integrity audit
-- Terminal-boundary diagnostic
+- VLTO when-issued and regular-way source composite
+- 10 independent-security market-termination references
+- 8 provider terminal-artifact exclusions
+- INFO nine-dividend corporate-action reference
+- INFO 543-row adjusted-price reconstruction
+- Final 596-request analysis-ready integrity audit
+- Canonical 783,086-row standardized price history
+- Initial membership-to-price input inspection
 
-Current analytical audit state:
+Current market-data quality state:
 
 - Total requests: 596
-- Structurally valid after validated transformations: 596
-- Completely passing current calendar expectation: 586
-- Remaining terminal-boundary cases: 10
-- Remaining apparent missing sessions: 18
-- Internal missing sessions among those cases: 0
-- All 10 remaining failures: `TERMINAL_ONLY`
+- PASS: 596
+- Known review items: 0
+- Critical failures: 0
+- Standardized rows: 783,086
+- Canonical-key duplicates: 0
+- Unexplained missing sessions: 0
+- Unexplained extra sessions: 0
+- Invalid OHLC relationships: 0
+- Required OHLCV nulls: 0
+
+Current membership state:
+
+- Anchor securities as of 2026-08-10: 503
+- Official membership actions: 202
+- Point-in-time interval rows previously generated: 593
+- Unique security identities previously generated: 593
+- Ticker-history rows previously generated: 594
+- 2021-01-01 checkpoint: 505 securities
+- 2025-12-31 checkpoint: 503 securities
 
 Next objective:
 
-Build and validate:
+Perform a dedicated audit of:
 
-`data/reference/securities/security_market_terminations.csv`
+`data/interim/sp500_membership_intervals_2021_2025.csv`
 
-for:
+and:
 
-- INFO
-- ATVI
-- CTLT
-- CXO
-- HES
-- JNPR
-- MRO
-- PXD
-- TWTR
-- VAR
+`data/interim/membership_count_checkpoints.csv`
 
-The termination reference must distinguish:
+Then construct and validate the point-in-time membership-to-price bridge.
 
-- transaction/completion date
-- last legitimate independent trading date
-- accepted analysis-ready end-exclusive date
-- merger / acquisition / privatization / delisting reason
-- primary evidence
-- provider-specific date anomalies
+The bridge must use security identity and valid-date intervals rather than joining only on current ticker text.
 
-Special attention remains required for:
+Return calculation, momentum feature engineering, and forward-performance testing remain blocked until the membership-to-price integration gate passes.
 
-- `TWTR`
-- `VAR`
+Git checkpoint objective:
 
-because their provider terminal observations may not align cleanly with documented trading suspension dates.
-
-Historical INFO also still requires dividend-adjusted price reconstruction after terminal-boundary resolution.
-
-The project must not yet standardize the final price table or calculate returns.
-
-# Current Status
-
-Current phase:
-
-**Historical market-price integrity validation**
-
-Completed:
-
-- Point-in-time S&P 500 membership reconstruction
-- Historical security identity reconciliation
-- Price download manifest construction
-- Yahoo Finance availability audit
-- Historical fallback-source resolution
-- Complete 596-request source resolution
-- Full historical market-price acquisition
-
-Current acquisition coverage:
-
-- Yahoo Finance: 553 requests
-- Tiingo: 42 requests
-- Investing.com: 1 request
-- Total: 596 / 596
-- Acquisition failures: 0
-
-Next objective:
-
-Perform a complete cross-source integrity audit of all 596 historical price files before standardization, adjusted-price reconstruction, return calculation, momentum-feature engineering, or database loading.
-
-Special pending item:
-
-The historical IHS Markit (`INFO`) series has validated raw OHLCV data, but its adjusted-price series still requires explicit reconstruction and validation.
-
+Commit the validated termination model, INFO corporate-action reconstruction, final analysis-ready audit, standardized-layer documentation, membership inspection script, and data-quality report while excluding reproducible interim datasets, timestamped backup scripts, and one-time integration helpers.
 
 ---
 

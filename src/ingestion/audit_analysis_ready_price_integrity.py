@@ -26,12 +26,28 @@ INCEPTION_REFERENCE_FILE = (
     / "security_market_inceptions.csv"
 )
 
+TERMINATION_REFERENCE_FILE = (
+    PROJECT_ROOT
+    / "data"
+    / "reference"
+    / "securities"
+    / "security_market_terminations.csv"
+)
+
 PRICE_EXCEPTION_REFERENCE_FILE = (
     PROJECT_ROOT
     / "data"
     / "reference"
     / "market_data"
     / "price_exception_resolutions.csv"
+)
+
+INFO_ACTION_REFERENCE_FILE = (
+    PROJECT_ROOT
+    / "data"
+    / "reference"
+    / "market_data"
+    / "info_corporate_actions.csv"
 )
 
 BOUNDARY_REFERENCE_FILE = (
@@ -61,6 +77,27 @@ VLTO_COMPOSITE_FILE = (
     / "data"
     / "interim"
     / "vlto_market_boundary_composite.csv"
+)
+
+INFO_ADJUSTED_FILE = (
+    PROJECT_ROOT
+    / "data"
+    / "interim"
+    / "info_adjusted_price_reconstruction.csv"
+)
+
+STANDARDIZED_PRICE_FILE = (
+    PROJECT_ROOT
+    / "data"
+    / "interim"
+    / "standardized_price_history.csv.gz"
+)
+
+STANDARDIZED_MANIFEST_FILE = (
+    PROJECT_ROOT
+    / "data"
+    / "interim"
+    / "standardized_price_history_manifest.csv"
 )
 
 OUTPUT_AUDIT_FILE = (
@@ -107,8 +144,30 @@ EXPECTED_BOUNDARY_RESOLUTIONS = {
 
 EXPECTED_INCEPTION_COUNT = 17
 
+EXPECTED_TERMINATIONS = {
+    "ATVI",
+    "CTLT",
+    "CXO",
+    "HES",
+    "INFO",
+    "JNPR",
+    "MRO",
+    "PXD",
+    "TWTR",
+    "VAR",
+}
+
+EXPECTED_TERMINAL_ACTION_COUNTS = {
+    "EXCLUDE_PROVIDER_ARTIFACT": 8,
+    "KEEP": 2,
+}
+
 
 # ============================================================
+EXPECTED_INFO_ACTION_COUNT = 9
+EXPECTED_INFO_DIVIDEND_TOTAL = 1.68
+
+
 # DISPLAY
 # ============================================================
 
@@ -542,6 +601,227 @@ def load_investing(file_path):
     return common
 
 
+def load_info_adjusted(file_path):
+
+    raw = pd.read_csv(
+        file_path
+    )
+
+    required = {
+        "date",
+        "open",
+        "high",
+        "low",
+        "close",
+        "adj_close",
+        "volume",
+        "dividend",
+        "split_factor",
+        "adjustment_factor",
+        "source_component",
+    }
+
+    missing = (
+        required
+        - set(raw.columns)
+    )
+
+    if missing:
+        raise RuntimeError(
+            "INFO reconstructed series missing columns: "
+            f"{sorted(missing)}"
+        )
+
+    raw = raw.copy()
+
+    raw["date"] = normalize_dates(
+        raw["date"]
+    )
+
+    numeric_columns = [
+        "open",
+        "high",
+        "low",
+        "close",
+        "adj_close",
+        "volume",
+        "dividend",
+        "split_factor",
+        "adjustment_factor",
+    ]
+
+    for column in numeric_columns:
+        raw[column] = pd.to_numeric(
+            raw[column],
+            errors="coerce",
+        )
+
+    if len(raw) != 543:
+        raise RuntimeError(
+            "Expected 543 reconstructed INFO rows; "
+            f"found {len(raw)}."
+        )
+
+    if (
+        raw["date"].min()
+        != pd.Timestamp("2020-01-02")
+    ):
+        raise RuntimeError(
+            "Unexpected reconstructed INFO first date."
+        )
+
+    if (
+        raw["date"].max()
+        != pd.Timestamp("2022-02-25")
+    ):
+        raise RuntimeError(
+            "Unexpected reconstructed INFO last date."
+        )
+
+    if (
+        raw["date"].isna().any()
+        or raw["date"].duplicated().any()
+    ):
+        raise RuntimeError(
+            "Reconstructed INFO dates are invalid "
+            "or duplicated."
+        )
+
+    if (
+        raw[numeric_columns]
+        .isna()
+        .any()
+        .any()
+    ):
+        raise RuntimeError(
+            "Reconstructed INFO numeric fields "
+            "contain nulls."
+        )
+
+    dividend_events = int(
+        (
+            raw["dividend"]
+            > 0
+        ).sum()
+    )
+
+    if dividend_events != EXPECTED_INFO_ACTION_COUNT:
+        raise RuntimeError(
+            "Reconstructed INFO must contain "
+            "nine dividends."
+        )
+
+    if (
+        abs(
+            float(
+                raw["dividend"].sum()
+            )
+            - EXPECTED_INFO_DIVIDEND_TOTAL
+        )
+        > 1e-12
+    ):
+        raise RuntimeError(
+            "Reconstructed INFO dividends "
+            "must total $1.68."
+        )
+
+    if (
+        raw["split_factor"]
+        .ne(1.0)
+        .any()
+    ):
+        raise RuntimeError(
+            "Unexpected INFO split factor."
+        )
+
+    if not (
+        raw["adjustment_factor"]
+        .between(
+            0,
+            1,
+            inclusive="both",
+        )
+        .all()
+    ):
+        raise RuntimeError(
+            "INFO adjustment factors fall "
+            "outside (0, 1]."
+        )
+
+    ordered = (
+        raw
+        .sort_values("date")
+        .reset_index(drop=True)
+    )
+
+    factor_changes = (
+        ordered["adjustment_factor"]
+        .diff()
+        .dropna()
+    )
+
+    if (
+        factor_changes
+        < -1e-12
+    ).any():
+        raise RuntimeError(
+            "INFO adjustment factors decrease "
+            "moving forward."
+        )
+
+    calculated = (
+        ordered["close"]
+        * ordered["adjustment_factor"]
+    )
+
+    differences = (
+        ordered["adj_close"]
+        - calculated
+    ).abs()
+
+    if not (
+        differences
+        <= 1e-8
+    ).all():
+        raise RuntimeError(
+            "INFO adjusted-close formula "
+            "validation failed."
+        )
+
+    terminal = ordered.iloc[-1]
+
+    if (
+        abs(
+            float(
+                terminal["adjustment_factor"]
+            )
+            - 1.0
+        )
+        > 1e-12
+    ):
+        raise RuntimeError(
+            "INFO terminal adjustment factor "
+            "is not 1.0."
+        )
+
+    common = ordered[
+        [
+            "date",
+            "open",
+            "high",
+            "low",
+            "close",
+            "adj_close",
+            "volume",
+            "dividend",
+            "split_factor",
+            "source_component",
+        ]
+    ].copy()
+
+    return common
+
+
 def load_disca_composite(file_path):
 
     raw = pd.read_csv(
@@ -790,11 +1070,14 @@ print_section(
 required_files = [
     DOWNLOAD_AUDIT_FILE,
     INCEPTION_REFERENCE_FILE,
+    TERMINATION_REFERENCE_FILE,
     PRICE_EXCEPTION_REFERENCE_FILE,
+    INFO_ACTION_REFERENCE_FILE,
     BOUNDARY_REFERENCE_FILE,
     RESOLVED_ROWS_FILE,
     DISCA_COMPOSITE_FILE,
     VLTO_COMPOSITE_FILE,
+    INFO_ADJUSTED_FILE,
 ]
 
 
@@ -836,8 +1119,18 @@ inceptions = pd.read_csv(
 )
 
 
+terminations = pd.read_csv(
+    TERMINATION_REFERENCE_FILE
+)
+
+
 price_exceptions = pd.read_csv(
     PRICE_EXCEPTION_REFERENCE_FILE
+)
+
+
+info_actions = pd.read_csv(
+    INFO_ACTION_REFERENCE_FILE
 )
 
 
@@ -905,6 +1198,167 @@ print(
 )
 
 
+required_termination_columns = {
+    "security_key",
+    "project_ticker",
+    "last_valid_trading_date",
+    "accepted_effective_end_exclusive",
+    "provider_terminal_date",
+    "provider_terminal_action",
+    "termination_basis",
+    "evidence_status",
+}
+
+
+missing_termination_columns = (
+    required_termination_columns
+    - set(
+        terminations.columns
+    )
+)
+
+
+if missing_termination_columns:
+
+    print(
+        "\nERROR:"
+    )
+
+    print(
+        "Termination reference is missing "
+        "required columns:"
+    )
+
+    print(
+        sorted(
+            missing_termination_columns
+        )
+    )
+
+    sys.exit(1)
+
+
+termination_set = set(
+    terminations[
+        "security_key"
+    ]
+)
+
+
+if (
+    termination_set
+    != EXPECTED_TERMINATIONS
+):
+
+    print(
+        "\nERROR:"
+    )
+
+    print(
+        "Termination-reference population "
+        "does not match the ten validated "
+        "terminal cases."
+    )
+
+    print(
+        sorted(
+            termination_set
+        )
+    )
+
+    sys.exit(1)
+
+
+if (
+    terminations[
+        [
+            "security_key",
+            "project_ticker",
+        ]
+    ]
+    .duplicated()
+    .any()
+):
+
+    print(
+        "\nERROR:"
+    )
+
+    print(
+        "Duplicate security/project pairs "
+        "exist in the termination reference."
+    )
+
+    sys.exit(1)
+
+
+terminal_action_counts = (
+    terminations[
+        "provider_terminal_action"
+    ]
+    .value_counts()
+    .to_dict()
+)
+
+
+if (
+    terminal_action_counts
+    != EXPECTED_TERMINAL_ACTION_COUNTS
+):
+
+    print(
+        "\nERROR:"
+    )
+
+    print(
+        "Termination action counts changed."
+    )
+
+    print(
+        terminal_action_counts
+    )
+
+    sys.exit(1)
+
+
+allowed_evidence_statuses = {
+    "VERIFIED",
+    "CORROBORATED",
+}
+
+
+if (
+    ~terminations[
+        "evidence_status"
+    ]
+    .isin(
+        allowed_evidence_statuses
+    )
+).any():
+
+    print(
+        "\nERROR:"
+    )
+
+    print(
+        "Termination evidence contains an "
+        "unaccepted status."
+    )
+
+    sys.exit(1)
+
+
+print(
+    "Security terminations: "
+    "10 — VERIFIED/CORROBORATED"
+)
+
+print(
+    "Terminal provider actions: "
+    "8 exclusions / 2 retained"
+)
+
+
 price_exception_set = set(
     price_exceptions[
         "security_key"
@@ -960,6 +1414,101 @@ if (
 print(
     "Price exceptions: "
     "UA, FISV, DISCA — VALIDATED"
+)
+
+
+required_info_action_columns = {
+    "security_key",
+    "project_ticker",
+    "event_type",
+    "ex_date",
+    "cash_amount",
+    "split_factor",
+    "evidence_status",
+    "resolution_status",
+}
+
+missing_info_action_columns = (
+    required_info_action_columns
+    - set(info_actions.columns)
+)
+
+if missing_info_action_columns:
+    print("\nERROR:")
+    print(
+        "INFO corporate-action reference is "
+        "missing required columns:"
+    )
+    print(
+        sorted(
+            missing_info_action_columns
+        )
+    )
+    sys.exit(1)
+
+info_actions["cash_amount"] = pd.to_numeric(
+    info_actions["cash_amount"],
+    errors="coerce",
+)
+
+info_actions["split_factor"] = pd.to_numeric(
+    info_actions["split_factor"],
+    errors="coerce",
+)
+
+info_actions["ex_date"] = normalize_dates(
+    info_actions["ex_date"]
+)
+
+info_action_gate_failed = (
+    len(info_actions)
+    != EXPECTED_INFO_ACTION_COUNT
+    or info_actions[
+        "security_key"
+    ].ne("INFO").any()
+    or info_actions[
+        "project_ticker"
+    ].ne("INFO").any()
+    or info_actions[
+        "event_type"
+    ].ne("CASH_DIVIDEND").any()
+    or info_actions[
+        "resolution_status"
+    ].ne("VALIDATED").any()
+    or info_actions[
+        "evidence_status"
+    ].ne("CORROBORATED").any()
+    or info_actions[
+        "split_factor"
+    ].ne(1.0).any()
+    or info_actions[
+        "ex_date"
+    ].isna().any()
+    or info_actions[
+        "ex_date"
+    ].duplicated().any()
+    or abs(
+        float(
+            info_actions[
+                "cash_amount"
+            ].sum()
+        )
+        - EXPECTED_INFO_DIVIDEND_TOTAL
+    )
+    > 1e-12
+)
+
+if info_action_gate_failed:
+    print("\nERROR:")
+    print(
+        "INFO corporate-action reference failed "
+        "its validated-control gate."
+    )
+    sys.exit(1)
+
+print(
+    "INFO corporate actions: "
+    "9 dividends / $1.68 — VALIDATED"
 )
 
 
@@ -1077,6 +1626,117 @@ inceptions[
     ],
     errors="raise",
 )
+
+
+for date_column in [
+    "last_valid_trading_date",
+    "accepted_effective_end_exclusive",
+    "provider_terminal_date",
+]:
+
+    terminations[
+        date_column
+    ] = pd.to_datetime(
+        terminations[
+            date_column
+        ],
+        errors="raise",
+    )
+
+
+invalid_termination_boundaries = (
+    terminations[
+        "accepted_effective_end_exclusive"
+    ]
+    <= terminations[
+        "last_valid_trading_date"
+    ]
+)
+
+
+if invalid_termination_boundaries.any():
+
+    print(
+        "\nERROR:"
+    )
+
+    print(
+        "A termination end-exclusive date "
+        "does not occur after the last valid "
+        "trading date."
+    )
+
+    sys.exit(1)
+
+
+exclude_actions = (
+    terminations[
+        "provider_terminal_action"
+    ]
+    == "EXCLUDE_PROVIDER_ARTIFACT"
+)
+
+
+keep_actions = (
+    terminations[
+        "provider_terminal_action"
+    ]
+    == "KEEP"
+)
+
+
+if (
+    terminations.loc[
+        exclude_actions,
+        "provider_terminal_date",
+    ]
+    .ne(
+        terminations.loc[
+            exclude_actions,
+            "accepted_effective_end_exclusive",
+        ]
+    )
+    .any()
+):
+
+    print(
+        "\nERROR:"
+    )
+
+    print(
+        "Every excluded provider artifact "
+        "must occur exactly on the accepted "
+        "end-exclusive boundary."
+    )
+
+    sys.exit(1)
+
+
+if (
+    terminations.loc[
+        keep_actions,
+        "provider_terminal_date",
+    ]
+    .ne(
+        terminations.loc[
+            keep_actions,
+            "last_valid_trading_date",
+        ]
+    )
+    .any()
+):
+
+    print(
+        "\nERROR:"
+    )
+
+    print(
+        "Every retained provider terminal "
+        "date must equal the last valid "
+        "trading date."
+    )
+
+    sys.exit(1)
 
 
 boundary_resolutions[
@@ -1202,6 +1862,7 @@ print_section(
 
 
 audit_records = []
+standardized_frames = []
 
 
 for request_number, (_, request) in enumerate(
@@ -1248,6 +1909,11 @@ for request_number, (_, request) in enumerate(
     ).normalize()
 
 
+    effective_expected_end_exclusive = (
+        requested_end_exclusive
+    )
+
+
     raw_file = (
         PROJECT_ROOT
         / str(
@@ -1271,6 +1937,94 @@ for request_number, (_, request) in enumerate(
     try:
 
         if (
+            security_key == "INFO"
+            and project_ticker == "INFO"
+        ):
+
+            data = load_info_adjusted(
+                INFO_ADJUSTED_FILE
+            )
+
+            expected_events = (
+                info_actions[
+                    [
+                        "ex_date",
+                        "cash_amount",
+                    ]
+                ]
+                .sort_values("ex_date")
+                .reset_index(drop=True)
+            )
+
+            actual_events = (
+                data.loc[
+                    data["dividend"] > 0,
+                    [
+                        "date",
+                        "dividend",
+                    ],
+                ]
+                .rename(
+                    columns={
+                        "date": "ex_date",
+                        "dividend": "cash_amount",
+                    }
+                )
+                .sort_values("ex_date")
+                .reset_index(drop=True)
+            )
+
+            if (
+                len(actual_events)
+                != len(expected_events)
+            ):
+                raise RuntimeError(
+                    "INFO reconstructed dividend-event "
+                    "count changed."
+                )
+
+            if not (
+                actual_events["ex_date"]
+                .equals(
+                    expected_events["ex_date"]
+                )
+            ):
+                raise RuntimeError(
+                    "INFO reconstructed ex-dates do not "
+                    "match the reference."
+                )
+
+            amount_difference = (
+                actual_events["cash_amount"]
+                - expected_events["cash_amount"]
+            ).abs()
+
+            if (
+                amount_difference
+                > 1e-12
+            ).any():
+                raise RuntimeError(
+                    "INFO reconstructed dividends do not "
+                    "match the reference."
+                )
+
+            transformations.append(
+                "INFO_ADJUSTED_PRICE_RECONSTRUCTION"
+            )
+
+            add_transformation(
+                security_key,
+                project_ticker,
+                "ADJUSTED_PRICE_RECONSTRUCTION",
+                (
+                    "Reconstructed historical adjusted "
+                    "close from validated INFO "
+                    "cash-dividend actions; raw "
+                    "Investing.com OHLCV remains unchanged."
+                ),
+            )
+
+        elif (
             security_key == "DISCA"
             and project_ticker == "DISCA"
         ):
@@ -1404,6 +2158,9 @@ for request_number, (_, request) in enumerate(
 
                 "requested_end_exclusive":
                     requested_end_exclusive.date(),
+
+                "effective_expected_end_exclusive":
+                    None,
 
                 "analysis_rows":
                     0,
@@ -2016,6 +2773,245 @@ for request_number, (_, request) in enumerate(
 
 
     # ========================================================
+    # EFFECTIVE EXPECTED END / MARKET TERMINATION
+    # ========================================================
+
+    termination_match = (
+        terminations[
+            (
+                terminations[
+                    "security_key"
+                ]
+                == security_key
+            )
+            &
+            (
+                terminations[
+                    "project_ticker"
+                ]
+                == project_ticker
+            )
+        ]
+    )
+
+
+    termination_last_valid = None
+
+
+    if len(
+        termination_match
+    ) > 1:
+
+        critical_issues += 1
+
+        flags.append(
+            "DUPLICATE_TERMINATION_REFERENCE"
+        )
+
+        add_issue(
+            security_key,
+            project_ticker,
+            "CRITICAL",
+            "DUPLICATE_TERMINATION_REFERENCE",
+            (
+                "More than one market-"
+                "termination reference row."
+            ),
+        )
+
+
+    elif len(
+        termination_match
+    ) == 1:
+
+        termination_row = (
+            termination_match.iloc[0]
+        )
+
+
+        accepted_end_exclusive = (
+            termination_row[
+                "accepted_effective_end_exclusive"
+            ]
+            .normalize()
+        )
+
+
+        termination_last_valid = (
+            termination_row[
+                "last_valid_trading_date"
+            ]
+            .normalize()
+        )
+
+
+        provider_terminal_date = (
+            termination_row[
+                "provider_terminal_date"
+            ]
+            .normalize()
+        )
+
+
+        provider_terminal_action = str(
+            termination_row[
+                "provider_terminal_action"
+            ]
+        )
+
+
+        termination_basis = str(
+            termination_row[
+                "termination_basis"
+            ]
+        )
+
+
+        effective_expected_end_exclusive = min(
+            requested_end_exclusive,
+            accepted_end_exclusive,
+        )
+
+
+        if (
+            effective_expected_start
+            >= effective_expected_end_exclusive
+        ):
+
+            critical_issues += 1
+
+            flags.append(
+                "INVALID_EFFECTIVE_PRICE_INTERVAL"
+            )
+
+            add_issue(
+                security_key,
+                project_ticker,
+                "CRITICAL",
+                "INVALID_EFFECTIVE_PRICE_INTERVAL",
+                (
+                    "Effective start is not "
+                    "earlier than the accepted "
+                    "termination boundary."
+                ),
+            )
+
+
+        provider_terminal_count = int(
+            (
+                data[
+                    "date"
+                ]
+                == provider_terminal_date
+            )
+            .sum()
+        )
+
+
+        if provider_terminal_count != 1:
+
+            critical_issues += 1
+
+            flags.append(
+                "TERMINAL_PROVIDER_ROW_NOT_UNIQUE"
+            )
+
+            add_issue(
+                security_key,
+                project_ticker,
+                "CRITICAL",
+                "TERMINAL_PROVIDER_ROW_NOT_UNIQUE",
+                (
+                    f"Expected exactly one provider "
+                    f"row on "
+                    f"{provider_terminal_date.date()}; "
+                    f"found {provider_terminal_count}."
+                ),
+            )
+
+
+        elif (
+            provider_terminal_action
+            == "EXCLUDE_PROVIDER_ARTIFACT"
+        ):
+
+            data = data[
+                data[
+                    "date"
+                ]
+                != provider_terminal_date
+            ].copy()
+
+
+            transformations.append(
+                "TERMINAL_PROVIDER_ROW_EXCLUSION"
+            )
+
+
+            add_transformation(
+                security_key,
+                project_ticker,
+                "TERMINAL_ROW_EXCLUSION",
+                (
+                    f"Excluded provider observation "
+                    f"dated "
+                    f"{provider_terminal_date.date()} "
+                    f"because independent trading "
+                    f"had already terminated. Raw "
+                    f"provider data remains unchanged."
+                ),
+            )
+
+
+        elif (
+            provider_terminal_action
+            == "KEEP"
+        ):
+
+            transformations.append(
+                "TERMINAL_PROVIDER_ROW_RETAINED"
+            )
+
+
+            add_transformation(
+                security_key,
+                project_ticker,
+                "MARKET_TERMINATION_BOUNDARY",
+                (
+                    f"Retained validated final "
+                    f"trading observation dated "
+                    f"{provider_terminal_date.date()} "
+                    f"and capped expected coverage "
+                    f"before "
+                    f"{accepted_end_exclusive.date()}."
+                ),
+            )
+
+
+        else:
+
+            critical_issues += 1
+
+            flags.append(
+                "UNSUPPORTED_TERMINAL_ACTION"
+            )
+
+            add_issue(
+                security_key,
+                project_ticker,
+                "CRITICAL",
+                "UNSUPPORTED_TERMINAL_ACTION",
+                provider_terminal_action,
+            )
+
+
+        transformations.append(
+            "TERMINATION_BOUNDARY:"
+            + termination_basis
+        )
+
+
+    # ========================================================
     # SORT BEFORE FINAL AUDIT
     # ========================================================
 
@@ -2026,6 +3022,80 @@ for request_number, (_, request) in enumerate(
         )
         .reset_index(drop=True)
     )
+
+
+    if termination_last_valid is not None:
+
+        valid_dates = (
+            data[
+                "date"
+            ]
+            .dropna()
+        )
+
+
+        actual_last_date = (
+            valid_dates.max()
+            if not valid_dates.empty
+            else None
+        )
+
+
+        if (
+            actual_last_date
+            != termination_last_valid
+        ):
+
+            critical_issues += 1
+
+            flags.append(
+                "TERMINATION_LAST_DATE_MISMATCH"
+            )
+
+            add_issue(
+                security_key,
+                project_ticker,
+                "CRITICAL",
+                "TERMINATION_LAST_DATE_MISMATCH",
+                (
+                    f"Expected final valid date "
+                    f"{termination_last_valid.date()}, "
+                    f"but analysis-ready data ends "
+                    f"on "
+                    f"{actual_last_date.date() if actual_last_date is not None else None}."
+                ),
+            )
+
+
+        post_termination_rows = int(
+            (
+                valid_dates
+                >= effective_expected_end_exclusive
+            )
+            .sum()
+        )
+
+
+        if post_termination_rows > 0:
+
+            critical_issues += 1
+
+            flags.append(
+                "POST_TERMINATION_ROWS_REMAIN"
+            )
+
+            add_issue(
+                security_key,
+                project_ticker,
+                "CRITICAL",
+                "POST_TERMINATION_ROWS_REMAIN",
+                (
+                    f"{post_termination_rows} row(s) "
+                    f"remain on or after the accepted "
+                    f"end-exclusive boundary "
+                    f"{effective_expected_end_exclusive.date()}."
+                ),
+            )
 
 
     # ========================================================
@@ -2125,81 +3195,39 @@ for request_number, (_, request) in enumerate(
 
 
     # ========================================================
+    # ========================================================
     # ADJUSTED CLOSE
     # ========================================================
 
-    if (
-        security_key == "INFO"
-        and project_ticker == "INFO"
-    ):
+    adjusted_numeric = pd.to_numeric(
+        data["adj_close"],
+        errors="coerce",
+    )
 
-        adjusted_close_nulls = int(
-            data[
-                "adj_close"
-            ]
-            .isna()
-            .sum()
-        )
+    adjusted_close_nulls = int(
+        adjusted_numeric
+        .isna()
+        .sum()
+    )
 
-
-        known_reviews += 1
+    if adjusted_close_nulls > 0:
+        critical_issues += 1
 
         flags.append(
-            "INFO_ADJUSTED_PRICE_PENDING"
+            "ADJUSTED_CLOSE_NULLS"
         )
-
 
         add_issue(
             security_key,
             project_ticker,
-            "KNOWN_REVIEW",
-            "INFO_ADJUSTED_PRICE_RECONSTRUCTION_PENDING",
-            (
-                "Raw INFO_OLD OHLCV is "
-                "validated, but adjusted-price "
-                "reconstruction remains pending."
+            "CRITICAL",
+            "ADJUSTED_CLOSE_NULLS",
+            str(
+                adjusted_close_nulls
             ),
         )
 
 
-    else:
-
-        adjusted_numeric = pd.to_numeric(
-            data[
-                "adj_close"
-            ],
-            errors="coerce",
-        )
-
-
-        adjusted_close_nulls = int(
-            adjusted_numeric
-            .isna()
-            .sum()
-        )
-
-
-        if adjusted_close_nulls > 0:
-
-            critical_issues += 1
-
-            flags.append(
-                "ADJUSTED_CLOSE_NULLS"
-            )
-
-
-            add_issue(
-                security_key,
-                project_ticker,
-                "CRITICAL",
-                "ADJUSTED_CLOSE_NULLS",
-                str(
-                    adjusted_close_nulls
-                ),
-            )
-
-
-    # ========================================================
     # PRICE / VOLUME VALIDITY
     # ========================================================
 
@@ -2363,7 +3391,7 @@ for request_number, (_, request) in enumerate(
         &
         (
             spy_dates
-            < requested_end_exclusive
+            < effective_expected_end_exclusive
         )
     ]
 
@@ -2494,6 +3522,58 @@ for request_number, (_, request) in enumerate(
         status = "PASS"
 
 
+    if status == "PASS":
+
+        standardized_request = data[
+            [
+                "date",
+                "open",
+                "high",
+                "low",
+                "close",
+                "adj_close",
+                "volume",
+                "dividend",
+                "split_factor",
+                "source_component",
+            ]
+        ].copy()
+
+        standardized_request = (
+            standardized_request.rename(
+                columns={
+                    "adj_close":
+                        "adjusted_close",
+
+                    "source_component":
+                        "source",
+                }
+            )
+        )
+
+        standardized_request.insert(
+            0,
+            "provider_symbol",
+            provider_symbol,
+        )
+
+        standardized_request.insert(
+            0,
+            "project_ticker",
+            project_ticker,
+        )
+
+        standardized_request.insert(
+            0,
+            "security_key",
+            security_key,
+        )
+
+        standardized_frames.append(
+            standardized_request
+        )
+
+
     first_date = (
         data[
             "date"
@@ -2537,6 +3617,9 @@ for request_number, (_, request) in enumerate(
 
             "requested_end_exclusive":
                 requested_end_exclusive.date(),
+
+            "effective_expected_end_exclusive":
+                effective_expected_end_exclusive.date(),
 
             "analysis_rows":
                 len(
@@ -3190,29 +4273,23 @@ print_section(
     "11. FINAL QUALITY GATE"
 )
 
-
 if not critical_failures.empty:
-
     print(
         "ANALYSIS-READY PRICE "
         "INTEGRITY AUDIT FAILED."
     )
-
 
     print(
         f"\nCritical requests: "
         f"{len(critical_failures)}"
     )
 
-
     print(
         "\nDO NOT STANDARDIZE "
         "OR CALCULATE RETURNS."
     )
 
-
     sys.exit(2)
-
 
 if (
     total_missing != 0
@@ -3222,7 +4299,6 @@ if (
     or total_invalid_low != 0
     or total_required_nulls != 0
 ):
-
     print(
         "ANALYSIS-READY PRICE "
         "INTEGRITY AUDIT FAILED."
@@ -3235,44 +4311,398 @@ if (
 
     sys.exit(2)
 
+if not known_reviews.empty:
+    print(
+        "ANALYSIS-READY PRICE "
+        "INTEGRITY AUDIT INCOMPLETE."
+    )
+
+    print(
+        f"\nKnown review requests remaining: "
+        f"{len(known_reviews)}"
+    )
+
+    sys.exit(2)
+
+canonical_columns = [
+    "security_key",
+    "project_ticker",
+    "provider_symbol",
+    "date",
+    "open",
+    "high",
+    "low",
+    "close",
+    "adjusted_close",
+    "volume",
+    "dividend",
+    "split_factor",
+    "source",
+]
+
+
+if (
+    len(standardized_frames)
+    != EXPECTED_REQUEST_COUNT
+):
+
+    print(
+        "STANDARDIZED PRICE HISTORY FAILED."
+    )
+
+    print(
+        "Expected 596 validated request frames; "
+        f"found {len(standardized_frames)}."
+    )
+
+    sys.exit(2)
+
+
+standardized_history = pd.concat(
+    standardized_frames,
+    ignore_index=True,
+)
+
+
+standardized_history = (
+    standardized_history
+    .sort_values(
+        [
+            "security_key",
+            "project_ticker",
+            "date",
+        ]
+    )
+    .reset_index(drop=True)
+)
+
+
+if (
+    list(
+        standardized_history.columns
+    )
+    != canonical_columns
+):
+
+    print(
+        "STANDARDIZED PRICE HISTORY FAILED."
+    )
+
+    print(
+        "Canonical schema changed."
+    )
+
+    sys.exit(2)
+
+
+duplicate_standardized_keys = int(
+    standardized_history
+    .duplicated(
+        [
+            "security_key",
+            "project_ticker",
+            "date",
+        ]
+    )
+    .sum()
+)
+
+
+if duplicate_standardized_keys != 0:
+
+    print(
+        "STANDARDIZED PRICE HISTORY FAILED."
+    )
+
+    print(
+        "Duplicate canonical keys: "
+        f"{duplicate_standardized_keys}"
+    )
+
+    sys.exit(2)
+
+
+standardized_numeric_columns = [
+    "open",
+    "high",
+    "low",
+    "close",
+    "adjusted_close",
+    "volume",
+    "dividend",
+    "split_factor",
+]
+
+
+standardized_nulls = int(
+    standardized_history[
+        standardized_numeric_columns
+    ]
+    .isna()
+    .sum()
+    .sum()
+)
+
+
+if standardized_nulls != 0:
+
+    print(
+        "STANDARDIZED PRICE HISTORY FAILED."
+    )
+
+    print(
+        "Canonical numeric nulls: "
+        f"{standardized_nulls}"
+    )
+
+    sys.exit(2)
+
+
+if (
+    standardized_history[
+        [
+            "open",
+            "high",
+            "low",
+            "close",
+            "adjusted_close",
+        ]
+    ]
+    .le(0)
+    .any()
+    .any()
+):
+
+    print(
+        "STANDARDIZED PRICE HISTORY FAILED."
+    )
+
+    print(
+        "Canonical prices must be positive."
+    )
+
+    sys.exit(2)
+
+
+if (
+    standardized_history[
+        "volume"
+    ]
+    .lt(0)
+    .any()
+    or standardized_history[
+        "split_factor"
+    ]
+    .le(0)
+    .any()
+):
+
+    print(
+        "STANDARDIZED PRICE HISTORY FAILED."
+    )
+
+    print(
+        "Invalid canonical volume "
+        "or split factor."
+    )
+
+    sys.exit(2)
+
+
+if (
+    standardized_history[
+        "source"
+    ]
+    .isna()
+    .any()
+    or standardized_history[
+        "source"
+    ]
+    .astype(str)
+    .str.strip()
+    .eq("")
+    .any()
+):
+
+    print(
+        "STANDARDIZED PRICE HISTORY FAILED."
+    )
+
+    print(
+        "Canonical source labels are missing."
+    )
+
+    sys.exit(2)
+
+
+expected_standardized_rows = int(
+    audit[
+        "analysis_rows"
+    ]
+    .sum()
+)
+
+
+if (
+    len(standardized_history)
+    != expected_standardized_rows
+):
+
+    print(
+        "STANDARDIZED PRICE HISTORY FAILED."
+    )
+
+    print(
+        "Global row count differs from the audit: "
+        f"{len(standardized_history)} != "
+        f"{expected_standardized_rows}."
+    )
+
+    sys.exit(2)
+
+
+standardized_output = (
+    standardized_history.copy()
+)
+
+
+standardized_output[
+    "date"
+] = (
+    standardized_output[
+        "date"
+    ]
+    .dt.strftime(
+        "%Y-%m-%d"
+    )
+)
+
+
+temporary_price_file = (
+    STANDARDIZED_PRICE_FILE
+    .with_name(
+        STANDARDIZED_PRICE_FILE.name
+        + ".tmp"
+    )
+)
+
+
+standardized_output.to_csv(
+    temporary_price_file,
+    index=False,
+    float_format="%.12g",
+    compression={
+        "method": "gzip",
+        "mtime": 0,
+    },
+)
+
+
+temporary_price_file.replace(
+    STANDARDIZED_PRICE_FILE
+)
+
+
+manifest_columns = [
+    "security_key",
+    "project_ticker",
+    "provider_symbol",
+    "original_source",
+    "analysis_rows",
+    "first_date",
+    "last_date",
+    "effective_expected_start",
+    "effective_expected_end_exclusive",
+    "transformations",
+]
+
+
+standardized_manifest = audit[
+    manifest_columns
+].copy()
+
+
+standardized_manifest = (
+    standardized_manifest
+    .sort_values(
+        [
+            "security_key",
+            "project_ticker",
+        ]
+    )
+    .reset_index(drop=True)
+)
+
+
+temporary_manifest_file = (
+    STANDARDIZED_MANIFEST_FILE
+    .with_name(
+        STANDARDIZED_MANIFEST_FILE.name
+        + ".tmp"
+    )
+)
+
+
+standardized_manifest.to_csv(
+    temporary_manifest_file,
+    index=False,
+)
+
+
+temporary_manifest_file.replace(
+    STANDARDIZED_MANIFEST_FILE
+)
+
+
+print(
+    "STANDARDIZED_PRICE_HISTORY_PASSED"
+)
+
+
+print(
+    f"Standardized requests: "
+    f"{len(standardized_frames)}"
+)
+
+
+print(
+    f"Standardized rows: "
+    f"{len(standardized_history):,}"
+)
+
+
+print(
+    "Canonical key duplicates: 0"
+)
+
+
+print(
+    f"Saved standardized history:\n"
+    f"{STANDARDIZED_PRICE_FILE}"
+)
+
+
+print(
+    f"Saved standardized manifest:\n"
+    f"{STANDARDIZED_MANIFEST_FILE}"
+)
+
 
 print(
     "ANALYSIS-READY PRICE "
     "INTEGRITY AUDIT PASSED."
 )
 
-
 print(
-    "\nAll 596 historical price "
-    "requests passed structural "
-    "and expected-session coverage "
-    "validation after applying only "
+    "\nAll 596 historical price requests "
+    "passed structural and expected-session "
+    "coverage validation after applying only "
     "documented, validated resolutions."
 )
 
-
-if len(
-    known_reviews
-) == 1:
-
-    info_review = (
-        known_reviews.iloc[0]
-    )
-
-
-    if (
-        info_review[
-            "security_key"
-        ]
-        == "INFO"
-    ):
-
-        print(
-            "\nThe only remaining known "
-            "review is historical INFO "
-            "adjusted-price reconstruction."
-        )
-
+print(
+    "\nNo known review items remain."
+)
 
 print(
     "\nNo unexplained missing "
@@ -3291,7 +4721,6 @@ print(
 print(
     "No required OHLCV nulls remain."
 )
-
 
 print(
     "\nRAW / ACQUISITION QUALITY "
