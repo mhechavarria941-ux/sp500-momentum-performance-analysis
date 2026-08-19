@@ -1,0 +1,138 @@
+
+===============================================================================
+S&P 500 MEMBERSHIP INTERVAL INTEGRITY AUDIT
+===============================================================================
+PASS: membership.valid_from uses YYYY-MM-DD format.
+PASS: membership.valid_from has valid dates.
+PASS: membership.valid_to_exclusive uses YYYY-MM-DD format.
+PASS: membership.valid_to_exclusive has valid dates.
+PASS: history.ticker_valid_from uses YYYY-MM-DD format.
+PASS: history.ticker_valid_from has valid dates.
+PASS: history.ticker_valid_to_exclusive uses YYYY-MM-DD format.
+PASS: history.ticker_valid_to_exclusive has valid dates.
+PASS: checkpoints.checkpoint_date uses YYYY-MM-DD format.
+PASS: checkpoints.checkpoint_date has valid dates.
+PASS: aliases.effective_date uses YYYY-MM-DD format.
+PASS: aliases.effective_date has valid dates.
+PASS: manifest.first_date uses YYYY-MM-DD format.
+PASS: manifest.first_date has valid dates.
+PASS: manifest.last_date uses YYYY-MM-DD format.
+PASS: manifest.last_date has valid dates.
+PASS: manifest.effective_expected_start uses YYYY-MM-DD format.
+PASS: manifest.effective_expected_start has valid dates.
+PASS: manifest.effective_expected_end_exclusive uses YYYY-MM-DD format.
+PASS: manifest.effective_expected_end_exclusive has valid dates.
+PASS: terminations.last_valid_trading_date uses YYYY-MM-DD format.
+PASS: terminations.last_valid_trading_date has valid dates.
+PASS: terminations.accepted_effective_end_exclusive uses YYYY-MM-DD format.
+PASS: terminations.accepted_effective_end_exclusive has valid dates.
+PASS: terminations.provider_terminal_date uses YYYY-MM-DD format.
+PASS: terminations.provider_terminal_date has valid dates.
+PASS: membership.left_censored contains only True/False.
+PASS: membership.right_censored contains only True/False.
+PASS: history.left_censored contains only True/False.
+PASS: history.right_censored contains only True/False.
+PASS: checkpoints.expected_security_count contains only integers.
+PASS: checkpoints.later_additions_reversed contains only integers.
+PASS: checkpoints.later_deletions_reversed contains only integers.
+PASS: manifest.analysis_rows contains only integers.
+
+===============================================================================
+1. STRUCTURE
+===============================================================================
+PASS: Membership contains 593 rows.
+PASS: Membership contains 593 security identities.
+PASS: Ticker history contains 594 rows.
+PASS: Ticker history contains 594 historical tickers.
+PASS: Price manifest contains 596 requests.
+PASS: Price manifest contains 595 security keys.
+PASS: Membership has no exact duplicates.
+PASS: Ticker history has no exact duplicates.
+PASS: Checkpoints has no exact duplicates.
+PASS: Aliases has no exact duplicates.
+PASS: Terminations has no exact duplicates.
+PASS: Price manifest has no exact duplicates.
+PASS: Required membership fields have no nulls.
+PASS: Ticker-history fields have no nulls.
+PASS: Checkpoint fields have no nulls.
+PASS: Alias fields have no nulls.
+PASS: Required market-termination fields have no nulls.
+
+===============================================================================
+2. MEMBERSHIP SEMANTICS
+===============================================================================
+PASS: Each security has one membership interval in this universe.
+PASS: Every membership interval has positive duration.
+PASS: Every membership start is inside the analysis window.
+PASS: No membership interval extends beyond the analysis scope.
+PASS: Membership left-censor flags match the start boundary.
+PASS: Membership right-censor flags match the end boundary.
+PASS: Exactly 505 securities are active at the analysis start.
+PASS: Exactly 503 securities are active at the analysis end.
+PASS: Entry provenance is absent only for left-censored intervals.
+PASS: Exit tickers are absent only for right-censored intervals.
+PASS: Exit provenance is absent only for right-censored intervals.
+PASS: Observed entries have HTTP(S) provenance.
+PASS: Observed exits have HTTP(S) provenance.
+
+===============================================================================
+3. IDENTITY AND TICKER HISTORY
+===============================================================================
+PASS: Alias old tickers are unique.
+PASS: Alias new tickers are unique.
+PASS: No alias maps a ticker to itself.
+PASS: Every alias has HTTP(S) provenance.
+PASS: The alias file contains the two documented identity events.
+PASS: Every entry ticker resolves to its canonical security key.
+PASS: Every exit ticker resolves to its canonical security key.
+PASS: Every historical ticker resolves to its canonical security key.
+PASS: Post-scope aliases do not create in-scope ticker-history rows.
+PASS: Every ticker segment has positive duration.
+PASS: Ticker segment starts are unique within each security.
+PASS: Every historical ticker appears in one segment.
+PASS: Ticker left-censor flags match the start boundary.
+PASS: Ticker right-censor flags match the end boundary.
+PASS: Ticker history exactly partitions membership intervals.
+PASS: DAY is the only multi-segment identity, with CDAY then DAY.
+
+===============================================================================
+4. CHECKPOINTS
+===============================================================================
+PASS: Checkpoint evidence matches the documented reconstruction.
+PASS: All checkpoints reconcile to the 503-security anchor.
+PASS: All six in-scope counts match the interval table.
+INFO: The 2026-08-10 row is an anchor control outside interval scope.
+
+===============================================================================
+5. PRICE-BRIDGE READINESS
+===============================================================================
+PASS: The termination reference contains exactly ten validated cases.
+PASS: Termination security/ticker keys are unique.
+PASS: All market terminations have accepted evidence status.
+PASS: Termination boundaries follow their last valid sessions.
+PASS: Every ticker segment has a standardized price request.
+PASS: Every membership key exists in the price manifest.
+PASS: Exactly two price requests are benchmarks.
+PASS: Exactly two price security keys are benchmarks.
+PASS: Price-manifest request keys are unique.
+PASS: Every price request covers its usable membership segment.
+PASS: All ten early price endings are documented market terminations.
+PASS: DAY is the only key with two standardized ticker requests.
+
+===============================================================================
+6. FINAL QUALITY GATE
+===============================================================================
+MEMBERSHIP_INTERVAL_INTEGRITY_AUDIT_PASSED
+Passed checks: 95
+Membership intervals: 593
+Security identities: 593
+Ticker-history segments: 594
+Historical tickers: 594
+In-scope checkpoints validated: 6
+Standardized constituent requests mapped: 594
+Documented market-termination truncations: 10
+Non-constituent benchmark requests: 2
+No interval gaps or overlaps remain.
+No unexplained identity mappings remain.
+No undocumented price-window truncations remain.
+POINT-IN-TIME MEMBERSHIP QUALITY GATE COMPLETE.

@@ -2456,6 +2456,193 @@ Before any membership-to-price join, the project must explicitly validate:
 - absence of membership rows outside the 2021–2025 analytical window
 
 No return, momentum, or forward-performance calculation should begin until this membership-integration gate passes.
+## 3.23 Membership Interval Integrity Audit
+
+### Objective
+
+Perform the dedicated quality gate required before joining point-in-time S&P 500 membership to standardized daily prices.
+
+The audit validates the membership interval table, ticker-history table, reconstruction checkpoints, security aliases, documented market terminations, and standardized price-request manifest as one internally consistent system.
+
+### Audit Script
+
+`src/ingestion/audit_membership_interval_integrity.py`
+
+### Audit Report
+
+`reports/data_quality/membership_interval_integrity_audit.txt`
+
+The audit report is retained as version-controlled data-quality documentation.
+
+### Validated Inputs
+
+Membership intervals:
+
+`data/interim/sp500_membership_intervals_2021_2025.csv`
+
+Ticker history:
+
+`data/interim/sp500_ticker_history_2021_2025.csv`
+
+Membership checkpoints:
+
+`data/interim/membership_count_checkpoints.csv`
+
+Security aliases:
+
+`data/reference/securities/security_aliases.csv`
+
+Security market terminations:
+
+`data/reference/securities/security_market_terminations.csv`
+
+Standardized price manifest:
+
+`data/interim/standardized_price_history_manifest.csv`
+
+### Interval and Identity Validation
+
+The audit confirmed:
+
+- exact expected schemas and row populations
+- no exact duplicate rows
+- no required-field nulls
+- valid inclusive-start and exclusive-end dates
+- positive-duration membership and ticker intervals
+- censoring flags consistent with the analysis boundaries
+- entry and exit provenance consistent with censoring status
+- canonical security-key continuity
+- no ticker-history gaps or overlaps
+- exact partitioning of every membership interval by ticker history
+- `DAY` as the only multi-segment security identity, represented by `CDAY -> DAY`
+
+The documented:
+
+`SATS -> ECHO`
+
+alias became effective on:
+
+`2026-06-24`
+
+This date is outside the 2021–2025 analytical scope. Neither ticker appears in the in-scope ticker-history output, so the alias correctly creates no 2021–2025 ticker segment.
+
+### Checkpoint Validation
+
+All six in-scope point-in-time membership counts were reproduced directly from the interval table:
+
+`2021-01-01: 505 securities`
+
+`2021-12-31: 505 securities`
+
+`2022-12-31: 503 securities`
+
+`2023-12-31: 503 securities`
+
+`2024-12-31: 503 securities`
+
+`2025-12-31: 503 securities`
+
+The:
+
+`2026-08-10: 503 securities`
+
+record remains an anchor/reconstruction control and is not evaluated against interval rows clipped at `2026-01-01`.
+
+### Membership-to-Price Request Reconciliation
+
+Every one of the:
+
+`594 ticker-history segments`
+
+maps to exactly one standardized constituent-price request.
+
+The remaining two of the 596 standardized price requests are the non-constituent benchmark series.
+
+Ten price-request windows end before their associated S&P membership interval because independent public trading terminated before the official index deletion date:
+
+- ATVI
+- CTLT
+- CXO
+- HES
+- INFO
+- JNPR
+- MRO
+- PXD
+- TWTR
+- VAR
+
+All ten early boundaries reconcile exactly to the validated:
+
+`security_market_terminations.csv`
+
+reference. No undocumented early price-window ending remains.
+
+### Methodological Decision
+
+Index membership and independent-security tradability remain separate concepts.
+
+A constituent-price observation is usable only while both conditions are satisfied:
+
+`membership valid_from <= date < membership valid_to_exclusive`
+
+and:
+
+`date < accepted market-termination end-exclusive boundary`, when a documented termination exists.
+
+The project will not fabricate post-termination prices merely because the official membership deletion became effective later.
+
+### Final Result
+
+Passed checks:
+
+`95`
+
+Membership intervals:
+
+`593`
+
+Security identities:
+
+`593`
+
+Ticker-history segments:
+
+`594`
+
+Historical tickers:
+
+`594`
+
+In-scope checkpoints validated:
+
+`6`
+
+Standardized constituent requests mapped:
+
+`594`
+
+Documented market-termination truncations:
+
+`10`
+
+Non-constituent benchmark requests:
+
+`2`
+
+Final result:
+
+`MEMBERSHIP_INTERVAL_INTEGRITY_AUDIT_PASSED`
+
+and:
+
+`POINT-IN-TIME MEMBERSHIP QUALITY GATE COMPLETE`
+
+### Next Step
+
+Construct the point-in-time membership-to-price bridge using canonical security identity, historical ticker validity, membership validity, and documented tradability boundaries.
+
+Return calculation, momentum feature engineering, and forward-performance testing remain blocked until the bridge itself passes its integrity audit.
+
 
 ---
 
@@ -2463,7 +2650,7 @@ No return, momentum, or forward-performance calculation should begin until this 
 
 Current phase:
 
-**Point-in-time membership and standardized-price integration preparation**
+**Point-in-time membership-to-price bridge construction**
 
 Completed:
 
@@ -2494,6 +2681,11 @@ Completed:
 - Final 596-request analysis-ready integrity audit
 - Canonical 783,086-row standardized price history
 - Initial membership-to-price input inspection
+- Dedicated membership interval and ticker-history inspection
+- 95-check membership interval integrity audit
+- Exact mapping of 594 historical ticker segments to standardized price requests
+- Reconciliation of 10 early price boundaries to documented market terminations
+- Point-in-time membership quality gate
 
 Current market-data quality state:
 
@@ -2512,31 +2704,43 @@ Current membership state:
 
 - Anchor securities as of 2026-08-10: 503
 - Official membership actions: 202
-- Point-in-time interval rows previously generated: 593
-- Unique security identities previously generated: 593
-- Ticker-history rows previously generated: 594
+- Point-in-time membership intervals: 593
+- Unique security identities: 593
+- Ticker-history segments: 594
+- Unique historical tickers: 594
 - 2021-01-01 checkpoint: 505 securities
 - 2025-12-31 checkpoint: 503 securities
+- Dedicated integrity checks passed: 95
+- Membership/ticker interval gaps or overlaps: 0
+- Unexplained identity mappings: 0
+- Standardized constituent requests mapped: 594
+- Documented market-termination truncations: 10
+- Non-constituent benchmark requests: 2
+- Membership quality-gate result: PASSED
 
 Next objective:
 
-Perform a dedicated audit of:
+Construct the point-in-time membership-to-price bridge from:
 
 `data/interim/sp500_membership_intervals_2021_2025.csv`
 
 and:
 
-`data/interim/membership_count_checkpoints.csv`
+`data/interim/sp500_ticker_history_2021_2025.csv`
 
-Then construct and validate the point-in-time membership-to-price bridge.
+and:
 
-The bridge must use security identity and valid-date intervals rather than joining only on current ticker text.
+`data/interim/standardized_price_history.csv.gz`
+
+The bridge must retain only constituent observations satisfying both the security membership interval and historical ticker-validity interval.
+
+The two benchmark series must remain outside the constituent bridge and be retained separately for benchmark analysis.
 
 Return calculation, momentum feature engineering, and forward-performance testing remain blocked until the membership-to-price integration gate passes.
 
 Git checkpoint objective:
 
-Commit the validated termination model, INFO corporate-action reconstruction, final analysis-ready audit, standardized-layer documentation, membership inspection script, and data-quality report while excluding reproducible interim datasets, timestamped backup scripts, and one-time integration helpers.
+Commit the membership interval builder, interval inspection script, integrity-audit script, both membership data-quality reports, and this updated project log while continuing to exclude reproducible interim datasets, timestamped backup scripts, and one-time integration helpers.
 
 ---
 

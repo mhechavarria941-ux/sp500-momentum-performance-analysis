@@ -1,0 +1,1110 @@
+
+===============================================================================
+MEMBERSHIP INTERVAL OUTPUT INSPECTION
+===============================================================================
+
+===============================================================================
+POINT-IN-TIME MEMBERSHIP INTERVALS
+===============================================================================
+Path: C:\Users\mhech\OneDrive\Documents\projects\sp500-momentum-performance-analysis\data\interim\sp500_membership_intervals_2021_2025.csv
+Exists: True
+Rows: 593
+Columns: 10
+Exact duplicate rows: 0
+
+Column names:
+ 1. security_key
+ 2. company_name_reference
+ 3. valid_from
+ 4. left_censored
+ 5. entry_ticker
+ 6. entry_source_url
+ 7. valid_to_exclusive
+ 8. right_censored
+ 9. exit_ticker
+10. exit_source_url
+
+Data types:
+security_key               str
+company_name_reference     str
+valid_from                 str
+left_censored             bool
+entry_ticker               str
+entry_source_url           str
+valid_to_exclusive         str
+right_censored            bool
+exit_ticker                str
+exit_source_url            str
+
+Null counts:
+security_key                0
+company_name_reference      0
+valid_from                  0
+left_censored               0
+entry_ticker                0
+entry_source_url          505
+valid_to_exclusive          0
+right_censored              0
+exit_ticker               503
+exit_source_url           503
+
+Unique counts:
+security_key              593
+company_name_reference    593
+valid_from                 60
+left_censored               2
+entry_ticker              593
+entry_source_url           56
+valid_to_exclusive         57
+right_censored              2
+exit_ticker                90
+exit_source_url            56
+
+First ten rows:
+security_key   company_name_reference valid_from  left_censored entry_ticker                                                                                                                                          entry_source_url valid_to_exclusive  right_censored exit_ticker                                                                                                                                                               exit_source_url
+           A AGILENT TECHNOLOGIES INC 2021-01-01           True            A                                                                                                                                                       NaN         2026-01-01            True         NaN                                                                                                                                                                           NaN
+         AAL  American Airlines Group 2021-01-01           True          AAL                                                                                                                                                       NaN         2024-09-23           False         AAL https://press.spglobal.com/2024-09-06-Palantir-Technologies%2C-Dell-Technologies%2C-and-Erie-Indemnity-Set-to-Join-S-P-500-Others-to-Join-S-P-MidCap-400-and-S-P-SmallCap-600
+         AAP       Advance Auto Parts 2021-01-01           True          AAP                                                                                                                                                       NaN         2023-08-25           False         AAP                                                                  https://press.spglobal.com/2023-08-21-Kenvue-Set-to-Join-S-P-500-Advance-Auto-Parts-to-Join-S-P-SmallCap-600
+        AAPL                APPLE INC 2021-01-01           True         AAPL                                                                                                                                                       NaN         2026-01-01            True         NaN                                                                                                                                                                           NaN
+        ABBV               ABBVIE INC 2021-01-01           True         ABBV                                                                                                                                                       NaN         2026-01-01            True         NaN                                                                                                                                                                           NaN
+        ABMD                  Abiomed 2021-01-01           True         ABMD                                                                                                                                                       NaN         2022-12-22           False        ABMD                                                          https://press.spglobal.com/2022-12-19-Steel-Dynamics-Set-to-Join-S-P-500-Super-Micro-Computer-to-Join-S-P-MidCap-400
+        ABNB                   Airbnb 2023-09-18          False         ABNB             https://press.spglobal.com/2023-09-01-Blackstone-and-Airbnb-Set-to-Join-S-P-500-Others-to-Join-S-P-100%2C-S-P-MidCap-400-and-S-P-SmallCap-600         2026-01-01            True         NaN                                                                                                                                                                           NaN
+         ABT      ABBOTT LABORATORIES 2021-01-01           True          ABT                                                                                                                                                       NaN         2026-01-01            True         NaN                                                                                                                                                                           NaN
+        ACGL       Arch Capital Group 2022-11-01          False         ACGL https://press.spglobal.com/2022-10-27-Arch-Capital-Group-Set-to-Join-S-P-500-RXO-to-Join-S-P-MidCap-400-Bread-Financial-Holdings-to-Join-S-P-SmallCap-600         2026-01-01            True         NaN                                                                                                                                                                           NaN
+         ACN       ACCENTURE PLC CL A 2021-01-01           True          ACN                                                                                                                                                       NaN         2026-01-01            True         NaN                                                                                                                                                                           NaN
+
+Last ten rows:
+security_key       company_name_reference valid_from  left_censored entry_ticker                                                entry_source_url valid_to_exclusive  right_censored exit_ticker                                                                                                                                                                                         exit_source_url
+         XOM     EXXONMOBIL HOLDINGS CORP 2021-01-01           True          XOM                                                             NaN         2026-01-01            True         NaN                                                                                                                                                                                                     NaN
+        XRAY              Dentsply Sirona 2021-01-01           True         XRAY                                                             NaN         2024-04-03           False        XRAY                                               https://press.spglobal.com/2024-03-27-GE-Vernova-and-Solventum-Set-to-Join-S-P-500-Dentsply-Sirona-to-Join-S-P-MidCap-400-Others-to-Join-S-P-SmallCap-600
+         XRX               Xerox Holdings 2021-01-01           True          XRX                                                             NaN         2021-03-22           False         XRX https://press.spglobal.com/2021-03-12-NXP-Semiconductors-Penn-National-Gaming-Generac-Holdings-and-Caesars-Entertainment-Set-to-Join-S-P-500-Others-to-Join-S-P-MidCap-400-S-P-SmallCap-600-and-S-P-100
+         XYL                    XYLEM INC 2021-01-01           True          XYL                                                             NaN         2026-01-01            True         NaN                                                                                                                                                                                                     NaN
+         XYZ                        Block 2025-07-23          False          XYZ https://press.spglobal.com/2025-07-18-Block-Set-to-Join-S-P-500         2026-01-01            True         NaN                                                                                                                                                                                                     NaN
+         YUM              YUM  BRANDS INC 2021-01-01           True          YUM                                                             NaN         2026-01-01            True         NaN                                                                                                                                                                                                     NaN
+         ZBH   ZIMMER BIOMET HOLDINGS INC 2021-01-01           True          ZBH                                                             NaN         2026-01-01            True         NaN                                                                                                                                                                                                     NaN
+        ZBRA ZEBRA TECHNOLOGIES CORP CL A 2021-01-01           True         ZBRA                                                             NaN         2026-01-01            True         NaN                                                                                                                                                                                                     NaN
+        ZION         Zions Bancorporation 2021-01-01           True         ZION                                                             NaN         2024-03-18           False        ZION                                        https://press.spglobal.com/2024-03-01-Super-Micro-Computer-and-Deckers-Outdoor-Set-to-Join-S-P-500-Others-to-Join-S-P-100%2C-S-P-MidCap-400-and-S-P-SmallCap-600
+         ZTS                   ZOETIS INC 2021-01-01           True          ZTS                                                             NaN         2026-01-01            True         NaN                                                                                                                                                                                                     NaN
+
+===============================================================================
+SECURITY TICKER HISTORY
+===============================================================================
+Path: C:\Users\mhech\OneDrive\Documents\projects\sp500-momentum-performance-analysis\data\interim\sp500_ticker_history_2021_2025.csv
+Exists: True
+Rows: 594
+Columns: 6
+Exact duplicate rows: 0
+
+Column names:
+ 1. security_key
+ 2. ticker
+ 3. ticker_valid_from
+ 4. left_censored
+ 5. ticker_valid_to_exclusive
+ 6. right_censored
+
+Data types:
+security_key                  str
+ticker                        str
+ticker_valid_from             str
+left_censored                bool
+ticker_valid_to_exclusive     str
+right_censored               bool
+
+Null counts:
+security_key                 0
+ticker                       0
+ticker_valid_from            0
+left_censored                0
+ticker_valid_to_exclusive    0
+right_censored               0
+
+Unique counts:
+security_key                 593
+ticker                       594
+ticker_valid_from             61
+left_censored                  2
+ticker_valid_to_exclusive     58
+right_censored                 2
+
+First ten rows:
+security_key ticker ticker_valid_from  left_censored ticker_valid_to_exclusive  right_censored
+           A      A        2021-01-01           True                2026-01-01            True
+         AAL    AAL        2021-01-01           True                2024-09-23           False
+         AAP    AAP        2021-01-01           True                2023-08-25           False
+        AAPL   AAPL        2021-01-01           True                2026-01-01            True
+        ABBV   ABBV        2021-01-01           True                2026-01-01            True
+        ABMD   ABMD        2021-01-01           True                2022-12-22           False
+        ABNB   ABNB        2023-09-18          False                2026-01-01            True
+         ABT    ABT        2021-01-01           True                2026-01-01            True
+        ACGL   ACGL        2022-11-01          False                2026-01-01            True
+         ACN    ACN        2021-01-01           True                2026-01-01            True
+
+Last ten rows:
+security_key ticker ticker_valid_from  left_censored ticker_valid_to_exclusive  right_censored
+         XOM    XOM        2021-01-01           True                2026-01-01            True
+        XRAY   XRAY        2021-01-01           True                2024-04-03           False
+         XRX    XRX        2021-01-01           True                2021-03-22           False
+         XYL    XYL        2021-01-01           True                2026-01-01            True
+         XYZ    XYZ        2025-07-23          False                2026-01-01            True
+         YUM    YUM        2021-01-01           True                2026-01-01            True
+         ZBH    ZBH        2021-01-01           True                2026-01-01            True
+        ZBRA   ZBRA        2021-01-01           True                2026-01-01            True
+        ZION   ZION        2021-01-01           True                2024-03-18           False
+         ZTS    ZTS        2021-01-01           True                2026-01-01            True
+
+===============================================================================
+MEMBERSHIP COUNT CHECKPOINTS
+===============================================================================
+Path: C:\Users\mhech\OneDrive\Documents\projects\sp500-momentum-performance-analysis\data\interim\membership_count_checkpoints.csv
+Exists: True
+Rows: 7
+Columns: 4
+Exact duplicate rows: 0
+
+Column names:
+ 1. checkpoint_date
+ 2. expected_security_count
+ 3. later_additions_reversed
+ 4. later_deletions_reversed
+
+Data types:
+checkpoint_date               str
+expected_security_count     int64
+later_additions_reversed    int64
+later_deletions_reversed    int64
+
+Null counts:
+checkpoint_date             0
+expected_security_count     0
+later_additions_reversed    0
+later_deletions_reversed    0
+
+Unique counts:
+checkpoint_date             7
+expected_security_count     2
+later_additions_reversed    7
+later_deletions_reversed    7
+
+First ten rows:
+checkpoint_date  expected_security_count  later_additions_reversed  later_deletions_reversed
+     2021-01-01                      505                       100                       102
+     2021-12-31                      505                        81                        83
+     2022-12-31                      503                        64                        64
+     2023-12-31                      503                        47                        47
+     2024-12-31                      503                        31                        31
+     2025-12-31                      503                        12                        12
+     2026-08-10                      503                         0                         0
+
+Last ten rows:
+checkpoint_date  expected_security_count  later_additions_reversed  later_deletions_reversed
+     2021-01-01                      505                       100                       102
+     2021-12-31                      505                        81                        83
+     2022-12-31                      503                        64                        64
+     2023-12-31                      503                        47                        47
+     2024-12-31                      503                        31                        31
+     2025-12-31                      503                        12                        12
+     2026-08-10                      503                         0                         0
+
+===============================================================================
+SECURITY ALIAS REFERENCE
+===============================================================================
+Path: C:\Users\mhech\OneDrive\Documents\projects\sp500-momentum-performance-analysis\data\reference\securities\security_aliases.csv
+Exists: True
+Rows: 2
+Columns: 9
+Exact duplicate rows: 0
+
+Column names:
+ 1. effective_date
+ 2. old_ticker
+ 3. new_ticker
+ 4. old_company_name
+ 5. new_company_name
+ 6. event_type
+ 7. source_type
+ 8. source_url
+ 9. notes
+
+Data types:
+effective_date      str
+old_ticker          str
+new_ticker          str
+old_company_name    str
+new_company_name    str
+event_type          str
+source_type         str
+source_url          str
+notes               str
+
+Null counts:
+effective_date      0
+old_ticker          0
+new_ticker          0
+old_company_name    0
+new_company_name    0
+event_type          0
+source_type         0
+source_url          0
+notes               0
+
+Unique counts:
+effective_date      2
+old_ticker          2
+new_ticker          2
+old_company_name    2
+new_company_name    2
+event_type          2
+source_type         2
+source_url          2
+notes               2
+
+First ten rows:
+effective_date old_ticker new_ticker          old_company_name     new_company_name             event_type                source_type                                                                                                                  source_url                                                                                             notes
+    2024-02-01       CDAY        DAY Ceridian HCM Holding Inc.        Dayforce Inc. ticker_and_name_change                 SEC Filing                                         https://www.sec.gov/Archives/edgar/data/1725057/000095017024050892/day-20240331.htm Corporate name changed January 31 2024; ticker changed from CDAY to DAY effective February 1 2024
+    2026-06-24       SATS       ECHO      EchoStar Corporation EchoStar Corporation          ticker_change Company Investor Relations https://ir.echostar.com/news-releases/news-release-details/echostar-changing-stocker-ticker-sats-echo-marking-companys-next                              Ticker changed from SATS to ECHO; company states CUSIP was unchanged
+
+Last ten rows:
+effective_date old_ticker new_ticker          old_company_name     new_company_name             event_type                source_type                                                                                                                  source_url                                                                                             notes
+    2024-02-01       CDAY        DAY Ceridian HCM Holding Inc.        Dayforce Inc. ticker_and_name_change                 SEC Filing                                         https://www.sec.gov/Archives/edgar/data/1725057/000095017024050892/day-20240331.htm Corporate name changed January 31 2024; ticker changed from CDAY to DAY effective February 1 2024
+    2026-06-24       SATS       ECHO      EchoStar Corporation EchoStar Corporation          ticker_change Company Investor Relations https://ir.echostar.com/news-releases/news-release-details/echostar-changing-stocker-ticker-sats-echo-marking-companys-next                              Ticker changed from SATS to ECHO; company states CUSIP was unchanged
+
+===============================================================================
+MEMBERSHIP INTERVALS — DATE COLUMN AUDIT
+===============================================================================
+
+Column: valid_from
+Source non-null: 593
+Parsed non-null: 593
+Invalid non-null dates: 0
+Minimum: 2021-01-01
+Maximum: 2025-12-22
+
+Column: valid_to_exclusive
+Source non-null: 593
+Parsed non-null: 593
+Invalid non-null dates: 0
+Minimum: 2021-01-07
+Maximum: 2026-01-01
+
+===============================================================================
+TICKER HISTORY — DATE COLUMN AUDIT
+===============================================================================
+
+Column: ticker_valid_from
+Source non-null: 594
+Parsed non-null: 594
+Invalid non-null dates: 0
+Minimum: 2021-01-01
+Maximum: 2025-12-22
+
+Column: ticker_valid_to_exclusive
+Source non-null: 594
+Parsed non-null: 594
+Invalid non-null dates: 0
+Minimum: 2021-01-07
+Maximum: 2026-01-01
+
+===============================================================================
+COUNT CHECKPOINTS — DATE COLUMN AUDIT
+===============================================================================
+
+Column: checkpoint_date
+Source non-null: 7
+Parsed non-null: 7
+Invalid non-null dates: 0
+Minimum: 2021-01-01
+Maximum: 2026-08-10
+
+===============================================================================
+SECURITY ALIASES — DATE COLUMN AUDIT
+===============================================================================
+
+Column: effective_date
+Source non-null: 2
+Parsed non-null: 2
+Invalid non-null dates: 0
+Minimum: 2024-02-01
+Maximum: 2026-06-24
+
+===============================================================================
+MEMBERSHIP INTERVALS — LOW-CARDINALITY VALUES
+===============================================================================
+
+Column: left_censored
+left_censored
+True     505
+False     88
+
+Column: right_censored
+right_censored
+True     503
+False     90
+
+===============================================================================
+TICKER HISTORY — LOW-CARDINALITY VALUES
+===============================================================================
+
+Column: left_censored
+left_censored
+True     505
+False     89
+
+Column: right_censored
+right_censored
+True     503
+False     91
+
+===============================================================================
+COUNT CHECKPOINTS — LOW-CARDINALITY VALUES
+===============================================================================
+
+Column: checkpoint_date
+checkpoint_date
+2021-01-01    1
+2021-12-31    1
+2022-12-31    1
+2023-12-31    1
+2024-12-31    1
+2025-12-31    1
+2026-08-10    1
+
+Column: expected_security_count
+expected_security_count
+503    5
+505    2
+
+Column: later_additions_reversed
+later_additions_reversed
+100    1
+81     1
+64     1
+47     1
+31     1
+12     1
+0      1
+
+Column: later_deletions_reversed
+later_deletions_reversed
+102    1
+83     1
+64     1
+47     1
+31     1
+12     1
+0      1
+
+===============================================================================
+SECURITY ALIASES — LOW-CARDINALITY VALUES
+===============================================================================
+
+Column: effective_date
+effective_date
+2024-02-01    1
+2026-06-24    1
+
+Column: old_ticker
+old_ticker
+CDAY    1
+SATS    1
+
+Column: new_ticker
+new_ticker
+DAY     1
+ECHO    1
+
+Column: old_company_name
+old_company_name
+Ceridian HCM Holding Inc.    1
+EchoStar Corporation         1
+
+Column: new_company_name
+new_company_name
+Dayforce Inc.           1
+EchoStar Corporation    1
+
+Column: event_type
+event_type
+ticker_and_name_change    1
+ticker_change             1
+
+Column: source_type
+source_type
+SEC Filing                    1
+Company Investor Relations    1
+
+Column: source_url
+source_url
+https://www.sec.gov/Archives/edgar/data/1725057/000095017024050892/day-20240331.htm                                            1
+https://ir.echostar.com/news-releases/news-release-details/echostar-changing-stocker-ticker-sats-echo-marking-companys-next    1
+
+Column: notes
+notes
+Corporate name changed January 31 2024; ticker changed from CDAY to DAY effective February 1 2024    1
+Ticker changed from SATS to ECHO; company states CUSIP was unchanged                                 1
+
+===============================================================================
+MEMBERSHIP INTERVALS — CANDIDATE KEY TESTS
+===============================================================================
+['security_key']: duplicate rows = 0
+['security_key', 'valid_from']: duplicate rows = 0
+
+===============================================================================
+TICKER HISTORY — CANDIDATE KEY TESTS
+===============================================================================
+['security_key']: duplicate rows = 1
+['ticker']: duplicate rows = 0
+
+===============================================================================
+COUNT CHECKPOINTS — CANDIDATE KEY TESTS
+===============================================================================
+['checkpoint_date']: duplicate rows = 0
+
+===============================================================================
+SECURITY ALIASES — CANDIDATE KEY TESTS
+===============================================================================
+No predefined candidate-key combination matched the schema.
+
+===============================================================================
+MEMBERSHIP BUILDER — RELEVANT SOURCE LINES
+===============================================================================
+Path: C:\Users\mhech\OneDrive\Documents\projects\sp500-momentum-performance-analysis\src\ingestion\build_membership_intervals.py
+Exists: True
+  26: )
+  27:
+  28: ALIASES_FILE = (
+  29:     PROJECT_ROOT
+  30:     / "data"
+  31:     / "reference"
+  32:     / "securities"
+  33:     / "security_aliases.csv"
+  34: )
+  35:
+     ...
+  42: MEMBERSHIP_OUTPUT = (
+  43:     INTERIM_DIR
+  44:     / "sp500_membership_intervals_2021_2025.csv"
+  45: )
+  46:
+  47: TICKER_HISTORY_OUTPUT = (
+  48:     INTERIM_DIR
+  49:     / "sp500_ticker_history_2021_2025.csv"
+  50: )
+  51:
+     ...
+  88:     ANCHOR_FILE,
+  89:     CHANGES_FILE,
+  90:     ALIASES_FILE,
+  91: ]
+  92:
+     ...
+ 108: changes = pd.read_csv(CHANGES_FILE)
+ 109:
+ 110: aliases = pd.read_csv(ALIASES_FILE)
+ 111:
+ 112:
+     ...
+ 134: )
+ 135:
+ 136: changes["effective_date"] = pd.to_datetime(
+ 137:     changes["effective_date"],
+ 138:     format="%Y-%m-%d",
+ 139:     errors="raise",
+     ...
+ 148:
+ 149: # --------------------------------------------------
+ 150: # Normalize aliases
+ 151: # --------------------------------------------------
+ 152:
+ 153: aliases["old_ticker"] = (
+ 154:     aliases["old_ticker"]
+ 155:     .astype(str)
+ 156:     .str.strip()
+     ...
+ 158: )
+ 159:
+ 160: aliases["new_ticker"] = (
+ 161:     aliases["new_ticker"]
+ 162:     .astype(str)
+ 163:     .str.strip()
+     ...
+ 165: )
+ 166:
+ 167: aliases["effective_date"] = pd.to_datetime(
+ 168:     aliases["effective_date"],
+ 169:     format="%Y-%m-%d",
+ 170:     errors="raise",
+     ...
+ 179:
+ 180:
+ 181: alias_forward = dict(
+ 182:     zip(
+ 183:         aliases["old_ticker"],
+ 184:         aliases["new_ticker"],
+ 185:     )
+ 186: )
+     ...
+ 193:     seen = set()
+ 194:
+ 195:     while ticker in alias_forward:
+ 196:
+ 197:         if ticker in seen:
+ 198:
+ 199:             raise ValueError(
+ 200:                 f"Alias cycle detected involving {ticker}"
+ 201:             )
+ 202:
+ 203:         seen.add(ticker)
+ 204:
+ 205:         ticker = alias_forward[ticker]
+ 206:
+ 207:     return ticker
+ 208:
+ 209:
+ 210: for _, alias in aliases.iterrows():
+ 211:
+ 212:     print(
+ 213:         f"{alias['old_ticker']} -> "
+ 214:         f"{alias['new_ticker']} "
+ 215:         f"({alias['effective_date'].date()})"
+ 216:     )
+ 217:
+     ...
+ 242:
+ 243:
+ 244: for _, row in aliases.iterrows():
+ 245:
+ 246:     name_lookup[row["old_ticker"]] = str(
+     ...
+ 266:     set(
+ 267:         changes.loc[
+ 268:             changes["effective_date"] > ANALYSIS_START,
+ 269:             "effective_date",
+ 270:         ]
+ 271:     )
+ 272:     |
+ 273:     set(
+ 274:         aliases.loc[
+ 275:             aliases["effective_date"] > ANALYSIS_START,
+ 276:             "effective_date",
+ 277:         ]
+ 278:     ),
+     ...
+ 281:
+ 282:
+ 283: for effective_date in reverse_dates:
+ 284:
+ 285:     date_changes = changes[
+ 286:         changes["effective_date"] == effective_date
+ 287:     ]
+ 288:
+     ...
+ 309:             print(
+ 310:                 f"\nERROR: Cannot reverse addition for "
+ 311:                 f"{ticker} on {effective_date.date()}."
+ 312:             )
+ 313:
+     ...
+ 324:             print(
+ 325:                 f"\nERROR: Cannot reverse deletion for "
+ 326:                 f"{ticker} on {effective_date.date()}."
+ 327:             )
+ 328:
+     ...
+ 332:
+ 333:
+ 334:     # Reverse ticker aliases.
+ 335:     date_aliases = aliases[
+ 336:         aliases["effective_date"] == effective_date
+ 337:     ]
+ 338:
+ 339:     for _, alias in date_aliases.iterrows():
+ 340:
+ 341:         old_ticker = alias["old_ticker"]
+ 342:         new_ticker = alias["new_ticker"]
+ 343:
+ 344:         if (
+     ...
+ 356:
+ 357:             print(
+ 358:                 f"\nERROR: Alias collision while reversing "
+ 359:                 f"{new_ticker} -> {old_ticker}."
+ 360:             )
+     ...
+ 392: active_membership = {}
+ 393:
+ 394: membership_intervals = []
+ 395:
+ 396: ticker_history = []
+ 397:
+ 398: active_ticker_history = {}
+ 399:
+ 400:
+ 401: for ticker in sorted(historical_state):
+ 402:
+ 403:     security_key = canonical_ticker(ticker)
+ 404:
+ 405:     if security_key in active_membership:
+ 406:
+ 407:         print(
+ 408:             f"\nERROR: Multiple starting tickers map "
+ 409:             f"to security key {security_key}."
+ 410:         )
+ 411:
+     ...
+ 413:
+ 414:
+ 415:     active_membership[security_key] = {
+ 416:         "security_key": security_key,
+ 417:         "company_name_reference": name_lookup.get(
+ 418:             ticker,
+ 419:             name_lookup.get(
+ 420:                 security_key,
+ 421:                 ticker,
+ 422:             ),
+ 423:         ),
+ 424:         "valid_from": ANALYSIS_START,
+ 425:         "left_censored": True,
+ 426:         "entry_ticker": ticker,
+ 427:         "entry_source_url": None,
+     ...
+ 429:
+ 430:
+ 431:     active_ticker_history[security_key] = {
+ 432:         "security_key": security_key,
+ 433:         "ticker": ticker,
+ 434:         "ticker_valid_from": ANALYSIS_START,
+ 435:         "left_censored": True,
+ 436:     }
+ 437:
+     ...
+ 454:         changes.loc[
+ 455:             (
+ 456:                 (changes["effective_date"] > ANALYSIS_START)
+ 457:                 & (
+ 458:                     changes["effective_date"]
+ 459:                     <= ANALYSIS_END
+ 460:                 )
+ 461:             ),
+ 462:             "effective_date",
+ 463:         ]
+ 464:     )
+ 465:     |
+ 466:     set(
+ 467:         aliases.loc[
+ 468:             (
+ 469:                 (aliases["effective_date"] > ANALYSIS_START)
+ 470:                 & (
+ 471:                     aliases["effective_date"]
+ 472:                     <= ANALYSIS_END
+ 473:                 )
+ 474:             ),
+ 475:             "effective_date",
+ 476:         ]
+ 477:     )
+     ...
+ 479:
+ 480:
+ 481: for effective_date in forward_dates:
+ 482:
+ 483:     # --------------------------------------------------
+ 484:     # Apply ticker aliases first
+ 485:     # --------------------------------------------------
+ 486:
+ 487:     date_aliases = aliases[
+ 488:         aliases["effective_date"] == effective_date
+ 489:     ]
+ 490:
+ 491:
+ 492:     for _, alias in date_aliases.iterrows():
+ 493:
+ 494:         old_ticker = alias["old_ticker"]
+ 495:         new_ticker = alias["new_ticker"]
+ 496:
+ 497:         security_key = canonical_ticker(old_ticker)
+ 498:
+ 499:
+ 500:         if security_key not in active_membership:
+ 501:
+ 502:             # Security is not an index member at this
+     ...
+ 505:
+ 506:
+ 507:         if security_key not in active_ticker_history:
+ 508:
+ 509:             print(
+ 510:                 f"\nERROR: Missing active ticker history "
+ 511:                 f"for {security_key}."
+ 512:             )
+ 513:
+     ...
+ 516:
+ 517:         current_ticker = (
+ 518:             active_ticker_history[
+ 519:                 security_key
+ 520:             ]["ticker"]
+ 521:         )
+     ...
+ 525:
+ 526:             print(
+ 527:                 f"\nERROR: Alias expected active ticker "
+ 528:                 f"{old_ticker}, but found "
+ 529:                 f"{current_ticker}."
+     ...
+ 535:         # Close old ticker history.
+ 536:         old_ticker_record = (
+ 537:             active_ticker_history.pop(
+ 538:                 security_key
+ 539:             )
+ 540:         )
+ 541:
+ 542:         old_ticker_record[
+ 543:             "ticker_valid_to_exclusive"
+ 544:         ] = effective_date
+ 545:
+ 546:         old_ticker_record[
+ 547:             "right_censored"
+ 548:         ] = False
+ 549:
+ 550:         ticker_history.append(
+ 551:             old_ticker_record
+ 552:         )
+     ...
+ 554:
+ 555:         # Open new ticker history.
+ 556:         active_ticker_history[
+ 557:             security_key
+ 558:         ] = {
+ 559:             "security_key": security_key,
+ 560:             "ticker": new_ticker,
+ 561:             "ticker_valid_from": effective_date,
+ 562:             "left_censored": False,
+ 563:         }
+ 564:
+     ...
+ 567:             f"Ticker change applied: "
+ 568:             f"{old_ticker} -> {new_ticker} "
+ 569:             f"({effective_date.date()})"
+ 570:         )
+ 571:
+     ...
+ 576:
+ 577:     date_changes = changes[
+ 578:         changes["effective_date"] == effective_date
+ 579:     ]
+ 580:
+     ...
+ 598:         ticker = row["ticker"]
+ 599:
+ 600:         security_key = canonical_ticker(ticker)
+ 601:
+ 602:
+ 603:         if security_key not in active_membership:
+ 604:
+ 605:             print(
+ 606:                 f"\nERROR: Cannot delete {ticker} "
+ 607:                 f"on {effective_date.date()} because "
+ 608:                 f"security key {security_key} "
+ 609:                 "is not active."
+ 610:             )
+     ...
+ 614:
+ 615:         interval = active_membership.pop(
+ 616:             security_key
+ 617:         )
+ 618:
+ 619:         interval[
+ 620:             "valid_to_exclusive"
+ 621:         ] = effective_date
+ 622:
+ 623:         interval[
+ 624:             "right_censored"
+ 625:         ] = False
+ 626:
+     ...
+ 633:         ] = row["source_url"]
+ 634:
+ 635:         membership_intervals.append(
+ 636:             interval
+ 637:         )
+     ...
+ 639:
+ 640:         # Close ticker history.
+ 641:         if security_key not in active_ticker_history:
+ 642:
+ 643:             print(
+     ...
+ 650:
+ 651:         ticker_record = (
+ 652:             active_ticker_history.pop(
+ 653:                 security_key
+ 654:             )
+ 655:         )
+ 656:
+ 657:         ticker_record[
+ 658:             "ticker_valid_to_exclusive"
+ 659:         ] = effective_date
+ 660:
+ 661:         ticker_record[
+ 662:             "right_censored"
+ 663:         ] = False
+ 664:
+ 665:         ticker_history.append(
+ 666:             ticker_record
+ 667:         )
+     ...
+ 676:         ticker = row["ticker"]
+ 677:
+ 678:         security_key = canonical_ticker(ticker)
+ 679:
+ 680:
+ 681:         if security_key in active_membership:
+ 682:
+ 683:             print(
+ 684:                 f"\nERROR: Cannot add {ticker} "
+ 685:                 f"on {effective_date.date()} because "
+ 686:                 f"security key {security_key} "
+ 687:                 "is already active."
+ 688:             )
+     ...
+ 692:
+ 693:         active_membership[
+ 694:             security_key
+ 695:         ] = {
+ 696:             "security_key": security_key,
+ 697:             "company_name_reference": str(
+ 698:                 row["company_name"]
+ 699:             ).strip(),
+ 700:             "valid_from": effective_date,
+ 701:             "left_censored": False,
+ 702:             "entry_ticker": ticker,
+ 703:             "entry_source_url": row["source_url"],
+     ...
+ 705:
+ 706:
+ 707:         active_ticker_history[
+ 708:             security_key
+ 709:         ] = {
+ 710:             "security_key": security_key,
+ 711:             "ticker": ticker,
+ 712:             "ticker_valid_from": effective_date,
+ 713:             "left_censored": False,
+ 714:         }
+ 715:
+     ...
+ 722:
+ 723:
+ 724: for security_key in sorted(
+ 725:     active_membership
+ 726: ):
+ 727:
+ 728:     interval = active_membership[
+ 729:         security_key
+ 730:     ].copy()
+ 731:
+ 732:     interval[
+ 733:         "valid_to_exclusive"
+ 734:     ] = SCOPE_END_EXCLUSIVE
+ 735:
+ 736:     interval[
+ 737:         "right_censored"
+ 738:     ] = True
+ 739:
+     ...
+ 746:     ] = None
+ 747:
+ 748:     membership_intervals.append(
+ 749:         interval
+ 750:     )
+ 751:
+ 752:
+ 753: for security_key in sorted(
+ 754:     active_ticker_history
+ 755: ):
+ 756:
+ 757:     ticker_record = (
+ 758:         active_ticker_history[
+ 759:             security_key
+ 760:         ].copy()
+ 761:     )
+ 762:
+ 763:     ticker_record[
+ 764:         "ticker_valid_to_exclusive"
+ 765:     ] = SCOPE_END_EXCLUSIVE
+ 766:
+ 767:     ticker_record[
+ 768:         "right_censored"
+ 769:     ] = True
+ 770:
+ 771:     ticker_history.append(
+ 772:         ticker_record
+ 773:     )
+     ...
+ 779:
+ 780: membership_df = pd.DataFrame(
+ 781:     membership_intervals
+ 782: )
+ 783:
+ 784: ticker_history_df = pd.DataFrame(
+ 785:     ticker_history
+ 786: )
+ 787:
+     ...
+ 789: membership_df = membership_df.sort_values(
+ 790:     [
+ 791:         "security_key",
+ 792:         "valid_from",
+ 793:     ]
+ 794: ).reset_index(drop=True)
+ 795:
+ 796:
+ 797: ticker_history_df = (
+ 798:     ticker_history_df
+ 799:     .sort_values(
+ 800:         [
+ 801:             "security_key",
+ 802:             "ticker_valid_from",
+ 803:         ]
+ 804:     )
+     ...
+ 815:
+ 816: invalid_intervals = membership_df[
+ 817:     membership_df["valid_from"]
+ 818:     >= membership_df[
+ 819:         "valid_to_exclusive"
+ 820:     ]
+ 821: ]
+     ...
+ 851:
+ 852:
+ 853: for security_key, group in (
+ 854:     membership_df
+ 855:     .groupby("security_key")
+ 856: ):
+ 857:
+ 858:     group = group.sort_values(
+ 859:         "valid_from"
+ 860:     )
+ 861:
+     ...
+ 867:         if (
+ 868:             previous_end is not None
+ 869:             and row["valid_from"] < previous_end
+ 870:         ):
+ 871:
+ 872:             overlap_errors.append(
+ 873:                 security_key
+ 874:             )
+ 875:
+ 876:         previous_end = row[
+ 877:             "valid_to_exclusive"
+ 878:         ]
+ 879:
+     ...
+ 902:
+ 903: # --------------------------------------------------
+ 904: # 10. Checkpoint validation
+ 905: # --------------------------------------------------
+ 906:
+ 907: print_section("7. POINT-IN-TIME CHECKPOINT VALIDATION")
+ 908:
+ 909:
+     ...
+ 918:
+ 919:
+ 920: checkpoint_errors = []
+ 921:
+ 922:
+ 923: for checkpoint, expected_count in (
+ 924:     EXPECTED_COUNTS.items()
+ 925: ):
+     ...
+ 929:             (
+ 930:                 membership_df[
+ 931:                     "valid_from"
+ 932:                 ]
+ 933:                 <= checkpoint
+ 934:             )
+ 935:             &
+ 936:             (
+ 937:                 membership_df[
+ 938:                     "valid_to_exclusive"
+ 939:                 ]
+ 940:                 > checkpoint
+ 941:             )
+ 942:         ]
+     ...
+ 952:
+ 953:     print(
+ 954:         f"{checkpoint.date()} | "
+ 955:         f"Expected: {expected_count} | "
+ 956:         f"Actual: {active_count} | "
+     ...
+ 961:     if active_count != expected_count:
+ 962:
+ 963:         checkpoint_errors.append(
+ 964:             {
+ 965:                 "checkpoint": checkpoint,
+ 966:                 "expected": expected_count,
+ 967:                 "actual": active_count,
+     ...
+ 970:
+ 971:
+ 972: if checkpoint_errors:
+ 973:
+ 974:     print(
+ 975:         "\nERROR: One or more checkpoint "
+ 976:         "counts failed."
+ 977:     )
+     ...
+ 994: print(
+ 995:     f"Unique security identities: "
+ 996:     f"{membership_df['security_key'].nunique()}"
+ 997: )
+ 998:
+ 999: print(
+1000:     f"Ticker-history rows: "
+1001:     f"{len(ticker_history_df)}"
+1002: )
+1003:
+1004: print(
+1005:     f"Unique historical tickers: "
+1006:     f"{ticker_history_df['ticker'].nunique()}"
+1007: )
+1008:
+1009: print(
+1010:     f"Securities active at analysis start: "
+1011:     f"{int(membership_df['left_censored'].sum())}"
+1012: )
+1013:
+1014: print(
+1015:     f"Securities active at analysis end: "
+1016:     f"{int(membership_df['right_censored'].sum())}"
+1017: )
+1018:
+     ...
+1031:
+1032:
+1033: membership_df.to_csv(
+1034:     MEMBERSHIP_OUTPUT,
+1035:     index=False,
+     ...
+1038:
+1039:
+1040: ticker_history_df.to_csv(
+1041:     TICKER_HISTORY_OUTPUT,
+1042:     index=False,
+1043:     date_format="%Y-%m-%d",
+     ...
+1052: print(
+1053:     f"\nTicker history saved:\n"
+1054:     f"{TICKER_HISTORY_OUTPUT}"
+1055: )
+1056:
+
+Relevant lines with context: 578
+
+===============================================================================
+INSPECTION COMPLETE
+===============================================================================
+No project source or generated data files were modified.
