@@ -1,0 +1,124 @@
+
+===============================================================================
+S&P 500 MEMBERSHIP-PRICE BRIDGE INTEGRITY AUDIT
+===============================================================================
+PASS: prices.date contains valid dates.
+PASS: price_manifest.first_date contains valid dates.
+PASS: price_manifest.last_date contains valid dates.
+PASS: price_manifest.effective_expected_start contains valid dates.
+PASS: price_manifest.effective_expected_end_exclusive contains valid dates.
+PASS: membership.valid_from contains valid dates.
+PASS: membership.valid_to_exclusive contains valid dates.
+PASS: ticker_history.ticker_valid_from contains valid dates.
+PASS: ticker_history.ticker_valid_to_exclusive contains valid dates.
+PASS: bridge.date contains valid dates.
+PASS: bridge.membership_valid_from contains valid dates.
+PASS: bridge.membership_valid_to_exclusive contains valid dates.
+PASS: bridge.ticker_valid_from contains valid dates.
+PASS: bridge.ticker_valid_to_exclusive contains valid dates.
+PASS: bridge.effective_price_start contains valid dates.
+PASS: bridge.effective_price_end_exclusive contains valid dates.
+PASS: bridge.usable_start contains valid dates.
+PASS: bridge.usable_end_exclusive contains valid dates.
+PASS: bridge_manifest.membership_valid_from contains valid dates.
+PASS: bridge_manifest.membership_valid_to_exclusive contains valid dates.
+PASS: bridge_manifest.ticker_valid_from contains valid dates.
+PASS: bridge_manifest.ticker_valid_to_exclusive contains valid dates.
+PASS: bridge_manifest.effective_price_start contains valid dates.
+PASS: bridge_manifest.effective_price_end_exclusive contains valid dates.
+PASS: bridge_manifest.usable_start contains valid dates.
+PASS: bridge_manifest.usable_end_exclusive contains valid dates.
+PASS: bridge_manifest.first_bridge_date contains valid dates.
+PASS: bridge_manifest.last_bridge_date contains valid dates.
+PASS: benchmark.date contains valid dates.
+
+===============================================================================
+1. POPULATION AND STRUCTURE
+===============================================================================
+PASS: Standardized source contains 783,086 rows.
+PASS: Standardized manifest contains 596 requests.
+PASS: Membership table contains 593 intervals.
+PASS: Ticker history contains 594 segments.
+PASS: Bridge contains 631,942 constituent observations.
+PASS: Bridge manifest contains 594 segment rows.
+PASS: Benchmark output contains 2,510 observations.
+PASS: Bridge contains 593 security identities.
+PASS: Bridge contains 594 historical tickers.
+PASS: Benchmark output contains two request keys.
+PASS: Bridge has no exact duplicate rows.
+PASS: Bridge manifest has no exact duplicate rows.
+PASS: Benchmark has no exact duplicate rows.
+PASS: Bridge observation keys are unique.
+PASS: Bridge-manifest segment keys are unique.
+PASS: Benchmark observation keys are unique.
+PASS: Bridge required numeric and control fields contain no nulls.
+
+===============================================================================
+2. RECONSTRUCT CONTROL TABLE
+===============================================================================
+PASS: Bridge-manifest controls exactly reproduce source-derived controls.
+PASS: Every reconstructed usable interval has positive duration.
+PASS: Every reconstructed usable interval is inside 2021-2025.
+PASS: Exactly ten usable intervals end at documented price boundaries.
+PASS: The ten shortened intervals are the validated termination cases.
+
+===============================================================================
+3. INDEPENDENT SOURCE RECONCILIATION
+===============================================================================
+PASS: Independent reconstruction produces 631,942 rows.
+PASS: No independently expected bridge observations are missing.
+PASS: No ineligible observations exist in the bridge.
+PASS: Every bridge identity and source value matches standardized history.
+PASS: Every bridge numeric value matches standardized history.
+PASS: Every bridge-manifest count and boundary independently reconciles.
+
+===============================================================================
+4. INTERVAL ELIGIBILITY
+===============================================================================
+PASS: Every bridge row lies inside its membership interval.
+PASS: Every bridge row lies inside its ticker-validity interval.
+PASS: Every bridge row lies inside its usable price interval.
+PASS: Control boundaries remain constant within each ticker segment.
+PASS: No security identity appears more than once on a date.
+
+===============================================================================
+5. SPY SESSION COVERAGE
+===============================================================================
+PASS: Benchmark output contains exactly one SPY request.
+PASS: The 2021-2025 SPY calendar contains 1,255 sessions.
+PASS: Every ticker segment has exact SPY-session coverage.
+PASS: Total expected SPY-session rows equal the bridge row count.
+PASS: Daily bridge populations match reconstructed usable membership.
+PASS: Bridge date coverage exactly matches the SPY calendar.
+
+===============================================================================
+6. PRICE AND BENCHMARK INTEGRITY
+===============================================================================
+PASS: Bridge has no required numeric nulls.
+PASS: Bridge contains only positive prices.
+PASS: Bridge has no negative volume.
+PASS: Bridge has only positive split factors.
+PASS: Bridge has no invalid HIGH relationships.
+PASS: Bridge has no invalid LOW relationships.
+PASS: Benchmark output contains exactly two distinct requests.
+PASS: Benchmark and constituent request populations are disjoint.
+PASS: Both benchmark requests exactly cover the SPY calendar.
+
+===============================================================================
+7. FINAL QUALITY GATE
+===============================================================================
+MEMBERSHIP_PRICE_BRIDGE_INTEGRITY_AUDIT_PASSED
+Passed checks: 77
+Constituent bridge rows: 631,942
+Security identities: 593
+Historical ticker segments: 594
+SPY trading sessions: 1,255
+Benchmark rows: 2,510
+Documented early price boundaries: 10
+Minimum daily constituent observations: 502
+Maximum daily constituent observations: 506
+Missing expected constituent sessions: 0
+Extra constituent sessions: 0
+Membership/ticker/date duplicates: 0
+No observations outside membership, ticker, or usable-price intervals remain.
+POINT-IN-TIME MEMBERSHIP-PRICE INTEGRATION QUALITY GATE COMPLETE.

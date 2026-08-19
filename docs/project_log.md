@@ -2643,6 +2643,242 @@ Construct the point-in-time membership-to-price bridge using canonical security 
 
 Return calculation, momentum feature engineering, and forward-performance testing remain blocked until the bridge itself passes its integrity audit.
 
+## 3.24 Point-in-Time Membership-to-Price Bridge
+
+### Objective
+
+Construct a daily constituent-price dataset that includes a security only while all applicable conditions are valid:
+
+- the security is an S&P 500 constituent
+- the historical ticker is valid
+- the standardized price request is inside its validated usable period
+- independent public trading has not terminated
+
+This bridge prevents current constituents from being applied retroactively and prevents historical ticker changes, market terminations, and momentum-lookback observations from creating invalid constituent rows.
+
+### Builder
+
+`src/ingestion/build_membership_price_bridge.py`
+
+### Source Inputs
+
+Standardized price history:
+
+`data/interim/standardized_price_history.csv.gz`
+
+Standardized price manifest:
+
+`data/interim/standardized_price_history_manifest.csv`
+
+Membership intervals:
+
+`data/interim/sp500_membership_intervals_2021_2025.csv`
+
+Ticker history:
+
+`data/interim/sp500_ticker_history_2021_2025.csv`
+
+### Eligibility Rule
+
+For each security, ticker, and date, the builder requires:
+
+`membership_valid_from <= date < membership_valid_to_exclusive`
+
+and:
+
+`ticker_valid_from <= date < ticker_valid_to_exclusive`
+
+and:
+
+`usable_start <= date < usable_end_exclusive`
+
+The usable interval is calculated as:
+
+`usable_start = max(membership start, ticker start, effective price start)`
+
+and:
+
+`usable_end_exclusive = min(membership end, ticker end, effective price end)`
+
+This combines index membership, historical ticker identity, validated market inception, and validated market termination without treating them as the same concept.
+
+### Constituent and Benchmark Separation
+
+The 594 historical constituent ticker requests are written to the point-in-time bridge.
+
+The two non-constituent benchmark requests are stored separately.
+
+This prevents benchmark observations from entering company-level or constituent-level calculations while preserving them for market comparison, beta, and excess-return analysis.
+
+### Generated Outputs
+
+Point-in-time constituent bridge:
+
+`data/interim/sp500_membership_price_bridge_2021_2025.csv.gz`
+
+Ticker-segment reconciliation manifest:
+
+`data/interim/sp500_membership_price_bridge_manifest.csv`
+
+Benchmark history:
+
+`data/interim/sp500_benchmark_price_history_2021_2025.csv.gz`
+
+These files remain excluded from Git because they are reproducible from committed code, validated reference controls, and preserved source data.
+
+### Build Result
+
+Constituent bridge rows:
+
+`631,942`
+
+Constituent security identities:
+
+`593`
+
+Historical constituent ticker segments:
+
+`594`
+
+Benchmark rows:
+
+`2,510`
+
+Benchmark requests:
+
+`2`
+
+Standardized constituent lookback and out-of-window rows removed:
+
+`148,128`
+
+Result:
+
+`MEMBERSHIP_PRICE_BRIDGE_BUILD_PASSED`
+
+### Independent Integrity Audit
+
+Audit script:
+
+`src/ingestion/audit_membership_price_bridge.py`
+
+Audit report:
+
+`reports/data_quality/membership_price_bridge_integrity_audit.txt`
+
+The audit independently reloads the source datasets and reconstructs the expected bridge rather than relying only on the builder’s internal validation.
+
+The audit validates:
+
+- exact input and output schemas
+- expected row populations
+- canonical observation-key uniqueness
+- security and ticker populations
+- reconstruction of all membership, ticker, and effective-price controls
+- exact source-to-bridge row reconciliation
+- exact numeric reconciliation with standardized price history
+- membership interval eligibility
+- ticker-validity eligibility
+- usable-price interval eligibility
+- absence of benchmark observations from the constituent bridge
+- exact benchmark separation
+- daily constituent population reconciliation
+- complete SPY-session coverage for every ticker segment
+- absence of missing or extra constituent trading sessions
+
+### SPY Trading-Calendar Validation
+
+SPY trading sessions during 2021–2025:
+
+`1,255`
+
+Every historical ticker segment was compared independently against the eligible SPY sessions inside its usable interval.
+
+Results:
+
+- missing expected constituent sessions: 0
+- extra constituent sessions: 0
+- membership/ticker/date duplicates: 0
+
+Daily constituent observations ranged from:
+
+`502`
+
+to:
+
+`506`
+
+The project preserves the observed security-level index structure and documented tradability boundaries rather than artificially forcing every day to contain exactly 500 rows.
+
+### Market-Termination Reconciliation
+
+Exactly ten ticker intervals end at a validated effective-price boundary before their S&P membership interval ends:
+
+- ATVI
+- CTLT
+- CXO
+- HES
+- INFO
+- JNPR
+- MRO
+- PXD
+- TWTR
+- VAR
+
+These are the same ten independently validated security-market-termination cases.
+
+No undocumented early price boundary remains.
+
+### Final Audit Result
+
+Passed checks:
+
+`77`
+
+Constituent bridge rows:
+
+`631,942`
+
+Security identities:
+
+`593`
+
+Historical ticker segments:
+
+`594`
+
+SPY trading sessions:
+
+`1,255`
+
+Benchmark rows:
+
+`2,510`
+
+Documented early price boundaries:
+
+`10`
+
+Final result:
+
+`MEMBERSHIP_PRICE_BRIDGE_INTEGRITY_AUDIT_PASSED`
+
+and:
+
+`POINT-IN-TIME MEMBERSHIP-PRICE INTEGRATION QUALITY GATE COMPLETE`
+
+### Result
+
+The project now has a fully validated, survivorship-bias-aware daily constituent-price dataset for the complete 2021–2025 analytical period.
+
+The membership-to-price integration gate is complete.
+
+Return calculation and momentum feature engineering are no longer blocked by membership or market-data integrity.
+
+### Next Step
+
+Design and populate the normalized Azure SQL analytical layer using the validated security identities, ticker history, membership intervals, constituent price bridge, and benchmark history.
+
 
 ---
 
@@ -2650,7 +2886,7 @@ Return calculation, momentum feature engineering, and forward-performance testin
 
 Current phase:
 
-**Point-in-time membership-to-price bridge construction**
+**Validated analytical bridge complete — normalized Azure SQL loading preparation**
 
 Completed:
 
@@ -2684,8 +2920,11 @@ Completed:
 - Dedicated membership interval and ticker-history inspection
 - 95-check membership interval integrity audit
 - Exact mapping of 594 historical ticker segments to standardized price requests
-- Reconciliation of 10 early price boundaries to documented market terminations
-- Point-in-time membership quality gate
+- Point-in-time membership-price bridge construction
+- Independent 77-check bridge integrity audit
+- Exact SPY-session coverage validation
+- Separate 2,510-row benchmark history
+- Point-in-time membership-price integration quality gate
 
 Current market-data quality state:
 
@@ -2706,41 +2945,50 @@ Current membership state:
 - Official membership actions: 202
 - Point-in-time membership intervals: 593
 - Unique security identities: 593
-- Ticker-history segments: 594
-- Unique historical tickers: 594
+- Historical ticker segments: 594
 - 2021-01-01 checkpoint: 505 securities
 - 2025-12-31 checkpoint: 503 securities
-- Dedicated integrity checks passed: 95
+- Membership integrity checks passed: 95
 - Membership/ticker interval gaps or overlaps: 0
 - Unexplained identity mappings: 0
-- Standardized constituent requests mapped: 594
-- Documented market-termination truncations: 10
-- Non-constituent benchmark requests: 2
 - Membership quality-gate result: PASSED
+
+Current integrated analytical state:
+
+- Constituent bridge rows: 631,942
+- Constituent security identities: 593
+- Historical constituent ticker segments: 594
+- SPY trading sessions: 1,255
+- Benchmark rows: 2,510
+- Benchmark requests: 2
+- Documented early price boundaries: 10
+- Minimum daily constituent observations: 502
+- Maximum daily constituent observations: 506
+- Missing expected constituent sessions: 0
+- Extra constituent sessions: 0
+- Membership/ticker/date duplicates: 0
+- Bridge integrity checks passed: 77
+- Membership-price integration quality-gate result: PASSED
 
 Next objective:
 
-Construct the point-in-time membership-to-price bridge from:
+Design and populate the normalized Azure SQL analytical layer using:
 
 `data/interim/sp500_membership_intervals_2021_2025.csv`
 
-and:
-
 `data/interim/sp500_ticker_history_2021_2025.csv`
 
-and:
+`data/interim/sp500_membership_price_bridge_2021_2025.csv.gz`
 
-`data/interim/standardized_price_history.csv.gz`
+`data/interim/sp500_benchmark_price_history_2021_2025.csv.gz`
 
-The bridge must retain only constituent observations satisfying both the security membership interval and historical ticker-validity interval.
+The database layer must preserve canonical security identity, historical ticker validity, point-in-time membership, daily prices, and benchmark separation.
 
-The two benchmark series must remain outside the constituent bridge and be retained separately for benchmark analysis.
-
-Return calculation, momentum feature engineering, and forward-performance testing remain blocked until the membership-to-price integration gate passes.
+Feature engineering will begin only after database loading and relational-integrity validation pass.
 
 Git checkpoint objective:
 
-Commit the membership interval builder, interval inspection script, integrity-audit script, both membership data-quality reports, and this updated project log while continuing to exclude reproducible interim datasets, timestamped backup scripts, and one-time integration helpers.
+Commit the membership-price bridge builder, independent bridge audit, bridge data-quality report, and this updated project log while continuing to exclude reproducible interim datasets.
 
 ---
 
