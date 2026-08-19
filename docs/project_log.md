@@ -2456,6 +2456,8 @@ Before any membership-to-price join, the project must explicitly validate:
 - absence of membership rows outside the 2021–2025 analytical window
 
 No return, momentum, or forward-performance calculation should begin until this membership-integration gate passes.
+
+---
 ## 3.23 Membership Interval Integrity Audit
 
 ### Objective
@@ -2879,6 +2881,485 @@ Return calculation and momentum feature engineering are no longer blocked by mem
 
 Design and populate the normalized Azure SQL analytical layer using the validated security identities, ticker history, membership intervals, constituent price bridge, and benchmark history.
 
+## 3.25 Azure SQL Environment Inspection
+
+### Objective
+
+Inspect the target Azure SQL database before creating or loading analytical objects.
+
+The inspection was explicitly read-only and was designed to establish the database configuration, available schemas, existing object inventory, and compatibility with the planned normalized market-data model.
+
+### Inspection Script
+
+`src/ingestion/inspect_azure_sql_environment.py`
+
+### Inspection Report
+
+`reports/data_quality/azure_sql_environment_inspection.txt`
+
+The report excludes all database credentials and records that no database modifications were performed.
+
+### Connection Resolution
+
+The initial connection attempt timed out because the connection configuration required an explicit extended timeout for the Azure SQL endpoint.
+
+The connection was validated after applying:
+
+`timeout=90`
+
+to the `mssql_python.connect()` call.
+
+TCP connectivity to the Azure SQL endpoint on port 1433 was also confirmed.
+
+### Environment Result
+
+Database:
+
+`sp500_analytics`
+
+Compatibility level:
+
+`170`
+
+Collation:
+
+`SQL_Latin1_General_CP1_CI_AS`
+
+Read-committed snapshot isolation:
+
+`ON`
+
+Required schemas present:
+
+- `raw`
+- `staging`
+- `core`
+- `analytics`
+
+User tables present before deployment:
+
+`0`
+
+Database modifications performed:
+
+`0`
+
+Final result:
+
+`AZURE_SQL_ENVIRONMENT_INSPECTION_PASSED`
+
+The database was empty, correctly configured, and free of legacy-table conflicts.
+
+## 3.26 Normalized Azure SQL Market-Data Schema
+
+### Objective
+
+Create the normalized relational structure required to preserve canonical security identity, historical ticker validity, point-in-time S&P 500 membership, validated constituent prices, price-eligibility controls, and separate benchmark history.
+
+### Baseline Migration
+
+`sql/schema/001_create_market_data_model.sql`
+
+### Application Script
+
+`src/ingestion/apply_azure_sql_schema.py`
+
+### Application Report
+
+`reports/data_quality/azure_sql_schema_application.txt`
+
+### Core Data Model
+
+The migration created eight core tables:
+
+- `core.market_index`
+- `core.security`
+- `core.security_ticker_history`
+- `core.index_membership`
+- `core.security_price_eligibility`
+- `core.daily_security_price`
+- `core.benchmark_series`
+- `core.daily_benchmark_price`
+
+The `core.market_index` table contains the single analytical anchor:
+
+`SP500 | S&P 500 | S&P Dow Jones Indices | 2021-01-01 | 2025-12-31`
+
+### Staging Model
+
+Seven constraint-free staging tables mirror the load-target columns required for:
+
+- securities
+- ticker history
+- membership intervals
+- price eligibility
+- constituent prices
+- benchmark definitions
+- benchmark prices
+
+The staging layer permits fast bulk loading and independent reconciliation before constrained core promotion.
+
+### Relational Controls
+
+Primary keys:
+
+`8`
+
+Foreign keys:
+
+`8`
+
+Check constraints:
+
+`22`
+
+Required supporting indexes:
+
+`2`
+
+All objects were created inside a transactional, create-if-absent migration.
+
+No membership or price data was loaded during schema deployment.
+
+### Result
+
+Final result:
+
+`AZURE_SQL_MARKET_DATA_SCHEMA_APPLICATION_PASSED`
+
+The normalized Azure SQL structure was ready for controlled loading.
+
+## 3.27 Azure SQL Load-Input Inspection
+
+### Objective
+
+Inspect the exact source schemas, row populations, driver capability, and database target state before defining bulk-copy mappings.
+
+### Inspection Script
+
+`src/ingestion/inspect_azure_sql_load_inputs.py`
+
+### Inspection Report
+
+`reports/data_quality/azure_sql_load_input_inspection.txt`
+
+### Source Inputs
+
+Membership intervals:
+
+`data/interim/sp500_membership_intervals_2021_2025.csv`
+
+Ticker history:
+
+`data/interim/sp500_ticker_history_2021_2025.csv`
+
+Constituent bridge:
+
+`data/interim/sp500_membership_price_bridge_2021_2025.csv.gz`
+
+Bridge manifest:
+
+`data/interim/sp500_membership_price_bridge_manifest.csv`
+
+Benchmark history:
+
+`data/interim/sp500_benchmark_price_history_2021_2025.csv.gz`
+
+### Validated Populations
+
+Membership intervals:
+
+`593`
+
+Ticker-history segments:
+
+`594`
+
+Constituent observations:
+
+`631,942`
+
+Bridge-manifest rows:
+
+`594`
+
+Benchmark observations:
+
+`2,510`
+
+All five source datasets matched their previously validated row anchors and exact expected column structures.
+
+### Driver Capability
+
+Installed `mssql-python` version:
+
+`1.13.0`
+
+`cursor.bulkcopy` availability:
+
+`True`
+
+All seven core load targets and all seven staging tables were empty at the time of inspection.
+
+Database modifications performed:
+
+`0`
+
+Final result:
+
+`AZURE_SQL_LOAD_INPUT_INSPECTION_PASSED`
+
+## 3.28 Decimal-Precision Migration and Controlled Market-Data Load
+
+### Objective
+
+Load the five validated analytical sources into Azure SQL through a controlled staging, reconciliation, and transactional-promotion workflow.
+
+### Loader
+
+`src/ingestion/load_azure_sql_market_data.py`
+
+The loader:
+
+- validates every source header before connecting
+- rejects nonempty staging or core targets
+- streams large compressed price files in bounded chunks
+- bulk-loads only the constraint-free staging layer
+- reconciles all staging row counts to documented anchors
+- promotes all seven datasets to core in one transaction
+- validates manifest, usable-window, membership, and benchmark relationships
+- clears staging only after successful core promotion
+- clears partial staging rows automatically if bulk loading fails
+- never deletes or replaces committed core data
+
+### Initial Decimal-Scale Failure
+
+The first bulk-load attempt stopped while loading constituent prices because a validated source value had eleven decimal places while the original schema allowed ten:
+
+`Input decimal scale 11 exceeds target scale 10`
+
+The loader reported:
+
+`Core promotion committed: False`
+
+and:
+
+`Failure cleanup: Completed; staging tables were cleared.`
+
+No core rows were committed by the failed attempt, and no source data was changed or rounded.
+
+### Precision Decision
+
+The project preserves the validated source precision instead of silently quantizing values to ten decimal places.
+
+All market-value columns were expanded from:
+
+`DECIMAL(28, 10)`
+
+to:
+
+`DECIMAL(38, 18)`
+
+The affected columns are:
+
+- `open`
+- `high`
+- `low`
+- `close`
+- `adjusted_close`
+- `dividend`
+- `split_factor`
+
+across both constituent and benchmark price tables in the core and staging schemas.
+
+### Corrective Migration
+
+Migration:
+
+`sql/schema/002_expand_market_data_decimal_scale.sql`
+
+Migration runner:
+
+`src/ingestion/apply_azure_sql_decimal_scale_migration.py`
+
+Migration report:
+
+`reports/data_quality/azure_sql_decimal_scale_migration.txt`
+
+The baseline migration was also updated so future database creation uses `DECIMAL(38, 18)` directly.
+
+### Migration Validation
+
+Tables migrated:
+
+`4`
+
+Decimal columns verified:
+
+`28`
+
+Price-integrity checks restored and verified:
+
+`8`
+
+Supporting daily-security index restored and verified:
+
+`1`
+
+Data rows modified by the precision migration:
+
+`0`
+
+Final migration result:
+
+`AZURE_SQL_DECIMAL_SCALE_MIGRATION_PASSED`
+
+### Final Core Populations
+
+Security identities:
+
+`593`
+
+Ticker-history segments:
+
+`594`
+
+Membership intervals:
+
+`593`
+
+Price-eligibility manifests:
+
+`594`
+
+Constituent price observations:
+
+`631,942`
+
+Benchmark definitions:
+
+`2`
+
+Benchmark price observations:
+
+`2,510`
+
+Total daily price observations:
+
+`634,452`
+
+After the successful promotion, a later loader invocation was correctly rejected because all seven core load targets were already populated.
+
+The rejected duplicate attempt made no database changes and required no cleanup.
+
+Because that later attempt overwrote the loader's operational text report, the independent post-load integrity audit is retained as the authoritative completion record.
+
+## 3.29 Azure SQL Market-Data Integrity Audit
+
+### Objective
+
+Independently determine whether the existing Azure SQL core population is complete, relationally valid, numerically identical to the validated source outputs, and safe to use for feature engineering.
+
+The audit is read-only and performs no database modifications.
+
+### Audit Script
+
+`src/ingestion/audit_azure_sql_market_data_load.py`
+
+### Audit Report
+
+`reports/data_quality/azure_sql_market_data_integrity_audit.txt`
+
+### Population Validation
+
+All seven core load targets exactly matched their documented source anchors.
+
+All seven staging tables contained zero rows.
+
+### Relational and Precision Validation
+
+The audit confirmed:
+
+- all core foreign keys are enabled and trusted
+- all core check constraints are enabled and trusted
+- all 28 market-value columns remain `DECIMAL(38, 18)`
+- all six point-in-time membership checkpoints reconcile
+- `DAY` is the only multi-segment security identity
+- all 594 constituent price segments reconcile to their manifests
+- no constituent observation falls outside its usable interval
+- both benchmark requests contain exactly 1,255 sessions
+- benchmark definitions contain exactly one ETF and one index
+
+### Source-to-SQL Numeric Reconciliation
+
+The source files and Azure SQL core tables were independently aggregated for:
+
+- adjusted close
+- volume
+- dividend
+- split factor
+
+Constituent aggregate differences:
+
+`0`
+
+Benchmark aggregate differences:
+
+`0`
+
+### Final Result
+
+Passed checks:
+
+`31`
+
+Core security identities:
+
+`593`
+
+Core ticker-history segments:
+
+`594`
+
+Core membership intervals:
+
+`593`
+
+Core constituent observations:
+
+`631,942`
+
+Core benchmark observations:
+
+`2,510`
+
+Total core daily observations:
+
+`634,452`
+
+Staging rows remaining:
+
+`0`
+
+Final result:
+
+`AZURE_SQL_MARKET_DATA_INTEGRITY_AUDIT_PASSED`
+
+and:
+
+`NORMALIZED AZURE SQL MARKET-DATA QUALITY GATE COMPLETE`
+
+### Result
+
+The normalized Azure SQL market-data layer is complete, source-reconciled, relationally constrained, and ready for analytical feature engineering.
+
+Daily returns, momentum features, risk measures, and forward-performance testing are no longer blocked by source, membership, bridge, or database integrity.
+
+### Next Step
+
+Define the analytical price and return methodology before creating the first feature-engineering tables or views.
+
+The next stage must specify adjusted-price usage, dividend treatment, daily-return convention, monthly observation convention, lookback completeness requirements, and look-ahead protections before momentum variables are calculated.
 
 ---
 
@@ -2886,7 +3367,7 @@ Design and populate the normalized Azure SQL analytical layer using the validate
 
 Current phase:
 
-**Validated analytical bridge complete — normalized Azure SQL loading preparation**
+**Normalized Azure SQL market-data layer complete — feature-engineering methodology preparation**
 
 Completed:
 
@@ -2925,6 +3406,20 @@ Completed:
 - Exact SPY-session coverage validation
 - Separate 2,510-row benchmark history
 - Point-in-time membership-price integration quality gate
+- Read-only Azure SQL environment and object inspection
+- Normalized eight-table core market-data schema
+- Seven-table controlled staging schema
+- Eight primary keys and eight foreign keys
+- Twenty-two core check constraints
+- Two required supporting indexes
+- Five-source Azure SQL load-input inspection
+- `mssql-python 1.13.0` bulk-copy capability validation
+- Transactional staging-to-core market-data load
+- Decimal precision expansion to `DECIMAL(38, 18)`
+- Exact loading of 634,452 daily observations
+- Independent 31-check Azure SQL market-data integrity audit
+- Exact source-to-SQL numeric aggregate reconciliation
+- Normalized Azure SQL market-data quality gate
 
 Current market-data quality state:
 
@@ -2970,25 +3465,61 @@ Current integrated analytical state:
 - Bridge integrity checks passed: 77
 - Membership-price integration quality-gate result: PASSED
 
+Current Azure SQL state:
+
+- Database: `sp500_analytics`
+- Compatibility level: 170
+- Required analytical schemas present: 4 / 4
+- Core tables present: 8
+- Staging tables present: 7
+- Core security identities: 593
+- Core ticker-history segments: 594
+- Core membership intervals: 593
+- Core price-eligibility manifests: 594
+- Core constituent price observations: 631,942
+- Core benchmark definitions: 2
+- Core benchmark price observations: 2,510
+- Total core daily observations: 634,452
+- Remaining staging rows: 0
+- Primary keys present: 8
+- Foreign keys present and trusted: 8
+- Check constraints present and trusted: 22
+- Required supporting indexes present: 2
+- Market-value decimal definition: `DECIMAL(38, 18)`
+- Source-to-SQL numeric aggregate differences: 0
+- Azure SQL integrity checks passed: 31
+- Normalized Azure SQL quality-gate result: PASSED
+
 Next objective:
 
-Design and populate the normalized Azure SQL analytical layer using:
+Define and document the analytical price and return methodology before implementing Phase 5 feature engineering.
 
-`data/interim/sp500_membership_intervals_2021_2025.csv`
+The methodology must establish:
 
-`data/interim/sp500_ticker_history_2021_2025.csv`
+- adjusted-close usage
+- dividend and split treatment
+- daily-return formula
+- monthly observation and return conventions
+- minimum lookback completeness requirements
+- momentum formation periods
+- forward-return horizons
+- risk-free-rate handling
+- benchmark and excess-return conventions
+- look-ahead and survivorship-bias protections
 
-`data/interim/sp500_membership_price_bridge_2021_2025.csv.gz`
-
-`data/interim/sp500_benchmark_price_history_2021_2025.csv.gz`
-
-The database layer must preserve canonical security identity, historical ticker validity, point-in-time membership, daily prices, and benchmark separation.
-
-Feature engineering will begin only after database loading and relational-integrity validation pass.
+After the methodology is validated, create the first reproducible feature-engineering SQL objects and independent integrity audit.
 
 Git checkpoint objective:
 
-Commit the membership-price bridge builder, independent bridge audit, bridge data-quality report, and this updated project log while continuing to exclude reproducible interim datasets.
+Commit the Azure SQL inspection, schema migrations, migration runners, controlled loader, independent database audit, authoritative data-quality reports, and this updated project log.
+
+Continue to exclude:
+
+- `.env` and all credentials
+- reproducible datasets under `data/interim/`
+- the overwritten failed duplicate-attempt loader report
+- timestamped backup scripts
+- one-time integration helpers
 
 ---
 

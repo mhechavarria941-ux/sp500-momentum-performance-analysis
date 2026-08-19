@@ -1,0 +1,75 @@
+===============================================================================
+AZURE SQL MARKET-DATA INTEGRITY AUDIT
+===============================================================================
+Audit mode: READ-ONLY
+Credentials included in report: NO
+
+===============================================================================
+1. CORE AND STAGING POPULATIONS
+===============================================================================
+PASS: core.security: 593 / 593 rows.
+PASS: core.security_ticker_history: 594 / 594 rows.
+PASS: core.index_membership: 593 / 593 rows.
+PASS: core.security_price_eligibility: 594 / 594 rows.
+PASS: core.daily_security_price: 631,942 / 631,942 rows.
+PASS: core.benchmark_series: 2 / 2 rows.
+PASS: core.daily_benchmark_price: 2,510 / 2,510 rows.
+PASS: staging.security is empty.
+PASS: staging.security_ticker_history is empty.
+PASS: staging.index_membership is empty.
+PASS: staging.security_price_eligibility is empty.
+PASS: staging.daily_security_price is empty.
+PASS: staging.benchmark_series is empty.
+PASS: staging.daily_benchmark_price is empty.
+
+===============================================================================
+2. CONSTRAINT TRUST AND DECIMAL DEFINITIONS
+===============================================================================
+PASS: All core foreign keys are enabled and trusted.
+PASS: All core check constraints are enabled and trusted.
+PASS: All 28 market-value columns remain DECIMAL(38, 18).
+
+===============================================================================
+3. MEMBERSHIP AND IDENTITY RECONCILIATION
+===============================================================================
+PASS: 2021-01-01 membership count: 505.
+PASS: 2021-12-31 membership count: 505.
+PASS: 2022-12-31 membership count: 503.
+PASS: 2023-12-31 membership count: 503.
+PASS: 2024-12-31 membership count: 503.
+PASS: 2025-12-31 membership count: 503.
+PASS: DAY is the only multi-segment security identity.
+
+===============================================================================
+4. CONSTITUENT PRICE RECONCILIATION
+===============================================================================
+PASS: All constituent price segments reconcile to their manifests.
+PASS: No constituent observations fall outside usable intervals.
+PASS: Constituent history contains exactly 594 requests.
+
+===============================================================================
+5. BENCHMARK RECONCILIATION
+===============================================================================
+PASS: Both benchmark requests contain exactly 1,255 sessions.
+PASS: Benchmark definitions contain one ETF and one index.
+
+===============================================================================
+6. SOURCE-TO-SQL NUMERIC RECONCILIATION
+===============================================================================
+PASS: Constituent adjusted-close, volume, dividend, and split aggregates exactly match the source.
+PASS: Benchmark adjusted-close, volume, dividend, and split aggregates exactly match the source.
+
+===============================================================================
+7. FINAL QUALITY GATE
+===============================================================================
+AZURE_SQL_MARKET_DATA_INTEGRITY_AUDIT_PASSED
+Passed checks: 31
+Core security identities: 593
+Core ticker-history segments: 594
+Core membership intervals: 593
+Core constituent observations: 631,942
+Core benchmark observations: 2,510
+Total core daily observations: 634,452
+Staging rows remaining: 0
+Source-to-SQL numeric aggregate differences: 0
+NORMALIZED AZURE SQL MARKET-DATA QUALITY GATE COMPLETE.

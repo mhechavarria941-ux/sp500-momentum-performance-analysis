@@ -1,0 +1,38 @@
+===============================================================================
+AZURE SQL DECIMAL-SCALE MIGRATION
+===============================================================================
+Credentials included in report: NO
+Migration: sql\schema\002_expand_market_data_decimal_scale.sql
+Target decimal definition: DECIMAL(38, 18)
+
+===============================================================================
+1. EMPTY-TABLE CONTROL
+===============================================================================
+core.daily_security_price: 0 rows
+core.daily_benchmark_price: 0 rows
+staging.daily_security_price: 0 rows
+staging.daily_benchmark_price: 0 rows
+PASS: All four price tables are empty.
+
+===============================================================================
+2. APPLY MIGRATION
+===============================================================================
+PASS: Decimal-scale migration executed and committed.
+
+===============================================================================
+3. VERIFY DECIMAL DEFINITIONS
+===============================================================================
+PASS: All 28 price/action columns are DECIMAL(38, 18).
+PASS: All eight price integrity checks are present.
+PASS: The daily-security supporting index is present.
+
+===============================================================================
+4. FINAL QUALITY GATE
+===============================================================================
+AZURE_SQL_DECIMAL_SCALE_MIGRATION_PASSED
+Tables migrated: 4
+Decimal columns verified: 28
+Decimal precision: 38
+Decimal scale: 18
+Data rows modified: 0
+Azure SQL is ready for a clean controlled-load retry.

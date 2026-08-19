@@ -1,0 +1,332 @@
+===============================================================================
+AZURE SQL LOAD-INPUT INSPECTION
+===============================================================================
+Inspection mode: READ-ONLY
+Credentials included in report: NO
+
+===============================================================================
+MEMBERSHIP INTERVALS
+===============================================================================
+Path: C:\Users\mhech\OneDrive\Documents\projects\sp500-momentum-performance-analysis\data\interim\sp500_membership_intervals_2021_2025.csv
+Exists: True
+Rows: 593
+Expected rows: 593
+Columns: 10
+Exact duplicate rows: 0
+PASS: Row count matches the validated project anchor.
+
+Column names:
+ 1. security_key
+ 2. company_name_reference
+ 3. valid_from
+ 4. left_censored
+ 5. entry_ticker
+ 6. entry_source_url
+ 7. valid_to_exclusive
+ 8. right_censored
+ 9. exit_ticker
+10. exit_source_url
+
+Data types:
+security_key: str
+company_name_reference: str
+valid_from: str
+left_censored: bool
+entry_ticker: str
+entry_source_url: str
+valid_to_exclusive: str
+right_censored: bool
+exit_ticker: str
+exit_source_url: str
+
+Null counts:
+security_key: 0
+company_name_reference: 0
+valid_from: 0
+left_censored: 0
+entry_ticker: 0
+entry_source_url: 505
+valid_to_exclusive: 0
+right_censored: 0
+exit_ticker: 503
+exit_source_url: 503
+
+===============================================================================
+TICKER HISTORY
+===============================================================================
+Path: C:\Users\mhech\OneDrive\Documents\projects\sp500-momentum-performance-analysis\data\interim\sp500_ticker_history_2021_2025.csv
+Exists: True
+Rows: 594
+Expected rows: 594
+Columns: 6
+Exact duplicate rows: 0
+PASS: Row count matches the validated project anchor.
+
+Column names:
+ 1. security_key
+ 2. ticker
+ 3. ticker_valid_from
+ 4. left_censored
+ 5. ticker_valid_to_exclusive
+ 6. right_censored
+
+Data types:
+security_key: str
+ticker: str
+ticker_valid_from: str
+left_censored: bool
+ticker_valid_to_exclusive: str
+right_censored: bool
+
+Null counts:
+security_key: 0
+ticker: 0
+ticker_valid_from: 0
+left_censored: 0
+ticker_valid_to_exclusive: 0
+right_censored: 0
+
+===============================================================================
+MEMBERSHIP-PRICE BRIDGE
+===============================================================================
+Path: C:\Users\mhech\OneDrive\Documents\projects\sp500-momentum-performance-analysis\data\interim\sp500_membership_price_bridge_2021_2025.csv.gz
+Exists: True
+Rows: 631,942
+Expected rows: 631,942
+Columns: 21
+Exact duplicate rows: 0
+PASS: Row count matches the validated project anchor.
+
+Column names:
+ 1. security_key
+ 2. project_ticker
+ 3. provider_symbol
+ 4. date
+ 5. open
+ 6. high
+ 7. low
+ 8. close
+ 9. adjusted_close
+10. volume
+11. dividend
+12. split_factor
+13. source
+14. membership_valid_from
+15. membership_valid_to_exclusive
+16. ticker_valid_from
+17. ticker_valid_to_exclusive
+18. effective_price_start
+19. effective_price_end_exclusive
+20. usable_start
+21. usable_end_exclusive
+
+Data types:
+security_key: str
+project_ticker: str
+provider_symbol: str
+date: str
+open: float64
+high: float64
+low: float64
+close: float64
+adjusted_close: float64
+volume: int64
+dividend: float64
+split_factor: float64
+source: str
+membership_valid_from: str
+membership_valid_to_exclusive: str
+ticker_valid_from: str
+ticker_valid_to_exclusive: str
+effective_price_start: str
+effective_price_end_exclusive: str
+usable_start: str
+usable_end_exclusive: str
+
+Null counts:
+security_key: 0
+project_ticker: 0
+provider_symbol: 0
+date: 0
+open: 0
+high: 0
+low: 0
+close: 0
+adjusted_close: 0
+volume: 0
+dividend: 0
+split_factor: 0
+source: 0
+membership_valid_from: 0
+membership_valid_to_exclusive: 0
+ticker_valid_from: 0
+ticker_valid_to_exclusive: 0
+effective_price_start: 0
+effective_price_end_exclusive: 0
+usable_start: 0
+usable_end_exclusive: 0
+
+===============================================================================
+BRIDGE MANIFEST
+===============================================================================
+Path: C:\Users\mhech\OneDrive\Documents\projects\sp500-momentum-performance-analysis\data\interim\sp500_membership_price_bridge_manifest.csv
+Exists: True
+Rows: 594
+Expected rows: 594
+Columns: 16
+Exact duplicate rows: 0
+PASS: Row count matches the validated project anchor.
+
+Column names:
+ 1. security_key
+ 2. project_ticker
+ 3. membership_valid_from
+ 4. membership_valid_to_exclusive
+ 5. ticker_valid_from
+ 6. ticker_valid_to_exclusive
+ 7. effective_price_start
+ 8. effective_price_end_exclusive
+ 9. usable_start
+10. usable_end_exclusive
+11. standardized_rows
+12. bridge_rows
+13. rows_before_usable_window
+14. rows_after_usable_window
+15. first_bridge_date
+16. last_bridge_date
+
+Data types:
+security_key: str
+project_ticker: str
+membership_valid_from: str
+membership_valid_to_exclusive: str
+ticker_valid_from: str
+ticker_valid_to_exclusive: str
+effective_price_start: str
+effective_price_end_exclusive: str
+usable_start: str
+usable_end_exclusive: str
+standardized_rows: int64
+bridge_rows: int64
+rows_before_usable_window: int64
+rows_after_usable_window: int64
+first_bridge_date: str
+last_bridge_date: str
+
+Null counts:
+security_key: 0
+project_ticker: 0
+membership_valid_from: 0
+membership_valid_to_exclusive: 0
+ticker_valid_from: 0
+ticker_valid_to_exclusive: 0
+effective_price_start: 0
+effective_price_end_exclusive: 0
+usable_start: 0
+usable_end_exclusive: 0
+standardized_rows: 0
+bridge_rows: 0
+rows_before_usable_window: 0
+rows_after_usable_window: 0
+first_bridge_date: 0
+last_bridge_date: 0
+
+===============================================================================
+BENCHMARK HISTORY
+===============================================================================
+Path: C:\Users\mhech\OneDrive\Documents\projects\sp500-momentum-performance-analysis\data\interim\sp500_benchmark_price_history_2021_2025.csv.gz
+Exists: True
+Rows: 2,510
+Expected rows: 2,510
+Columns: 13
+Exact duplicate rows: 0
+PASS: Row count matches the validated project anchor.
+
+Column names:
+ 1. security_key
+ 2. project_ticker
+ 3. provider_symbol
+ 4. date
+ 5. open
+ 6. high
+ 7. low
+ 8. close
+ 9. adjusted_close
+10. volume
+11. dividend
+12. split_factor
+13. source
+
+Data types:
+security_key: str
+project_ticker: str
+provider_symbol: str
+date: str
+open: float64
+high: float64
+low: float64
+close: float64
+adjusted_close: float64
+volume: int64
+dividend: float64
+split_factor: float64
+source: str
+
+Null counts:
+security_key: 0
+project_ticker: 0
+provider_symbol: 0
+date: 0
+open: 0
+high: 0
+low: 0
+close: 0
+adjusted_close: 0
+volume: 0
+dividend: 0
+split_factor: 0
+source: 0
+
+===============================================================================
+SOURCE-SCHEMA CONTROLS
+===============================================================================
+PASS: Membership interval columns match the validated schema.
+PASS: Ticker-history columns match the validated schema.
+
+===============================================================================
+MSSQL-PYTHON LOAD CAPABILITY
+===============================================================================
+mssql-python version: 1.13.0
+cursor.bulkcopy available: True
+PASS: Controlled bulk-copy loading is available.
+
+===============================================================================
+DATABASE TARGET STATE
+===============================================================================
+SP500 analytical anchors: 1
+core.security: 0 rows
+core.security_ticker_history: 0 rows
+core.index_membership: 0 rows
+core.security_price_eligibility: 0 rows
+core.daily_security_price: 0 rows
+core.benchmark_series: 0 rows
+core.daily_benchmark_price: 0 rows
+staging.security: 0 rows
+staging.security_ticker_history: 0 rows
+staging.index_membership: 0 rows
+staging.security_price_eligibility: 0 rows
+staging.daily_security_price: 0 rows
+staging.benchmark_series: 0 rows
+staging.daily_benchmark_price: 0 rows
+
+PASS: All controlled-load targets are empty.
+
+===============================================================================
+FINAL QUALITY GATE
+===============================================================================
+AZURE_SQL_LOAD_INPUT_INSPECTION_PASSED
+Source datasets inspected: 5
+Validated constituent observations: 631,942
+Validated benchmark observations: 2,510
+Database modifications performed: 0
+Source-to-staging mapping can now be defined from observed columns.
