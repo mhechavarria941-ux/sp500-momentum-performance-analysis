@@ -1,0 +1,80 @@
+===============================================================================
+AZURE SQL MOMENTUM-RANKING INTEGRITY AUDIT
+===============================================================================
+Audit mode: READ-ONLY
+Credentials included in report: NO
+
+===============================================================================
+1. OBJECT AND SOURCE CONTROLS
+===============================================================================
+PASS: The monthly feature, ranking, portfolio, and summary views are present.
+PASS: core.security: 593 rows.
+PASS: core.security_ticker_history: 594 rows.
+PASS: core.index_membership: 593 rows.
+PASS: core.security_price_eligibility: 594 rows.
+PASS: core.daily_security_price: 631,942 rows.
+PASS: core.benchmark_series: 2 rows.
+PASS: core.daily_benchmark_price: 2,510 rows.
+PASS: The validated source contains exactly 23,401 complete momentum signals.
+
+===============================================================================
+2. RANKING POPULATION AND SOURCE RECONCILIATION
+===============================================================================
+PASS: Ranking output contains exactly 23,401 eligible observations.
+PASS: Ranking output contains exactly 48 months.
+PASS: Ranking dates span 2022-01-31 through 2025-12-31.
+PASS: Monthly eligible populations have the validated range of 485-491.
+PASS: Every monthly eligible population exactly matches the validated source.
+PASS: Ranking month/security keys are unique.
+PASS: Ranking rows contain all and only the validated source signals.
+
+===============================================================================
+3. INDEPENDENT RANK AND TIE RECONSTRUCTION
+===============================================================================
+PASS: Every rank and tie field matches an independent source reconstruction.
+PASS: Ascending and descending ranks are exact complements.
+PASS: All rank and tie positions are in range.
+
+===============================================================================
+4. DECILE AND PORTFOLIO ASSIGNMENT
+===============================================================================
+PASS: Portfolio output preserves all 23,401 ranking observations.
+PASS: Every decile matches an independent NTILE reconstruction.
+PASS: Portfolio rows exactly preserve their ranking inputs.
+PASS: Every ranking month contains all ten deciles.
+PASS: Monthly decile populations have the validated range of 48-50.
+PASS: Decile sizes differ by no more than one security within every month.
+PASS: Every decile count and equal weight matches its independently derived value.
+PASS: Winner, middle, and loser labels exactly match their deciles.
+PASS: Momentum is monotonic across adjacent deciles in every month.
+PASS: Winner and loser portfolios both cover all 48 ranking months.
+
+===============================================================================
+5. MONTHLY SUMMARY AND LOOK-AHEAD CONTROLS
+===============================================================================
+PASS: Monthly summary contains exactly 480 month/decile rows.
+PASS: Monthly summary keys are unique.
+PASS: Every summary row exactly reconciles to the detailed portfolio assignments.
+PASS: Every monthly decile has unit total weight.
+PASS: Ranking and portfolio views contain no forward-looking fields.
+PASS: Ranking definitions contain no future-row window functions.
+PASS: Every ranking uses months -12 through -1 and skips its ranking month.
+
+===============================================================================
+6. FINAL QUALITY GATE
+===============================================================================
+AZURE_SQL_MOMENTUM_RANKING_INTEGRITY_AUDIT_PASSED
+Passed checks: 36
+Ranking months: 48
+Eligible momentum rows: 23,401
+Monthly eligible population range: 485-491
+Monthly decile population range: 48-50
+Portfolio assignment rows: 23,401
+Winner portfolio rows: 2,307
+Loser portfolio rows: 2,353
+Rows participating in exact ties: 0
+Monthly decile summary rows: 480
+Forward-looking columns: 0
+Core rows modified: 0
+Point-in-time rankings, ties, deciles, labels, and equal weights are valid.
+SQL MOMENTUM-RANKING QUALITY GATE COMPLETE.

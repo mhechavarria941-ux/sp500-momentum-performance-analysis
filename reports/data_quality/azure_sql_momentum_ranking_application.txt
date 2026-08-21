@@ -1,0 +1,73 @@
+===============================================================================
+AZURE SQL MOMENTUM-RANKING APPLICATION
+===============================================================================
+Connection status: SUCCESS
+Credentials included in report: NO
+Migration: sql\analytics\006_create_momentum_ranking_views.sql
+Strategy: point-in-time ranking, deterministic ties, and decile assignment
+
+===============================================================================
+1. DEPENDENCY AND CORE CONTROLS
+===============================================================================
+PASS: The validated monthly momentum feature dependency is present.
+PASS: The source contains exactly 23,401 complete momentum signals.
+PASS: core.security: 593 rows.
+PASS: core.security_ticker_history: 594 rows.
+PASS: core.index_membership: 593 rows.
+PASS: core.security_price_eligibility: 594 rows.
+PASS: core.daily_security_price: 631,942 rows.
+PASS: core.benchmark_series: 2 rows.
+PASS: core.daily_benchmark_price: 2,510 rows.
+
+===============================================================================
+2. APPLY MOMENTUM-RANKING VIEWS
+===============================================================================
+PASS: Migration contains the expected four SQL batches.
+PASS: Executed SQL batch 1 / 4.
+PASS: Executed SQL batch 2 / 4.
+PASS: Executed SQL batch 3 / 4.
+PASS: Executed SQL batch 4 / 4.
+
+===============================================================================
+3. VERIFY RANKING AND PORTFOLIO OUTPUTS
+===============================================================================
+PASS: All three momentum-ranking views are present.
+PASS: Ranking view contains all and only 23,401 complete momentum signals.
+PASS: Portfolio assignment preserves all 23,401 ranking rows.
+PASS: Ranking output contains exactly 48 months.
+PASS: Monthly summary contains exactly 480 month/decile rows.
+PASS: Ranking month/security keys are unique.
+PASS: Every ranking row contains a complete momentum signal.
+PASS: Every monthly descending rank is unique, contiguous, and complete.
+PASS: Every ranking month contains ten deciles.
+PASS: Monthly decile sizes differ by no more than one security.
+PASS: Winner, middle, and loser labels match their deciles.
+PASS: Every monthly decile has unit total weight.
+PASS: Momentum-ranking objects contain no forward-looking fields.
+PASS: Every ranking month has at least ten eligible securities.
+
+===============================================================================
+4. POST-MIGRATION CORE CONTROL
+===============================================================================
+PASS: core.security remains unchanged at 593 rows.
+PASS: core.security_ticker_history remains unchanged at 594 rows.
+PASS: core.index_membership remains unchanged at 593 rows.
+PASS: core.security_price_eligibility remains unchanged at 594 rows.
+PASS: core.daily_security_price remains unchanged at 631,942 rows.
+PASS: core.benchmark_series remains unchanged at 2 rows.
+PASS: core.daily_benchmark_price remains unchanged at 2,510 rows.
+PASS: Momentum-ranking migration committed.
+
+===============================================================================
+5. FINAL QUALITY GATE
+===============================================================================
+AZURE_SQL_MOMENTUM_RANKING_APPLICATION_PASSED
+Passed checks: 36
+Analytical views created or updated: 3
+Ranking months: 48
+Eligible momentum rows: 23,401
+Monthly eligible population range: 485-491
+Monthly decile summary rows: 480
+Forward-looking ranking columns: 0
+Core rows modified: 0
+Point-in-time momentum rankings and portfolio assignments are ready for independent auditing.

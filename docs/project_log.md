@@ -3932,12 +3932,234 @@ Create the point-in-time monthly momentum-ranking and portfolio-assignment layer
 
 The next layer must define eligibility, ranking order, tie handling, portfolio counts, and decile assignment before forward returns are joined.
 ---
+## 3.36 Azure SQL Point-in-Time Momentum Rankings
+
+### Objective
+
+Convert the validated canonical 12-1 momentum signals into deterministic monthly cross-sectional rankings and equal-weighted decile assignments without introducing forward-return information.
+
+### SQL Migration
+
+`sql/analytics/006_create_momentum_ranking_views.sql`
+
+### Application Script
+
+`src/analysis/apply_azure_sql_momentum_rankings.py`
+
+### Application Report
+
+`reports/data_quality/azure_sql_momentum_ranking_application.txt`
+
+### Analytical Objects Created
+
+The migration created or updated:
+
+- `analytics.v_security_monthly_momentum_ranking`
+- `analytics.v_security_monthly_momentum_portfolio`
+- `analytics.v_momentum_decile_monthly_summary`
+
+### Eligibility Convention
+
+A security is eligible for ranking only when:
+
+- `momentum_12_1_complete = 1`
+- `momentum_12_1` is not null
+- its validated point-in-time feature row exists for the ranking month
+
+### Ranking Convention
+
+Momentum is ranked independently within each month.
+
+Descending rank:
+
+- rank 1 represents the highest momentum
+- exact ties are resolved by `security_key` ascending
+
+Ascending rank:
+
+- rank 1 represents the lowest momentum
+- exact ties are resolved by `security_key` descending
+
+The ascending and descending ranks are exact complements.
+
+### Portfolio Convention
+
+`NTILE(10)` assigns approximately equal momentum deciles.
+
+Portfolio definitions:
+
+- decile 1: `LOSER`
+- deciles 2 through 9: `MIDDLE`
+- decile 10: `WINNER`
+
+Each security receives an equal weight within its monthly decile.
+
+### Application Results
+
+Ranking months:
+
+`48`
+
+Eligible momentum rows:
+
+`23,401`
+
+Monthly eligible population range:
+
+`485-491`
+
+Monthly decile summary rows:
+
+`480`
+
+Forward-looking ranking columns:
+
+`0`
+
+Core rows modified:
+
+`0`
+
+Passed checks:
+
+`36`
+
+Final result:
+
+`AZURE_SQL_MOMENTUM_RANKING_APPLICATION_PASSED`
+
+### Result
+
+The point-in-time momentum rankings and portfolio assignments were created successfully.
+
+### Next Step
+
+Independently reconstruct and audit ranking populations, ranks, ties, deciles, labels, weights, and look-ahead controls.
+
+---
+
+## 3.37 Azure SQL Momentum-Ranking Integrity Audit
+
+### Objective
+
+Independently validate the complete momentum-ranking and portfolio-assignment layer without modifying the database.
+
+### Audit Script
+
+`src/analysis/audit_azure_sql_momentum_rankings.py`
+
+### Audit Report
+
+`reports/data_quality/azure_sql_momentum_ranking_integrity_audit.txt`
+
+### Source Reconciliation
+
+The audit confirmed:
+
+- exactly 23,401 eligible momentum observations
+- exactly 48 ranking months
+- ranking dates from `2022-01-31` through `2025-12-31`
+- monthly eligible populations of 485 through 491
+- exact reconciliation to the validated monthly feature source
+- unique month/security ranking keys
+
+### Rank and Tie Validation
+
+The audit independently reconstructed:
+
+- descending momentum rank
+- ascending momentum rank
+- exact-tie population
+- deterministic tie-break order
+
+All reconstructed values matched the ranking view.
+
+Rows participating in exact momentum ties:
+
+`0`
+
+### Portfolio Validation
+
+The audit independently reconstructed all decile assignments using `NTILE(10)`.
+
+Monthly decile population range:
+
+`48-50`
+
+Portfolio assignment rows:
+
+`23,401`
+
+Winner portfolio rows:
+
+`2,307`
+
+Loser portfolio rows:
+
+`2,353`
+
+Both winner and loser portfolios cover all 48 ranking months.
+
+Momentum is monotonic across adjacent deciles in every month.
+
+### Weight and Summary Validation
+
+Every security’s equal weight matched:
+
+`1 / monthly decile population`
+
+Every monthly decile’s weights sum to one.
+
+Monthly decile summary rows:
+
+`480`
+
+Every summary row exactly reconciled to the detailed assignments.
+
+### Look-Ahead Controls
+
+The audit confirmed:
+
+- forward-looking columns: 0
+- future-row SQL window functions: 0
+- signal windows span months `-12` through `-1`
+- every signal skips its ranking month
+- forward performance remains outside the ranking layer
+
+### Final Result
+
+Passed checks:
+
+`36`
+
+Core rows modified:
+
+`0`
+
+Final result:
+
+`AZURE_SQL_MOMENTUM_RANKING_INTEGRITY_AUDIT_PASSED`
+
+and:
+
+`SQL MOMENTUM-RANKING QUALITY GATE COMPLETE`
+
+### Result
+
+Point-in-time rankings, deterministic ordering, decile assignments, portfolio labels, and equal weights are valid and analysis-ready.
+
+### Next Step
+
+Define and implement the forward-return and portfolio-performance layer.
+
+Forward returns must be joined only after portfolio assignments are fixed. The next layer must explicitly address exact holding periods, constituent exits, terminal observations, right-censoring, benchmark alignment, and the unavailable post-scope return for the final December 2025 ranking.
+---
 
 # Current Status
 
 Current phase:
 
-**SQL monthly return and momentum feature layer complete - momentum-ranking preparation**
+**Point-in-time momentum ranking complete - forward-return methodology preparation**
 
 Completed:
 
@@ -4003,6 +4225,14 @@ Completed:
 - Independent 40-check monthly return-feature integrity audit
 - SQL monthly feature-engineering quality gate
 - `pyodbc 5.3.0` analytical audit connectivity
+- Point-in-time ranking of 23,401 canonical momentum signals
+- Deterministic ascending and descending monthly momentum ranks
+- Ten approximately equal monthly momentum deciles
+- Explicit winner, middle, and loser portfolio assignments
+- Equal security weights within every monthly decile
+- Exact 480-row month/decile summary
+- Independent 36-check momentum-ranking integrity audit
+- SQL momentum-ranking quality gate
 
 Current market-data quality state:
 
@@ -4094,36 +4324,49 @@ Current SQL feature-engineering state:
 - Monthly feature-integrity checks passed: 40
 - Core rows modified by feature engineering: 0
 - SQL monthly feature-engineering quality-gate result: PASSED
+- Momentum ranking months: 48
+- Ranking period: 2022-01-31 through 2025-12-31
+- Eligible momentum ranking rows: 23,401
+- Monthly eligible ranking population range: 485-491
+- Monthly decile population range: 48-50
+- Winner portfolio rows: 2,307
+- Loser portfolio rows: 2,353
+- Exact-tie rows: 0
+- Monthly decile summary rows: 480
+- Momentum-ranking integrity checks passed: 36
+- Momentum-ranking quality-gate result: PASSED
 
 Next objective:
 
-Create and independently validate the point-in-time monthly momentum-ranking and portfolio-assignment layer.
+Define and independently validate the forward-return and portfolio-performance layer.
 
-The next stage must define:
+The next stage must establish:
 
-- monthly ranking eligibility
-- descending momentum rank
-- deterministic tie handling
-- cross-sectional population controls
-- decile or portfolio assignment
-- winner and loser portfolio definitions
-- minimum eligible-universe requirements
-- separation of signal formation from forward performance
-- exact reconciliation to the validated 23,401 momentum signals
+- the exact forward holding period
+- ranking-date and liquidation-date price conventions
+- exact next-month SPY calendar alignment
+- treatment of index removals during a holding month
+- treatment of documented market terminations
+- terminal-price and right-censoring rules
+- equal-weight decile return aggregation
+- winner, loser, and winner-minus-loser returns
+- SPY and S&P 500 benchmark alignment
+- explicit exclusion of the unavailable post-scope return for the December 2025 ranking
 
-Forward returns must remain outside the signal and ranking layer until portfolio membership is finalized.
+Portfolio assignments must remain fixed before any forward return is joined.
 
 Git checkpoint objective:
 
-Commit the analytical methodology, SQL return-foundation migration, monthly feature migration, indexed snapshot optimization, Python application and audit scripts, authoritative analytical quality reports, dependency update, and this updated project log.
+Commit the momentum-ranking SQL migration, transactional application runner, independent integrity audit, authoritative application and audit reports, and this updated project log.
 
 Continue to exclude:
 
 - `.env` and all credentials
 - reproducible datasets under `data/interim/`
-- failed or superseded duplicate reports
+- failed or superseded reports
 - timestamped backup scripts
 - one-time integration helpers
+
 ---
 
 # Logging Standard Going Forward
