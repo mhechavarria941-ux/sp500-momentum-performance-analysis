@@ -1,0 +1,82 @@
+===============================================================================
+AZURE SQL MONTHLY RETURN-FEATURE INTEGRITY AUDIT
+===============================================================================
+Audit mode: READ-ONLY
+Credentials included in report: NO
+
+===============================================================================
+1. OBJECT AND SOURCE CONTROLS
+===============================================================================
+PASS: All monthly source and feature views are present.
+PASS: core.security: 593 rows.
+PASS: core.security_ticker_history: 594 rows.
+PASS: core.index_membership: 593 rows.
+PASS: core.security_price_eligibility: 594 rows.
+PASS: core.daily_security_price: 631,942 rows.
+PASS: core.benchmark_series: 2 rows.
+PASS: core.daily_benchmark_price: 2,510 rows.
+
+===============================================================================
+2. CONSTITUENT FEATURE POPULATION
+===============================================================================
+PASS: Constituent feature view contains exactly 30,211 rows.
+PASS: Constituent feature month/security keys are unique.
+PASS: Every constituent feature row reconciles to its month-end source.
+PASS: The constituent signal view contains no forward-looking fields.
+
+===============================================================================
+3. CONSTITUENT TRAILING RETURNS
+===============================================================================
+PASS: 1-month completeness exactly matches its lag observation.
+PASS: Every 1-month return matches the adjusted-close formula.
+PASS: 1-month completeness population: 29,623 rows.
+PASS: 3-month completeness exactly matches its lag observation.
+PASS: Every 3-month return matches the adjusted-close formula.
+PASS: 3-month completeness population: 28,464 rows.
+PASS: 6-month completeness exactly matches its lag observation.
+PASS: Every 6-month return matches the adjusted-close formula.
+PASS: 6-month completeness population: 26,752 rows.
+PASS: 12-month completeness exactly matches its lag observation.
+PASS: Every 12-month return matches the adjusted-close formula.
+PASS: 12-month completeness population: 23,401 rows.
+
+===============================================================================
+4. CANONICAL 12-1 MOMENTUM
+===============================================================================
+PASS: Canonical 12-1 momentum is complete for 23,401 rows.
+PASS: Momentum completeness and anchor dates match months -1 and -12.
+PASS: Every momentum signal matches the month -1 / month -12 formula.
+PASS: Every momentum window spans months -12 through -1 and skips the ranking month.
+PASS: The CDAY-to-DAY identity transition remains continuous at month-end.
+
+===============================================================================
+5. BENCHMARK FEATURES
+===============================================================================
+PASS: Benchmark feature view contains exactly 120 rows.
+PASS: Benchmark 1-month completeness is exact: 118 rows.
+PASS: Every benchmark 1-month return matches its formula.
+PASS: Benchmark 3-month completeness is exact: 114 rows.
+PASS: Every benchmark 3-month return matches its formula.
+PASS: Benchmark 6-month completeness is exact: 108 rows.
+PASS: Every benchmark 6-month return matches its formula.
+PASS: Benchmark 12-month completeness is exact: 96 rows.
+PASS: Every benchmark 12-month return matches its formula.
+PASS: Both benchmarks contain 48 complete momentum observations.
+PASS: Every benchmark momentum signal matches its formula.
+
+===============================================================================
+6. FINAL QUALITY GATE
+===============================================================================
+AZURE_SQL_MONTHLY_RETURN_FEATURE_INTEGRITY_AUDIT_PASSED
+Passed checks: 40
+Constituent feature rows: 30,211
+Complete 1-month returns: 29,623
+Complete 3-month returns: 28,464
+Complete 6-month returns: 26,752
+Complete 12-month returns: 23,401
+Complete canonical 12-1 momentum signals: 23,401
+Benchmark feature rows: 120
+Forward-looking feature columns: 0
+Core rows modified: 0
+Exact-calendar monthly return and momentum features are analysis-ready.
+SQL MONTHLY FEATURE-ENGINEERING QUALITY GATE COMPLETE.

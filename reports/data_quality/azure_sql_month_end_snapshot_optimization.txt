@@ -1,0 +1,78 @@
+===============================================================================
+AZURE SQL MONTH-END SNAPSHOT OPTIMIZATION
+===============================================================================
+Connection status: SUCCESS
+Credentials included in report: NO
+Migration: sql\analytics\005_create_indexed_month_end_snapshots.sql
+Strategy: indexed analytical snapshots with transactional refresh
+
+===============================================================================
+1. PRE-OPTIMIZATION CORE CONTROL
+===============================================================================
+PASS: core.security: 593 / 593 rows.
+PASS: core.security_ticker_history: 594 / 594 rows.
+PASS: core.index_membership: 593 / 593 rows.
+PASS: core.security_price_eligibility: 594 / 594 rows.
+PASS: core.daily_security_price: 631,942 / 631,942 rows.
+PASS: core.benchmark_series: 2 / 2 rows.
+PASS: core.daily_benchmark_price: 2,510 / 2,510 rows.
+
+===============================================================================
+2. APPLY SNAPSHOT STRUCTURE AND FEATURE VIEWS
+===============================================================================
+PASS: Migration contains the expected five SQL batches.
+PASS: Executed SQL batch 1 / 5.
+PASS: Executed SQL batch 2 / 5.
+PASS: Executed SQL batch 3 / 5.
+PASS: Executed SQL batch 4 / 5.
+PASS: Executed SQL batch 5 / 5.
+
+===============================================================================
+3. TRANSACTIONAL SNAPSHOT REFRESH
+===============================================================================
+PASS: Constituent snapshot insert completed.
+PASS: Benchmark snapshot insert completed.
+Snapshot refresh elapsed seconds: 0.796
+
+===============================================================================
+4. SNAPSHOT RECONCILIATION
+===============================================================================
+PASS: Constituent snapshot contains exactly 30,211 rows.
+PASS: Benchmark snapshot contains exactly 120 rows.
+PASS: Constituent snapshot exactly reconciles to its source view.
+PASS: Benchmark snapshot exactly reconciles to its source view.
+
+===============================================================================
+5. OPTIMIZED FEATURE PERFORMANCE
+===============================================================================
+PASS: Optimized feature view contains exactly 30,211 rows.
+PASS: Feature row count completed in 0.051 seconds.
+PASS: Optimized feature view preserves 23,401 complete momentum rows.
+PASS: Momentum row count completed in 0.109 seconds.
+
+===============================================================================
+6. POST-OPTIMIZATION CORE CONTROL
+===============================================================================
+PASS: core.security remains unchanged at 593 rows.
+PASS: core.security_ticker_history remains unchanged at 594 rows.
+PASS: core.index_membership remains unchanged at 593 rows.
+PASS: core.security_price_eligibility remains unchanged at 594 rows.
+PASS: core.daily_security_price remains unchanged at 631,942 rows.
+PASS: core.benchmark_series remains unchanged at 2 rows.
+PASS: core.daily_benchmark_price remains unchanged at 2,510 rows.
+PASS: Snapshot refresh and view optimization committed.
+
+===============================================================================
+7. FINAL QUALITY GATE
+===============================================================================
+AZURE_SQL_MONTH_END_SNAPSHOT_OPTIMIZATION_PASSED
+Passed checks: 31
+Indexed analytical snapshot tables: 2
+Constituent snapshot rows: 30,211
+Benchmark snapshot rows: 120
+Feature count elapsed seconds: 0.051
+Momentum count elapsed seconds: 0.109
+Constituent feature rows: 30,211
+Complete canonical 12-1 momentum rows: 23,401
+Core rows modified: 0
+Monthly feature views are ready for a reliable integrity-audit retry.

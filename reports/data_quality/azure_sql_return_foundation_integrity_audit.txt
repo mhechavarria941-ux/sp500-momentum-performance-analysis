@@ -1,0 +1,81 @@
+===============================================================================
+AZURE SQL RETURN-FOUNDATION INTEGRITY AUDIT
+===============================================================================
+Audit mode: READ-ONLY
+Credentials included in report: NO
+
+===============================================================================
+1. OBJECT AND SOURCE CONTROLS
+===============================================================================
+PASS: All six return-foundation views are present.
+PASS: core.security: 593 rows.
+PASS: core.security_ticker_history: 594 rows.
+PASS: core.index_membership: 593 rows.
+PASS: core.security_price_eligibility: 594 rows.
+PASS: core.daily_security_price: 631,942 rows.
+PASS: core.benchmark_series: 2 rows.
+PASS: core.daily_benchmark_price: 2,510 rows.
+
+===============================================================================
+2. SPY TRADING CALENDAR
+===============================================================================
+PASS: SPY calendar contains exactly 1,255 sessions.
+PASS: SPY calendar dates are unique.
+PASS: First SPY trading session is 2021-01-04.
+PASS: Last SPY trading session is 2025-12-31.
+PASS: Every SPY session points to its immediately preceding session.
+
+===============================================================================
+3. EXACT SPY MONTH-END CALENDAR
+===============================================================================
+PASS: Month-end calendar contains exactly 60 months.
+PASS: Every calendar month has exactly one SPY month-end.
+PASS: Every month-end is the final SPY session of its calendar month.
+PASS: Analysis-month numbering is limited to 1 through 60.
+
+===============================================================================
+4. CONSTITUENT DAILY RETURNS
+===============================================================================
+PASS: Daily-return view preserves all 631,942 constituent rows.
+PASS: Constituent security/date return keys are unique.
+PASS: Every complete constituent return uses the prior SPY session.
+PASS: Incomplete constituent returns remain null.
+PASS: Exactly one initial return is incomplete per security identity.
+PASS: Every constituent return matches the adjusted-close formula.
+PASS: The CDAY-to-DAY transition preserves security-return continuity.
+
+===============================================================================
+5. BENCHMARK DAILY RETURNS
+===============================================================================
+PASS: Benchmark daily-return view contains exactly 2,510 rows.
+PASS: Both benchmarks contain 1,254 complete daily returns.
+PASS: Each benchmark has one initial incomplete return.
+PASS: Every benchmark return matches the adjusted-close formula.
+
+===============================================================================
+6. EXACT MONTH-END PRICE OUTPUTS
+===============================================================================
+PASS: Constituent month-end output contains 30,211 observations.
+PASS: Constituent output covers all 60 SPY month-ends.
+PASS: Constituent month-end security/date keys are unique.
+PASS: Every constituent observation uses an exact SPY month-end.
+PASS: Monthly constituent populations remain within the validated daily bounds: 502-505.
+PASS: Every monthly population exactly matches the underlying core month-end prices.
+PASS: Benchmark output contains two series across 60 month-ends.
+PASS: Both benchmarks contain all 60 month-end observations.
+
+===============================================================================
+7. FINAL QUALITY GATE
+===============================================================================
+AZURE_SQL_RETURN_FOUNDATION_INTEGRITY_AUDIT_PASSED
+Passed checks: 36
+SPY trading sessions: 1,255
+SPY month-end sessions: 60
+Constituent daily observations: 631,942
+Constituent complete daily returns: 631,349
+Constituent month-end observations: 30,211
+Benchmark daily observations: 2,510
+Benchmark month-end observations: 120
+Core rows modified: 0
+Daily-return and exact-month-end foundations are analysis-ready.
+SQL RETURN-FOUNDATION QUALITY GATE COMPLETE.

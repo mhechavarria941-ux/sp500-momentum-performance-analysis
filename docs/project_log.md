@@ -789,12 +789,6 @@ The project can therefore proceed to generate point-in-time S&P 500 membership i
 
 Build the historical membership reconstruction pipeline and generate security-level membership intervals containing each constituent's valid-from and valid-to dates.
 
-# Current Status
-
-Completed:
-
-`Development environment → GitHub → Azure SQL → Python/Azure connection → raw SPY acquisition → workbook audit → constituent filtering → 503-security anchor → historical S&P 500 change-source construction → historical change validation`
-
 Historical membership reference:
 
 `202 membership actions`
@@ -3360,14 +3354,590 @@ Daily returns, momentum features, risk measures, and forward-performance testing
 Define the analytical price and return methodology before creating the first feature-engineering tables or views.
 
 The next stage must specify adjusted-price usage, dividend treatment, daily-return convention, monthly observation convention, lookback completeness requirements, and look-ahead protections before momentum variables are calculated.
+## 3.30 Analytical Price and Return Methodology
 
+### Objective
+
+Define the analytical conventions required to calculate reproducible daily returns, monthly returns, and momentum signals without introducing look-ahead bias, ticker discontinuities, or inconsistent calendar assumptions.
+
+### Documentation
+
+`docs/analytical_methodology.md`
+
+### Analytical Engine
+
+Azure SQL is the primary feature-engineering and analytical engine.
+
+Python is used for independent integrity auditing, reproducibility controls, and report generation.
+
+Power BI will consume validated analytical outputs during the reporting stage.
+
+### Price Convention
+
+Returns use `adjusted_close`.
+
+The adjusted price series incorporates the economic effects of validated dividends and stock splits.
+
+Raw close is retained for reference but is not used as the canonical total-return input.
+
+### Daily Return Convention
+
+Daily simple return:
+
+`adjusted_close_t / adjusted_close_previous_session - 1`
+
+A daily return is complete only when the previous observation is the immediately preceding SPY trading session.
+
+Missing sessions are not bridged or imputed.
+
+### Monthly Observation Convention
+
+Each analytical month uses the final SPY trading session of the calendar month.
+
+Constituent and benchmark month-end observations must fall on that exact SPY session.
+
+### Monthly Return Features
+
+Trailing returns are calculated over exact:
+
+- 1-month
+- 3-month
+- 6-month
+- 12-month
+
+A feature is complete only when its required calendar-month anchor exists.
+
+### Canonical Momentum Convention
+
+Canonical 12-1 momentum is defined as:
+
+`adjusted_close_month_minus_1 / adjusted_close_month_minus_12 - 1`
+
+The formation window spans months `-12` through `-1`.
+
+The ranking month is skipped.
+
+### Identity Convention
+
+`security_key` is the permanent analytical identity.
+
+Ticker changes do not break return continuity when the underlying security identity remains unchanged.
+
+This convention preserves the validated `CDAY` to `DAY` transition.
+
+### Look-Ahead Controls
+
+Signal views contain no forward-return, lead, or future-performance columns.
+
+Forward returns will be constructed in a separate analytical layer after signals and rankings are finalized.
+
+Point-in-time membership, ticker-validity intervals, and usable-price boundaries remain enforced.
+
+### Decisions Deferred
+
+Risk-free-rate treatment and risk-adjusted performance measures remain deferred until the required external rate source and conventions are documented.
+
+### Result
+
+The analytical methodology is defined and ready for SQL implementation.
+
+### Next Step
+
+Create the SPY trading calendar, exact month-end calendar, daily-return views, and month-end price views in Azure SQL.
+
+---
+
+## 3.31 Azure SQL Return Foundation
+
+### Objective
+
+Create the SQL calendar and return foundation required for monthly feature engineering while preserving the validated normalized core data.
+
+### SQL Migration
+
+`sql/analytics/003_create_return_foundation_views.sql`
+
+### Application Script
+
+`src/analysis/apply_azure_sql_return_foundation.py`
+
+### Application Report
+
+`reports/data_quality/azure_sql_return_foundation_application.txt`
+
+### Objects Created
+
+The migration created or updated six analytical views:
+
+- `analytics.v_spy_trading_calendar`
+- `analytics.v_spy_month_end_calendar`
+- `analytics.v_security_daily_return`
+- `analytics.v_benchmark_daily_return`
+- `analytics.v_security_month_end_price`
+- `analytics.v_benchmark_month_end_price`
+
+### Calendar Results
+
+SPY trading sessions:
+
+`1,255`
+
+Exact SPY month-end sessions:
+
+`60`
+
+First SPY session:
+
+`2021-01-04`
+
+Last SPY session:
+
+`2025-12-31`
+
+### Return Results
+
+Constituent daily observations:
+
+`631,942`
+
+Benchmark daily observations:
+
+`2,510`
+
+Constituent month-end observations:
+
+`30,211`
+
+Benchmark month-end observations:
+
+`120`
+
+### Validation
+
+The application passed `31` checks.
+
+All seven core-table populations remained unchanged.
+
+Core rows modified:
+
+`0`
+
+Final result:
+
+`AZURE_SQL_RETURN_FOUNDATION_APPLICATION_PASSED`
+
+### Result
+
+The exact-session daily-return and exact-month-end SQL foundation was created successfully.
+
+### Next Step
+
+Independently audit calendar continuity, return formulas, month-end selection, identity continuity, and source preservation.
+
+---
+
+## 3.32 Azure SQL Return-Foundation Integrity Audit
+
+### Objective
+
+Independently validate the return-foundation views without modifying the database.
+
+### Audit Script
+
+`src/analysis/audit_azure_sql_return_foundation.py`
+
+### Audit Report
+
+`reports/data_quality/azure_sql_return_foundation_integrity_audit.txt`
+
+### Calendar Validation
+
+The audit confirmed:
+
+- exactly 1,255 unique SPY sessions
+- exact coverage from `2021-01-04` through `2025-12-31`
+- every SPY session points to its immediately preceding session
+- exactly 60 calendar months
+- one exact final SPY session per calendar month
+- analysis-month numbering from 1 through 60
+
+### Constituent Return Validation
+
+The audit confirmed:
+
+- all 631,942 constituent observations are preserved
+- constituent security/date keys are unique
+- complete daily returns use the immediately preceding SPY session
+- incomplete returns remain null
+- each security identity has exactly one initial incomplete return
+- all calculated returns match the adjusted-close formula
+- the `CDAY` to `DAY` identity transition remains continuous
+
+Complete constituent daily returns:
+
+`631,349`
+
+### Month-End Validation
+
+Constituent month-end observations:
+
+`30,211`
+
+Monthly constituent population range:
+
+`502-505`
+
+Every monthly population exactly matched the underlying core month-end prices.
+
+Benchmark month-end observations:
+
+`120`
+
+### Final Result
+
+Passed checks:
+
+`36`
+
+Core rows modified:
+
+`0`
+
+Final result:
+
+`AZURE_SQL_RETURN_FOUNDATION_INTEGRITY_AUDIT_PASSED`
+
+and:
+
+`SQL RETURN-FOUNDATION QUALITY GATE COMPLETE`
+
+### Result
+
+The daily-return and exact-month-end foundations are analysis-ready.
+
+### Next Step
+
+Create exact-calendar monthly return and canonical 12-1 momentum feature views.
+
+---
+
+## 3.33 Azure SQL Monthly Return Features
+
+### Objective
+
+Create monthly constituent and benchmark feature views using exact calendar-month anchors and the documented adjusted-close methodology.
+
+### SQL Migration
+
+`sql/analytics/004_create_monthly_return_feature_views.sql`
+
+### Application Script
+
+`src/analysis/apply_azure_sql_monthly_return_features.py`
+
+### Application Report
+
+`reports/data_quality/azure_sql_monthly_return_feature_application.txt`
+
+### Objects Created
+
+The migration created or updated:
+
+- `analytics.v_security_monthly_return_features`
+- `analytics.v_benchmark_monthly_return_features`
+
+### Features Created
+
+The views calculate:
+
+- 1-month trailing return
+- 3-month trailing return
+- 6-month trailing return
+- 12-month trailing return
+- canonical 12-1 momentum
+- exact completeness indicators
+- required historical anchor dates
+
+No forward-looking performance fields were added.
+
+### Application Results
+
+Constituent feature rows:
+
+`30,211`
+
+Complete canonical 12-1 momentum rows:
+
+`23,401`
+
+Benchmark feature rows:
+
+`120`
+
+Passed checks:
+
+`24`
+
+Core rows modified:
+
+`0`
+
+Final result:
+
+`AZURE_SQL_MONTHLY_RETURN_FEATURE_APPLICATION_PASSED`
+
+### Performance Issue
+
+Although the feature calculations were logically correct, querying the original nested constituent feature view was too expensive for the two-vCore serverless database.
+
+A simple feature-row count required approximately:
+
+`271 seconds`
+
+Long-running audit queries produced intermittent Azure SQL timeouts and communication-link failures.
+
+### Decision
+
+Preserve the validated formulas while materializing the exact month-end source observations into indexed analytical snapshot tables.
+
+### Next Step
+
+Create transactionally refreshed, indexed month-end snapshots and rebuild the feature views on those snapshots.
+
+---
+
+## 3.34 Indexed Month-End Snapshot Optimization
+
+### Objective
+
+Eliminate repeated evaluation of the expensive nested month-end views while preserving exact reconciliation to the validated source calculations.
+
+### SQL Migration
+
+`sql/analytics/005_create_indexed_month_end_snapshots.sql`
+
+### Application Script
+
+`src/analysis/apply_azure_sql_month_end_snapshot_optimization.py`
+
+### Application Report
+
+`reports/data_quality/azure_sql_month_end_snapshot_optimization.txt`
+
+### Objects Created
+
+The migration created indexed analytical snapshot tables:
+
+- `analytics.security_month_end_snapshot`
+- `analytics.benchmark_month_end_snapshot`
+
+The monthly feature views were recreated against these snapshot tables without changing their formulas or output structure.
+
+### Refresh Strategy
+
+The snapshot refresh:
+
+- executes transactionally
+- clears and reloads both snapshot tables
+- reconciles the snapshot populations to their original source views
+- commits only after all validation checks pass
+- leaves the normalized core tables unchanged
+
+### Snapshot Results
+
+Constituent snapshot rows:
+
+`30,211`
+
+Benchmark snapshot rows:
+
+`120`
+
+Snapshot refresh elapsed time:
+
+`0.796 seconds`
+
+### Performance Results
+
+Constituent feature count:
+
+`30,211`
+
+Feature-count elapsed time:
+
+`0.051 seconds`
+
+Complete momentum count:
+
+`23,401`
+
+Momentum-count elapsed time:
+
+`0.109 seconds`
+
+The feature-count runtime decreased from approximately `271` seconds to `0.051` seconds.
+
+### Validation
+
+The optimization passed `31` checks.
+
+Both snapshots exactly reconciled to their original source views.
+
+Core rows modified:
+
+`0`
+
+Final result:
+
+`AZURE_SQL_MONTH_END_SNAPSHOT_OPTIMIZATION_PASSED`
+
+### Connection Correction
+
+The Python optimization runner initially attempted to assign a timeout to a `pyodbc.Cursor`, which does not support that attribute.
+
+The timeout was correctly assigned to the connection before cursor creation.
+
+### Result
+
+The monthly feature layer retains its validated calculations while providing reliable query performance for independent auditing and subsequent analysis.
+
+### Next Step
+
+Run the complete monthly return-feature integrity audit against the optimized snapshot-backed feature layer.
+
+---
+
+## 3.35 Azure SQL Monthly Return-Feature Integrity Audit
+
+### Objective
+
+Independently validate every monthly return and momentum feature after the indexed snapshot optimization.
+
+The audit is read-only and performs no database modifications.
+
+### Audit Script
+
+`src/analysis/audit_azure_sql_monthly_return_features.py`
+
+### Audit Report
+
+`reports/data_quality/azure_sql_monthly_return_feature_integrity_audit.txt`
+
+### Python and Driver Configuration
+
+Python package:
+
+`pyodbc==5.3.0`
+
+Required system driver:
+
+`ODBC Driver 18 for SQL Server`
+
+`mssql-python` remains installed for the existing bulk-copy ingestion workflow.
+
+### Constituent Feature Validation
+
+Constituent feature rows:
+
+`30,211`
+
+Complete 1-month returns:
+
+`29,623`
+
+Complete 3-month returns:
+
+`28,464`
+
+Complete 6-month returns:
+
+`26,752`
+
+Complete 12-month returns:
+
+`23,401`
+
+Complete canonical 12-1 momentum signals:
+
+`23,401`
+
+The audit confirmed:
+
+- unique month/security feature keys
+- exact reconciliation to the indexed month-end snapshots
+- exact lag-observation completeness
+- exact adjusted-close return formulas
+- exact month `-1` and month `-12` momentum anchors
+- an 11-month momentum window ending one month before ranking
+- continuous `CDAY` to `DAY` security identity
+- zero forward-looking feature columns
+
+### Benchmark Feature Validation
+
+Benchmark feature rows:
+
+`120`
+
+Complete benchmark 1-month returns:
+
+`118`
+
+Complete benchmark 3-month returns:
+
+`114`
+
+Complete benchmark 6-month returns:
+
+`108`
+
+Complete benchmark 12-month returns:
+
+`96`
+
+Complete benchmark momentum observations:
+
+`96`
+
+Each benchmark contains `48` complete momentum observations.
+
+### Final Result
+
+Passed checks:
+
+`40`
+
+Forward-looking feature columns:
+
+`0`
+
+Core rows modified:
+
+`0`
+
+Final result:
+
+`AZURE_SQL_MONTHLY_RETURN_FEATURE_INTEGRITY_AUDIT_PASSED`
+
+and:
+
+`SQL MONTHLY FEATURE-ENGINEERING QUALITY GATE COMPLETE`
+
+### Result
+
+The exact-calendar monthly return and canonical 12-1 momentum features are correct, source-reconciled, free of forward-looking fields, and analysis-ready.
+
+### Next Step
+
+Create the point-in-time monthly momentum-ranking and portfolio-assignment layer.
+
+The next layer must define eligibility, ranking order, tie handling, portfolio counts, and decile assignment before forward returns are joined.
 ---
 
 # Current Status
 
 Current phase:
 
-**Normalized Azure SQL market-data layer complete — feature-engineering methodology preparation**
+**SQL monthly return and momentum feature layer complete - momentum-ranking preparation**
 
 Completed:
 
@@ -3420,6 +3990,19 @@ Completed:
 - Independent 31-check Azure SQL market-data integrity audit
 - Exact source-to-SQL numeric aggregate reconciliation
 - Normalized Azure SQL market-data quality gate
+- Documented analytical price and return methodology
+- Azure SQL SPY trading-session calendar
+- Exact 60-month SPY month-end calendar
+- Constituent and benchmark daily-return views
+- Independent 36-check return-foundation integrity audit
+- Exact-calendar 1-, 3-, 6-, and 12-month return features
+- Canonical 12-1 momentum feature
+- Indexed constituent and benchmark month-end snapshots
+- Transactional analytical snapshot refresh
+- Monthly feature-query runtime reduction from approximately 271 seconds to 0.051 seconds
+- Independent 40-check monthly return-feature integrity audit
+- SQL monthly feature-engineering quality gate
+- `pyodbc 5.3.0` analytical audit connectivity
 
 Current market-data quality state:
 
@@ -3490,37 +4073,57 @@ Current Azure SQL state:
 - Azure SQL integrity checks passed: 31
 - Normalized Azure SQL quality-gate result: PASSED
 
+Current SQL feature-engineering state:
+
+- Primary analytical engine: Azure SQL
+- Independent audit engine: Python
+- SPY trading sessions: 1,255
+- Exact SPY month-end sessions: 60
+- Constituent daily observations: 631,942
+- Complete constituent daily returns: 631,349
+- Constituent month-end snapshot rows: 30,211
+- Benchmark month-end snapshot rows: 120
+- Complete 1-month constituent returns: 29,623
+- Complete 3-month constituent returns: 28,464
+- Complete 6-month constituent returns: 26,752
+- Complete 12-month constituent returns: 23,401
+- Complete canonical 12-1 momentum signals: 23,401
+- Forward-looking feature columns: 0
+- Return-foundation integrity checks passed: 36
+- Snapshot-optimization checks passed: 31
+- Monthly feature-integrity checks passed: 40
+- Core rows modified by feature engineering: 0
+- SQL monthly feature-engineering quality-gate result: PASSED
+
 Next objective:
 
-Define and document the analytical price and return methodology before implementing Phase 5 feature engineering.
+Create and independently validate the point-in-time monthly momentum-ranking and portfolio-assignment layer.
 
-The methodology must establish:
+The next stage must define:
 
-- adjusted-close usage
-- dividend and split treatment
-- daily-return formula
-- monthly observation and return conventions
-- minimum lookback completeness requirements
-- momentum formation periods
-- forward-return horizons
-- risk-free-rate handling
-- benchmark and excess-return conventions
-- look-ahead and survivorship-bias protections
+- monthly ranking eligibility
+- descending momentum rank
+- deterministic tie handling
+- cross-sectional population controls
+- decile or portfolio assignment
+- winner and loser portfolio definitions
+- minimum eligible-universe requirements
+- separation of signal formation from forward performance
+- exact reconciliation to the validated 23,401 momentum signals
 
-After the methodology is validated, create the first reproducible feature-engineering SQL objects and independent integrity audit.
+Forward returns must remain outside the signal and ranking layer until portfolio membership is finalized.
 
 Git checkpoint objective:
 
-Commit the Azure SQL inspection, schema migrations, migration runners, controlled loader, independent database audit, authoritative data-quality reports, and this updated project log.
+Commit the analytical methodology, SQL return-foundation migration, monthly feature migration, indexed snapshot optimization, Python application and audit scripts, authoritative analytical quality reports, dependency update, and this updated project log.
 
 Continue to exclude:
 
 - `.env` and all credentials
 - reproducible datasets under `data/interim/`
-- the overwritten failed duplicate-attempt loader report
+- failed or superseded duplicate reports
 - timestamped backup scripts
 - one-time integration helpers
-
 ---
 
 # Logging Standard Going Forward

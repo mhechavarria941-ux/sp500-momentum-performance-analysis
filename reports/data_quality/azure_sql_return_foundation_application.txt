@@ -1,0 +1,64 @@
+===============================================================================
+AZURE SQL RETURN-FOUNDATION APPLICATION
+===============================================================================
+Connection status: SUCCESS
+Credentials included in report: NO
+Migration: sql\analytics\003_create_return_foundation_views.sql
+Migration type: CREATE OR ALTER analytical views
+
+===============================================================================
+1. PRE-MIGRATION CORE CONTROL
+===============================================================================
+PASS: core.security: 593 / 593 rows.
+PASS: core.security_ticker_history: 594 / 594 rows.
+PASS: core.index_membership: 593 / 593 rows.
+PASS: core.security_price_eligibility: 594 / 594 rows.
+PASS: core.daily_security_price: 631,942 / 631,942 rows.
+PASS: core.benchmark_series: 2 / 2 rows.
+PASS: core.daily_benchmark_price: 2,510 / 2,510 rows.
+
+===============================================================================
+2. APPLY ANALYTICAL VIEWS
+===============================================================================
+PASS: Migration contains the expected eight SQL batches.
+PASS: Executed SQL batch 1 / 8.
+PASS: Executed SQL batch 2 / 8.
+PASS: Executed SQL batch 3 / 8.
+PASS: Executed SQL batch 4 / 8.
+PASS: Executed SQL batch 5 / 8.
+PASS: Executed SQL batch 6 / 8.
+PASS: Executed SQL batch 7 / 8.
+PASS: Executed SQL batch 8 / 8.
+PASS: Analytical-view migration committed.
+
+===============================================================================
+3. VERIFY ANALYTICAL OBJECTS
+===============================================================================
+PASS: All 6 return-foundation views are present.
+PASS: SPY calendar contains 1,255 trading sessions.
+PASS: SPY calendar contains 60 exact month-end sessions.
+PASS: Constituent daily-return view preserves all 631,942 observations.
+PASS: Benchmark daily-return view preserves all 2,510 observations.
+PASS: Benchmark month-end view contains 120 observations.
+PASS: Constituent month-end view is populated.
+
+===============================================================================
+4. POST-MIGRATION CORE CONTROL
+===============================================================================
+PASS: core.security remains unchanged at 593 rows.
+PASS: core.security_ticker_history remains unchanged at 594 rows.
+PASS: core.index_membership remains unchanged at 593 rows.
+PASS: core.security_price_eligibility remains unchanged at 594 rows.
+PASS: core.daily_security_price remains unchanged at 631,942 rows.
+PASS: core.benchmark_series remains unchanged at 2 rows.
+PASS: core.daily_benchmark_price remains unchanged at 2,510 rows.
+
+===============================================================================
+5. FINAL QUALITY GATE
+===============================================================================
+AZURE_SQL_RETURN_FOUNDATION_APPLICATION_PASSED
+Passed checks: 31
+Analytical views created or updated: 6
+Constituent month-end observations: 30,211
+Core rows modified: 0
+SQL return foundation is ready for independent integrity auditing.

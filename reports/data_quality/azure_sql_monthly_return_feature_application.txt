@@ -1,0 +1,59 @@
+===============================================================================
+AZURE SQL MONTHLY RETURN-FEATURE APPLICATION
+===============================================================================
+Connection status: SUCCESS
+Credentials included in report: NO
+Migration: sql\analytics\004_create_monthly_return_feature_views.sql
+Migration type: CREATE OR ALTER analytical views
+
+===============================================================================
+1. DEPENDENCY AND CORE CONTROLS
+===============================================================================
+PASS: All six return-foundation dependencies are present.
+PASS: core.security: 593 / 593 rows.
+PASS: core.security_ticker_history: 594 / 594 rows.
+PASS: core.index_membership: 593 / 593 rows.
+PASS: core.security_price_eligibility: 594 / 594 rows.
+PASS: core.daily_security_price: 631,942 / 631,942 rows.
+PASS: core.benchmark_series: 2 / 2 rows.
+PASS: core.daily_benchmark_price: 2,510 / 2,510 rows.
+
+===============================================================================
+2. APPLY MONTHLY RETURN-FEATURE VIEWS
+===============================================================================
+PASS: Migration contains the expected three SQL batches.
+PASS: Executed SQL batch 1 / 3.
+PASS: Executed SQL batch 2 / 3.
+PASS: Executed SQL batch 3 / 3.
+PASS: Monthly return-feature migration committed.
+
+===============================================================================
+3. VERIFY MONTHLY FEATURE OUTPUTS
+===============================================================================
+PASS: Both monthly return-feature views are present.
+PASS: Security feature view preserves all 30,211 month-end observations.
+PASS: Benchmark feature view preserves all 120 month-end observations.
+PASS: Canonical 12-1 momentum is available for 23,401 observations.
+
+===============================================================================
+4. POST-MIGRATION CORE CONTROL
+===============================================================================
+PASS: core.security remains unchanged at 593 rows.
+PASS: core.security_ticker_history remains unchanged at 594 rows.
+PASS: core.index_membership remains unchanged at 593 rows.
+PASS: core.security_price_eligibility remains unchanged at 594 rows.
+PASS: core.daily_security_price remains unchanged at 631,942 rows.
+PASS: core.benchmark_series remains unchanged at 2 rows.
+PASS: core.daily_benchmark_price remains unchanged at 2,510 rows.
+
+===============================================================================
+5. FINAL QUALITY GATE
+===============================================================================
+AZURE_SQL_MONTHLY_RETURN_FEATURE_APPLICATION_PASSED
+Passed checks: 24
+Monthly analytical views created or updated: 2
+Constituent month-end feature rows: 30,211
+Complete constituent 12-1 momentum rows: 23,401
+Benchmark month-end feature rows: 120
+Core rows modified: 0
+Monthly return and momentum features are ready for auditing.
