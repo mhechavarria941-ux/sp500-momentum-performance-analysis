@@ -1,0 +1,92 @@
+===============================================================================
+AZURE SQL FORWARD-RETURN INTEGRITY AUDIT
+===============================================================================
+Audit mode: READ-ONLY
+Credentials included in report: NO
+
+===============================================================================
+1. OBJECT AND CORE CONTROLS
+===============================================================================
+PASS: All required forward-return views are present.
+PASS: core.security: 593 rows.
+PASS: core.security_ticker_history: 594 rows.
+PASS: core.index_membership: 593 rows.
+PASS: core.security_price_eligibility: 594 rows.
+PASS: core.daily_security_price: 631,942 rows.
+PASS: core.benchmark_series: 2 rows.
+PASS: core.daily_benchmark_price: 2,510 rows.
+
+===============================================================================
+2. CONSTITUENT HOLDING-RETURN CONTROLS
+===============================================================================
+PASS: Constituent holding output contains exactly 23,401 assignments.
+PASS: Exactly 22,916 constituent holding returns are complete.
+PASS: Exactly 22,850 holdings end on the next SPY month-end.
+PASS: Exactly 63 holdings use an early-exit boundary.
+PASS: Exactly three holdings use an immediate-exit boundary.
+PASS: Exactly 485 December 2025 holdings are right-censored outside scope.
+PASS: Exact and terminal holding boundaries reconcile to complete returns.
+PASS: Constituent month/security keys are unique.
+PASS: Every holding row exactly preserves its fixed portfolio assignment.
+PASS: Every realized holding boundary is the final validated price in its window.
+PASS: Every constituent forward return matches the adjusted-close formula.
+PASS: Holding statuses and boundary flags are internally consistent.
+
+===============================================================================
+3. BENCHMARK FORWARD-RETURN CONTROLS
+===============================================================================
+PASS: Benchmark output contains exactly 96 rows.
+PASS: Both benchmarks contain 47 complete forward returns.
+PASS: Only the two December 2025 benchmark rows are right-censored.
+PASS: Every benchmark forward return matches the adjusted-close formula.
+PASS: Every ranking month contains one ETF and one index benchmark.
+
+===============================================================================
+4. PORTFOLIO AGGREGATION CONTROLS
+===============================================================================
+PASS: Decile output contains exactly 480 month/decile rows.
+PASS: All ten deciles are complete for 47 observable holding months.
+PASS: Every decile return and boundary count matches an independent aggregation.
+PASS: Assigned and complete decile weights reconcile to one.
+PASS: Long-short output contains exactly 48 months.
+PASS: Winner-minus-loser returns are complete for 47 observable months.
+PASS: Every winner-minus-loser return matches winner return minus loser return.
+PASS: Combined performance output contains exactly 48 months.
+PASS: Momentum and benchmark comparisons are complete for 47 months.
+PASS: Winner-minus-SPY and loser-minus-SPY returns match their formulas.
+PASS: Only the ten December 2025 deciles are right-censored.
+PASS: Only December 2025 is incomplete long-short.
+PASS: Only December 2025 is incomplete performance.
+
+===============================================================================
+5. LOOK-AHEAD AND SOURCE-PRESERVATION CONTROLS
+===============================================================================
+PASS: Signal and assignment views still contain no forward-looking columns.
+PASS: Signal and assignment views do not depend on forward-return objects.
+PASS: core.security remains unchanged at 593 rows.
+PASS: core.security_ticker_history remains unchanged at 594 rows.
+PASS: core.index_membership remains unchanged at 593 rows.
+PASS: core.security_price_eligibility remains unchanged at 594 rows.
+PASS: core.daily_security_price remains unchanged at 631,942 rows.
+PASS: core.benchmark_series remains unchanged at 2 rows.
+PASS: core.daily_benchmark_price remains unchanged at 2,510 rows.
+
+===============================================================================
+6. FINAL QUALITY GATE
+===============================================================================
+AZURE_SQL_FORWARD_RETURN_INTEGRITY_AUDIT_PASSED
+Passed checks: 47
+Constituent holding rows: 23,401
+Complete constituent returns: 22,916
+Exact-month-end holdings: 22,850
+Early-exit holdings: 63
+Immediate-exit holdings: 3
+Right-censored holdings: 485
+Benchmark holding rows: 96
+Complete decile return rows: 470
+Complete winner-minus-loser months: 47
+Complete benchmark-comparison months: 47
+Look-ahead dependencies: 0
+Core rows modified: 0
+Forward holding boundaries, returns, deciles, and benchmarks are valid.
+SQL FORWARD-RETURN QUALITY GATE COMPLETE.

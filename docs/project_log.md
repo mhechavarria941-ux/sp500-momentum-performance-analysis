@@ -4153,13 +4153,311 @@ Point-in-time rankings, deterministic ordering, decile assignments, portfolio la
 Define and implement the forward-return and portfolio-performance layer.
 
 Forward returns must be joined only after portfolio assignments are fixed. The next layer must explicitly address exact holding periods, constituent exits, terminal observations, right-censoring, benchmark alignment, and the unavailable post-scope return for the final December 2025 ranking.
+
+## 3.38 Azure SQL One-Month Forward-Return Layer
+
+### Date
+
+2026-08-22
+
+### Objective
+
+Create a reproducible Azure SQL layer that connects each fixed point-in-time momentum portfolio assignment to its subsequent one-month holding-period return.
+
+The assignment population must remain fixed before any future price information is joined.
+
+### SQL Migration
+
+`sql/analytics/007_create_forward_return_views.sql`
+
+### Application Script
+
+`src/analysis/apply_azure_sql_forward_returns.py`
+
+### Application Report
+
+`reports/data_quality/azure_sql_forward_return_application.txt`
+
+### Source Objects
+
+The forward-return layer uses:
+
+- `analytics.v_security_monthly_momentum_portfolio`
+- `analytics.v_spy_month_end_calendar`
+- the indexed benchmark month-end snapshot
+- `core.daily_security_price`
+- the validated benchmark price history
+
+### Holding-Period Convention
+
+Each security is assigned to its momentum portfolio using only information available at the ranking month-end.
+
+The intended holding period is:
+
+- start: the ranking month-end
+- target end: the following SPY month-end
+- return horizon: one month
+
+The fixed portfolio assignment is established before the subsequent holding return is joined.
+
+### Terminal-Exit Treatment
+
+When a security has no validated price on the target month-end because its usable market history ends during the holding month, the last validated observation within the holding window is used.
+
+Holding boundaries are classified as:
+
+- `EXACT_MONTH_END`
+- `EARLY_EXIT`
+- `IMMEDIATE_EXIT`
+- `OUT_OF_SCOPE`
+
+An early or immediate exit is treated as a documented terminal holding boundary rather than an unexplained missing return.
+
+December 2025 assignments are right-censored because their January 2026 holding-period endpoints fall outside the validated 2021-2025 project scope.
+
+### Analytical Views
+
+The migration created or updated five views:
+
+- `analytics.v_security_monthly_forward_return_1m`
+- `analytics.v_benchmark_monthly_forward_return_1m`
+- `analytics.v_momentum_decile_forward_return_1m`
+- `analytics.v_momentum_long_short_forward_return_1m`
+- `analytics.v_momentum_monthly_performance_1m`
+
+### Portfolio Aggregation
+
+Security-level forward returns are aggregated using the equal weights fixed during portfolio assignment.
+
+The output provides:
+
+- all ten momentum-decile returns
+- winner-portfolio returns
+- loser-portfolio returns
+- winner-minus-loser returns
+- SPY forward returns
+- S&P 500 index forward returns
+- winner-minus-SPY returns
+- loser-minus-SPY returns
+
+### Application Validation
+
+Passed checks:
+
+`46`
+
+Analytical views created or updated:
+
+`5`
+
+Constituent holding rows:
+
+`23,401`
+
+Complete constituent holding returns:
+
+`22,916`
+
+Exact-month-end constituent holdings:
+
+`22,850`
+
+Early-exit constituent holdings:
+
+`63`
+
+Immediate-exit constituent holdings:
+
+`3`
+
+Out-of-scope constituent holdings:
+
+`485`
+
+Benchmark holding rows:
+
+`96`
+
+Complete decile return rows:
+
+`470`
+
+Complete winner-minus-loser months:
+
+`47`
+
+Complete benchmark-comparison months:
+
+`47`
+
+Core rows modified:
+
+`0`
+
+Final result:
+
+`AZURE_SQL_FORWARD_RETURN_APPLICATION_PASSED`
+
+### Decision
+
+The project uses a fixed-assignment, next-month holding-return convention.
+
+Terminal observations are preserved when they represent the final validated price of a security that exits during the holding month. This avoids silently discarding delisted or acquired securities and reduces survivorship bias.
+
+December 2025 is retained as a documented right-censored ranking month but is excluded from completed forward-performance calculations.
+
+### Result
+
+The point-in-time momentum portfolios now have validated one-month forward returns for every observable holding month.
+
+The layer is ready for independent integrity auditing.
+
+---
+
+## 3.39 Azure SQL Forward-Return Integrity Audit
+
+### Date
+
+2026-08-23
+
+### Objective
+
+Independently verify that the Azure SQL forward-return layer preserves fixed point-in-time assignments, uses valid holding boundaries, calculates returns correctly, aggregates portfolios accurately, and introduces no look-ahead dependency.
+
+The audit is read-only and performs no database modifications.
+
+### Audit Script
+
+`src/analysis/audit_azure_sql_forward_returns.py`
+
+### Audit Report
+
+`reports/data_quality/azure_sql_forward_return_integrity_audit.txt`
+
+### Independent Validation
+
+The audit independently confirmed:
+
+- all required forward-return objects are present
+- all 23,401 fixed portfolio assignments are preserved
+- constituent month/security keys are unique
+- every holding row preserves its original rank, decile, weight, and starting price
+- every realized endpoint is the final validated security price within its holding window
+- all complete constituent returns match the adjusted-close formula
+- terminal-boundary classifications reconcile exactly
+- all benchmark returns match the adjusted-close formula
+- every decile return matches an independent security-level aggregation
+- assigned and complete decile weights reconcile to one
+- winner-minus-loser returns equal winner returns minus loser returns
+- winner-minus-SPY and loser-minus-SPY returns match their formulas
+- only December 2025 is right-censored
+- signal and assignment objects contain no forward-looking columns
+- signal and assignment objects do not depend on forward-return objects
+- all core-table populations remain unchanged
+
+### Final Result
+
+Passed checks:
+
+`47`
+
+Constituent holding rows:
+
+`23,401`
+
+Complete constituent returns:
+
+`22,916`
+
+Exact-month-end holdings:
+
+`22,850`
+
+Early-exit holdings:
+
+`63`
+
+Immediate-exit holdings:
+
+`3`
+
+Right-censored holdings:
+
+`485`
+
+Benchmark holding rows:
+
+`96`
+
+Complete decile return rows:
+
+`470`
+
+Complete winner-minus-loser months:
+
+`47`
+
+Complete benchmark-comparison months:
+
+`47`
+
+Look-ahead dependencies:
+
+`0`
+
+Core rows modified:
+
+`0`
+
+Final result:
+
+`AZURE_SQL_FORWARD_RETURN_INTEGRITY_AUDIT_PASSED`
+
+and:
+
+`SQL FORWARD-RETURN QUALITY GATE COMPLETE`
+
+### Result
+
+The one-month forward-return layer is point-in-time valid, terminal-exit aware, independently reconciled, and ready for portfolio-performance analysis.
+
+No unexplained in-scope holding returns are missing.
+
+No portfolio assignments were changed after observing future returns.
+
+No forward-return dependency enters the momentum signal or portfolio-assignment layers.
+
+### Issues / Limitations
+
+December 2025 contains 485 valid momentum assignments but no completed one-month forward return because January 2026 is outside the validated project scope.
+
+Transaction costs, turnover costs, risk-free returns, and risk-adjusted performance statistics have not yet been applied.
+
+### Next Step
+
+Create the Azure SQL portfolio-performance layer using the 47 complete observable holding months.
+
+The next layer should calculate:
+
+- cumulative wealth
+- arithmetic and geometric average returns
+- annualized return
+- annualized volatility
+- maximum drawdown
+- positive-month frequency
+- benchmark-relative performance
+- winner-minus-loser performance
+- portfolio turnover
+
+Risk-free-rate and transaction-cost conventions must be established before producing Sharpe ratios, net-of-cost results, or regression-based alpha estimates.
+
 ---
 
 # Current Status
 
 Current phase:
 
-**Point-in-time momentum ranking complete - forward-return methodology preparation**
+**SQL forward-return layer complete - portfolio-performance analysis preparation**
 
 Completed:
 
@@ -4233,6 +4531,18 @@ Completed:
 - Exact 480-row month/decile summary
 - Independent 36-check momentum-ranking integrity audit
 - SQL momentum-ranking quality gate
+- Fixed point-in-time one-month holding-period definitions
+- Terminal-exit-aware constituent forward returns
+- Five Azure SQL forward-return and portfolio-performance views
+- Exact preservation of 23,401 momentum portfolio assignments
+- Complete forward returns for 22,916 constituent assignments
+- Exact treatment of 63 early exits and 3 immediate exits
+- Documented right-censoring of 485 December 2025 assignments
+- Equal-weight returns for all ten momentum deciles
+- Winner, loser, and winner-minus-loser forward-return series
+- SPY and S&P 500 forward benchmark comparisons
+- Independent 47-check forward-return integrity audit
+- SQL forward-return quality gate
 
 Current market-data quality state:
 
@@ -4336,24 +4646,36 @@ Current SQL feature-engineering state:
 - Momentum-ranking integrity checks passed: 36
 - Momentum-ranking quality-gate result: PASSED
 
+Current SQL forward-performance state:
+
+- Fixed portfolio assignments: 23,401
+- Ranking months: 48
+- Observable forward-return months: 47
+- Complete constituent forward returns: 22,916
+- Exact-month-end holdings: 22,850
+- Early-exit holdings: 63
+- Immediate-exit holdings: 3
+- Right-censored December 2025 holdings: 485
+- Benchmark holding rows: 96
+- Complete benchmark returns: 94
+- Decile return rows: 480
+- Complete decile return rows: 470
+- Winner-minus-loser rows: 48
+- Complete winner-minus-loser months: 47
+- Complete benchmark-comparison months: 47
+- Forward-return application checks passed: 46
+- Forward-return integrity checks passed: 47
+- Look-ahead dependencies: 0
+- Core rows modified: 0
+- SQL forward-return quality-gate result: PASSED
+
 Next objective:
 
-Define and independently validate the forward-return and portfolio-performance layer.
+Create the Azure SQL portfolio-performance and cumulative-wealth layer using the 47 complete forward-return months.
 
-The next stage must establish:
+The next stage must calculate cumulative wealth, average returns, annualized return and volatility, maximum drawdown, positive-month frequency, benchmark-relative results, winner-minus-loser performance, and portfolio turnover.
 
-- the exact forward holding period
-- ranking-date and liquidation-date price conventions
-- exact next-month SPY calendar alignment
-- treatment of index removals during a holding month
-- treatment of documented market terminations
-- terminal-price and right-censoring rules
-- equal-weight decile return aggregation
-- winner, loser, and winner-minus-loser returns
-- SPY and S&P 500 benchmark alignment
-- explicit exclusion of the unavailable post-scope return for the December 2025 ranking
-
-Portfolio assignments must remain fixed before any forward return is joined.
+Risk-free-rate and transaction-cost conventions must be documented before Sharpe ratios, regression alpha, or net-of-cost performance are calculated.
 
 Git checkpoint objective:
 

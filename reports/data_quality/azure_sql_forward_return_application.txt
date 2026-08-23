@@ -1,0 +1,92 @@
+===============================================================================
+AZURE SQL FORWARD-RETURN APPLICATION
+===============================================================================
+Connection status: SUCCESS
+Credentials included in report: NO
+Migration: sql\analytics\007_create_forward_return_views.sql
+Strategy: fixed assignments, next-month holding returns, and terminal exits
+
+===============================================================================
+1. DEPENDENCY AND CORE CONTROLS
+===============================================================================
+PASS: The momentum portfolio and SPY calendar dependencies are present.
+PASS: The indexed benchmark snapshot is present.
+PASS: The source contains exactly 23,401 fixed portfolio assignments.
+PASS: The source contains exactly 48 ranking months.
+PASS: core.security: 593 rows.
+PASS: core.security_ticker_history: 594 rows.
+PASS: core.index_membership: 593 rows.
+PASS: core.security_price_eligibility: 594 rows.
+PASS: core.daily_security_price: 631,942 rows.
+PASS: core.benchmark_series: 2 rows.
+PASS: core.daily_benchmark_price: 2,510 rows.
+
+===============================================================================
+2. APPLY FORWARD-RETURN VIEWS
+===============================================================================
+PASS: Migration contains the expected six SQL batches.
+PASS: Executed SQL batch 1 / 6.
+PASS: Executed SQL batch 2 / 6.
+PASS: Executed SQL batch 3 / 6.
+PASS: Executed SQL batch 4 / 6.
+PASS: Executed SQL batch 5 / 6.
+PASS: Executed SQL batch 6 / 6.
+
+===============================================================================
+3. CONSTITUENT HOLDING-RETURN OUTPUT
+===============================================================================
+PASS: All five forward-return views are present.
+PASS: Constituent holding output preserves all 23,401 assignments.
+PASS: Every in-scope constituent assignment has a complete holding return.
+PASS: Only the December 2025 assignments are right-censored outside the project scope.
+PASS: No in-scope constituent holding return is unavailable.
+PASS: Constituent completeness, return, and censoring fields are internally consistent.
+PASS: Every complete constituent return has one exact or terminal holding boundary.
+
+===============================================================================
+4. PORTFOLIO AND BENCHMARK OUTPUTS
+===============================================================================
+PASS: Benchmark holding output contains two series across all 48 ranking months.
+PASS: Both benchmarks contain 47 complete forward returns.
+PASS: Exactly two December 2025 benchmark rows are right-censored.
+PASS: Decile output contains all 480 month/decile assignments.
+PASS: All ten deciles contain complete returns for 47 observable months.
+PASS: Winner-minus-loser output contains all 48 ranking months.
+PASS: Winner-minus-loser returns are complete for 47 observable months.
+PASS: Combined momentum-performance output contains all 48 ranking months.
+PASS: Combined momentum and benchmark returns are complete for 47 observable months.
+PASS: Benchmark completeness reconciles.
+PASS: Decile right-censoring reconciles.
+PASS: Long-short right-censoring reconciles.
+PASS: Combined performance right-censoring reconciles.
+
+===============================================================================
+5. POST-MIGRATION CORE CONTROL
+===============================================================================
+PASS: core.security remains unchanged at 593 rows.
+PASS: core.security_ticker_history remains unchanged at 594 rows.
+PASS: core.index_membership remains unchanged at 593 rows.
+PASS: core.security_price_eligibility remains unchanged at 594 rows.
+PASS: core.daily_security_price remains unchanged at 631,942 rows.
+PASS: core.benchmark_series remains unchanged at 2 rows.
+PASS: core.daily_benchmark_price remains unchanged at 2,510 rows.
+PASS: Forward-return migration committed.
+
+===============================================================================
+6. FINAL QUALITY GATE
+===============================================================================
+AZURE_SQL_FORWARD_RETURN_APPLICATION_PASSED
+Passed checks: 46
+Analytical views created or updated: 5
+Constituent holding rows: 23,401
+Complete constituent holding returns: 22,916
+Exact-month-end constituent holdings: 22,850
+Early-exit constituent holdings: 63
+Immediate-exit constituent holdings: 3
+Out-of-scope constituent holdings: 485
+Benchmark holding rows: 96
+Complete decile return rows: 470
+Complete winner-minus-loser months: 47
+Complete benchmark-comparison months: 47
+Core rows modified: 0
+One-month forward holding returns are ready for independent auditing.
