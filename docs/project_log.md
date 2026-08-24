@@ -4453,11 +4453,563 @@ Risk-free-rate and transaction-cost conventions must be established before produ
 
 ---
 
+## 3.40 Azure SQL Portfolio-Performance and Cumulative-Wealth Layer
+
+### Date
+
+2026-08-23
+
+### Objective
+
+Convert the validated one-month forward-return series into a portfolio-level performance layer capable of measuring compounded wealth, return characteristics, drawdowns, benchmark-relative performance, and momentum-portfolio turnover.
+
+The layer uses only the 47 complete observable holding months established by the validated forward-return methodology.
+
+### SQL Migration
+
+`sql/analytics/008_create_portfolio_performance_views.sql`
+
+### Application Script
+
+`src/analysis/apply_azure_sql_portfolio_performance.py`
+
+### Application Report
+
+`reports/data_quality/azure_sql_portfolio_performance_application.txt`
+
+### Source Objects
+
+The portfolio-performance layer builds on the previously validated ranking and forward-return objects:
+
+- `analytics.v_security_monthly_momentum_portfolio`
+- `analytics.v_momentum_decile_forward_return_1m`
+- `analytics.v_momentum_long_short_forward_return_1m`
+- `analytics.v_benchmark_monthly_forward_return_1m`
+
+Portfolio assignments remain fixed before future returns enter the analytical process.
+
+### Analytical Objects Created
+
+The migration created or updated six analytical views:
+
+- `analytics.v_momentum_monthly_return_panel`
+- `analytics.v_momentum_cumulative_wealth`
+- `analytics.v_momentum_wealth_drawdown`
+- `analytics.v_momentum_performance_summary`
+- `analytics.v_momentum_decile_turnover`
+- `analytics.v_momentum_turnover_summary`
+
+### Monthly Return Panel
+
+The monthly panel contains 13 analytical series:
+
+- momentum deciles 1 through 10
+- winner-minus-loser (`WML`)
+- SPY
+- S&P 500 index
+
+Each series contains exactly:
+
+`47`
+
+complete observable monthly returns.
+
+Monthly return-panel rows:
+
+`611`
+
+The right-censored December 2025 forward-return period remains excluded because January 2026 falls outside the validated analytical scope.
+
+### Cumulative-Wealth Convention
+
+Each analytical series begins with wealth indexed to:
+
+`1.00`
+
+Monthly wealth is compounded sequentially using:
+
+`ending_wealth = beginning_wealth × (1 + monthly_return)`
+
+Each month's beginning wealth equals the preceding month's ending wealth.
+
+Cumulative-wealth rows:
+
+`611`
+
+### Drawdown Convention
+
+For each series, the layer tracks the historical running wealth peak.
+
+Drawdown is calculated as:
+
+`ending_wealth / running_peak_wealth - 1`
+
+This measures the percentage decline from the highest wealth value previously achieved by the strategy.
+
+Drawdown rows:
+
+`611`
+
+### Performance Summary
+
+The performance-summary layer contains one row for each of the 13 analytical series.
+
+The summary includes portfolio-level measures derived from the 47 complete monthly returns, including:
+
+- arithmetic average monthly return
+- geometric average monthly return
+- cumulative return
+- annualized return
+- monthly volatility
+- annualized volatility
+- best monthly return
+- worst monthly return
+- positive-month frequency
+- maximum drawdown
+- SPY-relative active return statistics
+- tracking error
+- information ratio where defined
+
+Performance-summary rows:
+
+`13`
+
+### Benchmark Treatment
+
+SPY and the S&P 500 index are retained as separate benchmark series.
+
+SPY represents the investable ETF benchmark.
+
+The S&P 500 index represents the underlying index benchmark.
+
+SPY is used as the reference series for active-return and tracking-error calculations in the current performance layer.
+
+### Portfolio-Turnover Convention
+
+Turnover is measured from the target portfolio weights established by consecutive monthly momentum rankings.
+
+For each decile and rebalance month, the layer compares:
+
+- prior securities
+- current securities
+- retained securities
+- portfolio entries
+- portfolio exits
+- security overlap
+- target-weight changes
+
+One-way turnover measures the proportion of portfolio capital that would need to be reallocated to move from the previous target portfolio to the new target portfolio.
+
+Decile turnover rows:
+
+`470`
+
+Turnover-summary rows:
+
+`10`
+
+Rebalances per decile:
+
+`47`
+
+December 2025 remains included in turnover because the December target portfolio is a valid point-in-time rebalance even though its January 2026 forward return is right-censored.
+
+### Gross-Performance Convention
+
+The current portfolio-performance layer represents:
+
+`GROSS PERFORMANCE`
+
+No transaction costs are deducted.
+
+The following methodologies remain intentionally deferred:
+
+- risk-free-rate adjustment
+- Sharpe ratio
+- regression alpha
+- transaction-cost-adjusted performance
+- net-of-cost performance
+
+These measures require additional methodological decisions and, where applicable, external data before they are calculated.
+
+### Application Validation
+
+Passed checks:
+
+`56`
+
+Analytical views created or updated:
+
+`6`
+
+Monthly return-panel rows:
+
+`611`
+
+Analytical series:
+
+`13`
+
+Observable gross-performance months:
+
+`47`
+
+Cumulative-wealth rows:
+
+`611`
+
+Drawdown rows:
+
+`611`
+
+Performance-summary rows:
+
+`13`
+
+Decile-turnover rows:
+
+`470`
+
+Turnover-summary rows:
+
+`10`
+
+Core rows modified:
+
+`0`
+
+Final result:
+
+`AZURE_SQL_PORTFOLIO_PERFORMANCE_APPLICATION_PASSED`
+
+### Result
+
+The validated forward-return layer has been converted into a complete gross portfolio-performance framework.
+
+The project can now evaluate how the momentum portfolios compounded through time, how volatile they were, how deeply they declined from prior peaks, how they performed relative to SPY, and how much portfolio rebalancing the momentum strategy required.
+
+### Next Step
+
+Independently reconstruct the portfolio-performance calculations in Python and reconcile them against the Azure SQL analytical views before accepting the results as authoritative.
+
+---
+
+## 3.41 Azure SQL Portfolio-Performance Integrity Audit
+
+### Date
+
+2026-08-23
+
+### Objective
+
+Independently validate the complete portfolio-performance layer without modifying the database.
+
+The audit reconstructs the monthly performance panel, cumulative wealth, drawdowns, summary statistics, and momentum-decile turnover directly in Python using the previously validated ranking and forward-return sources.
+
+### Audit Script
+
+`src/analysis/audit_azure_sql_portfolio_performance.py`
+
+### Audit Report
+
+`reports/data_quality/azure_sql_portfolio_performance_integrity_audit.txt`
+
+### Audit Mode
+
+The audit is:
+
+`READ-ONLY`
+
+No analytical or core database rows are modified.
+
+### Independent Monthly Return Reconstruction
+
+Python independently reconstructed all portfolio and benchmark return observations from the previously validated forward-return sources.
+
+Validated:
+
+- monthly return-panel rows: `611`
+- analytical series: `13`
+- observable performance months: `47`
+- month/series key mismatches: `0`
+- return-value mismatches: `0`
+
+The observable performance period corresponds exactly to analysis months:
+
+`13 through 59`
+
+The right-censored December 2025 return remains excluded.
+
+### Independent Cumulative-Wealth Reconstruction
+
+Python independently compounded every monthly return sequence beginning at:
+
+`1.00`
+
+Validated:
+
+- cumulative-wealth rows: `611`
+- broken wealth chains: `0`
+- compounding mismatches: `0`
+- nonpositive wealth observations: `0`
+
+Every SQL wealth observation matched the independent Python calculation.
+
+### Independent Drawdown Reconstruction
+
+Python independently reconstructed:
+
+- running wealth peaks
+- monthly drawdowns
+- maximum drawdowns
+
+Validated drawdown rows:
+
+`611`
+
+Independent Python drawdown mismatches:
+
+`0`
+
+### Independent Performance-Summary Reconstruction
+
+Python independently recalculated the statistics for all 13 analytical series directly from monthly returns.
+
+The audit independently verified:
+
+- arithmetic return
+- geometric return
+- cumulative return
+- annualized return
+- monthly volatility
+- annualized volatility
+- best month
+- worst month
+- positive-month frequency
+- maximum drawdown
+- SPY-relative active-return statistics
+- tracking error
+- information ratio where defined
+
+Performance-summary rows:
+
+`13`
+
+Independent Python performance-summary mismatches:
+
+`0`
+
+SPY correctly produced zero active return and zero tracking error relative to itself.
+
+### Independent Turnover Reconstruction
+
+The audit reloaded all:
+
+`23,401`
+
+fixed momentum assignments and independently reconstructed portfolio changes between consecutive ranking months.
+
+For every month and decile, Python independently calculated:
+
+- prior security count
+- current security count
+- retained securities
+- entries
+- exits
+- overlap
+- one-way target-weight turnover
+
+Independent turnover rows:
+
+`470`
+
+SQL turnover rows:
+
+`470`
+
+Independent Python turnover mismatches:
+
+`0`
+
+Turnover covers exactly:
+
+`47`
+
+consecutive monthly rebalances corresponding to analysis months:
+
+`14 through 60`
+
+### Independent Turnover-Summary Reconstruction
+
+Python independently aggregated the monthly turnover results for all ten momentum deciles.
+
+Turnover-summary rows:
+
+`10`
+
+Independent Python turnover-summary mismatches:
+
+`0`
+
+### Methodology and Look-Ahead Controls
+
+The audit confirmed:
+
+- risk-free-rate fields are absent
+- Sharpe-ratio fields are absent
+- regression-alpha fields are absent
+- transaction-cost fields are absent
+- net-of-cost fields are absent
+- December 2025 realized returns remain excluded
+- December 2025 remains correctly included as a valid turnover rebalance
+- ranking and forward-return source objects do not depend on the new performance layer
+- the performance layer introduces no backward dependency into signal construction or portfolio assignment
+
+### Core Preservation
+
+All validated core populations remained unchanged.
+
+Core rows modified:
+
+`0`
+
+### Final Result
+
+Passed checks:
+
+`50`
+
+Monthly return-panel rows:
+
+`611`
+
+Analytical series:
+
+`13`
+
+Observable gross-performance months:
+
+`47`
+
+Cumulative-wealth rows:
+
+`611`
+
+Drawdown rows:
+
+`611`
+
+Performance-summary rows:
+
+`13`
+
+Decile-turnover rows:
+
+`470`
+
+Turnover-summary rows:
+
+`10`
+
+Independent Python return-panel mismatches:
+
+`0`
+
+Independent Python wealth mismatches:
+
+`0`
+
+Independent Python drawdown mismatches:
+
+`0`
+
+Independent Python performance-summary mismatches:
+
+`0`
+
+Independent Python turnover mismatches:
+
+`0`
+
+Independent Python turnover-summary mismatches:
+
+`0`
+
+Gross performance convention:
+
+`YES`
+
+Risk-free-rate dependency:
+
+`NO`
+
+Sharpe ratio calculated:
+
+`NO`
+
+Regression alpha calculated:
+
+`NO`
+
+Transaction costs applied:
+
+`NO`
+
+Core rows modified:
+
+`0`
+
+Final result:
+
+`AZURE_SQL_PORTFOLIO_PERFORMANCE_INTEGRITY_AUDIT_PASSED`
+
+and:
+
+`SQL PORTFOLIO-PERFORMANCE QUALITY GATE COMPLETE`
+
+### Result
+
+The gross portfolio-performance layer is independently validated and analysis-ready.
+
+Every SQL return, wealth, drawdown, performance-summary, and turnover result reconciles to an independent Python reconstruction.
+
+The project can now begin interpreting the actual momentum-strategy results without relying on unverified analytical calculations.
+
+### Issues / Limitations
+
+The performance history contains 47 observable forward-return months.
+
+December 2025 remains right-censored for realized performance because January 2026 is outside the validated project scope.
+
+Current results are gross of transaction costs.
+
+Risk-free-rate-adjusted performance, Sharpe ratios, regression alpha, and net-of-cost results remain outside the current validated methodology.
+
+### Next Step
+
+Inspect and document the validated portfolio-performance results, including:
+
+- winner performance
+- loser performance
+- winner-minus-loser performance
+- cumulative wealth
+- annualized returns
+- annualized volatility
+- maximum drawdown
+- positive-month frequency
+- SPY and S&P 500 benchmark comparisons
+- momentum-decile behavior
+- portfolio turnover
+
+After the gross results are understood, define the risk-free-rate and transaction-cost methodologies before implementing Sharpe ratios, regression alpha, or net-of-cost performance.
+
+---
+
 # Current Status
 
 Current phase:
 
-**SQL forward-return layer complete - portfolio-performance analysis preparation**
+**SQL portfolio-performance layer complete - validated strategy-results analysis**
 
 Completed:
 
@@ -4533,7 +5085,7 @@ Completed:
 - SQL momentum-ranking quality gate
 - Fixed point-in-time one-month holding-period definitions
 - Terminal-exit-aware constituent forward returns
-- Five Azure SQL forward-return and portfolio-performance views
+- Five Azure SQL forward-return views
 - Exact preservation of 23,401 momentum portfolio assignments
 - Complete forward returns for 22,916 constituent assignments
 - Exact treatment of 63 early exits and 3 immediate exits
@@ -4543,6 +5095,23 @@ Completed:
 - SPY and S&P 500 forward benchmark comparisons
 - Independent 47-check forward-return integrity audit
 - SQL forward-return quality gate
+- Six-view Azure SQL gross portfolio-performance layer
+- 611-row monthly return panel across 13 analytical series
+- 47 complete observable gross-performance months
+- Cumulative-wealth compounding for all analytical series
+- Running-peak and drawdown analysis
+- Thirteen-series portfolio-performance summary
+- SPY-relative active-return and tracking-error statistics
+- 470 month/decile target-weight turnover observations
+- Ten-decile turnover summary
+- Independent Python reconstruction of monthly return panel
+- Independent Python reconstruction of cumulative wealth
+- Independent Python reconstruction of drawdowns
+- Independent Python reconstruction of performance statistics
+- Independent Python reconstruction of target-weight turnover
+- Independent 50-check portfolio-performance integrity audit
+- Zero Python-to-SQL portfolio-performance mismatches
+- SQL portfolio-performance quality gate
 
 Current market-data quality state:
 
@@ -4669,17 +5238,56 @@ Current SQL forward-performance state:
 - Core rows modified: 0
 - SQL forward-return quality-gate result: PASSED
 
+Current SQL portfolio-performance state:
+
+- Gross-performance months: 47
+- Analytical series: 13
+- Monthly return-panel rows: 611
+- Momentum decile series: 10
+- Winner-minus-loser series: 1
+- Benchmark series: 2
+- Cumulative-wealth rows: 611
+- Drawdown rows: 611
+- Performance-summary rows: 13
+- Decile-turnover rows: 470
+- Turnover-summary rows: 10
+- Rebalances per decile: 47
+- Portfolio-performance application checks passed: 56
+- Portfolio-performance integrity checks passed: 50
+- Independent Python return-panel mismatches: 0
+- Independent Python wealth mismatches: 0
+- Independent Python drawdown mismatches: 0
+- Independent Python performance-summary mismatches: 0
+- Independent Python turnover mismatches: 0
+- Independent Python turnover-summary mismatches: 0
+- Gross performance convention: YES
+- Risk-free-rate dependency: NO
+- Sharpe ratio calculated: NO
+- Regression alpha calculated: NO
+- Transaction costs applied: NO
+- Core rows modified: 0
+- SQL portfolio-performance quality-gate result: PASSED
+
 Next objective:
 
-Create the Azure SQL portfolio-performance and cumulative-wealth layer using the 47 complete forward-return months.
+Inspect and document the validated gross momentum-strategy results across all 13 analytical series.
 
-The next stage must calculate cumulative wealth, average returns, annualized return and volatility, maximum drawdown, positive-month frequency, benchmark-relative results, winner-minus-loser performance, and portfolio turnover.
+Evaluate cumulative wealth, annualized return, annualized volatility, maximum drawdown, positive-month frequency, benchmark-relative performance, winner-minus-loser behavior, momentum-decile behavior, and portfolio turnover.
 
-Risk-free-rate and transaction-cost conventions must be documented before Sharpe ratios, regression alpha, or net-of-cost performance are calculated.
+After the gross-performance results are understood, define and document the risk-free-rate and transaction-cost methodologies before calculating Sharpe ratios, regression alpha, or net-of-cost performance.
 
 Git checkpoint objective:
 
-Commit the momentum-ranking SQL migration, transactional application runner, independent integrity audit, authoritative application and audit reports, and this updated project log.
+Commit the portfolio-performance SQL migration, application runner, independent integrity audit, authoritative application and audit reports, and this updated project log.
+
+Files for the checkpoint:
+
+- `sql/analytics/008_create_portfolio_performance_views.sql`
+- `src/analysis/apply_azure_sql_portfolio_performance.py`
+- `src/analysis/audit_azure_sql_portfolio_performance.py`
+- `reports/data_quality/azure_sql_portfolio_performance_application.txt`
+- `reports/data_quality/azure_sql_portfolio_performance_integrity_audit.txt`
+- `project_log.md`
 
 Continue to exclude:
 

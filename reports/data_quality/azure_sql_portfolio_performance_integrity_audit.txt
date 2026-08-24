@@ -1,0 +1,113 @@
+===============================================================================
+AZURE SQL PORTFOLIO-PERFORMANCE INTEGRITY AUDIT
+===============================================================================
+Audit mode: READ-ONLY
+Credentials included in report: NO
+Independent method: reconstruct portfolio panel, wealth, drawdown, summary statistics, and turnover in Python
+Deferred by design: risk-free rates, Sharpe ratios, regression alpha, and transaction costs
+
+===============================================================================
+1. OBJECT, SCHEMA, AND SOURCE CONTROLS
+===============================================================================
+PASS: All required source and portfolio-performance views are present.
+PASS: All six portfolio-performance views match the expected schemas.
+PASS: core.security: 593 rows.
+PASS: core.security_ticker_history: 594 rows.
+PASS: core.index_membership: 593 rows.
+PASS: core.security_price_eligibility: 594 rows.
+PASS: core.daily_security_price: 631,942 rows.
+PASS: core.benchmark_series: 2 rows.
+PASS: core.daily_benchmark_price: 2,510 rows.
+PASS: The ranking source still contains 23,401 fixed assignments.
+PASS: The decile source still contains 470 complete returns.
+PASS: The long-short source still contains 47 complete returns.
+PASS: The benchmark source still contains 94 complete returns.
+
+===============================================================================
+2. INDEPENDENT MONTHLY RETURN-PANEL RECONSTRUCTION
+===============================================================================
+PASS: Benchmark source contains exactly one ETF and one index type.
+PASS: Independent source reconstruction produced 611 panel rows.
+PASS: SQL monthly return panel contains 611 rows.
+PASS: Every SQL month/series key matches the independent source reconstruction.
+PASS: Every return-panel row exactly reconciles to its independent source mapping.
+PASS: Gross-performance months are exactly analysis months 13 through 59.
+PASS: The return panel contains exactly 13 analytical series.
+PASS: Every monthly return is greater than -100%, preserving the wealth domain.
+
+===============================================================================
+3. INDEPENDENT WEALTH AND DRAWDOWN RECONSTRUCTION
+===============================================================================
+PASS: Cumulative wealth preserves all 611 panel observations.
+PASS: Cumulative-wealth keys match the independent reconstruction.
+PASS: All SQL wealth chains match direct Python compounding.
+PASS: Drawdown history preserves all 611 wealth observations.
+PASS: All SQL running peaks and drawdowns match the Python reconstruction.
+
+===============================================================================
+4. INDEPENDENT PERFORMANCE-SUMMARY RECONSTRUCTION
+===============================================================================
+PASS: Performance summary contains exactly 13 series rows.
+PASS: Performance-summary series exactly match the independent reconstruction.
+PASS: All SQL performance statistics match independent Python recalculation from monthly returns.
+PASS: SPY correctly has zero active return/tracking error versus itself.
+
+===============================================================================
+5. INDEPENDENT TARGET-WEIGHT TURNOVER RECONSTRUCTION
+===============================================================================
+PASS: Ranking assignments span exactly analysis months 13 through 60.
+PASS: Independent turnover reconstruction produced 470 rebalances.
+PASS: SQL turnover layer contains 470 month/decile rebalances.
+PASS: Every SQL turnover key matches the independent reconstruction.
+PASS: All SQL security counts, overlap rates, and target-weight turnover values match independent Python reconstruction.
+PASS: Turnover covers exactly 47 consecutive rebalances, months 14 through 60.
+
+===============================================================================
+6. INDEPENDENT TURNOVER-SUMMARY RECONSTRUCTION
+===============================================================================
+PASS: Turnover summary contains exactly one row for each decile.
+PASS: All ten turnover-summary rows match independent Python aggregation.
+
+===============================================================================
+7. METHODOLOGY, DEPENDENCY, AND LOOK-AHEAD CONTROLS
+===============================================================================
+PASS: No deferred risk-free, Sharpe, alpha, or transaction-cost fields are present.
+PASS: Right-censored December 2025 returns are excluded from gross performance.
+PASS: December 2025 remains in turnover as ten valid target-weight rebalances even though its forward return is censored.
+PASS: Ranking and forward-return source views do not depend on the new portfolio-performance layer.
+PASS: SQL definitions contain no deferred risk/cost methodology.
+
+===============================================================================
+8. FINAL CORE PRESERVATION AND QUALITY GATE
+===============================================================================
+PASS: core.security remains unchanged at 593 rows.
+PASS: core.security_ticker_history remains unchanged at 594 rows.
+PASS: core.index_membership remains unchanged at 593 rows.
+PASS: core.security_price_eligibility remains unchanged at 594 rows.
+PASS: core.daily_security_price remains unchanged at 631,942 rows.
+PASS: core.benchmark_series remains unchanged at 2 rows.
+PASS: core.daily_benchmark_price remains unchanged at 2,510 rows.
+
+AZURE_SQL_PORTFOLIO_PERFORMANCE_INTEGRITY_AUDIT_PASSED
+Passed checks: 50
+Monthly return-panel rows: 611
+Analytical series: 13
+Observable gross-performance months: 47
+Cumulative-wealth rows: 611
+Drawdown rows: 611
+Performance-summary rows: 13
+Decile-turnover rows: 470
+Turnover-summary rows: 10
+Independent Python return-panel mismatches: 0
+Independent Python wealth mismatches: 0
+Independent Python drawdown mismatches: 0
+Independent Python performance-summary mismatches: 0
+Independent Python turnover mismatches: 0
+Independent Python turnover-summary mismatches: 0
+Gross performance convention: YES
+Risk-free-rate dependency: NO
+Sharpe ratio calculated: NO
+Regression alpha calculated: NO
+Transaction costs applied: NO
+Core rows modified: 0
+SQL PORTFOLIO-PERFORMANCE QUALITY GATE COMPLETE

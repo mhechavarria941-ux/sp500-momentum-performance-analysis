@@ -1,0 +1,118 @@
+===============================================================================
+AZURE SQL PORTFOLIO-PERFORMANCE APPLICATION
+===============================================================================
+Connection status: SUCCESS
+Credentials included in report: NO
+Migration: sql\analytics\008_create_portfolio_performance_views.sql
+Strategy: gross portfolio performance, cumulative wealth, drawdown, and turnover
+Excluded by design: risk-free rates, Sharpe ratios, regression alpha, and transaction costs
+
+===============================================================================
+1. DEPENDENCY AND CORE CONTROLS
+===============================================================================
+PASS: All four ranking and forward-return dependencies are present.
+PASS: The ranking source still contains 23,401 fixed portfolio assignments.
+PASS: The source contains 470 complete month/decile forward returns.
+PASS: The source contains 47 complete winner-minus-loser returns.
+PASS: The benchmark source contains 94 complete returns across two series.
+PASS: core.security: 593 rows.
+PASS: core.security_ticker_history: 594 rows.
+PASS: core.index_membership: 593 rows.
+PASS: core.security_price_eligibility: 594 rows.
+PASS: core.daily_security_price: 631,942 rows.
+PASS: core.benchmark_series: 2 rows.
+PASS: core.daily_benchmark_price: 2,510 rows.
+
+===============================================================================
+2. APPLY PORTFOLIO-PERFORMANCE VIEWS
+===============================================================================
+PASS: Migration contains the expected seven SQL batches.
+PASS: Executed SQL batch 1 / 7.
+PASS: Executed SQL batch 2 / 7.
+PASS: Executed SQL batch 3 / 7.
+PASS: Executed SQL batch 4 / 7.
+PASS: Executed SQL batch 5 / 7.
+PASS: Executed SQL batch 6 / 7.
+PASS: Executed SQL batch 7 / 7.
+
+===============================================================================
+3. MONTHLY RETURN PANEL
+===============================================================================
+PASS: All six portfolio-performance views are present.
+PASS: The monthly return panel contains 611 complete series/month observations.
+PASS: The panel contains all 13 analytical series.
+PASS: The panel contains exactly 47 observable holding months.
+PASS: Every month/series key in the return panel is unique.
+PASS: Every panel observation is a complete, non-null monthly return.
+PASS: Each analytical series contains exactly 47 monthly returns.
+
+===============================================================================
+4. CUMULATIVE WEALTH AND DRAWDOWN
+===============================================================================
+PASS: Cumulative wealth preserves every monthly return-panel row.
+PASS: Every series begins with wealth indexed to 1.00.
+PASS: All wealth observations are positive and use 47 return periods.
+PASS: Every month's beginning wealth equals the previous month's ending wealth.
+PASS: Every ending wealth value matches the monthly compounding formula.
+PASS: The drawdown view preserves every cumulative-wealth observation.
+PASS: Running peaks and drawdowns remain within valid wealth bounds.
+PASS: Every drawdown matches ending wealth relative to its running peak.
+
+===============================================================================
+5. PERFORMANCE SUMMARY
+===============================================================================
+PASS: The performance summary contains one row for each of 13 analytical series.
+PASS: All summary statistics have valid populations and numeric bounds.
+PASS: Every cumulative return reconciles to final wealth minus one.
+PASS: Every annualized volatility matches monthly volatility times sqrt(12).
+PASS: SPY correctly has zero active return and tracking error versus itself.
+
+===============================================================================
+6. PORTFOLIO TURNOVER
+===============================================================================
+PASS: The turnover layer contains all 470 month/decile rebalances.
+PASS: Turnover spans exactly 47 consecutive monthly rebalances.
+PASS: Every turnover row reconciles security counts, overlap, and one-way turnover.
+PASS: Every month/decile turnover key is unique.
+PASS: The turnover summary contains one row for each momentum decile.
+PASS: Every turnover summary row has 47 rebalances and valid metric bounds.
+
+===============================================================================
+7. METHODOLOGY AND LOOK-AHEAD CONTROLS
+===============================================================================
+PASS: No deferred Sharpe, alpha, risk-free, or transaction-cost fields are present.
+PASS: The right-censored December 2025 ranking month is excluded from gross performance.
+
+===============================================================================
+8. POST-MIGRATION CORE CONTROL
+===============================================================================
+PASS: core.security remains unchanged at 593 rows.
+PASS: core.security_ticker_history remains unchanged at 594 rows.
+PASS: core.index_membership remains unchanged at 593 rows.
+PASS: core.security_price_eligibility remains unchanged at 594 rows.
+PASS: core.daily_security_price remains unchanged at 631,942 rows.
+PASS: core.benchmark_series remains unchanged at 2 rows.
+PASS: core.daily_benchmark_price remains unchanged at 2,510 rows.
+PASS: Portfolio-performance migration committed.
+
+===============================================================================
+9. FINAL QUALITY GATE
+===============================================================================
+AZURE_SQL_PORTFOLIO_PERFORMANCE_APPLICATION_PASSED
+Passed checks: 56
+Analytical views created or updated: 6
+Monthly return-panel rows: 611
+Analytical series: 13
+Observable gross-performance months: 47
+Cumulative-wealth rows: 611
+Drawdown rows: 611
+Performance-summary rows: 13
+Decile-turnover rows: 470
+Turnover-summary rows: 10
+Gross performance convention: YES
+Risk-free-rate dependency: NO
+Sharpe ratio calculated: NO
+Regression alpha calculated: NO
+Transaction costs applied: NO
+Core rows modified: 0
+Gross portfolio performance, cumulative wealth, drawdown, and turnover are ready for independent auditing.
