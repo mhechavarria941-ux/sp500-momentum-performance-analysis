@@ -10,3 +10,61 @@ data/interim/
 
 # Licensed / source market-price data
 data/raw/source/prices/
+# GICS / SEC research caches and temporary diagnostics
+data/reference/gics/ivv_probe/
+data/reference/gics/sec_nport_probe/
+data/reference/gics/sec_select_sector_nport/
+data/reference/gics/sec_select_sector_submission_text/
+data/reference/gics/gics_security_key_identity_overrides_v2.csv
+
+# Superseded GICS implementation copies
+src/analysis/build_point_in_time_gics_security_intervals_v4.py
+
+# One-off GICS diagnostics
+reports/data_quality/gics_*diagnostic*
+reports/data_quality/gics_*residual*
+reports/data_quality/gics_*missing*
+reports/data_quality/gics_*unmatched*
+reports/data_quality/gics_*mismatch*
+reports/data_quality/sec_select_sector_*diagnostic*
+reports/data_quality/sec_select_sector_*problem*
+reports/data_quality/sec_select_sector_*failures*
+
+# Historical GICS exploratory / superseded source files
+data/reference/gics/sec_select_sector_nport/
+data/reference/gics/sec_select_sector_submission_text/
+data/reference/gics/sec_select_sector_nport_holdings.csv
+data/reference/gics/sec_select_sector_nport_manifest.csv
+
+# Superseded / exploratory GICS scripts
+src/analysis/audit_point_in_time_gics_sector_coverage.py
+src/analysis/build_point_in_time_gics_security_intervals_v4.py
+src/analysis/diagnose_gics_*.py
+src/analysis/diagnose_membership_vs_ranking_snapshot_mismatches.py
+src/analysis/diagnose_sec_*.py
+src/analysis/extract_sec_select_sector_historical_holdings.py
+src/analysis/probe_ishares_ivv_historical_holdings.py
+src/analysis/probe_sec_select_sector_nport.py
+
+# Exploratory GICS / SEC QA outputs
+reports/data_quality/gics_anchor_*
+reports/data_quality/gics_final_*
+reports/data_quality/gics_security_key_bridge_diagnostic.txt
+reports/data_quality/gics_security_key_unmatched_*
+reports/data_quality/gics_single_inwindow_*
+reports/data_quality/gics_unmapped_*
+reports/data_quality/ishares_ivv_*
+reports/data_quality/membership_vs_ranking_snapshot_mismatch_diagnostic.txt
+reports/data_quality/point_in_time_gics_interval_evidence.csv
+reports/data_quality/point_in_time_gics_monthly_coverage.csv
+reports/data_quality/point_in_time_gics_sector_audit.txt
+reports/data_quality/point_in_time_gics_sql_catalog.csv
+reports/data_quality/sec_nport_cache_diagnostic.txt
+reports/data_quality/sec_select_sector_all_series_candidates.csv
+reports/data_quality/sec_select_sector_cross_sector_duplicates.csv
+reports/data_quality/sec_select_sector_duplicate_identifier_detail.csv
+reports/data_quality/sec_select_sector_historical_extraction_audit.txt
+reports/data_quality/sec_select_sector_nport_probe.txt
+reports/data_quality/sec_select_sector_snapshot_coverage.csv
+reports/data_quality/sec_select_sector_submission_text_failures.csv
+reports/data_quality/sec_select_sector_transition_candidates.csv

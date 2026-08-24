@@ -1,0 +1,51 @@
+======================================================================================================================
+GICS TRANSITION EFFECTIVE-DATE VALIDATION
+======================================================================================================================
+Mode: LOCAL / READ-ONLY
+Detected canonical SEC transition candidates: 20
+Authoritative transition ledger rows: 20
+Exact matches: 20
+2023 structural-revision rows: 16
+Company-specific rows: 4
+SEC ETF lag cases where the authoritative GICS date predates the previous fund snapshot: 2
+Same-close SEC detections where the ETF snapshot date equals the official effective-close date: 1
+
+525327102 | Leidos Holdings Inc | Information Technology -> Industrials | effective close 2021-02-26 | new sector valid from 2021-03-01 | COMPANY_SPECIFIC
+879360105 | Teledyne Technologies Inc | Industrials -> Information Technology | effective close 2021-08-31 | new sector valid from 2021-09-01 | COMPANY_SPECIFIC
+776696106 | Roper Technologies Inc | Industrials -> Information Technology | effective close 2022-04-29 | new sector valid from 2022-05-02 | COMPANY_SPECIFIC
+053015103 | Automatic Data Processing Inc | Information Technology -> Industrials | effective close 2023-03-17 | new sector valid from 2023-03-20 | 2023_GICS_STRUCTURE_REVISION
+11133T103 | Broadridge Financial Solutions Inc | Information Technology -> Industrials | effective close 2023-03-17 | new sector valid from 2023-03-20 | 2023_GICS_STRUCTURE_REVISION
+15677J108 | Ceridian HCM Holding Inc | Information Technology -> Industrials | effective close 2023-03-17 | new sector valid from 2023-03-20 | 2023_GICS_STRUCTURE_REVISION
+256677105 | Dollar General Corp | Consumer Discretionary -> Consumer Staples | effective close 2023-03-17 | new sector valid from 2023-03-20 | 2023_GICS_STRUCTURE_REVISION
+256746108 | Dollar Tree Inc | Consumer Discretionary -> Consumer Staples | effective close 2023-03-17 | new sector valid from 2023-03-20 | 2023_GICS_STRUCTURE_REVISION
+31620M106 | Fidelity National Information Services Inc | Information Technology -> Financials | effective close 2023-03-17 | new sector valid from 2023-03-20 | 2023_GICS_STRUCTURE_REVISION
+337738108 | Fiserv Inc | Information Technology -> Financials | effective close 2023-03-17 | new sector valid from 2023-03-20 | 2023_GICS_STRUCTURE_REVISION
+339041105 | FleetCor Technologies Inc | Information Technology -> Financials | effective close 2023-03-17 | new sector valid from 2023-03-20 | 2023_GICS_STRUCTURE_REVISION
+37940X102 | Global Payments Inc | Information Technology -> Financials | effective close 2023-03-17 | new sector valid from 2023-03-20 | 2023_GICS_STRUCTURE_REVISION
+426281101 | Jack Henry & Associates Inc | Information Technology -> Financials | effective close 2023-03-17 | new sector valid from 2023-03-20 | 2023_GICS_STRUCTURE_REVISION
+57636Q104 | Mastercard Inc | Information Technology -> Financials | effective close 2023-03-17 | new sector valid from 2023-03-20 | 2023_GICS_STRUCTURE_REVISION
+704326107 | Paychex Inc | Information Technology -> Industrials | effective close 2023-03-17 | new sector valid from 2023-03-20 | 2023_GICS_STRUCTURE_REVISION
+70432V102 | Paycom Software Inc | Information Technology -> Industrials | effective close 2023-03-17 | new sector valid from 2023-03-20 | 2023_GICS_STRUCTURE_REVISION
+70450Y103 | PayPal Holdings Inc | Information Technology -> Financials | effective close 2023-03-17 | new sector valid from 2023-03-20 | 2023_GICS_STRUCTURE_REVISION
+87612E106 | Target Corp | Consumer Discretionary -> Consumer Staples | effective close 2023-03-17 | new sector valid from 2023-03-20 | 2023_GICS_STRUCTURE_REVISION
+92826C839 | Visa Inc | Information Technology -> Financials | effective close 2023-03-17 | new sector valid from 2023-03-20 | 2023_GICS_STRUCTURE_REVISION
+22160N109 | CoStar Group Inc | Industrials -> Real Estate | effective close 2023-06-30 | new sector valid from 2023-07-03 | COMPANY_SPECIFIC
+
+======================================================================================================================
+QUALITY GATE
+======================================================================================================================
+PASS: 20/20 detected sector transitions have an authoritative effective-date mapping.
+PASS: GICS sub-industry code prefixes reconcile to the stated old/new sectors.
+PASS: Every authoritative GICS effective date occurs no later than the first SEC snapshot showing the new sector.
+PASS: SEC ETF lag is treated as a source-layer implementation artifact, not as authority over the official GICS effective date.
+PASS: Same-close ETF detections are allowed when the official change is effective after that close; the analytical sector changes on the next business day.
+PASS: Every new-sector valid-from date equals the next business day after the official effective-close date.
+PASS: Every transition has a primary source URL.
+
+RESULT: GICS_TRANSITION_EFFECTIVE_DATE_GATE_PASSED
+
+Next step: build permanent security_key sector intervals and expand them to the 60 H2 ranking months.
+
+Source data modifications performed: 0
+Azure SQL modifications performed: 0
+Detail audit: reports\data_quality\gics_transition_effective_date_validation_detail.csv

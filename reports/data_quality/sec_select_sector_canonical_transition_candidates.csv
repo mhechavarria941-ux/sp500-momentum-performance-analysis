@@ -1,0 +1,21 @@
+holding_identifier,holding_name_previous,holding_name_current,previous_report_date,current_report_date,previous_sector,current_sector,status
+525327102,Leidos Holdings Inc,Leidos Holdings Inc,2020-12-31,2021-03-31,Information Technology,Industrials,REQUIRES_EXACT_EFFECTIVE_DATE_CONFIRMATION
+879360105,Teledyne Technologies Inc,Teledyne Technologies Inc,2021-06-30,2021-09-30,Industrials,Information Technology,REQUIRES_EXACT_EFFECTIVE_DATE_CONFIRMATION
+776696106,Roper Technologies Inc,Roper Technologies Inc,2022-03-31,2022-06-30,Industrials,Information Technology,REQUIRES_EXACT_EFFECTIVE_DATE_CONFIRMATION
+053015103,Automatic Data Processing Inc,Automatic Data Processing Inc,2022-12-31,2023-03-31,Information Technology,Industrials,REQUIRES_EXACT_EFFECTIVE_DATE_CONFIRMATION
+11133T103,Broadridge Financial Solutions Inc,Broadridge Financial Solutions Inc,2022-12-31,2023-03-31,Information Technology,Industrials,REQUIRES_EXACT_EFFECTIVE_DATE_CONFIRMATION
+256677105,Dollar General Corp,Dollar General Corp,2022-12-31,2023-03-31,Consumer Discretionary,Consumer Staples,REQUIRES_EXACT_EFFECTIVE_DATE_CONFIRMATION
+256746108,Dollar Tree Inc,Dollar Tree Inc,2022-12-31,2023-03-31,Consumer Discretionary,Consumer Staples,REQUIRES_EXACT_EFFECTIVE_DATE_CONFIRMATION
+31620M106,Fidelity National Information Services Inc,Fidelity National Information Services Inc,2022-12-31,2023-03-31,Information Technology,Financials,REQUIRES_EXACT_EFFECTIVE_DATE_CONFIRMATION
+337738108,Fiserv Inc,Fiserv Inc,2022-12-31,2023-03-31,Information Technology,Financials,REQUIRES_EXACT_EFFECTIVE_DATE_CONFIRMATION
+339041105,FleetCor Technologies Inc,FleetCor Technologies Inc,2022-12-31,2023-03-31,Information Technology,Financials,REQUIRES_EXACT_EFFECTIVE_DATE_CONFIRMATION
+37940X102,Global Payments Inc,Global Payments Inc,2022-12-31,2023-03-31,Information Technology,Financials,REQUIRES_EXACT_EFFECTIVE_DATE_CONFIRMATION
+426281101,Jack Henry & Associates Inc,Jack Henry & Associates Inc,2022-12-31,2023-03-31,Information Technology,Financials,REQUIRES_EXACT_EFFECTIVE_DATE_CONFIRMATION
+57636Q104,Mastercard Inc,Mastercard Inc,2022-12-31,2023-03-31,Information Technology,Financials,REQUIRES_EXACT_EFFECTIVE_DATE_CONFIRMATION
+704326107,Paychex Inc,Paychex Inc,2022-12-31,2023-03-31,Information Technology,Industrials,REQUIRES_EXACT_EFFECTIVE_DATE_CONFIRMATION
+70450Y103,PayPal Holdings Inc,PayPal Holdings Inc,2022-12-31,2023-03-31,Information Technology,Financials,REQUIRES_EXACT_EFFECTIVE_DATE_CONFIRMATION
+87612E106,Target Corp,Target Corp,2022-12-31,2023-03-31,Consumer Discretionary,Consumer Staples,REQUIRES_EXACT_EFFECTIVE_DATE_CONFIRMATION
+92826C839,Visa Inc,Visa Inc,2022-12-31,2023-03-31,Information Technology,Financials,REQUIRES_EXACT_EFFECTIVE_DATE_CONFIRMATION
+15677J108,Ceridian HCM Holding Inc,Ceridian HCM Holding Inc,2023-03-31,2023-06-30,Information Technology,Industrials,REQUIRES_EXACT_EFFECTIVE_DATE_CONFIRMATION
+22160N109,CoStar Group Inc,CoStar Group Inc,2023-03-31,2023-06-30,Industrials,Real Estate,REQUIRES_EXACT_EFFECTIVE_DATE_CONFIRMATION
+70432V102,Paycom Software Inc,Paycom Software Inc,2023-03-31,2023-06-30,Information Technology,Industrials,REQUIRES_EXACT_EFFECTIVE_DATE_CONFIRMATION

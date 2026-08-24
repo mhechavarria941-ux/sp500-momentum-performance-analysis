@@ -1,0 +1,119 @@
+======================================================================================================================
+SEC SELECT SECTOR SPDR — CANONICAL SERIES REBUILD AUDIT
+======================================================================================================================
+Mode: LOCAL SEC CACHE ONLY / Azure SQL unchanged
+Source: SEC EDGAR NPORT-P complete-submission XML
+Canonical ETF series explicitly pinned: 11
+Premium Income ETF series excluded by series_id: YES
+Wikipedia used: NO
+
+======================================================================================================================
+1. CANONICAL SERIES CONTROL
+======================================================================================================================
+Cached SEC submissions inspected: 253
+Canonical series filings parsed: 231
+Selected canonical sector/report-date filings: 231
+Canonical series IDs present: 11
+Canonical sectors present: 11
+Parse failures while scanning cache: 0
+
+Communication Services | XLC | S000062095 | selected_reports=21
+Consumer Discretionary | XLY | S000006408 | selected_reports=21
+Consumer Staples | XLP | S000006409 | selected_reports=21
+Energy | XLE | S000006410 | selected_reports=21
+Financials | XLF | S000006411 | selected_reports=21
+Health Care | XLV | S000006412 | selected_reports=21
+Industrials | XLI | S000006413 | selected_reports=21
+Information Technology | XLK | S000006415 | selected_reports=21
+Materials | XLB | S000006414 | selected_reports=21
+Real Estate | XLRE | S000051152 | selected_reports=21
+Utilities | XLU | S000006416 | selected_reports=21
+
+======================================================================================================================
+2. RESIDUAL CROSSHOLDING CONTROL
+======================================================================================================================
+Raw selected equity rows: 10,582
+Residual crossholding rows excluded under conservative dominance rule: 5
+Unresolved cross-sector duplicate rows: 0
+Dominance rule: dominant >= 0.01% ; residual <= 0.001% ; dominant/residual >= 1,000x
+
+Resolved residual artifacts:
+  2022-03-31 | 78409V104 | S&P Global Inc | keep Financials (3.40973990359%) | exclude Industrials (5.074486e-06%) | ratio=671,938x
+  2022-06-30 | 78409V104 | S&P Global Inc | keep Financials (3.37402544229%) | exclude Industrials (5.272548e-06%) | ratio=639,923x
+  2022-09-30 | 78409V104 | S&P Global Inc | keep Financials (3.12864396266%) | exclude Industrials (5.472942e-06%) | ratio=571,657x
+  2023-03-31 | 36266G107 | GE HealthCare Technologies Inc | keep Health Care (0.609902490228%) | exclude Industrials (1.97529e-07%) | ratio=3,087,660x
+  2023-06-30 | 36266G107 | GE HealthCare Technologies Inc | keep Health Care (0.635731714559%) | exclude Industrials (1.82034e-07%) | ratio=3,492,379x
+
+======================================================================================================================
+3. HISTORICAL SNAPSHOT COVERAGE
+======================================================================================================================
+Historical report dates: 21
+Complete 11-sector partitions: 21
+Earliest report date: 2020-12-31
+Latest report date: 2025-12-31
+Unique identifier range: 503 to 505
+
+  2020-12-31 | sectors=11 | filings=11 | unique_ids=505 | unresolved_duplicates=0 | complete=True
+  2021-03-31 | sectors=11 | filings=11 | unique_ids=505 | unresolved_duplicates=0 | complete=True
+  2021-06-30 | sectors=11 | filings=11 | unique_ids=505 | unresolved_duplicates=0 | complete=True
+  2021-09-30 | sectors=11 | filings=11 | unique_ids=505 | unresolved_duplicates=0 | complete=True
+  2021-12-31 | sectors=11 | filings=11 | unique_ids=505 | unresolved_duplicates=0 | complete=True
+  2022-03-31 | sectors=11 | filings=11 | unique_ids=505 | unresolved_duplicates=0 | complete=True
+  2022-06-30 | sectors=11 | filings=11 | unique_ids=503 | unresolved_duplicates=0 | complete=True
+  2022-09-30 | sectors=11 | filings=11 | unique_ids=503 | unresolved_duplicates=0 | complete=True
+  2022-12-31 | sectors=11 | filings=11 | unique_ids=503 | unresolved_duplicates=0 | complete=True
+  2023-03-31 | sectors=11 | filings=11 | unique_ids=503 | unresolved_duplicates=0 | complete=True
+  2023-06-30 | sectors=11 | filings=11 | unique_ids=503 | unresolved_duplicates=0 | complete=True
+  2023-09-30 | sectors=11 | filings=11 | unique_ids=503 | unresolved_duplicates=0 | complete=True
+  2023-12-31 | sectors=11 | filings=11 | unique_ids=503 | unresolved_duplicates=0 | complete=True
+  2024-03-31 | sectors=11 | filings=11 | unique_ids=503 | unresolved_duplicates=0 | complete=True
+  2024-06-30 | sectors=11 | filings=11 | unique_ids=503 | unresolved_duplicates=0 | complete=True
+  2024-09-30 | sectors=11 | filings=11 | unique_ids=504 | unresolved_duplicates=0 | complete=True
+  2024-12-31 | sectors=11 | filings=11 | unique_ids=503 | unresolved_duplicates=0 | complete=True
+  2025-03-31 | sectors=11 | filings=11 | unique_ids=503 | unresolved_duplicates=0 | complete=True
+  2025-06-30 | sectors=11 | filings=11 | unique_ids=504 | unresolved_duplicates=0 | complete=True
+  2025-09-30 | sectors=11 | filings=11 | unique_ids=503 | unresolved_duplicates=0 | complete=True
+  2025-12-31 | sectors=11 | filings=11 | unique_ids=503 | unresolved_duplicates=0 | complete=True
+
+======================================================================================================================
+4. TRANSITION DISCOVERY
+======================================================================================================================
+Sector transitions between consecutive complete snapshots: 20
+These remain candidates until their exact effective dates are validated against official S&P/MSCI/GICS or issuer evidence.
+  525327102 | Leidos Holdings Inc | Information Technology -> Industrials | 2020-12-31 to 2021-03-31
+  879360105 | Teledyne Technologies Inc | Industrials -> Information Technology | 2021-06-30 to 2021-09-30
+  776696106 | Roper Technologies Inc | Industrials -> Information Technology | 2022-03-31 to 2022-06-30
+  053015103 | Automatic Data Processing Inc | Information Technology -> Industrials | 2022-12-31 to 2023-03-31
+  11133T103 | Broadridge Financial Solutions Inc | Information Technology -> Industrials | 2022-12-31 to 2023-03-31
+  256677105 | Dollar General Corp | Consumer Discretionary -> Consumer Staples | 2022-12-31 to 2023-03-31
+  256746108 | Dollar Tree Inc | Consumer Discretionary -> Consumer Staples | 2022-12-31 to 2023-03-31
+  31620M106 | Fidelity National Information Services Inc | Information Technology -> Financials | 2022-12-31 to 2023-03-31
+  337738108 | Fiserv Inc | Information Technology -> Financials | 2022-12-31 to 2023-03-31
+  339041105 | FleetCor Technologies Inc | Information Technology -> Financials | 2022-12-31 to 2023-03-31
+  37940X102 | Global Payments Inc | Information Technology -> Financials | 2022-12-31 to 2023-03-31
+  426281101 | Jack Henry & Associates Inc | Information Technology -> Financials | 2022-12-31 to 2023-03-31
+  57636Q104 | Mastercard Inc | Information Technology -> Financials | 2022-12-31 to 2023-03-31
+  704326107 | Paychex Inc | Information Technology -> Industrials | 2022-12-31 to 2023-03-31
+  70450Y103 | PayPal Holdings Inc | Information Technology -> Financials | 2022-12-31 to 2023-03-31
+  87612E106 | Target Corp | Consumer Discretionary -> Consumer Staples | 2022-12-31 to 2023-03-31
+  92826C839 | Visa Inc | Information Technology -> Financials | 2022-12-31 to 2023-03-31
+  15677J108 | Ceridian HCM Holding Inc | Information Technology -> Industrials | 2023-03-31 to 2023-06-30
+  22160N109 | CoStar Group Inc | Industrials -> Real Estate | 2023-03-31 to 2023-06-30
+  70432V102 | Paycom Software Inc | Information Technology -> Industrials | 2023-03-31 to 2023-06-30
+
+======================================================================================================================
+5. H2 SOURCE-LAYER DECISION
+======================================================================================================================
+Canonical SEC quarterly sector partition: PASSED
+All 21 quarter-end source snapshots now satisfy the 11-sector partition gate.
+Next step: validate exact effective dates for detected GICS transitions, then map the cleaned sector states to permanent security_key and the 60 ranking months.
+
+RESULT: SEC_SELECT_SECTOR_CANONICAL_SOURCE_GATE_PASSED
+
+Azure SQL modifications performed: 0
+Validated membership/ranking data modified: 0
+Canonical manifest: data\reference\gics\sec_select_sector_canonical_manifest.csv
+Clean holdings: data\reference\gics\sec_select_sector_canonical_holdings_clean.csv
+Coverage audit: reports\data_quality\sec_select_sector_canonical_snapshot_coverage.csv
+Residual audit: reports\data_quality\sec_select_sector_residual_crossholdings.csv
+Transition candidates: reports\data_quality\sec_select_sector_canonical_transition_candidates.csv
