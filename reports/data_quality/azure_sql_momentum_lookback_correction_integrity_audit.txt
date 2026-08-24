@@ -1,0 +1,138 @@
+================================================================================================================
+AZURE SQL MOMENTUM LOOKBACK-SCOPE CORRECTION — INDEPENDENT INTEGRITY AUDIT
+================================================================================================================
+Mode: READ-ONLY
+Database modifications: 0
+Purpose: independently reconstruct corrected feature support and verify downstream propagation.
+Primary local source: validated standardized_price_history.csv.gz
+Ranking-date source: validated analytics.security_month_end_snapshot
+2020 price history role: FEATURE SUPPORT ONLY
+2021-2025 role: POINT-IN-TIME RANKING / PERFORMANCE WINDOW
+
+================================================================================================================
+1. LOCAL SOURCE CONTROLS
+================================================================================================================
+PASS: Standardized source contains exactly 783,086 rows.
+PASS: All standardized adjusted-close values are positive and non-null.
+PASS: SPY independently provides all 72 exact month-end support anchors from 2020-01 through 2025-12.
+PASS: Independent constituent support reconstruction contains exactly 37,245 rows.
+PASS: Independent benchmark support reconstruction contains exactly 144 rows.
+PASS: Independent constituent support keys are unique by security and feature month.
+PASS: Independent benchmark support keys are unique.
+
+================================================================================================================
+2. CORE PRESERVATION
+================================================================================================================
+PASS: core.security remains unchanged at 593 rows.
+PASS: core.security_ticker_history remains unchanged at 594 rows.
+PASS: core.index_membership remains unchanged at 593 rows.
+PASS: core.security_price_eligibility remains unchanged at 594 rows.
+PASS: core.daily_security_price remains unchanged at 631,942 rows.
+PASS: core.benchmark_series remains unchanged at 2 rows.
+PASS: core.daily_benchmark_price remains unchanged at 2,510 rows.
+
+================================================================================================================
+3. SUPPORT-TABLE RECONCILIATION
+================================================================================================================
+PASS: Azure SQL constituent support contains exactly 37,245 rows.
+PASS: Azure SQL benchmark support contains exactly 144 rows.
+PASS: Every Azure SQL constituent support key/date/ticker matches the independent local reconstruction.
+PASS: Every Azure SQL constituent support adjusted close matches the independent local reconstruction.
+PASS: Every Azure SQL benchmark support key/date/ticker matches the independent local reconstruction.
+PASS: Every Azure SQL benchmark support adjusted close matches the independent local reconstruction.
+
+================================================================================================================
+4. INDEPENDENT CONSTITUENT FEATURE RECONSTRUCTION
+================================================================================================================
+PASS: Ranking-date snapshot contains exactly 30,211 rows.
+PASS: Corrected constituent feature view preserves exactly 30,211 ranking-date rows.
+PASS: Corrected constituent feature keys are unique.
+PASS: Independent feature reconstruction keys match all SQL feature rows.
+PASS: 1-month completeness independently reconciles at 30,209 rows.
+PASS: 1-month lag dates match the independent support reconstruction for every row.
+PASS: 1-month trailing returns match the independent reconstruction for every row.
+PASS: 3-month completeness independently reconciles at 30,192 rows.
+PASS: 3-month lag dates match the independent support reconstruction for every row.
+PASS: 3-month trailing returns match the independent reconstruction for every row.
+PASS: 6-month completeness independently reconciles at 30,169 rows.
+PASS: 6-month lag dates match the independent support reconstruction for every row.
+PASS: 6-month trailing returns match the independent reconstruction for every row.
+PASS: 12-month completeness independently reconciles at 30,121 rows.
+PASS: 12-month lag dates match the independent support reconstruction for every row.
+PASS: 12-month trailing returns match the independent reconstruction for every row.
+PASS: Canonical 12-1 momentum independently reconciles at exactly 30,121 rows.
+PASS: Every SQL 12-1 momentum value matches the independent local reconstruction.
+PASS: Every SQL 12-1 momentum start/end anchor matches months -12 and -1 from the independent support reconstruction.
+
+================================================================================================================
+5. MONTHLY COVERAGE AND RANKING PROPAGATION
+================================================================================================================
+PASS: Independent corrected momentum coverage is positive in all 60 ranking months.
+PASS: SQL momentum portfolio contains all 60 ranking months.
+PASS: Every monthly SQL ranking-assignment count equals independently reconstructed corrected momentum eligibility.
+
+2021 independently reconstructed complete momentum signals:
+  2021-01: 502
+  2021-02: 502
+  2021-03: 505
+  2021-04: 505
+  2021-05: 505
+  2021-06: 504
+  2021-07: 504
+  2021-08: 504
+  2021-09: 504
+  2021-10: 504
+  2021-11: 504
+  2021-12: 504
+
+================================================================================================================
+6. DOWNSTREAM POPULATION AUDIT
+================================================================================================================
+PASS: Momentum portfolio assignments: 30,121 (expected).
+PASS: Decile forward-return rows: 600 (expected).
+PASS: Complete decile forward-return rows: 590 (expected).
+PASS: Winner-minus-loser rows: 60 (expected).
+PASS: Complete winner-minus-loser rows: 59 (expected).
+PASS: Benchmark forward-return rows: 120 (expected).
+PASS: Complete benchmark forward-return rows: 118 (expected).
+PASS: Security forward-return rows: 30,121 (expected).
+PASS: Complete security forward-return rows: 29,620 (expected).
+PASS: Right-censored security assignments: 501 (expected).
+PASS: Gross monthly return-panel rows: 767 (expected).
+PASS: Turnover rows: 590 (expected).
+PASS: Gross performance panel contains exactly 59 observable months.
+PASS: Turnover layer contains exactly 59 consecutive rebalance months.
+PASS: Gross return panel contains the expected 13 analytical series.
+PASS: Completed gross performance spans analysis months 1 through 59.
+PASS: Only analysis month 60 (December 2025 ranking) is right-censored.
+
+================================================================================================================
+7. PERFORMANCE-LAYER STRUCTURAL CONTROLS
+================================================================================================================
+PASS: Cumulative wealth preserves all 767 monthly return-panel rows.
+PASS: Drawdown layer preserves all 767 monthly return-panel rows.
+PASS: Performance summary contains exactly 13 series.
+PASS: Turnover summary contains exactly one row per momentum decile.
+PASS: Gross monthly return-panel month/series keys are unique.
+PASS: All corrected gross wealth and drawdown observations remain structurally valid.
+
+================================================================================================================
+8. FINAL INTEGRITY GATE
+================================================================================================================
+AZURE_SQL_MOMENTUM_LOOKBACK_SCOPE_CORRECTION_INTEGRITY_AUDIT_PASSED
+Passed checks: 65
+Failed checks: 0
+Database modifications performed: 0
+Core-table modifications detected: 0
+Constituent feature-support rows: 37,245
+Benchmark feature-support rows: 144
+Ranking-date constituent rows: 30,211
+Corrected 12-1 momentum rows: 30,121
+Ranking months: 60
+Observable completed performance months: 59
+Gross return-panel rows: 767
+Right-censored December 2025 assignments: 501
+
+CORRECTION QUALITY GATE COMPLETE.
+The 2020 standardized price history is confirmed as feature support only and does not expand the 2021-2025 point-in-time ranking universe.
+The corrected momentum population independently reconciles to permanent-security historical price support using months -12 through -1.

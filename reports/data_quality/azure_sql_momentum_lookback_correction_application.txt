@@ -1,0 +1,127 @@
+========================================================================================================
+AZURE SQL MOMENTUM LOOKBACK-SCOPE CORRECTION APPLICATION
+========================================================================================================
+Connection status: SUCCESS
+Credentials included in report: NO
+Migration: sql\analytics\009_correct_momentum_feature_lookback_scope.sql
+Correction: preserve point-in-time ranking membership while restoring validated pre-membership lag-price support.
+Revision: catalog-based dependency detection replaces the false-negative parameterized OBJECT_ID pre-check.
+Core-table modifications intended: 0
+
+========================================================================================================
+1. LOCAL SUPPORT PREPARATION
+========================================================================================================
+PASS: Constituent feature-support population prepared: 37,245 exact month-end rows.
+PASS: Benchmark feature-support population is exactly 144 rows.
+PASS: Constituent support month numbering spans 2020-01 (-11) through 2025-12 (60).
+PASS: Benchmark support month numbering spans 2020-01 (-11) through 2025-12 (60).
+
+========================================================================================================
+2. PRE-CORRECTION DATABASE CONTROLS
+========================================================================================================
+PASS: All required upstream and downstream analytical objects exist with the expected SQL object types.
+PASS: core.security: 593 rows.
+PASS: core.security_ticker_history: 594 rows.
+PASS: core.index_membership: 593 rows.
+PASS: core.security_price_eligibility: 594 rows.
+PASS: core.daily_security_price: 631,942 rows.
+PASS: core.benchmark_series: 2 rows.
+PASS: core.daily_benchmark_price: 2,510 rows.
+PASS: Current ranking-date snapshot remains 30,211 rows.
+PASS: Pre-correction feature layer is the expected 23,401-signal snapshot-only state.
+
+========================================================================================================
+3. APPLY SUPPORT TABLES AND CORRECTED FEATURE VIEWS
+========================================================================================================
+PASS: Correction migration contains the expected four SQL batches.
+PASS: Feature-support tables are present.
+PASS: Azure SQL constituent feature-support row count matches the local exact-month-end source.
+PASS: Azure SQL benchmark feature-support row count matches the local exact-month-end source.
+PASS: Executed correction SQL batch 2 / 4.
+PASS: Executed correction SQL batch 3 / 4.
+PASS: Executed correction SQL batch 4 / 4.
+
+========================================================================================================
+4. CORRECTED FEATURE POPULATIONS
+========================================================================================================
+PASS: Corrected constituent feature view still preserves all 30,211 ranking-date observations.
+PASS: Corrected constituent 1-month completeness is exact: 30,209.
+PASS: Corrected constituent 3-month completeness is exact: 30,192.
+PASS: Corrected constituent 6-month completeness is exact: 30,169.
+PASS: Corrected constituent 12-month completeness is exact: 30,121.
+PASS: Corrected canonical 12-1 momentum population is exactly 30,121 rows.
+PASS: Every corrected momentum-completeness flag and value reconciles to support months -1 and -12.
+PASS: Every corrected momentum window remains months -12 through -1 and skips the ranking month.
+PASS: Benchmark feature view still contains 120 ranking rows.
+PASS: Corrected benchmark 1-month completeness is exact: 120.
+PASS: Corrected benchmark 3-month completeness is exact: 120.
+PASS: Corrected benchmark 6-month completeness is exact: 120.
+PASS: Corrected benchmark 12-month completeness is exact: 120.
+PASS: Both benchmarks now contain complete 12-1 momentum for all 60 ranking months.
+
+========================================================================================================
+5. DOWNSTREAM PROPAGATION
+========================================================================================================
+PASS: Portfolio assignments propagate all 30,121 corrected momentum signals.
+PASS: Momentum portfolios now span all 60 ranking months.
+PASS: Ranking assignments span analysis months 1 through 60.
+PASS: Decile forward-return layer contains all 600 month/decile rows.
+PASS: All ten deciles contain complete returns for 59 observable holding months.
+PASS: Winner-minus-loser layer contains all 60 ranking months.
+PASS: Winner-minus-loser returns are complete for 59 observable months.
+PASS: Benchmark forward-return layer contains two series across all 60 ranking months.
+PASS: Both benchmarks contain 59 complete forward returns (118 rows total).
+PASS: Gross monthly return panel contains 767 observations (13 series x 59 months).
+PASS: Gross return panel still contains all 13 analytical series.
+PASS: Gross return panel now contains 59 observable months.
+PASS: Completed performance now spans analysis months 1 through 59; December 2025 remains right-censored.
+PASS: Cumulative wealth preserves all 767 panel rows.
+PASS: Drawdown layer preserves all 767 panel rows.
+PASS: Performance summary still contains 13 series.
+PASS: Turnover layer contains 590 month/decile rebalances (59 consecutive transitions x 10 deciles).
+PASS: Turnover spans 59 consecutive rebalances.
+PASS: Turnover summary still contains one row per decile.
+PASS: Security forward-return layer preserves every corrected assignment: 30,121 rows.
+PASS: Only December 2025 security assignments are right-censored: 501 rows.
+PASS: Every in-scope corrected security assignment has a complete holding return: 29,620.
+
+========================================================================================================
+6. FINAL CORE PRESERVATION
+========================================================================================================
+PASS: core.security remains unchanged at 593 rows.
+PASS: core.security_ticker_history remains unchanged at 594 rows.
+PASS: core.index_membership remains unchanged at 593 rows.
+PASS: core.security_price_eligibility remains unchanged at 594 rows.
+PASS: core.daily_security_price remains unchanged at 631,942 rows.
+PASS: core.benchmark_series remains unchanged at 2 rows.
+PASS: core.daily_benchmark_price remains unchanged at 2,510 rows.
+PASS: Lookback-scope correction transaction committed.
+
+========================================================================================================
+7. FINAL QUALITY GATE
+========================================================================================================
+AZURE_SQL_MOMENTUM_LOOKBACK_SCOPE_CORRECTION_PASSED
+Passed checks: 65
+Constituent feature-support rows: 37,245
+Benchmark feature-support rows: 144
+Ranking-date constituent feature rows: 30,211
+Corrected 1-month complete rows: 30,209
+Corrected 3-month complete rows: 30,192
+Corrected 6-month complete rows: 30,169
+Corrected 12-month complete rows: 30,121
+Corrected 12-1 momentum rows: 30,121
+Signals restored versus snapshot-only design: 6,720
+Ranking months: 60
+Complete observable performance months: 59
+Decile forward-return rows: 600
+Complete decile forward-return rows: 590
+Complete WML months: 59
+Complete benchmark forward-return rows: 118
+Monthly return-panel rows: 767
+Turnover rows: 590
+Security forward-return rows: 30,121
+Complete security forward returns: 29,620
+Right-censored December 2025 assignments: 501
+Core rows modified: 0
+The intended 2021-2025 momentum experiment is now propagated through the existing ranking, forward-return, and portfolio-performance view chain.
+Next action: independently audit the corrected layer, update hard-coded validation scripts/reports, document the correction in the project log, then commit the correction.

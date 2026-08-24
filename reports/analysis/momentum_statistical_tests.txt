@@ -1,0 +1,22 @@
+S&P 500 MOMENTUM — SUPERSEDED STATISTICAL TEST REPORT
+
+STATUS: SUPERSEDED
+
+The prior statistical tests were calculated from the narrower 47-month
+snapshot-only momentum population and are retained only as historical
+diagnostics.
+
+The validated 2026-08-24 lookback-scope correction produces:
+- 30,121 momentum signals
+- 60 ranking months
+- 59 completed performance months
+- 767 monthly return-panel rows
+
+All prior 47-month p-values, confidence intervals, sign-test results, HAC
+results, bootstrap intervals, and sensitivity findings must be rerun before
+interpretation.
+
+Rerun:
+python src/analysis/test_momentum_statistical_significance.py
+
+after the corrected gross-results extraction.

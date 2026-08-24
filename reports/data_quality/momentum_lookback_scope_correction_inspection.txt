@@ -1,0 +1,105 @@
+============================================================================================================
+MOMENTUM LOOKBACK SCOPE CORRECTION — READ-ONLY INSPECTION
+============================================================================================================
+Purpose: quantify the effect of restoring validated pre-membership price history to feature construction.
+Database modifications: 0
+Azure SQL connection required: NO
+
+============================================================================================================
+1. INPUT ANCHORS
+============================================================================================================
+PASS: Standardized price history contains 783,086 rows.
+PASS: Standardized manifest contains 596 rows.
+PASS: Membership interval table contains 593 rows.
+PASS: Ticker-history table contains 594 rows.
+PASS: All standardized adjusted-close values are positive and non-null.
+
+============================================================================================================
+2. SPY CALENDAR AND SUPPORT WINDOW
+============================================================================================================
+PASS: SPY standardized history is present with 1,508 rows.
+PASS: SPY provides an exact month-end trading anchor for every month from 2020-01 through 2025-12.
+PASS: The intended ranking calendar contains exactly 60 months (2021-01 through 2025-12).
+
+============================================================================================================
+3. SECURITY-IDENTITY PRICE SUPPORT
+============================================================================================================
+PASS: Permanent-identity support contains no duplicate security/date groups.
+
+============================================================================================================
+4. RECONSTRUCT CURRENT SNAPSHOT-ONLY FEATURE LOGIC
+============================================================================================================
+PASS: Local reconstruction reproduces the validated 30,211 constituent month-end snapshot rows.
+PASS: Reconstructed month/security snapshot keys are unique.
+PASS: Current snapshot-only 1-month completeness reproduced exactly: 29,623 rows.
+PASS: Current snapshot-only 3-month completeness reproduced exactly: 28,464 rows.
+PASS: Current snapshot-only 6-month completeness reproduced exactly: 26,752 rows.
+PASS: Current snapshot-only 12-month completeness reproduced exactly: 23,401 rows.
+PASS: Current snapshot-only canonical 12-1 momentum population reproduced exactly: 23,401 rows.
+PASS: Current snapshot-only momentum correctly reproduces 48 ranking months spanning analysis months 13 through 60.
+
+============================================================================================================
+5. CORRECTED PRE-MEMBERSHIP LOOKBACK FEATURE LOGIC
+============================================================================================================
+PASS: Corrected momentum support produces eligible signals in all 60 ranking months from 2021-01 through 2025-12.
+PASS: Corrected momentum population is 30,121 rows, restoring 6,720 previously excluded signals.
+
+Corrected constituent feature completeness:
+  1-month:  30,209
+  3-month:  30,192
+  6-month:  30,169
+  12-month: 30,121
+  12-1 momentum: 30,121
+  Signals restored by support history: 6,720
+  Corrected incomplete 12-1 rows: 90
+
+============================================================================================================
+6. 2021 MONTH-BY-MONTH CORRECTION
+============================================================================================================
+2021-01 | ranking eligible 505 | old complete   0 | corrected complete 502 | restored 502 | still incomplete   3
+2021-02 | ranking eligible 505 | old complete   0 | corrected complete 502 | restored 502 | still incomplete   3
+2021-03 | ranking eligible 505 | old complete   0 | corrected complete 505 | restored 505 | still incomplete   0
+2021-04 | ranking eligible 505 | old complete   0 | corrected complete 505 | restored 505 | still incomplete   0
+2021-05 | ranking eligible 505 | old complete   0 | corrected complete 505 | restored 505 | still incomplete   0
+2021-06 | ranking eligible 505 | old complete   0 | corrected complete 504 | restored 504 | still incomplete   1
+2021-07 | ranking eligible 505 | old complete   0 | corrected complete 504 | restored 504 | still incomplete   1
+2021-08 | ranking eligible 505 | old complete   0 | corrected complete 504 | restored 504 | still incomplete   1
+2021-09 | ranking eligible 505 | old complete   0 | corrected complete 504 | restored 504 | still incomplete   1
+2021-10 | ranking eligible 505 | old complete   0 | corrected complete 504 | restored 504 | still incomplete   1
+2021-11 | ranking eligible 505 | old complete   0 | corrected complete 504 | restored 504 | still incomplete   1
+2021-12 | ranking eligible 505 | old complete   0 | corrected complete 504 | restored 504 | still incomplete   1
+
+============================================================================================================
+7. BENCHMARK SUPPORT COVERAGE
+============================================================================================================
+Benchmark feature rows: 120
+Corrected benchmark 1-month complete rows: 120
+Corrected benchmark 3-month complete rows: 120
+Corrected benchmark 6-month complete rows: 120
+Corrected benchmark 12-month complete rows: 120
+Corrected benchmark 12-1 momentum rows: 120
+PASS: Benchmark ranking panel contains exactly 120 rows (2 series x 60 months).
+
+============================================================================================================
+8. CORRECTION DIAGNOSIS
+============================================================================================================
+CONFIRMED DESIGN ISSUE:
+The existing SQL feature layer uses the membership-clipped month-end snapshot as both the ranking-date source and the historical lag-price source.
+That correctly restricts the ranking universe, but it also removes validated pre-membership prices that were acquired specifically for trailing feature construction.
+
+CORRECT DESIGN:
+1. Ranking-date eligibility remains point-in-time, membership/ticker/tradability constrained.
+2. Historical lag anchors use validated standardized price support by permanent security identity, even when the lag date precedes S&P 500 membership.
+3. Support rows never become portfolio members merely because their prices exist.
+4. 2020 remains feature-support history only; the analytical ranking window remains 2021-2025.
+
+IMPORTANT: the correction is broader than adding the twelve 2021 ranking months. It can also restore momentum signals for securities newly added to the S&P 500 during 2021-2025 when their validated pre-membership price history is complete.
+
+Monthly coverage file: data\interim\momentum_lookback_scope_monthly_coverage.csv
+Incomplete-signal file: data\interim\momentum_lookback_scope_incomplete.csv
+
+MOMENTUM_LOOKBACK_SCOPE_CORRECTION_INSPECTION_PASSED
+Passed checks: 20
+Database modifications performed: 0
+Existing Azure SQL analytical objects modified: 0
+Next action: create a corrective feature-support migration using the exact counts reported above.

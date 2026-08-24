@@ -5007,6 +5007,11 @@ After the gross results are understood, define the risk-free-rate and transactio
 
 ## 3.42 Validated Gross Momentum-Strategy Results and Interpretation Checkpoint
 
+> **SUPERSEDED ANALYTICAL CHECKPOINT — retained for audit history.**
+>
+> The 47-month results documented in this section were calculated correctly for the then-current SQL feature population, but that feature population was later found to omit validated pre-membership lookback prices that had been intentionally acquired for momentum construction. Section 3.43 documents the correction. All 47-month performance and statistical findings must be treated as historical diagnostics only and must not be used as the current project result.
+
+
 ### Date
 
 2026-08-23
@@ -5292,11 +5297,300 @@ After statistical testing, define the risk-free-rate and transaction-cost method
 
 ---
 
+## 3.43 Momentum Lookback-Scope Correction and Independent Quality Gate
+
+### Date
+
+2026-08-24
+
+### Objective
+
+Correct a methodological boundary discovered after the first gross-results and statistical-analysis checkpoints.
+
+The original project design intentionally acquired approximately one year of pre-window market history so that trailing 12-month and canonical 12-1 momentum could be calculated beginning in the 2021 analytical window.
+
+The SQL feature layer, however, used the membership-clipped 2021-2025 month-end snapshot as both:
+
+- the ranking-date population, and
+- the historical lag-price population.
+
+That implementation correctly prevented non-members from entering portfolios, but it also removed valid pre-membership historical prices that were intended only for feature construction.
+
+### Design Error
+
+The prior SQL feature source conflated two distinct concepts:
+
+1. **Ranking eligibility**
+   - must be a valid point-in-time S&P 500 constituent
+   - must have the active project ticker for the ranking date
+   - must have a valid ranking-date market observation
+
+2. **Historical feature support**
+   - may use validated price observations before S&P 500 membership
+   - must belong to the same permanent `security_key`
+   - does not grant index membership
+   - exists only to calculate trailing features
+
+Because the historical lag source was clipped to membership, the prior implementation did not use the acquired 2020 support prices for January-December 2021 momentum rankings.
+
+The same issue could also suppress valid signals for securities newly added to the S&P 500 later in the 2021-2025 period when their pre-membership trading history was already available and validated.
+
+### Read-Only Scope Inspection
+
+Inspection script:
+
+`src/analysis/inspect_2021_momentum_lookback_coverage.py`
+
+Inspection report:
+
+`reports/data_quality/momentum_lookback_scope_correction_inspection.txt`
+
+The inspection first reproduced the existing validated snapshot-only feature population before evaluating any correction.
+
+Old-state reconciliation:
+
+- constituent month-end snapshot rows: `30,211`
+- complete 1-month rows: `29,623`
+- complete 3-month rows: `28,464`
+- complete 6-month rows: `26,752`
+- complete 12-month rows: `23,401`
+- complete canonical 12-1 momentum signals: `23,401`
+- ranking months: `48`
+- ranking span: analysis months `13-60`
+
+This exact reconstruction confirmed that the problem was a methodological scope boundary rather than a random data or SQL inconsistency.
+
+### Corrected Feature-Support Result
+
+Using validated standardized price history by permanent security identity while keeping ranking-date membership constrained produced:
+
+- exact constituent feature-support rows: `37,245`
+- exact benchmark feature-support rows: `144`
+- support months: `72`
+- support span: `2020-01` through `2025-12`
+- corrected 1-month complete constituent rows: `30,209`
+- corrected 3-month complete constituent rows: `30,192`
+- corrected 6-month complete constituent rows: `30,169`
+- corrected 12-month complete constituent rows: `30,121`
+- corrected canonical 12-1 momentum signals: `30,121`
+- restored momentum signals: `6,720`
+- incomplete 12-1 ranking rows: `90`
+- corrected ranking months: `60`
+
+2021 complete momentum signals:
+
+- 2021-01: `502`
+- 2021-02: `502`
+- 2021-03: `505`
+- 2021-04: `505`
+- 2021-05: `505`
+- 2021-06: `504`
+- 2021-07: `504`
+- 2021-08: `504`
+- 2021-09: `504`
+- 2021-10: `504`
+- 2021-11: `504`
+- 2021-12: `504`
+
+### SQL Correction
+
+Migration:
+
+`sql/analytics/009_correct_momentum_feature_lookback_scope.sql`
+
+Application script:
+
+`src/analysis/apply_azure_sql_momentum_lookback_correction.py`
+
+Application report:
+
+`reports/data_quality/azure_sql_momentum_lookback_correction_application.txt`
+
+The correction created analytical feature-support tables:
+
+- `analytics.security_month_end_feature_support`
+- `analytics.benchmark_month_end_feature_support`
+
+The support tables contain exact SPY-month-end historical observations used only as trailing feature anchors.
+
+The ranking-date population remains:
+
+`analytics.security_month_end_snapshot`
+
+Therefore, the existence of a historical price observation before membership cannot cause a security to enter a momentum portfolio before it is actually an S&P 500 constituent.
+
+### Corrected Feature Methodology
+
+For each valid ranking-date constituent observation:
+
+1. preserve point-in-time membership and ranking-date eligibility
+2. locate historical price anchors by permanent `security_key`
+3. allow those anchors to precede S&P 500 membership
+4. compute trailing returns from corrected historical support
+5. calculate canonical 12-1 momentum from:
+   - month `-12`
+   - through month `-1`
+6. continue to exclude the ranking month from the signal
+7. rank only valid S&P 500 members at the ranking date
+
+The corrected design therefore preserves survivorship-bias controls while using the historical prices intentionally collected for signal construction.
+
+### Application Quality Gate
+
+The correction application passed:
+
+`65 checks`
+
+Key corrected downstream populations:
+
+- corrected momentum assignments: `30,121`
+- ranking months: `60`
+- decile forward-return rows: `600`
+- complete decile forward-return rows: `590`
+- winner-minus-loser rows: `60`
+- complete winner-minus-loser months: `59`
+- benchmark forward-return rows: `120`
+- complete benchmark forward-return rows: `118`
+- security forward-return rows: `30,121`
+- complete security forward returns: `29,620`
+- right-censored December 2025 assignments: `501`
+- gross monthly return-panel rows: `767`
+- analytical series: `13`
+- observable completed performance months: `59`
+- turnover rows: `590`
+- turnover months: `59`
+
+Core rows modified:
+
+`0`
+
+Final application result:
+
+`AZURE_SQL_MOMENTUM_LOOKBACK_SCOPE_CORRECTION_PASSED`
+
+### Independent Integrity Audit
+
+Audit script:
+
+`src/analysis/audit_azure_sql_momentum_lookback_correction.py`
+
+Audit report:
+
+`reports/data_quality/azure_sql_momentum_lookback_correction_integrity_audit.txt`
+
+The audit is read-only and independently reconstructs the correction from the validated standardized price history.
+
+It verifies:
+
+- all `37,245` constituent support observations
+- all `144` benchmark support observations
+- security identity
+- project ticker
+- exact SPY month-end anchor date
+- adjusted close
+- 1-month lag dates and returns
+- 3-month lag dates and returns
+- 6-month lag dates and returns
+- 12-month lag dates and returns
+- all `30,121` canonical 12-1 momentum values
+- all momentum start and end anchors
+- all 60 monthly ranking populations
+- downstream ranking and forward-return propagation
+- December 2025 right-censoring
+- performance-panel structure
+- wealth and drawdown structural validity
+- unchanged core populations
+
+Independent audit checks passed:
+
+`65`
+
+Failed checks:
+
+`0`
+
+Final audit result:
+
+`AZURE_SQL_MOMENTUM_LOOKBACK_SCOPE_CORRECTION_INTEGRITY_AUDIT_PASSED`
+
+and:
+
+`CORRECTION QUALITY GATE COMPLETE`
+
+### Core Preservation
+
+The following validated core populations remained unchanged:
+
+- securities: `593`
+- ticker-history rows: `594`
+- membership intervals: `593`
+- price-eligibility rows: `594`
+- constituent daily observations: `631,942`
+- benchmark definitions: `2`
+- benchmark daily observations: `2,510`
+
+Core-table modifications detected:
+
+`0`
+
+### Analytical Consequence
+
+The original intended study is now restored:
+
+- feature-support history: `2020-01` through `2025-12`
+- analytical ranking window: `2021-01` through `2025-12`
+- ranking months: `60`
+- completed one-month forward-performance months: `59`
+- December 2025 ranking: right-censored because January 2026 is outside project scope
+
+The previously reported 47-month gross-performance results and the statistical tests calculated from that 47-month panel are now **superseded**.
+
+Those calculations were valid for the narrower snapshot-only feature population, but they are not the final intended 2021-2025 experiment.
+
+They must not be used as current evidence for:
+
+- winner performance
+- loser performance
+- winner-minus-loser performance
+- SPY-relative performance
+- drawdowns
+- turnover
+- statistical significance
+- decile monotonicity
+
+The corrected 59-month analytical panel must be re-extracted and re-tested before any economic or statistical interpretation is carried forward.
+
+### Decision
+
+Do not extend to risk-free-rate methodology, Sharpe ratios, regression alpha, or transaction-cost-adjusted performance until the corrected gross-results and statistical analyses have been rerun and documented.
+
+### Result
+
+The lookback-scope correction is complete and independently validated.
+
+The project is again aligned with its original methodology:
+
+**2020 historical prices support feature construction; 2021-2025 point-in-time membership defines portfolio eligibility.**
+
+### Next Step
+
+Commit the methodological correction and its quality-gate evidence.
+
+After the correction commit:
+
+1. rerun corrected gross portfolio-results extraction across all 59 completed months
+2. document the new economic findings
+3. rerun formal statistical testing across the corrected 59-month panel
+4. compare the corrected findings with the superseded 47-month checkpoint only as an audit/history exercise
+5. then proceed to risk-free-rate, Sharpe, regression-alpha, and transaction-cost methodology
+
+---
+
 # Current Status
 
 Current phase:
 
-**Validated gross strategy-results checkpoint complete - statistical testing preparation**
+**Momentum lookback-scope correction complete - corrected 59-month analysis pending**
 
 Completed:
 
@@ -5488,142 +5782,112 @@ Current SQL feature-engineering state:
 
 - Primary analytical engine: Azure SQL
 - Independent audit engine: Python
-- SPY trading sessions: 1,255
-- Exact SPY month-end sessions: 60
-- Constituent daily observations: 631,942
-- Complete constituent daily returns: 631,349
-- Constituent month-end snapshot rows: 30,211
-- Benchmark month-end snapshot rows: 120
-- Complete 1-month constituent returns: 29,623
-- Complete 3-month constituent returns: 28,464
-- Complete 6-month constituent returns: 26,752
-- Complete 12-month constituent returns: 23,401
-- Complete canonical 12-1 momentum signals: 23,401
+- SPY analytical trading sessions: 1,255
+- Exact analytical SPY month-end sessions: 60
+- Exact feature-support months: 72
+- Feature-support span: 2020-01 through 2025-12
+- Constituent feature-support rows: 37,245
+- Benchmark feature-support rows: 144
+- Ranking-date constituent month-end snapshot rows: 30,211
+- Benchmark ranking-date snapshot rows: 120
+- Corrected complete 1-month constituent returns: 30,209
+- Corrected complete 3-month constituent returns: 30,192
+- Corrected complete 6-month constituent returns: 30,169
+- Corrected complete 12-month constituent returns: 30,121
+- Corrected canonical 12-1 momentum signals: 30,121
+- Signals restored by pre-membership feature support: 6,720
 - Forward-looking feature columns: 0
-- Return-foundation integrity checks passed: 36
-- Snapshot-optimization checks passed: 31
-- Monthly feature-integrity checks passed: 40
-- Core rows modified by feature engineering: 0
-- SQL monthly feature-engineering quality-gate result: PASSED
-- Momentum ranking months: 48
-- Ranking period: 2022-01-31 through 2025-12-31
-- Eligible momentum ranking rows: 23,401
-- Monthly eligible ranking population range: 485-491
-- Monthly decile population range: 48-50
-- Winner portfolio rows: 2,307
-- Loser portfolio rows: 2,353
-- Exact-tie rows: 0
-- Monthly decile summary rows: 480
-- Momentum-ranking integrity checks passed: 36
-- Momentum-ranking quality-gate result: PASSED
+- Ranking months: 60
+- Ranking span: 2021-01 through 2025-12
+- Correction application checks passed: 65
+- Independent correction integrity checks passed: 65
+- Core rows modified by correction: 0
+- Momentum lookback-scope correction quality-gate result: PASSED
+- Prior 23,401-signal / 48-month feature population: SUPERSEDED
 
 Current SQL forward-performance state:
 
-- Fixed portfolio assignments: 23,401
-- Ranking months: 48
-- Observable forward-return months: 47
-- Complete constituent forward returns: 22,916
-- Exact-month-end holdings: 22,850
-- Early-exit holdings: 63
-- Immediate-exit holdings: 3
-- Right-censored December 2025 holdings: 485
-- Benchmark holding rows: 96
-- Complete benchmark returns: 94
-- Decile return rows: 480
-- Complete decile return rows: 470
-- Winner-minus-loser rows: 48
-- Complete winner-minus-loser months: 47
-- Complete benchmark-comparison months: 47
-- Forward-return application checks passed: 46
-- Forward-return integrity checks passed: 47
-- Look-ahead dependencies: 0
+- Fixed corrected portfolio assignments: 30,121
+- Ranking months: 60
+- Observable forward-return months: 59
+- Complete constituent forward returns: 29,620
+- Right-censored December 2025 holdings: 501
+- Benchmark holding rows: 120
+- Complete benchmark returns: 118
+- Decile return rows: 600
+- Complete decile return rows: 590
+- Winner-minus-loser rows: 60
+- Complete winner-minus-loser months: 59
+- Look-ahead dependencies introduced by correction: 0
 - Core rows modified: 0
-- SQL forward-return quality-gate result: PASSED
+- Corrected forward-performance propagation: PASSED
+- Prior 23,401-assignment / 47-month forward state: SUPERSEDED
 
 Current SQL portfolio-performance state:
 
-- Gross-performance months: 47
+- Gross-performance months: 59
 - Analytical series: 13
-- Monthly return-panel rows: 611
+- Monthly return-panel rows: 767
 - Momentum decile series: 10
 - Winner-minus-loser series: 1
 - Benchmark series: 2
-- Cumulative-wealth rows: 611
-- Drawdown rows: 611
+- Cumulative-wealth rows: 767
+- Drawdown rows: 767
 - Performance-summary rows: 13
-- Decile-turnover rows: 470
+- Decile-turnover rows: 590
 - Turnover-summary rows: 10
-- Rebalances per decile: 47
-- Portfolio-performance application checks passed: 56
-- Portfolio-performance integrity checks passed: 50
-- Independent Python return-panel mismatches: 0
-- Independent Python wealth mismatches: 0
-- Independent Python drawdown mismatches: 0
-- Independent Python performance-summary mismatches: 0
-- Independent Python turnover mismatches: 0
-- Independent Python turnover-summary mismatches: 0
+- Rebalance transitions: 59
+- Structural performance-layer checks after correction: PASSED
 - Gross performance convention: YES
 - Risk-free-rate dependency: NO
 - Sharpe ratio calculated: NO
 - Regression alpha calculated: NO
 - Transaction costs applied: NO
 - Core rows modified: 0
-- SQL portfolio-performance quality-gate result: PASSED
+- Prior 611-row / 47-month portfolio-performance state: SUPERSEDED
 
-Current validated gross-results state:
+Current corrected analysis state:
 
-- Observable performance months: 47
-- Analytical series: 13
-- Winner decile annualized return: 14.36%
-- Loser decile annualized return: 3.74%
-- Winner-minus-loser annualized return: 7.32%
-- SPY annualized return: 12.79%
-- S&P 500 index annualized return: 11.21%
-- Winner decile cumulative return: 69.13%
-- Winner-minus-loser cumulative return: 31.87%
-- Winner decile maximum drawdown: -14.23%
-- Loser decile maximum drawdown: -26.95%
-- Winner-minus-loser maximum drawdown: -22.82%
-- SPY maximum drawdown: -20.25%
-- Winner decile beat loser decile: 31 of 47 months
-- Winner decile beat SPY: 25 of 47 months
-- Winner-minus-loser positive months: 31 of 47
-- Adjacent decile annualized-return increases: 5 of 9
-- Winner decile average monthly turnover: 28.64%
-- Loser decile average monthly turnover: 27.07%
-- Average monthly turnover across all deciles: 59.84%
-- Winner information ratio versus SPY: 0.197
-- Statistical significance testing completed: NO
+- Corrected observable performance months: 59
+- Corrected analytical series: 13
+- Corrected gross-results extraction rerun: PENDING
+- Corrected statistical significance testing rerun: PENDING
+- Prior 47-month gross-result figures: SUPERSEDED
+- Prior 47-month statistical-test figures: SUPERSEDED
 - Risk-free-rate methodology completed: NO
 - Sharpe ratio calculated: NO
 - Regression alpha calculated: NO
 - Transaction-cost-adjusted performance calculated: NO
-- Current interpretation status: PROVISIONAL
+- Current interpretation status: WITHHELD PENDING CORRECTED RERUN
 - Final momentum-performance claim: NOT YET MADE
 
 Next objective:
 
-Perform formal statistical testing of the validated 47-month gross momentum results before introducing additional performance methodology.
+Commit the validated momentum lookback-scope correction and update the analysis scripts to require the corrected 59-month panel.
 
-The next analytical checkpoint should determine whether:
+After that commit, rerun the gross portfolio-results extraction and formal statistical tests using the corrected 2021-2025 experiment.
 
-- mean WML return is statistically different from zero
-- D10 minus D01 performance is statistically significant
-- D10 excess return versus SPY is statistically significant
-- the observed results are overly dependent on extreme months
-- the decile relationship exhibits a statistically meaningful trend
-
-After statistical testing, define and document the risk-free-rate and transaction-cost methodologies before calculating Sharpe ratios, regression alpha, or net-of-cost performance.
+Do not begin risk-free-rate, Sharpe-ratio, regression-alpha, or transaction-cost analysis until the corrected gross and statistical findings have been documented.
 
 Git checkpoint objective:
 
-Commit the validated gross-results analysis script, authoritative analysis report, and this updated project log as an interpretation checkpoint before beginning formal statistical testing.
+Commit the methodological correction, independent quality-gate evidence, corrected analysis guards, dependency update, and this project log.
 
-Files for the checkpoint:
+Files for the correction checkpoint:
 
+- `sql/analytics/009_correct_momentum_feature_lookback_scope.sql`
+- `src/analysis/inspect_2021_momentum_lookback_coverage.py`
+- `src/analysis/apply_azure_sql_momentum_lookback_correction.py`
+- `src/analysis/audit_azure_sql_momentum_lookback_correction.py`
 - `src/analysis/analyze_momentum_portfolio_results.py`
-- `reports/analysis/momentum_portfolio_results.txt`
+- `src/analysis/test_momentum_statistical_significance.py`
+- `reports/data_quality/momentum_lookback_scope_correction_inspection.txt`
+- `reports/data_quality/azure_sql_momentum_lookback_correction_application.txt`
+- `reports/data_quality/azure_sql_momentum_lookback_correction_integrity_audit.txt`
+- `requirements.txt`
 - `docs/project_log.md`
+
+The previously generated 47-month analysis reports are superseded and should not be committed as current results. They will be regenerated from the corrected 59-month panel after the correction checkpoint.
 
 Continue to exclude:
 

@@ -20,6 +20,10 @@ REPORT_PATH = (
 )
 
 ODBC_DRIVER = "ODBC Driver 18 for SQL Server"
+EXPECTED_OBSERVED_MONTHS = 59
+EXPECTED_FIRST_ANALYSIS_MONTH = 1
+EXPECTED_LAST_ANALYSIS_MONTH = 59
+EXPECTED_PANEL_ROWS = 767
 
 EXPECTED_SERIES = {
     "D01",
@@ -242,6 +246,42 @@ def main() -> None:
 
         print("Reading validated portfolio-performance results...")
 
+        panel_control = fetch_dicts(
+            cursor,
+            """
+            SELECT
+                COUNT_BIG(*) AS panel_rows,
+                COUNT_BIG(DISTINCT analysis_month_number) AS observed_months,
+                MIN(analysis_month_number) AS first_analysis_month_number,
+                MAX(analysis_month_number) AS last_analysis_month_number
+            FROM analytics.v_momentum_monthly_return_panel;
+            """,
+        )[0]
+
+        if int(panel_control["panel_rows"]) != EXPECTED_PANEL_ROWS:
+            raise RuntimeError(
+                f"Expected {EXPECTED_PANEL_ROWS} validated return-panel rows; "
+                f"found {int(panel_control['panel_rows'])}."
+            )
+
+        if int(panel_control["observed_months"]) != EXPECTED_OBSERVED_MONTHS:
+            raise RuntimeError(
+                f"Expected {EXPECTED_OBSERVED_MONTHS} observable months; "
+                f"found {int(panel_control['observed_months'])}."
+            )
+
+        if (
+            int(panel_control["first_analysis_month_number"])
+            != EXPECTED_FIRST_ANALYSIS_MONTH
+            or int(panel_control["last_analysis_month_number"])
+            != EXPECTED_LAST_ANALYSIS_MONTH
+        ):
+            raise RuntimeError(
+                "Unexpected corrected performance-month bounds: "
+                f"{panel_control['first_analysis_month_number']} through "
+                f"{panel_control['last_analysis_month_number']}."
+            )
+
         summary_rows = fetch_dicts(
             cursor,
             """
@@ -262,9 +302,12 @@ def main() -> None:
                 f"Found: {sorted(summary)}"
             )
 
-        if any(int(row["observed_months"]) != 47 for row in summary_rows):
+        if any(int(row["observed_months"]) != EXPECTED_OBSERVED_MONTHS for row in summary_rows):
             raise RuntimeError(
-                "At least one analytical series does not contain 47 observed months."
+                (
+                    "At least one analytical series does not contain "
+                    f"{EXPECTED_OBSERVED_MONTHS} observed months."
+                )
             )
 
         turnover_rows = fetch_dicts(
@@ -612,7 +655,7 @@ def main() -> None:
             "No regression alpha has been calculated.",
             "No statistical significance test is performed by this script.",
             (
-                "The report describes the observed 47-month sample and should not "
+                f"The report describes the observed {EXPECTED_OBSERVED_MONTHS}-month sample and should not "
                 "be interpreted as evidence of future performance."
             ),
         ]
