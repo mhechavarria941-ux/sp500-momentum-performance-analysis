@@ -5005,11 +5005,298 @@ After the gross results are understood, define the risk-free-rate and transactio
 
 ---
 
+## 3.42 Validated Gross Momentum-Strategy Results and Interpretation Checkpoint
+
+### Date
+
+2026-08-23
+
+### Objective
+
+Extract, document, and interpret the first validated portfolio-level momentum results produced by the completed SQL performance layer.
+
+This checkpoint is intentionally analytical rather than methodological. It records what the validated 47-month gross-performance sample currently shows, while explicitly separating observed findings from conclusions that still require statistical, risk-adjusted, and net-of-cost testing.
+
+### Analysis Script
+
+`src/analysis/analyze_momentum_portfolio_results.py`
+
+### Analysis Report
+
+`reports/analysis/momentum_portfolio_results.txt`
+
+### Source Objects
+
+The analysis reads only from the previously validated portfolio-performance views:
+
+- `analytics.v_momentum_performance_summary`
+- `analytics.v_momentum_monthly_return_panel`
+- `analytics.v_momentum_wealth_drawdown`
+- `analytics.v_momentum_turnover_summary`
+
+No database modifications are performed.
+
+### Analysis Scope
+
+The validated gross-performance sample contains:
+
+- 47 observable forward-return months
+- 13 analytical series
+- 10 momentum deciles
+- 1 winner-minus-loser (`WML`) series
+- SPY
+- S&P 500 index
+- 611 monthly return-panel observations
+- 470 month/decile turnover observations
+
+The analysis remains gross of transaction costs and does not yet include:
+
+- risk-free-rate adjustment
+- Sharpe ratios
+- regression alpha
+- transaction-cost-adjusted performance
+- statistical significance tests
+
+### Primary Performance Findings
+
+Winner decile (`D10`):
+
+- final wealth from $1.00: `1.6913`
+- cumulative return: `69.13%`
+- annualized return: `14.36%`
+- annualized volatility: `19.19%`
+- maximum drawdown: `-14.23%`
+- positive-month frequency: `63.83%`
+- annualized active return versus SPY: `1.94%`
+- information ratio versus SPY: `0.197`
+
+Loser decile (`D01`):
+
+- final wealth from $1.00: `1.1546`
+- cumulative return: `15.46%`
+- annualized return: `3.74%`
+- annualized volatility: `24.23%`
+- maximum drawdown: `-26.95%`
+- positive-month frequency: `46.81%`
+
+Winner-minus-loser (`WML`):
+
+- final wealth from $1.00: `1.3187`
+- cumulative return: `31.87%`
+- annualized return: `7.32%`
+- annualized volatility: `18.35%`
+- maximum drawdown: `-22.82%`
+- positive-month frequency: `65.96%`
+
+SPY:
+
+- final wealth from $1.00: `1.6023`
+- cumulative return: `60.23%`
+- annualized return: `12.79%`
+- annualized volatility: `15.82%`
+- maximum drawdown: `-20.25%`
+- positive-month frequency: `65.96%`
+
+S&P 500 index:
+
+- final wealth from $1.00: `1.5160`
+- cumulative return: `51.60%`
+- annualized return: `11.21%`
+- annualized volatility: `15.79%`
+- maximum drawdown: `-20.85%`
+- positive-month frequency: `63.83%`
+
+### Cross-Portfolio Findings
+
+Winner-decile annualized return minus loser-decile annualized return:
+
+`10.62 percentage points`
+
+Winner-decile annualized return minus SPY annualized return:
+
+`1.57 percentage points`
+
+Observed monthly comparisons:
+
+- D10 beat D01 in `31 of 47` months
+- D10 beat SPY in `25 of 47` months
+- D01 beat SPY in `17 of 47` months
+- WML was positive in `31 of 47` months
+- SPY beat the S&P 500 index in `45 of 47` months
+
+### Decile Pattern
+
+Annualized returns by momentum decile:
+
+- D01: `3.74%`
+- D02: `0.62%`
+- D03: `8.73%`
+- D04: `5.24%`
+- D05: `8.09%`
+- D06: `8.48%`
+- D07: `9.16%`
+- D08: `8.77%`
+- D09: `8.08%`
+- D10: `14.36%`
+
+Adjacent annualized returns increase in only:
+
+`5 of 9`
+
+decile transitions.
+
+### Interpretation
+
+The observed sample shows a strong separation between the highest- and lowest-momentum portfolios.
+
+The winner decile produced the highest annualized return of all 13 analytical series and materially outperformed the loser decile.
+
+The winner decile also exceeded SPY on a gross annualized basis over the observed sample while experiencing a smaller maximum drawdown than SPY.
+
+However, the momentum effect is not perfectly monotonic across all ten deciles.
+
+The middle deciles do not produce a smooth increase in return from D01 through D10. The strongest observed effect is concentrated primarily in the highest-momentum portfolio rather than appearing as a perfectly ordered decile gradient.
+
+This distinction is important and should be preserved in future interpretation.
+
+The WML series provides additional evidence of a meaningful observed spread between the strongest- and weakest-momentum securities:
+
+- annualized return: `7.32%`
+- cumulative return: `31.87%`
+- positive in `31 of 47` months
+
+The `10.62` percentage-point difference between independently annualized D10 and D01 returns is not expected to equal the `7.32%` annualized WML result.
+
+WML is formed by subtracting D01 from D10 at the monthly-return level and then compounding that return series through time.
+
+### Drawdown Interpretation
+
+The winner portfolio's observed maximum drawdown:
+
+`-14.23%`
+
+was smaller than:
+
+- SPY: `-20.25%`
+- S&P 500 index: `-20.85%`
+- loser decile: `-26.95%`
+
+Within this sample, the winner portfolio therefore did not achieve its higher gross return simply by accepting a larger maximum peak-to-trough decline.
+
+This is an economically interesting result, but it requires further risk-adjusted and statistical analysis before being interpreted as a persistent risk advantage.
+
+### Turnover Findings
+
+Average monthly target-weight turnover:
+
+- D01: `27.07%`
+- D10: `28.64%`
+- all deciles average: `59.84%`
+- highest observed decile turnover: D07 at `72.82%`
+
+Average security overlap:
+
+- D01: `72.96%`
+- D10: `71.45%`
+
+The extreme momentum portfolios are substantially more persistent than the middle deciles.
+
+This suggests that securities near the strongest and weakest momentum extremes tend to remain in those extreme portfolios more often than securities remain in the middle momentum buckets.
+
+The annualized turnover values are simple annualizations of monthly target-weight turnover and do not represent trading losses.
+
+Transaction costs remain unmodeled.
+
+### Benchmark Interpretation
+
+SPY outperformed the S&P 500 index in:
+
+`45 of 47`
+
+observed months.
+
+Under the current methodology, SPY adjusted-close returns represent an investable total-return-style benchmark, while the S&P 500 index series is retained separately as the underlying index benchmark.
+
+For current active-return comparisons, SPY remains the primary reference series.
+
+The benchmark difference should continue to be documented so that SPY-versus-index return differences are not misinterpreted as tracking skill.
+
+### Important Interpretation Boundary
+
+The current evidence is economically interesting but not yet sufficient to claim that the momentum effect is statistically reliable, structurally persistent, or implementable after costs.
+
+The observed sample contains only:
+
+`47 months`
+
+of completed forward performance.
+
+The winner portfolio's gross annualized advantage over SPY is modest relative to its much larger advantage over the loser portfolio.
+
+The current winner information ratio versus SPY is:
+
+`0.197`
+
+Therefore, the current evidence supports a documented sample finding, not a final claim of persistent abnormal performance.
+
+### Current Working Interpretation
+
+The current project evidence supports the following provisional interpretation:
+
+The 2022-2025 validated sample exhibits a substantial cross-sectional separation between the highest- and lowest-momentum S&P 500 securities. The winner decile produced the strongest gross annualized performance in the analysis and modestly outperformed SPY while experiencing a smaller observed maximum drawdown. The effect is concentrated at the highest-momentum extreme rather than displaying a perfectly monotonic decile-return gradient.
+
+This interpretation remains provisional and requires formal statistical testing, risk-adjusted analysis, transaction-cost modeling, and additional robustness analysis before stronger conclusions are made.
+
+### Questions Requiring Further Study
+
+Before progressing to presentation or final conclusions, the project should determine:
+
+- whether mean WML return is statistically different from zero
+- whether the D10 minus D01 return spread is statistically significant
+- whether D10 excess return over SPY is statistically significant
+- whether observed performance is concentrated in a small number of unusually strong months
+- whether the decile relationship has a statistically meaningful cross-sectional trend
+- whether results remain economically meaningful after realistic transaction costs
+- whether risk-adjusted performance remains favorable after introducing a documented risk-free rate
+- whether regression-based alpha remains positive after controlling for market exposure
+- whether the result persists across subperiods or market regimes
+- whether sector concentration helps explain the winner-decile result
+
+### Result
+
+The first validated gross momentum-strategy results have been extracted and documented.
+
+The project now has an explicit analytical interpretation checkpoint separating:
+
+- validated observed results
+- provisional interpretation
+- unresolved statistical questions
+- deferred risk-adjusted methodology
+- deferred transaction-cost methodology
+
+No final momentum-performance claim is made at this stage.
+
+### Next Step
+
+Perform formal statistical testing of the validated 47-month momentum results before introducing additional performance methodology.
+
+The next analytical layer should test:
+
+- WML mean return versus zero
+- D10 minus D01 performance
+- D10 excess return versus SPY
+- sensitivity to extreme months
+- cross-decile trend strength
+
+After statistical testing, define the risk-free-rate and transaction-cost methodologies before calculating Sharpe ratios, regression alpha, or net-of-cost performance.
+
+---
+
 # Current Status
 
 Current phase:
 
-**SQL portfolio-performance layer complete - validated strategy-results analysis**
+**Validated gross strategy-results checkpoint complete - statistical testing preparation**
 
 Completed:
 
@@ -5112,6 +5399,21 @@ Completed:
 - Independent 50-check portfolio-performance integrity audit
 - Zero Python-to-SQL portfolio-performance mismatches
 - SQL portfolio-performance quality gate
+- Read-only extraction of validated gross portfolio results
+- Complete 13-series portfolio-performance comparison
+- Winner-decile, loser-decile, WML, SPY, and S&P 500 benchmark interpretation
+- Documented D10 annualized return of 14.36%
+- Documented D01 annualized return of 3.74%
+- Documented WML annualized return of 7.32%
+- Documented SPY annualized return of 12.79%
+- Documented D10 maximum drawdown of -14.23%
+- Documented D01 maximum drawdown of -26.95%
+- Documented WML maximum drawdown of -22.82%
+- Documented 31-of-47 positive WML months
+- Documented non-monotonic decile-return pattern
+- Documented momentum-extreme turnover persistence
+- Explicit provisional interpretation of current momentum findings
+- Explicit statistical, risk-adjusted, transaction-cost, and robustness questions for further study
 
 Current market-data quality state:
 
@@ -5268,26 +5570,60 @@ Current SQL portfolio-performance state:
 - Core rows modified: 0
 - SQL portfolio-performance quality-gate result: PASSED
 
+Current validated gross-results state:
+
+- Observable performance months: 47
+- Analytical series: 13
+- Winner decile annualized return: 14.36%
+- Loser decile annualized return: 3.74%
+- Winner-minus-loser annualized return: 7.32%
+- SPY annualized return: 12.79%
+- S&P 500 index annualized return: 11.21%
+- Winner decile cumulative return: 69.13%
+- Winner-minus-loser cumulative return: 31.87%
+- Winner decile maximum drawdown: -14.23%
+- Loser decile maximum drawdown: -26.95%
+- Winner-minus-loser maximum drawdown: -22.82%
+- SPY maximum drawdown: -20.25%
+- Winner decile beat loser decile: 31 of 47 months
+- Winner decile beat SPY: 25 of 47 months
+- Winner-minus-loser positive months: 31 of 47
+- Adjacent decile annualized-return increases: 5 of 9
+- Winner decile average monthly turnover: 28.64%
+- Loser decile average monthly turnover: 27.07%
+- Average monthly turnover across all deciles: 59.84%
+- Winner information ratio versus SPY: 0.197
+- Statistical significance testing completed: NO
+- Risk-free-rate methodology completed: NO
+- Sharpe ratio calculated: NO
+- Regression alpha calculated: NO
+- Transaction-cost-adjusted performance calculated: NO
+- Current interpretation status: PROVISIONAL
+- Final momentum-performance claim: NOT YET MADE
+
 Next objective:
 
-Inspect and document the validated gross momentum-strategy results across all 13 analytical series.
+Perform formal statistical testing of the validated 47-month gross momentum results before introducing additional performance methodology.
 
-Evaluate cumulative wealth, annualized return, annualized volatility, maximum drawdown, positive-month frequency, benchmark-relative performance, winner-minus-loser behavior, momentum-decile behavior, and portfolio turnover.
+The next analytical checkpoint should determine whether:
 
-After the gross-performance results are understood, define and document the risk-free-rate and transaction-cost methodologies before calculating Sharpe ratios, regression alpha, or net-of-cost performance.
+- mean WML return is statistically different from zero
+- D10 minus D01 performance is statistically significant
+- D10 excess return versus SPY is statistically significant
+- the observed results are overly dependent on extreme months
+- the decile relationship exhibits a statistically meaningful trend
+
+After statistical testing, define and document the risk-free-rate and transaction-cost methodologies before calculating Sharpe ratios, regression alpha, or net-of-cost performance.
 
 Git checkpoint objective:
 
-Commit the portfolio-performance SQL migration, application runner, independent integrity audit, authoritative application and audit reports, and this updated project log.
+Commit the validated gross-results analysis script, authoritative analysis report, and this updated project log as an interpretation checkpoint before beginning formal statistical testing.
 
 Files for the checkpoint:
 
-- `sql/analytics/008_create_portfolio_performance_views.sql`
-- `src/analysis/apply_azure_sql_portfolio_performance.py`
-- `src/analysis/audit_azure_sql_portfolio_performance.py`
-- `reports/data_quality/azure_sql_portfolio_performance_application.txt`
-- `reports/data_quality/azure_sql_portfolio_performance_integrity_audit.txt`
-- `project_log.md`
+- `src/analysis/analyze_momentum_portfolio_results.py`
+- `reports/analysis/momentum_portfolio_results.txt`
+- `docs/project_log.md`
 
 Continue to exclude:
 
