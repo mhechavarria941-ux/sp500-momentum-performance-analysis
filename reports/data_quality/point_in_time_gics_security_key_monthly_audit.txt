@@ -1,0 +1,138 @@
+======================================================================================================================
+POINT-IN-TIME GICS SECURITY_KEY / MONTHLY ASSIGNMENT AUDIT
+======================================================================================================================
+Mode: LOCAL construction + Azure SQL READ-ONLY
+Source hierarchy: official GICS effective dates > canonical SEC Select Sector ETF states > official S&P membership-event GICS evidence; identity hierarchy: historical ticker > current SPY CUSIP > unique current/alias name > audited residual override
+Analytical window: 2021-01 through 2025-12
+Ranking dates: exact dates from analytics.security_month_end_snapshot
+
+
+======================================================================================================================
+1. IDENTITY BRIDGE
+======================================================================================================================
+SEC canonical holding rows: 10,577
+SEC rows mapped to security_key: 9,584
+SEC rows unmatched: 993
+Unique SEC holding identifiers bridged: 512
+Ambiguous global ticker keys excluded: 0
+Current State Street CUSIP identifiers bridged: 491
+Ambiguous current State Street identifiers excluded: 0
+Unique current/alias normalized names bridged: 487
+Ambiguous current/alias normalized names excluded: 3
+Audited residual identity overrides loaded: 13
+Ambiguous SEC holding identifiers excluded: 0
+Official membership-event rows mapped: 178
+Official membership-event rows unmatched: 0
+Authoritative GICS transitions mapped to security_key: 20
+Audited official membership-event GICS corrections applied: 1
+Unmapped SEC ETF rows retained for source audit but not used as a hard H2 gate: 993
+
+======================================================================================================================
+2. PERMANENT SECURITY GICS INTERVALS
+======================================================================================================================
+Membership security identities: 593
+Security identities with GICS intervals: 593
+GICS interval rows: 613
+Authoritative sector transitions represented: 20
+Interval overlaps: 0
+Interval gaps: 0
+Unresolved initial-sector identities: 0
+Unexplained evidence mismatches: 0
+
+======================================================================================================================
+3. 60-MONTH RANKING-DATE EXPANSION
+======================================================================================================================
+Azure ranking snapshot rows: 30,211
+Monthly GICS assignment rows: 30,211
+Ranking months: 60
+Security identities appearing in monthly assignments: 588
+Missing ranking-date sector assignments: 0
+Duplicate security-month assignments: 0
+Sector count range across ranking months: 11 to 11
+Monthly assigned-security range: 502 to 505
+
+Monthly sector coverage:
+  month=01 | 2021-01-29 | ranking_rows=505 | assigned=505 | sectors=11 | difference=0
+  month=02 | 2021-02-26 | ranking_rows=505 | assigned=505 | sectors=11 | difference=0
+  month=03 | 2021-03-31 | ranking_rows=505 | assigned=505 | sectors=11 | difference=0
+  month=04 | 2021-04-30 | ranking_rows=505 | assigned=505 | sectors=11 | difference=0
+  month=05 | 2021-05-28 | ranking_rows=505 | assigned=505 | sectors=11 | difference=0
+  month=06 | 2021-06-30 | ranking_rows=505 | assigned=505 | sectors=11 | difference=0
+  month=07 | 2021-07-30 | ranking_rows=505 | assigned=505 | sectors=11 | difference=0
+  month=08 | 2021-08-31 | ranking_rows=505 | assigned=505 | sectors=11 | difference=0
+  month=09 | 2021-09-30 | ranking_rows=505 | assigned=505 | sectors=11 | difference=0
+  month=10 | 2021-10-29 | ranking_rows=505 | assigned=505 | sectors=11 | difference=0
+  month=11 | 2021-11-30 | ranking_rows=505 | assigned=505 | sectors=11 | difference=0
+  month=12 | 2021-12-31 | ranking_rows=505 | assigned=505 | sectors=11 | difference=0
+  month=13 | 2022-01-31 | ranking_rows=505 | assigned=505 | sectors=11 | difference=0
+  month=14 | 2022-02-28 | ranking_rows=504 | assigned=504 | sectors=11 | difference=0
+  month=15 | 2022-03-31 | ranking_rows=505 | assigned=505 | sectors=11 | difference=0
+  month=16 | 2022-04-29 | ranking_rows=504 | assigned=504 | sectors=11 | difference=0
+  month=17 | 2022-05-31 | ranking_rows=504 | assigned=504 | sectors=11 | difference=0
+  month=18 | 2022-06-30 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=19 | 2022-07-29 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=20 | 2022-08-31 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=21 | 2022-09-30 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=22 | 2022-10-31 | ranking_rows=502 | assigned=502 | sectors=11 | difference=0
+  month=23 | 2022-11-30 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=24 | 2022-12-30 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=25 | 2023-01-31 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=26 | 2023-02-28 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=27 | 2023-03-31 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=28 | 2023-04-28 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=29 | 2023-05-31 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=30 | 2023-06-30 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=31 | 2023-07-31 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=32 | 2023-08-31 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=33 | 2023-09-29 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=34 | 2023-10-31 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=35 | 2023-11-30 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=36 | 2023-12-29 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=37 | 2024-01-31 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=38 | 2024-02-29 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=39 | 2024-03-28 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=40 | 2024-04-30 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=41 | 2024-05-31 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=42 | 2024-06-28 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=43 | 2024-07-31 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=44 | 2024-08-30 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=45 | 2024-09-30 | ranking_rows=504 | assigned=504 | sectors=11 | difference=0
+  month=46 | 2024-10-31 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=47 | 2024-11-29 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=48 | 2024-12-31 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=49 | 2025-01-31 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=50 | 2025-02-28 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=51 | 2025-03-31 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=52 | 2025-04-30 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=53 | 2025-05-30 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=54 | 2025-06-30 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=55 | 2025-07-31 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=56 | 2025-08-29 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=57 | 2025-09-30 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=58 | 2025-10-31 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=59 | 2025-11-28 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+  month=60 | 2025-12-31 | ranking_rows=503 | assigned=503 | sectors=11 | difference=0
+
+======================================================================================================================
+4. H2 POINT-IN-TIME GICS QUALITY GATE
+======================================================================================================================
+PASS: All 593 membership identities have continuous, non-overlapping point-in-time GICS intervals.
+PASS: All 20 authoritative GICS transitions are incorporated on their exact valid-from dates.
+PASS: All 30,211 ranking-date security rows map to exactly one canonical GICS sector.
+PASS: All 60 ranking months contain all 11 GICS sectors.
+PASS: No unexplained in-membership SEC or official membership-event sector evidence conflicts remain.
+PASS: SEC observations outside project membership intervals are retained as support/audit evidence and excluded from in-window contradiction checks.
+PASS: Remaining unmapped SEC ETF rows are informational only; every ranking-security observation has a complete point-in-time sector assignment.
+
+RESULT: POINT_IN_TIME_GICS_MONTHLY_QUALITY_GATE_PASSED
+
+H2 SECTOR-RELATIVE MOMENTUM DATA PREREQUISITE: READY
+
+Azure SQL modifications performed: 0
+Validated price/membership core modified: 0
+Permanent GICS intervals: data\reference\gics\security_gics_sector_intervals_2021_2025.csv
+Monthly GICS assignments: data\interim\security_gics_sector_month_end_2021_2025.csv
+SEC identifier bridge: data\reference\gics\sec_gics_identifier_security_key_bridge.csv
+Audited residual identity overrides: data\reference\gics\gics_security_key_identity_overrides.csv
+Audited official event-sector corrections: data\reference\gics\gics_official_event_sector_overrides.csv
+Coverage audit: reports\data_quality\gics_monthly_sector_coverage.csv

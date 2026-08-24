@@ -87,12 +87,14 @@ The purpose is to make the project reproducible
 
 ## Phase 7 — Momentum Research
 
-* Momentum rankings
-* Momentum deciles
-* Momentum persistence
-* Forward-return testing
-* Sector-relative momentum
-* Risk-adjusted momentum
+* Canonical 12-1 momentum rankings and deciles
+* Corrected 2021–2025 forward-return testing
+* Statistical, risk-adjusted, and implementation-cost analysis
+* H1 canonical 12-1 momentum closeout — not supported
+* Point-in-time GICS sector-history construction
+* H2 sector-relative 12-1 momentum preregistration
+* Within-sector quintile and sector-neutral portfolio testing
+* Post-H2 commonality and residual-winner exploration
 
 ## Phase 8 — SQL Analytics
 
@@ -6027,134 +6029,583 @@ Potential next hypotheses should be treated as new experiments with their own do
 
 ---
 
+
+## 3.45 Point-in-Time GICS Sector Layer and H2 Sector-Relative Momentum Preregistration
+
+### Date
+
+`2026-08-24`
+
+### Objective
+
+Build and validate a point-in-time GICS sector-classification layer for every security-month in the corrected 2021–2025 S&P 500 ranking universe, then preregister the second research hypothesis before inspecting any H2 performance results.
+
+The new experiment is:
+
+**H2 — Sector-relative 12-1 momentum**
+
+Stocks with stronger corrected 12-1 momentum relative to other stocks in their own point-in-time GICS sector are hypothesized to earn higher subsequent one-month returns than weaker sector-relative stocks.
+
+This is a new experiment. The completed H1 canonical market-wide momentum methodology and its unsupported result remain frozen.
+
+### Source Strategy
+
+The GICS layer was constructed from authoritative and regulator-filed sources rather than using a current classification table retroactively.
+
+Primary evidence hierarchy:
+
+1. **Official S&P DJI / MSCI GICS effective-date evidence** for known sector reclassifications.
+2. **SEC Form N-PORT filings** for the Select Sector SPDR ETF family as historical quarter-end sector-state evidence.
+3. **Official S&P 500 membership-event GICS evidence** where applicable.
+4. Audited security-identity reconciliation layers used only to map source identifiers to the project's permanent `security_key`.
+
+Current State Street SPY holdings were used only for identity reconciliation where needed. The current SPY `Sector` field was not used to backfill historical classifications.
+
+Wikipedia was not used as a project data source.
+
+### SEC Select Sector Source Validation
+
+The initial iShares IVV historical-holdings route was tested and rejected because the historical response was not reliably exposed in a usable machine-readable form.
+
+The project then validated the SEC Form N-PORT route for the canonical Select Sector SPDR funds.
+
+Canonical sector series:
+
+- XLC — Communication Services
+- XLY — Consumer Discretionary
+- XLP — Consumer Staples
+- XLE — Energy
+- XLF — Financials
+- XLV — Health Care
+- XLI — Industrials
+- XLK — Information Technology
+- XLB — Materials
+- XLRE — Real Estate
+- XLU — Utilities
+
+The SEC complete-submission-text route was used to recover the raw N-PORT XML because direct `primary_doc.xml` requests were rendered as SEC viewer HTML in the local retrieval environment.
+
+### Canonical SEC Snapshot Rebuild
+
+Canonical Select Sector SPDR series IDs were pinned explicitly to prevent newly introduced Premium Income products from being selected as the historical sector funds.
+
+The canonical rebuild produced:
+
+- 21 historical report dates
+- 21 / 21 complete 11-sector partitions
+- 10,582 raw equity rows
+- 10,577 clean canonical equity rows
+- 5 tiny residual cross-holdings excluded as ETF implementation artifacts
+- 0 unresolved material cross-sector duplicates
+- 503–505 unique security identifiers per complete historical snapshot
+- exact 503-security partition at 2025-12-31
+
+The five excluded residual cross-holdings were:
+
+- S&P Global in XLI while materially held in XLF during three 2022 quarter-ends
+- GE HealthCare in XLI while materially held in XLV during two 2023 quarter-ends
+
+The residual positions were many orders of magnitude smaller than the dominant sector holdings and were retained in the audit record rather than interpreted as genuine dual-sector classifications.
+
+Canonical rebuild result:
+
+`SEC_SELECT_SECTOR_CANONICAL_SOURCE_GATE_PASSED`
+
+### Authoritative GICS Transition Ledger
+
+Twenty sector-transition candidates detected from the canonical SEC sequence were reconciled to authoritative effective-date evidence.
+
+The transition ledger covers:
+
+- Leidos Holdings
+- Teledyne Technologies
+- Roper Technologies
+- Automatic Data Processing
+- Broadridge Financial Solutions
+- Ceridian / Dayforce
+- Dollar General
+- Dollar Tree
+- Fidelity National Information Services
+- Fiserv
+- FleetCor / Corpay
+- Global Payments
+- Jack Henry & Associates
+- Mastercard
+- Paychex
+- Paycom
+- PayPal
+- Target
+- Visa
+- CoStar Group
+
+Sixteen transitions use the 2023 GICS structural revision effective after the close of:
+
+`2023-03-17`
+
+with analytical validity beginning:
+
+`2023-03-20`
+
+Company-specific effective dates were preserved separately.
+
+CoStar Group remained:
+
+`Industrials`
+
+through the close of:
+
+`2023-06-30`
+
+and became:
+
+`Real Estate`
+
+from:
+
+`2023-07-03`
+
+The close-date-aware transition validator reconciled all 20 detected transitions exactly.
+
+Result:
+
+`GICS_TRANSITION_EFFECTIVE_DATE_GATE_PASSED`
+
+### Identity-Reconciliation Investigation
+
+The first point-in-time sector builder exposed a systematic identity-bridge defect:
+
+- membership security identities: 593
+- identities with sector intervals: 503
+- unresolved identities: 90
+- missing ranking-date assignments: 5,400
+- exact deficit per ranking month: 90
+
+A dedicated diagnostic confirmed that the **same 90 `security_key` values were missing in all 60 months**, proving that the problem was an identity bridge defect rather than missing historical sector coverage.
+
+The identity bridge was then strengthened conservatively without fuzzy auto-matching.
+
+Final identity hierarchy:
+
+1. historical project ticker
+2. current State Street SPY CUSIP identity
+3. unique exact normalized current / documented-alias company name
+4. explicit audited residual identifier override
+5. unique identifier propagation from already resolved rows
+
+Ambiguous company-name keys such as Alphabet, Fox, and News were excluded from name-based resolution.
+
+### Audited Residual Identity Overrides
+
+Thirteen exact identifier overrides were required after the deterministic identity tiers.
+
+The override ledger is:
+
+`data/reference/gics/gics_security_key_identity_overrides.csv`
+
+It includes audited mappings for:
+
+- JCI
+- LYB
+- NCLH
+- XOM
+- CPAY / historical FleetCor
+- PAYC
+- CAG
+- CPB
+- CTRA
+- EA
+- HOLX
+- LW
+- POOL
+
+Examples of why explicit overrides were necessary:
+
+- Johnson Controls, LyondellBasell, and Norwegian Cruise Line were represented in SEC N-PORT primarily through non-U.S. ISIN identity.
+- FleetCor and Corpay have different CUSIPs but preserve the same SEC LEI, providing deterministic issuer continuity.
+- Campbell Soup / The Campbell's Company and Cabot Oil & Gas / Coterra preserved stable SEC CUSIPs across naming changes.
+- Pool Corp was explicitly matched to CUSIP `73278L105`; a diagnostic substring match to Whirlpool was identified as a search-only false positive and was not used in the production bridge.
+
+No fuzzy identity rule was introduced.
+
+### CoStar Official Membership-Event Evidence Correction
+
+One official membership-event GICS evidence row was inconsistent with the authoritative historical state.
+
+The local event record for CoStar Group's S&P 500 addition on:
+
+`2022-09-19`
+
+contained:
+
+`Real Estate`
+
+but authoritative evidence establishes that CoStar belonged to:
+
+`Industrials`
+
+at that time.
+
+CoStar's later move to Real Estate is separately represented by the authoritative transition effective after the close of 2023-06-30.
+
+The membership action and effective date were not modified.
+
+A one-row audited sector-evidence correction layer was created:
+
+`data/reference/gics/gics_official_event_sector_overrides.csv`
+
+The correction is applied in memory by the builder and preserves the original source ledger for provenance.
+
+### Evidence-Scope Correction
+
+The evidence audit initially reported 413 mismatches.
+
+A targeted diagnostic showed:
+
+- 412 mismatches were SEC observations dated `2020-12-31`
+- 1 mismatch was the CoStar membership-event sector issue described above
+
+The 2020-12-31 observations are pre-window support evidence. They occur before the 2021-01-01 analytical membership intervals and therefore should not be evaluated as contradictions to a 2021–2025 membership classification.
+
+The final builder retains those SEC observations for provenance and support, but sector contradiction checks are applied only when the SEC evidence date overlaps the applicable project membership interval.
+
+This changes the audit scope, not the historical sector source.
+
+### Files Created or Modified
+
+Primary construction and validation:
+
+- `src/analysis/audit_point_in_time_gics_sector_coverage.py`
+- `src/analysis/probe_ishares_ivv_historical_holdings.py`
+- `src/analysis/probe_sec_select_sector_nport.py`
+- `src/analysis/extract_sec_select_sector_historical_holdings.py`
+- `src/analysis/rebuild_sec_select_sector_canonical_snapshots.py`
+- `src/analysis/diagnose_sec_select_sector_snapshot_anomalies.py`
+- `src/analysis/validate_gics_transition_effective_dates.py`
+- `src/analysis/build_point_in_time_gics_security_intervals.py`
+
+Targeted identity diagnostics were used during development to isolate mapping failures before the production bridge was changed.
+
+Reference / audit-control files:
+
+- `data/reference/gics/gics_transition_effective_dates.csv`
+- `data/reference/gics/gics_security_key_identity_overrides.csv`
+- `data/reference/gics/gics_official_event_sector_overrides.csv`
+
+Canonical outputs:
+
+- `data/reference/gics/security_gics_sector_intervals_2021_2025.csv`
+- `data/interim/security_gics_sector_month_end_2021_2025.csv`
+- `data/reference/gics/sec_gics_identifier_security_key_bridge.csv`
+- `reports/data_quality/gics_monthly_sector_coverage.csv`
+- `reports/data_quality/point_in_time_gics_security_key_monthly_audit.txt`
+
+H2 specification:
+
+- `docs/h2_sector_relative_momentum_preregistration.md`
+- `docs/project_log.md`
+
+### Final Point-in-Time GICS Validation
+
+Final production builder version:
+
+`2026-08-24-v4-final-identity-and-evidence-scope`
+
+Final identity state:
+
+- SEC canonical holding rows: 10,577
+- SEC rows mapped to `security_key`: 9,584
+- SEC rows retained unmatched for source audit: 993
+- unique SEC holding identifiers bridged: 512
+- current State Street CUSIP identifiers bridged: 491
+- ambiguous current State Street identifiers: 0
+- unique normalized current / alias company names bridged: 487
+- ambiguous normalized company names excluded: 3
+- audited residual identity overrides: 13
+- official membership-event rows mapped: 178
+- official membership-event rows unmatched: 0
+- authoritative GICS transitions mapped: 20
+- audited official membership-event GICS corrections applied: 1
+
+Final permanent interval state:
+
+- membership security identities: 593
+- security identities with GICS intervals: 593
+- GICS interval rows: 613
+- authoritative transitions represented: 20
+- interval overlaps: 0
+- interval gaps: 0
+- unresolved initial-sector identities: 0
+- unexplained in-membership evidence mismatches: 0
+
+Final monthly state:
+
+- Azure ranking snapshot rows: 30,211
+- monthly GICS assignment rows: 30,211
+- ranking months: 60
+- security identities appearing on at least one ranking date: 588
+- missing ranking-date sector assignments: 0
+- duplicate security-month assignments: 0
+- sector count range: 11 to 11
+- monthly security-count range: 502 to 505
+- every month reconciles exactly to the ranking snapshot
+
+The difference between 593 membership identities and 588 identities appearing in month-end assignments is expected because some historical constituents can enter and leave between ranking dates without appearing on one of the 60 exact month-end snapshots.
+
+The remaining 993 unmapped SEC ETF rows are retained as source-audit information. They are not a hard H2 failure because the project ranking universe itself is fully classified and contradiction-free.
+
+Final result:
+
+`POINT_IN_TIME_GICS_MONTHLY_QUALITY_GATE_PASSED`
+
+and:
+
+`H2 SECTOR-RELATIVE MOMENTUM DATA PREREQUISITE: READY`
+
+Azure SQL modifications performed by the sector builder:
+
+`0`
+
+Validated price/membership core rows modified:
+
+`0`
+
+### H2 Preregistration
+
+H2 was specified **after the GICS prerequisite passed and before H2 performance results were inspected**.
+
+Full preregistration:
+
+`docs/h2_sector_relative_momentum_preregistration.md`
+
+The preregistration freezes the following rules.
+
+#### Signal
+
+Use the corrected H1 canonical 12-1 signal:
+
+`price(t-1) / price(t-12) - 1`
+
+The ranking month itself remains skipped.
+
+2020 remains lookback support only.
+
+#### Within-Sector Ranking
+
+Within every:
+
+`(ranking_month, gics_sector)`
+
+partition, securities are ordered by:
+
+1. `momentum_12_1 ASC`
+2. `security_key ASC`
+
+and assigned deterministic quintiles using the equivalent of:
+
+`NTILE(5)`
+
+Q1 is the loser sleeve.
+
+Q5 is the winner sleeve.
+
+#### Portfolio Weighting
+
+Within each sector sleeve:
+
+`equal weight by security`
+
+Across sectors:
+
+`equal weight across all 11 GICS sectors`
+
+This prevents large sectors from dominating the aggregate strategy.
+
+Primary aggregate return:
+
+`sector-neutral Winner - sector-neutral Loser`
+
+#### Forward Period
+
+One-month forward return using the same terminal-exit and censoring rules as corrected H1.
+
+December 2025 remains a ranking month but is excluded from realized-return inference if January 2026 forward performance is unavailable.
+
+#### Primary Statistical Test
+
+Primary null:
+
+`H0: mean monthly aggregate sector-neutral W-L = 0`
+
+Inference:
+
+`two-sided HAC / Newey-West lag 3`
+
+Significance threshold:
+
+`alpha = 0.05`
+
+Directional support requires:
+
+- aggregate mean W-L > 0
+- two-sided HAC(3) p-value < 0.05
+
+A statistically insignificant positive point estimate is not classified as support.
+
+#### Robustness Tests
+
+The preregistration also requires:
+
+- ordinary one-sample t-test
+- bootstrap 95% confidence interval
+- Wilcoxon signed-rank test
+- sign test
+- HAC(3) intercept test
+- 11 sector-level W-L tests with Holm adjustment
+- quintile monotonicity diagnostics
+- benchmark comparisons
+- DGS1MO-based Sharpe ratios
+- CAPM alpha/beta against SPY
+- target-weight turnover
+- implementation-cost sensitivity
+- short-borrow sensitivity
+
+#### Cost Grid
+
+One-way transaction costs:
+
+- 5 bps
+- 10 bps
+- 20 bps
+
+Annualized borrow costs on the loser leg:
+
+- 0 bps
+- 50 bps
+- 100 bps
+- 200 bps
+
+Base-case implementation scenario:
+
+`10 bps transaction cost + 100 bps annualized loser-leg borrow`
+
+#### Cross-Sector Concentration Test
+
+Broad cross-sector support additionally requires:
+
+- at least 9 of 11 leave-one-sector-out mean W-L estimates remain positive
+- no single sector contributes more than 50% of cumulative gross aggregate W-L
+
+A statistically significant result that fails either implementation-cost or cross-sector-concentration robustness is reported as qualified rather than broad support.
+
+### H2 Decision Labels Frozen Before Results
+
+The H2 experiment must use exactly these interpretation classes:
+
+- `SUPPORTED — BROAD AND COST-ROBUST`
+- `SUPPORTED — QUALIFIED`
+- `NOT SUPPORTED`
+- `INVALID / REVIEW REQUIRED`
+
+Any post-result alternative signal, cutoff, weighting scheme, sector exclusion, inference rule, or sample window must be labeled exploratory and cannot alter the preregistered H2 conclusion.
+
+### Issues / Limitations
+
+- Select Sector SPDR N-PORT filings provide historical quarter-end sector-state evidence rather than a native daily GICS history.
+- Exact reclassification dates therefore come from authoritative S&P DJI / MSCI transition evidence, not inferred solely from ETF quarter-end states.
+- Current State Street SPY holdings are used only for identity reconciliation in documented bridge tiers, not for historical sector backfilling.
+- Unmapped SEC ETF rows remain in audit outputs; they do not affect the fully classified point-in-time ranking universe.
+- No H2 return, significance, or performance result has been inspected at this checkpoint.
+
+### Decision
+
+The point-in-time GICS prerequisite is closed.
+
+H2 is formally preregistered as a separate experiment.
+
+The H1 canonical 12-1 momentum conclusion remains:
+
+`CLOSED — NOT SUPPORTED IN THE CORRECTED 2021-2025 SAMPLE`
+
+No H1 parameter will be retuned in response to that result.
+
+### Output
+
+Analysis-ready H2 sector layer:
+
+`data/interim/security_gics_sector_month_end_2021_2025.csv`
+
+Permanent sector-history layer:
+
+`data/reference/gics/security_gics_sector_intervals_2021_2025.csv`
+
+Formal H2 specification:
+
+`docs/h2_sector_relative_momentum_preregistration.md`
+
+### Next Step
+
+Commit the validated GICS source / identity / interval layer and the H2 preregistration **before** implementing or running H2 performance analysis.
+
+After that commit:
+
+1. implement the within-sector quintile assignment layer;
+2. independently audit the ranking and weighting rules;
+3. construct the one-month sector-sleeve and sector-neutral forward-return layer;
+4. audit the complete H2 performance population;
+5. only then expose H2 return results.
+
+### Git Commit
+
+`PENDING — commit the GICS quality-gate closure and H2 preregistration before viewing H2 performance results.`
+
+---
+
 # Current Status
 
 Current phase:
 
-**Canonical 12-1 momentum hypothesis closed - corrected 2021-2025 risk/cost analysis complete**
+**H2 sector-relative momentum preregistered — point-in-time GICS prerequisite complete; H2 performance not yet inspected**
 
-Completed:
+## Completed Research Milestones
 
 - Project architecture and reproducibility framework
-- Azure SQL analytical database foundation
-- Current 503-security S&P 500 constituent anchor
-- Historical S&P 500 membership-action reference
-- Full-history membership integrity audit
-- Point-in-time membership interval construction
-- Historical security identity reconciliation
-- 596-request price-download manifest
-- Yahoo Finance primary-source acquisition
-- Tiingo fallback acquisition and validation
-- Investing.com historical INFO raw-price validation
-- Complete 596-request historical acquisition
-- Raw provider-file integrity audit
-- UA defective-price resolution
-- FISV missing-session resolution
-- DISCA historical source reconstruction
-- 17 independent-security market-inception references
-- CARR and OTIS observed-boundary resolutions
-- GEHC pre-inception provider-artifact resolution
-- VLTO when-issued and regular-way source composite
-- 10 independent-security market-termination references
-- 8 provider terminal-artifact exclusions
-- INFO nine-dividend corporate-action reference
-- INFO 543-row adjusted-price reconstruction
-- Final 596-request analysis-ready integrity audit
-- Canonical 783,086-row standardized price history
-- Initial membership-to-price input inspection
-- Dedicated membership interval and ticker-history inspection
-- 95-check membership interval integrity audit
-- Exact mapping of 594 historical ticker segments to standardized price requests
-- Point-in-time membership-price bridge construction
-- Independent 77-check bridge integrity audit
-- Exact SPY-session coverage validation
-- Separate 2,510-row benchmark history
-- Point-in-time membership-price integration quality gate
-- Read-only Azure SQL environment and object inspection
-- Normalized eight-table core market-data schema
-- Seven-table controlled staging schema
-- Eight primary keys and eight foreign keys
-- Twenty-two core check constraints
-- Two required supporting indexes
-- Five-source Azure SQL load-input inspection
-- `mssql-python 1.13.0` bulk-copy capability validation
-- Transactional staging-to-core market-data load
-- Decimal precision expansion to `DECIMAL(38, 18)`
-- Exact loading of 634,452 daily observations
-- Independent 31-check Azure SQL market-data integrity audit
-- Exact source-to-SQL numeric aggregate reconciliation
-- Normalized Azure SQL market-data quality gate
-- Documented analytical price and return methodology
-- Azure SQL SPY trading-session calendar
-- Exact 60-month SPY month-end calendar
-- Constituent and benchmark daily-return views
-- Independent 36-check return-foundation integrity audit
-- Exact-calendar 1-, 3-, 6-, and 12-month return features
-- Canonical 12-1 momentum feature
-- Indexed constituent and benchmark month-end snapshots
-- Transactional analytical snapshot refresh
-- Monthly feature-query runtime reduction from approximately 271 seconds to 0.051 seconds
-- Independent 40-check monthly return-feature integrity audit
-- SQL monthly feature-engineering quality gate
-- `pyodbc 5.3.0` analytical audit connectivity
-- Point-in-time ranking of 23,401 canonical momentum signals
-- Deterministic ascending and descending monthly momentum ranks
-- Ten approximately equal monthly momentum deciles
-- Explicit winner, middle, and loser portfolio assignments
-- Equal security weights within every monthly decile
-- Exact 480-row month/decile summary
-- Independent 36-check momentum-ranking integrity audit
-- SQL momentum-ranking quality gate
-- Fixed point-in-time one-month holding-period definitions
-- Terminal-exit-aware constituent forward returns
-- Five Azure SQL forward-return views
-- Exact preservation of 23,401 momentum portfolio assignments
-- Complete forward returns for 22,916 constituent assignments
-- Exact treatment of 63 early exits and 3 immediate exits
-- Documented right-censoring of 485 December 2025 assignments
-- Equal-weight returns for all ten momentum deciles
-- Winner, loser, and winner-minus-loser forward-return series
-- SPY and S&P 500 forward benchmark comparisons
-- Independent 47-check forward-return integrity audit
-- SQL forward-return quality gate
-- Six-view Azure SQL gross portfolio-performance layer
-- 611-row monthly return panel across 13 analytical series
-- 47 complete observable gross-performance months
-- Cumulative-wealth compounding for all analytical series
-- Running-peak and drawdown analysis
-- Thirteen-series portfolio-performance summary
-- SPY-relative active-return and tracking-error statistics
-- 470 month/decile target-weight turnover observations
-- Ten-decile turnover summary
-- Independent Python reconstruction of monthly return panel
-- Independent Python reconstruction of cumulative wealth
-- Independent Python reconstruction of drawdowns
-- Independent Python reconstruction of performance statistics
-- Independent Python reconstruction of target-weight turnover
-- Independent 50-check portfolio-performance integrity audit
-- Zero Python-to-SQL portfolio-performance mismatches
-- SQL portfolio-performance quality gate
-- Read-only extraction of validated gross portfolio results
-- Complete 13-series portfolio-performance comparison
-- Winner-decile, loser-decile, WML, SPY, and S&P 500 benchmark interpretation
-- Documented D10 annualized return of 14.36%
-- Documented D01 annualized return of 3.74%
-- Documented WML annualized return of 7.32%
-- Documented SPY annualized return of 12.79%
-- Documented D10 maximum drawdown of -14.23%
-- Documented D01 maximum drawdown of -26.95%
-- Documented WML maximum drawdown of -22.82%
-- Documented 31-of-47 positive WML months
-- Documented non-monotonic decile-return pattern
-- Documented momentum-extreme turnover persistence
-- Explicit provisional interpretation of current momentum findings
-- Explicit statistical, risk-adjusted, transaction-cost, and robustness questions for further study
+- Verified 503-security State Street SPY constituent anchor as of 2026-08-10
+- 202-action official historical S&P 500 membership reference
+- 593 point-in-time membership security identities
+- 594 historical ticker segments
+- 596-request historical price acquisition and validation
+- 783,086-row standardized price history
+- 631,942-row constituent membership-price bridge
+- 2,510-row benchmark history
+- Normalized Azure SQL core/staging market-data model
+- Exact 60-month 2021–2025 SPY ranking calendar
+- Corrected 72-month 2020–2025 feature-support calendar
+- 30,121 complete corrected canonical 12-1 momentum signals
+- 59 observable corrected forward-return months
+- 13-series corrected gross-performance panel
+- Formal H1 statistical testing
+- DGS1MO risk-free methodology
+- Sharpe and CAPM analysis
+- Transaction-cost and WML borrow-cost sensitivity
+- H1 canonical 12-1 momentum closeout
+- H1 result: `CLOSED — NOT SUPPORTED IN THE CORRECTED 2021-2025 SAMPLE`
+- Canonical SEC Select Sector SPDR historical source layer
+- 21 / 21 complete historical 11-sector partitions
+- 20 authoritative GICS transition dates
+- 13 audited residual identity overrides
+- 1 audited official membership-event GICS evidence correction
+- 593 / 593 continuous point-in-time GICS security intervals
+- 30,211 / 30,211 exact ranking-date GICS assignments
+- 0 missing ranking-date sector assignments
+- 0 duplicate security-month sector assignments
+- 0 unexplained in-membership sector evidence mismatches
+- all 11 canonical GICS sectors represented in every ranking month
+- H2 sector-relative momentum methodology preregistered before performance inspection
 
-Current market-data quality state:
+## Current Market-Data Quality State
 
-- Total requests: 596
+- Total price requests: 596
 - PASS: 596
-- Known review items: 0
 - Critical failures: 0
 - Standardized rows: 783,086
 - Canonical-key duplicates: 0
@@ -6163,7 +6614,7 @@ Current market-data quality state:
 - Invalid OHLC relationships: 0
 - Required OHLCV nulls: 0
 
-Current membership state:
+## Current Membership State
 
 - Anchor securities as of 2026-08-10: 503
 - Official membership actions: 202
@@ -6177,130 +6628,45 @@ Current membership state:
 - Unexplained identity mappings: 0
 - Membership quality-gate result: PASSED
 
-Current integrated analytical state:
-
-- Constituent bridge rows: 631,942
-- Constituent security identities: 593
-- Historical constituent ticker segments: 594
-- SPY trading sessions: 1,255
-- Benchmark rows: 2,510
-- Benchmark requests: 2
-- Documented early price boundaries: 10
-- Minimum daily constituent observations: 502
-- Maximum daily constituent observations: 506
-- Missing expected constituent sessions: 0
-- Extra constituent sessions: 0
-- Membership/ticker/date duplicates: 0
-- Bridge integrity checks passed: 77
-- Membership-price integration quality-gate result: PASSED
-
-Current Azure SQL state:
+## Current Azure SQL State
 
 - Database: `sp500_analytics`
 - Compatibility level: 170
-- Required analytical schemas present: 4 / 4
-- Core tables present: 8
-- Staging tables present: 7
+- Core tables: 8
+- Staging tables: 7
 - Core security identities: 593
 - Core ticker-history segments: 594
 - Core membership intervals: 593
-- Core price-eligibility manifests: 594
+- Core price-eligibility rows: 594
 - Core constituent price observations: 631,942
 - Core benchmark definitions: 2
 - Core benchmark price observations: 2,510
 - Total core daily observations: 634,452
 - Remaining staging rows: 0
-- Primary keys present: 8
-- Foreign keys present and trusted: 8
-- Check constraints present and trusted: 22
-- Required supporting indexes present: 2
+- Primary keys: 8
+- Trusted foreign keys: 8
+- Trusted check constraints: 22
+- Required supporting indexes: 2
 - Market-value decimal definition: `DECIMAL(38, 18)`
 - Source-to-SQL numeric aggregate differences: 0
-- Azure SQL integrity checks passed: 31
-- Normalized Azure SQL quality-gate result: PASSED
+- Azure SQL market-data quality gate: PASSED
 
-Current SQL feature-engineering state:
+## Current Corrected H1 Feature / Performance State
 
-- Primary analytical engine: Azure SQL
-- Independent audit engine: Python
-- SPY analytical trading sessions: 1,255
-- Exact analytical SPY month-end sessions: 60
-- Exact feature-support months: 72
+- Feature-support months: 72
 - Feature-support span: 2020-01 through 2025-12
-- Constituent feature-support rows: 37,245
-- Benchmark feature-support rows: 144
-- Ranking-date constituent month-end snapshot rows: 30,211
-- Benchmark ranking-date snapshot rows: 120
-- Corrected complete 1-month constituent returns: 30,209
-- Corrected complete 3-month constituent returns: 30,192
-- Corrected complete 6-month constituent returns: 30,169
-- Corrected complete 12-month constituent returns: 30,121
-- Corrected canonical 12-1 momentum signals: 30,121
-- Signals restored by pre-membership feature support: 6,720
-- Forward-looking feature columns: 0
 - Ranking months: 60
-- Ranking span: 2021-01 through 2025-12
-- Correction application checks passed: 65
-- Independent correction integrity checks passed: 65
-- Core rows modified by correction: 0
-- Momentum lookback-scope correction quality-gate result: PASSED
-- Prior 23,401-signal / 48-month feature population: SUPERSEDED
-
-Current SQL forward-performance state:
-
-- Fixed corrected portfolio assignments: 30,121
-- Ranking months: 60
+- Ranking-date constituent rows: 30,211
+- Complete corrected 12-1 signals: 30,121
+- Signals restored by pre-membership lookback support: 6,720
+- Corrected portfolio assignments: 30,121
 - Observable forward-return months: 59
 - Complete constituent forward returns: 29,620
-- Right-censored December 2025 holdings: 501
-- Benchmark holding rows: 120
-- Complete benchmark returns: 118
-- Decile return rows: 600
-- Complete decile return rows: 590
-- Winner-minus-loser rows: 60
-- Complete winner-minus-loser months: 59
-- Look-ahead dependencies introduced by correction: 0
-- Core rows modified: 0
-- Corrected forward-performance propagation: PASSED
-- Prior 23,401-assignment / 47-month forward state: SUPERSEDED
-
-Current SQL portfolio-performance state:
-
-- Gross-performance months: 59
-- Analytical series: 13
-- Monthly return-panel rows: 767
-- Momentum decile series: 10
-- Winner-minus-loser series: 1
-- Benchmark series: 2
-- Cumulative-wealth rows: 767
-- Drawdown rows: 767
-- Performance-summary rows: 13
-- Decile-turnover rows: 590
-- Turnover-summary rows: 10
-- Rebalance transitions: 59
-- Structural performance-layer checks after correction: PASSED
-- Gross performance convention: YES
-- Risk-free-rate dependency: NO
-- Sharpe ratio calculated: NO
-- Regression alpha calculated: NO
-- Transaction costs applied: NO
-- Core rows modified: 0
-- Prior 611-row / 47-month portfolio-performance state: SUPERSEDED
-
-Current corrected analysis state:
-
-- Corrected observable performance months: 59
-- Corrected analytical series: 13
-- Corrected gross-results extraction rerun: COMPLETE
-- Corrected statistical significance testing rerun: COMPLETE
-- Risk-free-rate methodology completed: YES
+- December 2025 right-censored holdings: 501
+- Monthly analytical return-panel rows: 767
+- Corrected gross-performance months: 59
 - Risk-free proxy: FRED DGS1MO
-- Sharpe ratio calculated: YES
-- CAPM regression calculated: YES
-- Regression alpha calculated: YES
-- Transaction-cost sensitivity completed: YES
-- WML borrow-cost sensitivity completed: YES
-- D10 annualized return: 13.23%
+- D10 annualized gross return: 13.23%
 - SPY annualized return: 14.83%
 - D10 Sharpe ratio: 0.587
 - SPY Sharpe ratio: 0.774
@@ -6308,35 +6674,102 @@ Current corrected analysis state:
 - D10 alpha HAC p-value: 0.7764
 - WML annualized gross return: -0.33%
 - WML alpha HAC p-value: 0.5821
-- D10 net annualized return at 5 bps: 13.023%
-- D10 net annualized return at 10 bps: 12.817%
-- D10 net annualized return at 20 bps: 12.406%
-- Current interpretation status: FINAL FOR THIS HYPOTHESIS
-- Canonical 12-1 momentum hypothesis: CLOSED — NOT SUPPORTED IN THE CORRECTED 2021-2025 SAMPLE
-- Final future-performance claim: NONE
+- H1 interpretation status: FINAL
+- H1 conclusion: `CLOSED — NOT SUPPORTED IN THE CORRECTED 2021-2025 SAMPLE`
 
-Next objective:
+## Current Point-in-Time GICS State
 
-Commit the final corrected momentum risk/cost analysis and the canonical 12-1 hypothesis closeout.
+- Canonical SEC holding rows: 10,577
+- SEC rows mapped to project `security_key`: 9,584
+- Unmapped SEC ETF rows retained for source audit: 993
+- Unique SEC holding identifiers bridged: 512
+- Audited residual identity overrides: 13
+- Official membership-event rows mapped: 178 / 178
+- Authoritative GICS transitions mapped: 20 / 20
+- Audited official membership-event GICS corrections: 1
+- Permanent GICS interval rows: 613
+- Membership identities with GICS intervals: 593 / 593
+- Interval overlaps: 0
+- Interval gaps: 0
+- Unresolved initial sector identities: 0
+- Unexplained in-membership evidence mismatches: 0
+- Ranking-date sector assignments: 30,211 / 30,211
+- Missing ranking-date assignments: 0
+- Duplicate security-month assignments: 0
+- Ranking months: 60
+- GICS sectors per ranking month: 11
+- Monthly security-count range: 502–505
+- Point-in-time GICS quality gate: PASSED
 
-After this commit, open a new research hypothesis as a separate experiment. Do not modify the completed canonical 12-1 methodology in response to its unsupported result.
+## Current H2 State
 
-Git checkpoint objective:
+Hypothesis:
 
-Commit the finalized risk-adjusted, CAPM, transaction-cost, WML implementation, and hypothesis-closeout evidence.
+**Stocks with stronger corrected 12-1 momentum relative to stocks in their own point-in-time GICS sector subsequently outperform weaker sector-relative stocks over the next month.**
 
-Files for the final canonical momentum-hypothesis checkpoint:
+Preregistration:
 
-- `src/analysis/analyze_momentum_risk_cost.py`
-- `data/external/fred_dgs1mo_daily_2020_2025.csv`
-- `reports/analysis/momentum_portfolio_results.txt`
-- `reports/analysis/momentum_statistical_tests.txt`
-- `reports/analysis/momentum_risk_cost_analysis.txt`
-- `reports/analysis/momentum_risk_free_monthly.csv`
-- `reports/analysis/momentum_risk_adjusted_summary.csv`
-- `reports/analysis/momentum_capm_summary.csv`
-- `reports/analysis/momentum_transaction_cost_summary.csv`
-- `reports/analysis/momentum_wml_cost_borrow_sensitivity.csv`
+`docs/h2_sector_relative_momentum_preregistration.md`
+
+Frozen primary construction:
+
+- corrected H1 12-1 signal
+- point-in-time S&P 500 universe
+- point-in-time GICS sector
+- within-sector deterministic quintiles
+- Q1 losers / Q5 winners
+- equal-weight stocks within each sector sleeve
+- equal-weight aggregation across all 11 sectors
+- one-month forward holding period
+- primary aggregate sector-neutral W-L series
+
+Frozen primary inference:
+
+- two-sided HAC / Newey-West lag 3
+- alpha = 0.05
+- support requires positive mean W-L and HAC(3) p < 0.05
+
+Frozen implementation grid:
+
+- one-way trading cost: 5 / 10 / 20 bps
+- loser-leg annual borrow: 0 / 50 / 100 / 200 bps
+- base-case net scenario: 10 bps trading + 100 bps annual borrow
+
+H2 performance results inspected:
+
+`NO`
+
+H2 status:
+
+`PREREGISTERED — READY FOR IMPLEMENTATION AFTER COMMIT`
+
+## Next Objective
+
+Create the Git checkpoint that freezes:
+
+- final point-in-time GICS construction and audit
+- audited residual identity overrides
+- audited CoStar membership-event sector-evidence correction
+- H2 preregistration
+- this updated project log
+
+After the checkpoint is committed, implement the H2 within-sector quintile and sector-neutral forward-return layer without altering the preregistered methodology.
+
+## Git Checkpoint Objective
+
+Commit the validated GICS quality-gate closure and H2 preregistration before any H2 performance result is viewed.
+
+Recommended checkpoint files:
+
+- `src/analysis/build_point_in_time_gics_security_intervals.py`
+- `data/reference/gics/gics_transition_effective_dates.csv`
+- `data/reference/gics/gics_security_key_identity_overrides.csv`
+- `data/reference/gics/gics_official_event_sector_overrides.csv`
+- `data/reference/gics/security_gics_sector_intervals_2021_2025.csv`
+- `data/reference/gics/sec_gics_identifier_security_key_bridge.csv`
+- `reports/data_quality/gics_monthly_sector_coverage.csv`
+- `reports/data_quality/point_in_time_gics_security_key_monthly_audit.txt`
+- `docs/h2_sector_relative_momentum_preregistration.md`
 - `docs/project_log.md`
 
 Continue to exclude:
@@ -6345,7 +6778,7 @@ Continue to exclude:
 - reproducible datasets under `data/interim/`
 - failed or superseded reports
 - timestamped backup scripts
-- one-time integration helpers
+- one-time diagnostic helpers unless intentionally retained as reproducibility documentation
 
 ---
 
