@@ -1,0 +1,158 @@
+======================================================================================================================
+S&P 500 MOMENTUM — RISK, CAPM, AND TRANSACTION-COST ANALYSIS
+======================================================================================================================
+Mode: READ-ONLY with respect to Azure SQL
+Analytical sample: corrected 2021-2025 momentum experiment
+Observable completed holding months: 59
+Risk-free proxy: FRED DGS1MO
+Risk-free timing: latest available DGS1MO observation on or before each portfolio ranking date
+Risk-free holding-period conversion: annualized yield / 100 x actual holding days / 365
+CAPM inference: Newey-West/HAC, lag 3
+Long-only transaction-cost scenarios: 5 bps, 10 bps, 20 bps per unit of one-way turnover
+WML short-borrow sensitivity: 0 bps/year, 50 bps/year, 100 bps/year, 200 bps/year
+Database modifications performed: 0
+
+======================================================================================================================
+1. CORRECTED SOURCE CONTROLS
+======================================================================================================================
+PASS: Corrected monthly return panel contains 767 rows.
+PASS: Exactly 59 completed holding months are present.
+PASS: All 13 analytical series are present.
+PASS: Month/series keys are unique.
+PASS: Turnover layer contains 590 month/decile rows.
+PASS: Azure SQL is queried read-only.
+
+======================================================================================================================
+2. RISK-FREE-RATE METHODOLOGY AND CONTROLS
+======================================================================================================================
+Series: DGS1MO
+Name: Market Yield on U.S. Treasury Securities at 1-Month Constant Maturity, Quoted on an Investment Basis
+Source: Federal Reserve Board H.15 via FRED
+Cache mode: EXISTING LOCAL CACHE
+Cached file: data\external\fred_dgs1mo_daily_2020_2025.csv
+Monthly alignment rows: 59
+Earliest aligned ranking date: 2021-01-29
+Latest aligned ranking date: 2025-11-28
+DGS1MO annual-yield range used: 0.010% to 5.600%
+Risk-free holding-return range: 0.001% to 0.506%
+Maximum FRED observation age at formation: 0 days
+PASS: Every risk-free observation date is on or before the ranking date.
+PASS: All 59 holding periods have an ex-ante DGS1MO proxy.
+
+======================================================================================================================
+3. RISK-ADJUSTED PERFORMANCE — SHARPE
+======================================================================================================================
+D01   | Ann Return 10.539% | Ann Vol 23.567% | Ann Excess 9.419% | Sharpe 0.399
+D03   | Ann Return 13.396% | Ann Vol 17.259% | Ann Excess 10.792% | Sharpe 0.625
+D10   | Ann Return 13.230% | Ann Vol 18.492% | Ann Excess 10.838% | Sharpe 0.587
+SPY   | Ann Return 14.834% | Ann Vol 15.232% | Ann Excess 11.751% | Sharpe 0.774
+SP500 | Ann Return 13.242% | Ann Vol 15.182% | Ann Excess 10.334% | Sharpe 0.683
+
+D10 annualized Sharpe: 0.587
+SPY annualized Sharpe: 0.774
+D10 Sharpe minus SPY Sharpe: -0.187
+Interpretation flag: SPY has the higher sample Sharpe.
+
+======================================================================================================================
+4. CAPM / MARKET REGRESSION WITH HAC INFERENCE
+======================================================================================================================
+Long-only equation: (R_portfolio - R_f) = alpha + beta * (R_SPY - R_f) + error
+WML equation: R_WML = alpha + beta * (R_SPY - R_f) + error
+HAC lag: 3
+
+D01   | Alpha/mo -0.384% | Alpha/yr -4.606% | Alpha p 0.3855 | Beta 1.193 | Beta p <0.0001 | R2 0.589
+D03   | Alpha/mo -0.055% | Alpha/yr -0.657% | Alpha p 0.8592 | Beta 0.974 | Beta p <0.0001 | R2 0.734
+D10   | Alpha/mo -0.096% | Alpha/yr -1.152% | Alpha p 0.7764 | Beta 1.020 | Beta p <0.0001 | R2 0.704
+WML   | Alpha/mo 0.288% | Alpha/yr 3.454% | Alpha p 0.5821 | Beta -0.173 | Beta p 0.2432 | R2 0.020
+SP500 | Alpha/mo -0.115% | Alpha/yr -1.376% | Alpha p <0.0001 | Beta 0.996 | Beta p <0.0001 | R2 1.000
+
+D10 alpha significance at 5%: NO
+WML alpha significance at 5%: NO
+
+======================================================================================================================
+5. LONG-ONLY TRANSACTION-COST SENSITIVITY
+======================================================================================================================
+Convention: analysis month 1 initial portfolio formation = 100% one-way turnover.
+Months 2-59 use the validated target-weight one-way turnover for the ranking portfolio.
+SPY is shown gross as the benchmark; no artificial monthly SPY turnover is imposed.
+
+D10:
+   5 bps | Net wealth 1.8256 | Net ann return 13.023% | Ann return drag 0.206%
+  10 bps | Net wealth 1.8093 | Net ann return 12.817% | Ann return drag 0.412%
+  20 bps | Net wealth 1.7771 | Net ann return 12.406% | Ann return drag 0.824%
+
+D01:
+   5 bps | Net wealth 1.6227 | Net ann return 10.346% | Ann return drag 0.193%
+  10 bps | Net wealth 1.6088 | Net ann return 10.154% | Ann return drag 0.386%
+  20 bps | Net wealth 1.5813 | Net ann return 9.769% | Ann return drag 0.771%
+
+======================================================================================================================
+6. WML IMPLEMENTATION / SHORT-LEG SENSITIVITY
+======================================================================================================================
+WML is analyzed separately because it is a zero-cost long D10 / short D01 spread.
+Adjusted-close returns already include distributions, so the short leg's negative total return captures the economic effect of dividends paid by the short seller.
+Additional modeled implementation frictions: trading costs on both legs plus an illustrative annual stock-borrow fee on the short notional.
+Not modeled: security-specific borrow availability, hard-to-borrow spikes, margin requirements, short rebates, financing spreads, taxes, or market impact.
+
+Trading cost = 5 bps per turnover unit:
+  Borrow   0 bps/year | Net wealth 0.9664 | Net ann return -0.693%
+  Borrow  50 bps/year | Net wealth 0.9429 | Net ann return -1.190%
+  Borrow 100 bps/year | Net wealth 0.9199 | Net ann return -1.684%
+  Borrow 200 bps/year | Net wealth 0.8756 | Net ann return -2.667%
+Trading cost = 10 bps per turnover unit:
+  Borrow   0 bps/year | Net wealth 0.9495 | Net ann return -1.049%
+  Borrow  50 bps/year | Net wealth 0.9263 | Net ann return -1.545%
+  Borrow 100 bps/year | Net wealth 0.9037 | Net ann return -2.038%
+  Borrow 200 bps/year | Net wealth 0.8602 | Net ann return -3.017%
+Trading cost = 20 bps per turnover unit:
+  Borrow   0 bps/year | Net wealth 0.9164 | Net ann return -1.759%
+  Borrow  50 bps/year | Net wealth 0.8941 | Net ann return -2.251%
+  Borrow 100 bps/year | Net wealth 0.8723 | Net ann return -2.741%
+  Borrow 200 bps/year | Net wealth 0.8302 | Net ann return -3.714%
+
+======================================================================================================================
+7. INTEGRATED DECISION CHECKPOINT
+======================================================================================================================
+This section combines the corrected gross results, risk-free adjustment, market regression, and implementation-cost sensitivity.
+
+SPY gross annualized return: 14.834%
+D10 annualized Sharpe: 0.587
+SPY annualized Sharpe: 0.774
+D10 CAPM alpha (annualized arithmetic): -1.152%
+D10 CAPM alpha HAC p-value: 0.7764
+D10 CAPM beta: 1.020
+WML CAPM alpha (annualized arithmetic): 3.454%
+WML CAPM alpha HAC p-value: 0.5821
+
+D10 net annualized return @ 5 bps:  13.023%
+D10 net annualized return @ 10 bps: 12.817%
+D10 net annualized return @ 20 bps: 12.406%
+
+Risk-adjusted outcome: D10 sample Sharpe does not exceed SPY.
+Alpha outcome: D10 alpha is not statistically significant at 5%.
+Implementation outcome: positive transaction costs can only reduce the already-observed gross return.
+WML implementation outcome: the reported trading/borrow scenarios remain sensitivity analyses rather than a claim about realized shorting costs.
+
+======================================================================================================================
+8. INTERPRETATION BOUNDARIES
+======================================================================================================================
+DGS1MO is a constant-maturity market-yield proxy, not a realized return from purchasing a specific bill.
+The monthly risk-free holding return uses an explicit simple day-count conversion for reproducibility.
+Sharpe ratios describe this 59-month sample and are not statistical proof of future risk-adjusted performance.
+CAPM alpha controls only for SPY market exposure; it does not control for size, value, profitability, investment, industry, or other factor exposures.
+Transaction costs are scenarios, not security-level historical execution estimates.
+WML borrow fees are illustrative scenarios and do not resolve historical borrow availability or margin financing.
+All inference remains exploratory/post-selection because the gross results were inspected before these tests.
+
+======================================================================================================================
+9. FINAL CONTROL
+======================================================================================================================
+Azure SQL modifications performed: 0
+Validated source rows modified: 0
+Risk-free monthly output: reports\analysis\momentum_risk_free_monthly.csv
+Risk-adjusted output: reports\analysis\momentum_risk_adjusted_summary.csv
+CAPM output: reports\analysis\momentum_capm_summary.csv
+Transaction-cost output: reports\analysis\momentum_transaction_cost_summary.csv
+WML sensitivity output: reports\analysis\momentum_wml_cost_borrow_sensitivity.csv
+
+MOMENTUM_RISK_COST_ANALYSIS_COMPLETE

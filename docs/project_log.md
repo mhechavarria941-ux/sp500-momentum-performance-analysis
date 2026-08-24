@@ -5586,11 +5586,452 @@ After the correction commit:
 
 ---
 
+## 3.44 Corrected 2021-2025 Momentum Hypothesis Final Risk/Cost Closeout
+
+### Date
+
+2026-08-24
+
+### Objective
+
+Finalize the corrected 2021-2025 momentum-performance hypothesis by combining:
+
+- corrected gross portfolio performance
+- formal statistical testing
+- ex-ante risk-free-rate adjustment
+- Sharpe ratios
+- CAPM-style alpha and beta
+- transaction-cost sensitivity
+- winner-minus-loser short-leg implementation sensitivity
+
+This checkpoint closes the current momentum hypothesis before the project opens a new research hypothesis.
+
+### Corrected Analytical Sample
+
+The final corrected experiment uses:
+
+- feature-support history: `2020-01` through `2025-12`
+- point-in-time ranking window: `2021-01` through `2025-12`
+- ranking months: `60`
+- completed forward-performance months: `59`
+- analytical series: `13`
+- monthly return-panel rows: `767`
+- corrected canonical 12-1 momentum signals: `30,121`
+- right-censored final ranking month: December 2025
+
+The previous 47-month result remains superseded.
+
+### Final Gross Performance Findings
+
+Winner decile (`D10`):
+
+- cumulative return: `84.21%`
+- annualized return: `13.23%`
+- annualized volatility: `18.49%`
+- maximum drawdown: `-17.30%`
+- positive-month frequency: `61.02%`
+
+Loser decile (`D01`):
+
+- cumulative return: `63.67%`
+- annualized return: `10.54%`
+- annualized volatility: `23.57%`
+- maximum drawdown: `-25.95%`
+- positive-month frequency: `54.24%`
+
+Winner-minus-loser (`WML`):
+
+- cumulative return: `-1.63%`
+- annualized return: `-0.33%`
+- annualized volatility: `18.65%`
+- maximum drawdown: `-23.82%`
+- positive months: `34 of 59`
+
+SPY:
+
+- cumulative return: `97.40%`
+- annualized return: `14.83%`
+- annualized volatility: `15.23%`
+- maximum drawdown: `-23.93%`
+- positive-month frequency: `67.80%`
+
+S&P 500 index:
+
+- cumulative return: `84.30%`
+- annualized return: `13.24%`
+- annualized volatility: `15.18%`
+- maximum drawdown: `-24.77%`
+
+### Gross Economic Interpretation
+
+The winner decile outperformed the loser decile by:
+
+`2.69 percentage points`
+
+on the independently annualized gross-return basis.
+
+However:
+
+- D10 underperformed SPY by `1.60 percentage points` annually
+- D03, not D10, was the best momentum decile
+- D03 annualized return: `13.40%`
+- D10 annualized return: `13.23%`
+- adjacent decile annualized-return increases: `5 of 9`
+- WML compounded to a slightly negative return
+
+The corrected 2021-2025 sample therefore does not show a dominant or monotonic momentum payoff.
+
+### Formal Statistical Testing
+
+Primary WML / D10-minus-D01 mean-spread test:
+
+- mean monthly WML: `0.118%`
+- classical t-test p-value: `0.8666`
+- bootstrap 95% mean interval: `[-1.256%, 1.442%]`
+- Wilcoxon p-value: `0.5868`
+- sign-test p-value: `0.2976`
+- Newey-West/HAC p-value: `0.8351`
+
+D10 excess return versus SPY:
+
+- mean monthly excess return: `-0.076%`
+- classical t-test p-value: `0.8408`
+- bootstrap 95% mean interval: `[-0.789%, 0.670%]`
+- Wilcoxon p-value: `0.4969`
+- sign-test p-value: `0.7948`
+- Newey-West/HAC p-value: `0.8223`
+
+Cross-decile trend:
+
+- mean monthly slope: `0.010%` per decile step
+- classical slope p-value: `0.8827`
+- Newey-West/HAC slope p-value: `0.8515`
+- mean monthly Spearman correlation: `0.0817`
+- mean-Spearman p-value: `0.3201`
+
+Holm-adjusted primary hypothesis results:
+
+- WML mean vs zero: do not reject
+- D10 excess vs SPY: do not reject
+- cross-decile mean slope vs zero: do not reject
+
+All Holm-adjusted p-values:
+
+`1.0000`
+
+### Statistical Interpretation
+
+The corrected 59-month sample does not provide statistically significant evidence that:
+
+- mean WML return differs from zero
+- D10 reliably outperforms SPY
+- returns increase systematically with momentum decile
+
+The observed effect estimates are also economically small relative to their month-to-month variability.
+
+This is stronger than merely saying that the sample may lack power. The point estimates themselves do not indicate a large, stable momentum premium in the corrected experiment.
+
+### Risk-Free-Rate Methodology
+
+Risk-free proxy:
+
+`FRED DGS1MO`
+
+Series name:
+
+`Market Yield on U.S. Treasury Securities at 1-Month Constant Maturity, Quoted on an Investment Basis`
+
+Timing rule:
+
+Use the latest available DGS1MO observation on or before each ranking date.
+
+Holding-period conversion:
+
+`annualized yield / 100 x actual holding days / 365`
+
+Controls:
+
+- aligned months: `59`
+- earliest ranking date: `2021-01-29`
+- latest ranking date: `2025-11-28`
+- annual-yield range used: `0.010%` to `5.600%`
+- holding-period risk-free return range: `0.001%` to `0.506%`
+- maximum observation age at formation: `0 days`
+- future risk-free observations used: `0`
+
+DGS1MO is treated as a reproducible market-yield proxy, not as the realized return from purchasing a specific Treasury bill.
+
+### Sharpe-Ratio Findings
+
+D01:
+
+- annualized return: `10.54%`
+- annualized volatility: `23.57%`
+- annualized arithmetic excess return: `9.42%`
+- Sharpe: `0.399`
+
+D03:
+
+- annualized return: `13.40%`
+- annualized volatility: `17.26%`
+- annualized arithmetic excess return: `10.79%`
+- Sharpe: `0.625`
+
+D10:
+
+- annualized return: `13.23%`
+- annualized volatility: `18.49%`
+- annualized arithmetic excess return: `10.84%`
+- Sharpe: `0.587`
+
+SPY:
+
+- annualized return: `14.83%`
+- annualized volatility: `15.23%`
+- annualized arithmetic excess return: `11.75%`
+- Sharpe: `0.774`
+
+S&P 500 index:
+
+- annualized return: `13.24%`
+- annualized volatility: `15.18%`
+- annualized arithmetic excess return: `10.33%`
+- Sharpe: `0.683`
+
+D10 Sharpe minus SPY Sharpe:
+
+`-0.187`
+
+### Risk-Adjusted Interpretation
+
+The winner decile's smaller maximum drawdown did not translate into a superior overall sample Sharpe ratio.
+
+SPY had:
+
+- higher annualized return
+- lower annualized volatility
+- higher annualized Sharpe
+
+Therefore, the corrected sample does not support the hypothesis that D10 provided a better overall return-per-unit-of-volatility profile than SPY.
+
+### CAPM / Market-Regression Findings
+
+Regression for long-only portfolios:
+
+`(R_portfolio - R_f) = alpha + beta * (R_SPY - R_f) + error`
+
+Regression for WML:
+
+`R_WML = alpha + beta * (R_SPY - R_f) + error`
+
+Inference:
+
+Newey-West/HAC, lag `3`
+
+D10:
+
+- monthly alpha: `-0.096%`
+- annualized arithmetic alpha: `-1.152%`
+- alpha HAC p-value: `0.7764`
+- beta: `1.020`
+- beta p-value: `<0.0001`
+- R-squared: `0.704`
+
+WML:
+
+- monthly alpha: `0.288%`
+- annualized arithmetic alpha: `3.454%`
+- alpha HAC p-value: `0.5821`
+- beta: `-0.173`
+- beta p-value: `0.2432`
+- R-squared: `0.020`
+
+D01:
+
+- annualized arithmetic alpha: `-4.606%`
+- alpha p-value: `0.3855`
+- beta: `1.193`
+
+D03:
+
+- annualized arithmetic alpha: `-0.657%`
+- alpha p-value: `0.8592`
+- beta: `0.974`
+
+### CAPM Interpretation
+
+D10's beta of approximately `1.02` indicates market exposure close to SPY, but its estimated alpha is negative and statistically indistinguishable from zero.
+
+WML has low market explanatory power in this sample, but its positive estimated alpha is also statistically indistinguishable from zero.
+
+The corrected experiment therefore does not provide evidence of statistically significant market-adjusted abnormal return for D10 or WML.
+
+CAPM is only a one-factor control and does not account for other systematic factor exposures.
+
+### Long-Only Transaction-Cost Sensitivity
+
+Transaction-cost assumptions:
+
+- `5 bps`
+- `10 bps`
+- `20 bps`
+
+per unit of one-way turnover.
+
+Initial January 2021 portfolio formation:
+
+`100% one-way turnover`
+
+Subsequent months use validated portfolio turnover.
+
+D10:
+
+- gross annualized return: `13.23%`
+- 5 bps net annualized return: `13.023%`
+- 10 bps net annualized return: `12.817%`
+- 20 bps net annualized return: `12.406%`
+
+Annualized D10 return drag:
+
+- 5 bps: `0.206%`
+- 10 bps: `0.412%`
+- 20 bps: `0.824%`
+
+D01:
+
+- 5 bps net annualized return: `10.346%`
+- 10 bps net annualized return: `10.154%`
+- 20 bps net annualized return: `9.769%`
+
+Because D10 already underperformed SPY gross, realistic positive trading costs only widen the observed performance disadvantage.
+
+### WML Trading and Borrow-Cost Sensitivity
+
+WML is treated separately as a zero-cost:
+
+`long D10 / short D01`
+
+spread.
+
+Trading-cost scenarios apply to both legs.
+
+Illustrative annual short-borrow fee scenarios:
+
+- `0 bps`
+- `50 bps`
+- `100 bps`
+- `200 bps`
+
+At `5 bps` trading cost:
+
+- 0 bps borrow: `-0.693%` annualized
+- 50 bps borrow: `-1.190%`
+- 100 bps borrow: `-1.684%`
+- 200 bps borrow: `-2.667%`
+
+At `10 bps` trading cost:
+
+- 0 bps borrow: `-1.049%`
+- 50 bps borrow: `-1.545%`
+- 100 bps borrow: `-2.038%`
+- 200 bps borrow: `-3.017%`
+
+At `20 bps` trading cost:
+
+- 0 bps borrow: `-1.759%`
+- 50 bps borrow: `-2.251%`
+- 100 bps borrow: `-2.741%`
+- 200 bps borrow: `-3.714%`
+
+The gross WML result was already slightly negative, so modeled implementation frictions make the long-short strategy progressively less attractive.
+
+These are implementation sensitivity scenarios, not reconstructed realized historical shorting costs.
+
+### Final Momentum-Hypothesis Decision
+
+The corrected 2021-2025 experiment does **not support** the working hypothesis that canonical 12-1 momentum, implemented as monthly S&P 500 momentum deciles, produced a reliable superior return in this sample.
+
+Evidence:
+
+1. D10 did not outperform SPY on gross annualized return.
+2. D10 did not outperform SPY on sample Sharpe ratio.
+3. D10 CAPM alpha was negative and statistically insignificant.
+4. WML gross compounded return was slightly negative.
+5. WML mean return was statistically indistinguishable from zero.
+6. WML CAPM alpha was statistically insignificant.
+7. The decile-return relationship was not monotonic.
+8. The cross-decile slope was statistically insignificant.
+9. Positive transaction costs reduced D10 returns further.
+10. Trading and borrow-cost scenarios reduced WML returns further.
+
+### Important Research Interpretation
+
+This result does not establish that momentum never works.
+
+It establishes that the specific tested implementation:
+
+- S&P 500 point-in-time constituents
+- canonical 12-1 adjusted-close momentum
+- monthly ranking
+- equal-weight momentum deciles
+- one-month holding periods
+- corrected 2021-2025 analytical window
+
+did not produce statistically reliable or implementation-robust superior performance in this sample.
+
+The project should preserve this as a completed negative/unsupported hypothesis rather than alter the methodology after seeing the result.
+
+That makes the result useful as a research finding and provides a controlled base from which to open new hypotheses.
+
+### Final Status
+
+Gross-performance analysis:
+
+`COMPLETE`
+
+Statistical significance analysis:
+
+`COMPLETE`
+
+Risk-free-rate methodology:
+
+`COMPLETE`
+
+Sharpe-ratio analysis:
+
+`COMPLETE`
+
+CAPM alpha/beta analysis:
+
+`COMPLETE`
+
+Transaction-cost sensitivity:
+
+`COMPLETE`
+
+WML borrow-cost sensitivity:
+
+`COMPLETE`
+
+Current 12-1 momentum hypothesis:
+
+`CLOSED — NOT SUPPORTED IN THE CORRECTED 2021-2025 SAMPLE`
+
+### Next Step
+
+Commit the final risk/cost analysis and this hypothesis-closeout documentation.
+
+After the commit, open a new research hypothesis without rewriting or tuning the completed canonical 12-1 result.
+
+Potential next hypotheses should be treated as new experiments with their own documented rationale, methodology, and validation checkpoint.
+
+---
+
 # Current Status
 
 Current phase:
 
-**Momentum lookback-scope correction complete - corrected 59-month analysis pending**
+**Canonical 12-1 momentum hypothesis closed - corrected 2021-2025 risk/cost analysis complete**
 
 Completed:
 
@@ -5850,44 +6291,53 @@ Current corrected analysis state:
 
 - Corrected observable performance months: 59
 - Corrected analytical series: 13
-- Corrected gross-results extraction rerun: PENDING
-- Corrected statistical significance testing rerun: PENDING
-- Prior 47-month gross-result figures: SUPERSEDED
-- Prior 47-month statistical-test figures: SUPERSEDED
-- Risk-free-rate methodology completed: NO
-- Sharpe ratio calculated: NO
-- Regression alpha calculated: NO
-- Transaction-cost-adjusted performance calculated: NO
-- Current interpretation status: WITHHELD PENDING CORRECTED RERUN
-- Final momentum-performance claim: NOT YET MADE
+- Corrected gross-results extraction rerun: COMPLETE
+- Corrected statistical significance testing rerun: COMPLETE
+- Risk-free-rate methodology completed: YES
+- Risk-free proxy: FRED DGS1MO
+- Sharpe ratio calculated: YES
+- CAPM regression calculated: YES
+- Regression alpha calculated: YES
+- Transaction-cost sensitivity completed: YES
+- WML borrow-cost sensitivity completed: YES
+- D10 annualized return: 13.23%
+- SPY annualized return: 14.83%
+- D10 Sharpe ratio: 0.587
+- SPY Sharpe ratio: 0.774
+- D10 CAPM alpha annualized arithmetic: -1.152%
+- D10 alpha HAC p-value: 0.7764
+- WML annualized gross return: -0.33%
+- WML alpha HAC p-value: 0.5821
+- D10 net annualized return at 5 bps: 13.023%
+- D10 net annualized return at 10 bps: 12.817%
+- D10 net annualized return at 20 bps: 12.406%
+- Current interpretation status: FINAL FOR THIS HYPOTHESIS
+- Canonical 12-1 momentum hypothesis: CLOSED — NOT SUPPORTED IN THE CORRECTED 2021-2025 SAMPLE
+- Final future-performance claim: NONE
 
 Next objective:
 
-Commit the validated momentum lookback-scope correction and update the analysis scripts to require the corrected 59-month panel.
+Commit the final corrected momentum risk/cost analysis and the canonical 12-1 hypothesis closeout.
 
-After that commit, rerun the gross portfolio-results extraction and formal statistical tests using the corrected 2021-2025 experiment.
-
-Do not begin risk-free-rate, Sharpe-ratio, regression-alpha, or transaction-cost analysis until the corrected gross and statistical findings have been documented.
+After this commit, open a new research hypothesis as a separate experiment. Do not modify the completed canonical 12-1 methodology in response to its unsupported result.
 
 Git checkpoint objective:
 
-Commit the methodological correction, independent quality-gate evidence, corrected analysis guards, dependency update, and this project log.
+Commit the finalized risk-adjusted, CAPM, transaction-cost, WML implementation, and hypothesis-closeout evidence.
 
-Files for the correction checkpoint:
+Files for the final canonical momentum-hypothesis checkpoint:
 
-- `sql/analytics/009_correct_momentum_feature_lookback_scope.sql`
-- `src/analysis/inspect_2021_momentum_lookback_coverage.py`
-- `src/analysis/apply_azure_sql_momentum_lookback_correction.py`
-- `src/analysis/audit_azure_sql_momentum_lookback_correction.py`
-- `src/analysis/analyze_momentum_portfolio_results.py`
-- `src/analysis/test_momentum_statistical_significance.py`
-- `reports/data_quality/momentum_lookback_scope_correction_inspection.txt`
-- `reports/data_quality/azure_sql_momentum_lookback_correction_application.txt`
-- `reports/data_quality/azure_sql_momentum_lookback_correction_integrity_audit.txt`
-- `requirements.txt`
+- `src/analysis/analyze_momentum_risk_cost.py`
+- `data/external/fred_dgs1mo_daily_2020_2025.csv`
+- `reports/analysis/momentum_portfolio_results.txt`
+- `reports/analysis/momentum_statistical_tests.txt`
+- `reports/analysis/momentum_risk_cost_analysis.txt`
+- `reports/analysis/momentum_risk_free_monthly.csv`
+- `reports/analysis/momentum_risk_adjusted_summary.csv`
+- `reports/analysis/momentum_capm_summary.csv`
+- `reports/analysis/momentum_transaction_cost_summary.csv`
+- `reports/analysis/momentum_wml_cost_borrow_sensitivity.csv`
 - `docs/project_log.md`
-
-The previously generated 47-month analysis reports are superseded and should not be committed as current results. They will be regenerated from the corrected 59-month panel after the correction checkpoint.
 
 Continue to exclude:
 

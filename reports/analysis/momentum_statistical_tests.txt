@@ -1,22 +1,122 @@
-S&P 500 MOMENTUM — SUPERSEDED STATISTICAL TEST REPORT
+================================================================================================================
+S&P 500 MOMENTUM — FORMAL STATISTICAL TESTING CHECKPOINT
+================================================================================================================
+Mode: READ-ONLY
+Source: validated Azure SQL monthly return panel
+Primary significance level: 0.05
+Primary tests: two-sided
+Bootstrap replications: 50,000
+Newey-West/HAC lag: 3
+Inference status: EXPLORATORY / POST-SELECTION. The descriptive results were reviewed before these tests were run.
+Interpretation rule: statistical significance in this sample is not treated as proof of future performance.
 
-STATUS: SUPERSEDED
+================================================================================================================
+1. SOURCE AND DESIGN CONTROLS
+================================================================================================================
+PASS: Validated monthly return panel contains exactly 767 rows.
+PASS: All 13 analytical series are present.
+PASS: Exactly 59 observable performance months are present.
+PASS: Analysis months are exactly 1 through 59.
+PASS: Every month contains all 13 analytical series.
+PASS: Month/series keys are unique.
+PASS: No monthly returns are null.
+NOTE: Statistical tests are exploratory because the portfolio results were inspected before this inferential checkpoint.
 
-The prior statistical tests were calculated from the narrower 47-month
-snapshot-only momentum population and are retained only as historical
-diagnostics.
+================================================================================================================
+2. PRIMARY TEST — WML / D10 MINUS D01
+================================================================================================================
+Null hypothesis: mean monthly WML return = 0.
+Observations: 59
+Mean monthly return/spread: 0.118%
+Arithmetic annualization of monthly mean: 1.419%
+Monthly standard deviation: 5.384%
+Classical one-sample t-test: t=0.1687, df=58, p=0.8666
+Classical 95% CI for mean: [-1.285%, 1.521%]
+Bootstrap 95% mean CI (50,000 replications): [-1.256%, 1.442%]
+Wilcoxon signed-rank robustness test: W=813.00, p=0.5868
+Sign test: positive=34, negative=25, p=0.2976
+Newey-West/HAC mean test (lag 3): z=0.2081, p=0.8351
+Newey-West/HAC 95% CI for mean: [-0.995%, 1.232%]
+D10 minus D01 reconciliation maximum absolute difference: 8.67361737988e-19
+Interpretation: the WML mean test and the paired D10-versus-D01 mean-difference test are the same underlying hypothesis.
 
-The validated 2026-08-24 lookback-scope correction produces:
-- 30,121 momentum signals
-- 60 ranking months
-- 59 completed performance months
-- 767 monthly return-panel rows
+================================================================================================================
+3. PRIMARY TEST — D10 EXCESS RETURN VERSUS SPY
+================================================================================================================
+Null hypothesis: mean monthly D10 minus SPY return = 0.
+Observations: 59
+Mean monthly return/spread: -0.076%
+Arithmetic annualization of monthly mean: -0.913%
+Monthly standard deviation: 2.899%
+Classical one-sample t-test: t=-0.2017, df=58, p=0.8408
+Classical 95% CI for mean: [-0.831%, 0.679%]
+Bootstrap 95% mean CI (50,000 replications): [-0.789%, 0.670%]
+Wilcoxon signed-rank robustness test: W=795.00, p=0.4969
+Sign test: positive=28, negative=31, p=0.7948
+Newey-West/HAC mean test (lag 3): z=-0.2246, p=0.8223
+Newey-West/HAC 95% CI for mean: [-0.740%, 0.588%]
 
-All prior 47-month p-values, confidence intervals, sign-test results, HAC
-results, bootstrap intervals, and sensitivity findings must be rerun before
-interpretation.
+================================================================================================================
+4. EXTREME-MONTH AND LEAVE-ONE-OUT SENSITIVITY
+================================================================================================================
+WML sensitivity:
+  Best monthly WML: 10.754%
+  Worst monthly WML: -16.697%
+  Remove best month -> mean -0.065%, t-test p=0.9249
+  Remove worst month -> mean 0.408%, t-test p=0.5321
+  Remove both best and worst -> mean 0.227%, t-test p=0.7222
+  Leave-one-out mean range: [-0.065%, 0.408%]
+  Leave-one-out t-test p-value range: [0.5321, 0.9967]
 
-Rerun:
-python src/analysis/test_momentum_statistical_significance.py
+D10 minus SPY sensitivity:
+  Best monthly excess return: 8.255%
+  Worst monthly excess return: -5.068%
+  Remove best month -> mean -0.220%, t-test p=0.5384
+  Remove worst month -> mean 0.010%, t-test p=0.9789
+  Remove both best and worst -> mean -0.135%, t-test p=0.7024
+  Leave-one-out mean range: [-0.220%, 0.010%]
+  Leave-one-out t-test p-value range: [0.5384, 0.9980]
 
-after the corrected gross-results extraction.
+================================================================================================================
+5. CROSS-DECILE TREND TEST
+================================================================================================================
+Method: for each of the 59 months, regress the ten decile returns on decile number 1 through 10; then test the mean monthly slope against zero.
+Mean monthly decile slope: 0.010% return per decile step
+Arithmetic annualization of mean slope: 0.115% per decile step
+Classical slope t-test: t=0.1482, df=58, p=0.8827
+Classical 95% CI for mean slope: [-0.120%, 0.139%]
+Bootstrap 95% slope CI (50,000 replications): [-0.120%, 0.131%]
+Newey-West/HAC slope test (lag 3): z=0.1873, p=0.8515
+Months with positive decile slope: 34 of 59; sign-test p=0.2976
+Mean monthly Spearman rank correlation between decile and return: 0.0817
+Mean-Spearman t-test: t=1.0028, p=0.3201
+Months with positive Spearman correlation: 31 of 59
+
+================================================================================================================
+6. MULTIPLE-TESTING CONTROL FOR PRIMARY HYPOTHESES
+================================================================================================================
+WML mean vs zero: raw p=0.8666, Holm-adjusted p=1.0000 -> DO NOT REJECT H0
+D10 excess vs SPY: raw p=0.8408, Holm-adjusted p=1.0000 -> DO NOT REJECT H0
+Cross-decile mean slope vs zero: raw p=0.8827, Holm-adjusted p=1.0000 -> DO NOT REJECT H0
+
+Note: D10 minus D01 is not added as a separate primary hypothesis because it is mathematically the same monthly spread as WML.
+
+================================================================================================================
+7. INTERPRETATION CHECKPOINT
+================================================================================================================
+WML robustness summary: EVIDENCE IS MIXED / NOT ROBUST ACROSS METHODS
+D10-minus-SPY robustness summary: EVIDENCE IS MIXED / NOT ROBUST ACROSS METHODS
+Primary inference remains exploratory/post-selection because the descriptive performance results were reviewed before formal testing.
+A statistically significant result here should be documented as sample evidence, not as proof of a persistent anomaly.
+A nonsignificant result does not prove that the effect is zero; with only 59 months, statistical power may still be limited.
+No risk-free-rate adjustment, Sharpe ratio, regression alpha, or transaction-cost adjustment is introduced by this script.
+
+================================================================================================================
+8. FINAL CONTROL
+================================================================================================================
+Database modifications performed: 0
+Validated source rows modified: 0
+Statistical-testing output is a read-only analytical report.
+
+MOMENTUM_STATISTICAL_TESTING_COMPLETE
+Report saved: C:\Users\mhech\OneDrive\Documents\projects\sp500-momentum-performance-analysis\reports\analysis\momentum_statistical_tests.txt

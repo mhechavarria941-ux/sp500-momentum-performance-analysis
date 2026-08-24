@@ -1,0 +1,55 @@
+S&P 500 MOMENTUM — CANONICAL 12-1 HYPOTHESIS CLOSEOUT
+
+Status:
+CLOSED — NOT SUPPORTED IN THE CORRECTED 2021-2025 SAMPLE
+
+Tested implementation:
+- Point-in-time S&P 500 constituents
+- Canonical 12-1 adjusted-close momentum
+- Monthly ranking
+- Equal-weight deciles
+- One-month forward holding period
+- Corrected 2021-2025 ranking window
+- 59 completed performance months
+
+Gross:
+- D10 annualized return: 13.23%
+- D01 annualized return: 10.54%
+- WML annualized return: -0.33%
+- SPY annualized return: 14.83%
+
+Statistics:
+- WML mean vs zero p-value: 0.8666
+- D10 excess vs SPY p-value: 0.8408
+- Cross-decile slope p-value: 0.8827
+- No primary hypothesis rejected at 5%.
+
+Risk-adjusted:
+- D10 Sharpe: 0.587
+- SPY Sharpe: 0.774
+- D10 CAPM alpha: -1.152% annualized arithmetic
+- D10 alpha HAC p-value: 0.7764
+- WML alpha: +3.454% annualized arithmetic
+- WML alpha HAC p-value: 0.5821
+
+Transaction costs:
+- D10 net annualized return @ 5 bps: 13.023%
+- D10 net annualized return @ 10 bps: 12.817%
+- D10 net annualized return @ 20 bps: 12.406%
+
+WML implementation:
+- Gross WML was already slightly negative.
+- Trading costs and illustrative borrow fees reduced performance further.
+- Net annualized WML ranged from -0.693% to -3.714% across modeled scenarios.
+
+Conclusion:
+The corrected 2021-2025 experiment does not support the hypothesis that this
+specific canonical 12-1 S&P 500 momentum-decile implementation produced a
+statistically reliable, risk-adjusted, or implementation-robust superior return.
+
+This does not establish that momentum never works. It closes this exact tested
+hypothesis and preserves it as a completed negative/unsupported research result.
+
+Next action:
+Open a new, separately documented hypothesis without altering the completed
+canonical 12-1 methodology after observing its result.

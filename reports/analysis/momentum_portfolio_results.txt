@@ -1,25 +1,121 @@
-S&P 500 MOMENTUM — SUPERSEDED GROSS RESULTS REPORT
+==============================================================================================================
+S&P 500 MOMENTUM — VALIDATED GROSS PORTFOLIO RESULTS
+==============================================================================================================
+Mode: READ-ONLY
+Source: validated Azure SQL portfolio-performance views
+Risk-free rate applied: NO
+Transaction costs applied: NO
+Sharpe ratio calculated: NO
+Regression alpha calculated: NO
 
-STATUS: SUPERSEDED
+==============================================================================================================
+1. COMPLETE PERFORMANCE SUMMARY
+==============================================================================================================
+Code  Series                            Wealth     Cum Ret     Ann Ret     Ann Vol      Max DD    Pos Mths  Act vs SPY  Info Rat
+--------------------------------------------------------------------------------------------------------------
+D01   Loser Decile                      1.6367      63.67%      10.54%      23.57%     -25.95%      54.24%      -2.33%    -0.152
+D02   Momentum Decile 2                 1.3251      32.51%       5.89%      18.50%     -25.72%      50.85%      -7.64%    -0.770
+D03   Momentum Decile 3                 1.8554      85.54%      13.40%      17.26%     -22.89%      57.63%      -0.96%    -0.108
+D04   Momentum Decile 4                 1.5993      59.93%      10.02%      16.81%     -18.89%      57.63%      -4.09%    -0.482
+D05   Momentum Decile 5                 1.6875      68.75%      11.23%      15.65%     -22.45%      59.32%      -3.17%    -0.391
+D06   Momentum Decile 6                 1.7084      70.84%      11.51%      15.32%     -16.51%      57.63%      -2.97%    -0.453
+D07   Momentum Decile 7                 1.7565      75.65%      12.14%      15.01%     -20.51%      61.02%      -2.44%    -0.321
+D08   Momentum Decile 8                 1.6001      60.01%      10.03%      15.01%     -19.84%      57.63%      -4.35%    -0.654
+D09   Momentum Decile 9                 1.5387      53.87%       9.16%      15.63%     -19.29%      59.32%      -5.06%    -0.667
+D10   Winner Decile                     1.8421      84.21%      13.23%      18.49%     -17.30%      61.02%      -0.91%    -0.091
+WML   Winner Minus Loser                0.9837      -1.63%      -0.33%      18.65%     -23.82%      57.63%     -13.64%    -0.532
+SPY   SPDR S&P 500 ETF Trust            1.9740      97.40%      14.83%      15.23%     -23.93%      67.80%       0.00%       N/A
+SP500 S&P 500 Index                     1.8430      84.30%      13.24%      15.18%     -24.77%      66.10%      -1.42%    -5.330
 
-The prior contents of this report were generated from the narrower 47-month
-snapshot-only momentum population.
+==============================================================================================================
+2. MOMENTUM STRATEGY HEADLINES
+==============================================================================================================
+Winner decile (D10) annualized return: 13.23%
+Loser decile (D01) annualized return: 10.54%
+Winner minus loser annualized-return difference (D10 - D01): 2.69%
+WML annualized return: -0.33%
+WML cumulative return: -1.63%
+WML final wealth from $1: 0.9837
+SPY annualized return: 14.83%
+S&P 500 index annualized return: 13.24%
+Winner decile annualized-return difference versus SPY: -1.60%
+Winner decile annualized active return vs SPY (arithmetic convention): -0.91%
+Winner decile information ratio vs SPY: -0.091
+Winner decile maximum drawdown: -17.30%
+Loser decile maximum drawdown: -25.95%
+WML maximum drawdown: -23.82%
+SPY maximum drawdown: -23.93%
+Best annualized-return series overall: SPY (SPDR S&P 500 ETF Trust) at 14.83%
+Worst annualized-return series overall: WML (Winner Minus Loser) at -0.33%
+Best momentum decile by annualized return: D03 at 13.40%
+Worst momentum decile by annualized return: D02 at 5.89%
+Adjacent decile annualized-return increases from D01 to D10: 5 of 9
 
-On 2026-08-24, the momentum lookback-scope correction restored validated
-pre-membership historical price support while preserving point-in-time S&P 500
-ranking eligibility.
+==============================================================================================================
+3. MONTH-BY-MONTH COMPARISON COUNTS
+==============================================================================================================
+Observable months: 59
+Winner decile beat loser decile: 34 of 59 months
+Winner decile beat SPY: 28 of 59 months
+Loser decile beat SPY: 23 of 59 months
+WML was positive: 34 of 59 months
+SPY beat the S&P 500 index: 56 of 59 months
 
-Corrected analytical state:
-- 30,121 momentum signals
-- 60 ranking months
-- 59 completed performance months
-- 767 monthly return-panel rows
+==============================================================================================================
+4. BEST AND WORST MONTHS
+==============================================================================================================
+D01   BEST  | ranking month-end 2022-12-30 | holding end 2023-01-31 | return 18.93%
+D01   WORST | ranking month-end 2022-05-31 | holding end 2022-06-30 | return -14.02%
+D10   BEST  | ranking month-end 2022-09-30 | holding end 2022-10-31 | return 16.38%
+D10   WORST | ranking month-end 2022-05-31 | holding end 2022-06-30 | return -10.93%
+SP500 BEST  | ranking month-end 2022-06-30 | holding end 2022-07-29 | return 9.11%
+SP500 WORST | ranking month-end 2022-08-31 | holding end 2022-09-30 | return -9.34%
+SPY   BEST  | ranking month-end 2022-06-30 | holding end 2022-07-29 | return 9.21%
+SPY   WORST | ranking month-end 2022-08-31 | holding end 2022-09-30 | return -9.24%
+WML   BEST  | ranking month-end 2025-08-29 | holding end 2025-09-30 | return 10.75%
+WML   WORST | ranking month-end 2022-12-30 | holding end 2023-01-31 | return -16.70%
 
-The prior 47-month numerical findings must not be treated as current project
-results.
+==============================================================================================================
+5. MAXIMUM-DRAWDOWN OBSERVATIONS
+==============================================================================================================
+D01   | ranking month-end 2022-08-31 | holding end 2022-09-30 | wealth 1.0493 | running peak 1.4169 | drawdown -25.95%
+D10   | ranking month-end 2022-08-31 | holding end 2022-09-30 | wealth 1.0020 | running peak 1.2116 | drawdown -17.30%
+WML   | ranking month-end 2021-12-31 | holding end 2022-01-31 | wealth 0.7618 | running peak 1.0000 | drawdown -23.82%
+SPY   | ranking month-end 2022-08-31 | holding end 2022-09-30 | wealth 0.9894 | running peak 1.3005 | drawdown -23.93%
+SP500 | ranking month-end 2022-08-31 | holding end 2022-09-30 | wealth 0.9654 | running peak 1.2832 | drawdown -24.77%
 
-Rerun:
-python src/analysis/analyze_momentum_portfolio_results.py
+==============================================================================================================
+6. DECILE TURNOVER SUMMARY
+==============================================================================================================
+Decile  Label        Avg Monthly    Annualized   Avg Overlap     Entries       Exits
+------------------------------------------------------------------------------------
+1       LOSER             27.74%       332.89%        72.36%         829         829
+2       MIDDLE            57.51%       690.17%        42.51%        1717        1718
+3       MIDDLE            67.91%       814.98%        32.11%        2016        2016
+4       MIDDLE            72.34%       868.10%        27.66%        2142        2142
+5       MIDDLE            73.43%       881.12%        26.58%        2168        2168
+6       MIDDLE            73.08%       877.02%        26.92%        2156        2156
+7       MIDDLE            72.95%       875.39%        27.05%        2152        2152
+8       MIDDLE            68.47%       821.69%        31.53%        2020        2020
+9       MIDDLE            59.97%       719.59%        40.03%        1769        1769
+10      WINNER            29.19%       350.24%        70.84%         860         860
 
-after the methodological correction commit to regenerate this report from the
-corrected 59-month panel.
+Average monthly turnover across all ten deciles: 60.26%
+Winner decile average monthly turnover: 29.19%
+Loser decile average monthly turnover: 27.74%
+Highest-turnover decile: D05 at 73.43%
+Lowest-turnover decile: D01 at 27.74%
+
+==============================================================================================================
+7. INTERPRETATION BOUNDARIES
+==============================================================================================================
+All figures are validated gross performance.
+No transaction costs have been deducted.
+No risk-free rate has been applied.
+No Sharpe ratio has been calculated.
+No regression alpha has been calculated.
+No statistical significance test is performed by this script.
+The report describes the observed 59-month sample and should not be interpreted as evidence of future performance.
+
+RESULT_EXTRACTION_COMPLETE
+Report saved: C:\Users\mhech\OneDrive\Documents\projects\sp500-momentum-performance-analysis\reports\analysis\momentum_portfolio_results.txt
