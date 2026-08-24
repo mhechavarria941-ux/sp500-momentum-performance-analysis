@@ -1,0 +1,49 @@
+========================================================================================================
+H2 SECTOR-RELATIVE MOMENTUM FINAL ANALYSIS INTEGRITY AUDIT
+========================================================================================================
+Mode: Azure SQL READ-ONLY + local output verification
+Azure SQL modifications performed: 0
+
+========================================================================================================
+1. CORE / H2 SOURCE PRESERVATION
+========================================================================================================
+PASS: core.security remains 593 rows.
+PASS: core.security_ticker_history remains 594 rows.
+PASS: core.index_membership remains 593 rows.
+PASS: core.security_price_eligibility remains 594 rows.
+PASS: core.daily_security_price remains 631,942 rows.
+PASS: core.benchmark_series remains 2 rows.
+PASS: core.daily_benchmark_price remains 2,510 rows.
+PASS: Validated H2 source still has exactly 59 complete W-L months.
+========================================================================================================
+2. PRIMARY TEST RECONSTRUCTION
+========================================================================================================
+PASS: Primary mean W-L matches independent reconstruction.
+PASS: Primary HAC(3) p-value matches independent reconstruction.
+PASS: Primary H2 directional decision flag is reproducible.
+========================================================================================================
+3. SECONDARY OUTPUT STRUCTURE
+========================================================================================================
+PASS: Sector inference output contains 11 GICS sectors.
+PASS: Cost/borrow sensitivity contains all 12 preregistered scenarios.
+PASS: Leave-one-sector-out output contains 11 exclusions.
+PASS: Sector contribution output contains 11 sectors.
+PASS: Turnover output contains 60 months x 2 aggregate legs.
+PASS: Exactly one preregistered base-case cost row exists.
+PASS: Leave-one-sector-out positive-count is valid (11/11).
+========================================================================================================
+4. FINAL GATE
+========================================================================================================
+PASS: core.security final population remains 593.
+PASS: core.security_ticker_history final population remains 594.
+PASS: core.index_membership final population remains 593.
+PASS: core.security_price_eligibility final population remains 594.
+PASS: core.daily_security_price final population remains 631,942.
+PASS: core.benchmark_series final population remains 2.
+PASS: core.daily_benchmark_price final population remains 2,510.
+H2_SECTOR_RELATIVE_ANALYSIS_INTEGRITY_AUDIT_PASSED
+Passed checks: 25
+Primary HAC inference independently reproduced.
+All preregistered cost/concentration output families present.
+Azure SQL modifications performed by audit: 0
+Core rows modified: 0

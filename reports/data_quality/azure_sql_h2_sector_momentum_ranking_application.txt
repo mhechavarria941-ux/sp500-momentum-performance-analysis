@@ -1,0 +1,78 @@
+========================================================================================
+AZURE SQL H2 SECTOR-RELATIVE MOMENTUM RANKING APPLICATION
+========================================================================================
+Connection status: SUCCESS
+Credentials included in report: NO
+Migration: sql\analytics\010_create_h2_sector_relative_momentum_ranking.sql
+Validated GICS input: data\interim\security_gics_sector_month_end_2021_2025.csv
+Scope: sector assignment load + preregistered within-sector ranking/quintiles only
+Forward-return / performance inspection: NO
+Weight implementation: explicit FLOAT 1/11 sector-neutral allocation
+
+========================================================================================
+1. LOCAL GICS INPUT CONTROL
+========================================================================================
+PASS: Local GICS input has the exact expected five-column schema.
+PASS: Validated monthly GICS input contains exactly 30,211 rows.
+PASS: GICS input spans analysis months 1 through 60.
+PASS: GICS month/security keys are unique.
+PASS: GICS input contains exactly the 11 canonical sectors.
+PASS: All 60 local ranking months contain all 11 GICS sectors.
+========================================================================================
+2. PRE-APPLICATION DATABASE CONTROLS
+========================================================================================
+PASS: core.security remains 593 rows.
+PASS: core.security_ticker_history remains 594 rows.
+PASS: core.index_membership remains 593 rows.
+PASS: core.security_price_eligibility remains 594 rows.
+PASS: core.daily_security_price remains 631,942 rows.
+PASS: core.benchmark_series remains 2 rows.
+PASS: core.daily_benchmark_price remains 2,510 rows.
+PASS: Ranking snapshot remains exactly 30,211 rows.
+PASS: Corrected H1 feature layer still contains exactly 30,121 complete 12-1 signals.
+========================================================================================
+3. CREATE TABLE, LOAD GICS, CREATE RANKING VIEWS
+========================================================================================
+PASS: H2 ranking migration contains exactly four SQL batches.
+PASS: analytics.security_month_end_gics_sector is present.
+PASS: Loaded 30,211 validated point-in-time GICS rows.
+PASS: Executed SQL batch 2 / 4.
+PASS: Executed SQL batch 3 / 4.
+PASS: Executed SQL batch 4 / 4.
+========================================================================================
+4. H2 RANKING / QUINTILE QUALITY GATE
+========================================================================================
+PASS: Azure GICS table contains exactly 30,211 rows.
+PASS: H2 ranking preserves exactly the 30,121 preregistered complete momentum signals.
+PASS: H2 portfolio assignment preserves every H2 ranking row.
+PASS: H2 rankings span all 60 analysis months.
+PASS: H2 rankings contain exactly 660 month/sector partitions.
+PASS: Every H2 sector-month has at least five eligible securities.
+PASS: H2 quintile summary contains exactly 3,300 month/sector/quintile rows.
+PASS: Q1/Q5/MIDDLE portfolio labels match the preregistration.
+PASS: Every sector/quintile sleeve sums to sector weight 1 and aggregate sector-neutral weight 1/11.
+PASS: Within-sector momentum ranks are contiguous from 1 to N.
+PASS: Within every sector-month, quintile sizes differ by at most one.
+========================================================================================
+5. LOOK-AHEAD / DEPENDENCY CONTROL
+========================================================================================
+PASS: H2 ranking views have no dependency on a forward-return object.
+PASS: H2 ranking schemas contain no forward-performance, risk, or cost fields.
+PASS: core.security remains unchanged at 593 rows.
+PASS: core.security_ticker_history remains unchanged at 594 rows.
+PASS: core.index_membership remains unchanged at 593 rows.
+PASS: core.security_price_eligibility remains unchanged at 594 rows.
+PASS: core.daily_security_price remains unchanged at 631,942 rows.
+PASS: core.benchmark_series remains unchanged at 2 rows.
+PASS: core.daily_benchmark_price remains unchanged at 2,510 rows.
+
+AZURE_SQL_H2_SECTOR_MOMENTUM_RANKING_APPLICATION_PASSED
+Passed checks: 41
+GICS rows loaded: 30,211
+H2 ranking rows: 30,121
+Ranking months: 60
+Month/sector partitions: 660
+Month/sector/quintile rows: 3,300
+Forward-return / H2 performance results inspected: 0
+Core rows modified: 0
+H2 ranking layer is ready for independent integrity audit. Do not construct forward returns until that audit passes.

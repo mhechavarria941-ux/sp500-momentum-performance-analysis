@@ -1,0 +1,155 @@
+==========================================================================================================================
+S&P 500 H2 — SECTOR-RELATIVE 12-1 MOMENTUM FINAL PREREGISTERED ANALYSIS
+==========================================================================================================================
+Mode: READ-ONLY with respect to Azure SQL
+Analytical sample: 2021-2025
+Observable completed holding months: 59
+Primary outcome: equal-sector-weight Winner minus Loser
+Primary inference: two-sided HAC/Newey-West mean test, lag 3, alpha 0.05
+Bootstrap replications: 50,000
+Risk-free proxy: FRED DGS1MO, latest observation on/before ranking date
+Risk-free conversion: annualized yield / 100 x actual holding days / 365
+Turnover: 0.5 * sum(abs(w_t - w_t-1)) on aggregate leg target weights
+Initial formation: 100% one-way turnover per leg
+Trading-cost grid: 5 / 10 / 20 bps per turnover unit on both legs
+Borrow grid: 0 / 50 / 100 / 200 bps annualized on Loser leg
+H2 borrow convention: annual borrow rate / 12 each month
+Base case: 10 bps trading + 100 bps annualized borrow
+Database modifications performed: 0
+
+==========================================================================================================================
+1. VALIDATED SOURCE CONTROLS
+==========================================================================================================================
+PASS: Aggregate H2 W-L complete rows = 59.
+PASS: Complete Winner/Loser sector rows = 1,298.
+PASS: Complete sector/quintile rows = 3,245.
+PASS: Complete benchmark rows = 118.
+PASS: H2 forward-return integrity gate was completed before this analysis.
+PASS: Risk-free alignment datetime keys normalized to datetime64[ns].
+
+==========================================================================================================================
+2. PRIMARY CONFIRMATORY H2 TEST
+==========================================================================================================================
+Mean monthly W-L: 0.186%
+Arithmetic annualized mean: 2.237%
+Gross compounded wealth: 1.0814
+Gross geometric annualized return: 1.605%
+Annualized volatility: 11.399%
+Maximum drawdown: -13.234%
+Classical t-test: t=0.4352, p=0.6650
+Bootstrap 95% CI (50,000): [-0.654%, 0.997%]
+Wilcoxon signed-rank: W=785.00, p=0.4504
+Sign test: positive=33, negative=26, p=0.4350
+PRIMARY HAC(3) mean test: z=0.5182, p=0.6043
+PRIMARY DECISION RULE: FAIL — mean W-L <= 0 or two-sided HAC p >= 0.05.
+
+==========================================================================================================================
+3. SECTOR-LEVEL SECONDARY TESTS WITH HOLM CONTROL
+==========================================================================================================================
+Communication Services     | W-L mean 1.040% | Ann 9.226% | Sharpe 0.468 | HAC p 0.2362 | Holm p 1.0000
+Consumer Discretionary     | W-L mean -0.076% | Ann -3.227% | Sharpe -0.042 | HAC p 0.9180 | Holm p 1.0000
+Consumer Staples           | W-L mean 0.682% | Ann 6.867% | Sharpe 0.462 | HAC p 0.3009 | Holm p 1.0000
+Energy                     | W-L mean 0.917% | Ann 8.508% | Sharpe 0.461 | HAC p 0.3287 | Holm p 1.0000
+Financials                 | W-L mean -0.130% | Ann -3.990% | Sharpe -0.069 | HAC p 0.8615 | Holm p 1.0000
+Health Care                | W-L mean -0.617% | Ann -8.747% | Sharpe -0.403 | HAC p 0.3773 | Holm p 1.0000
+Industrials                | W-L mean -0.447% | Ann -6.297% | Sharpe -0.356 | HAC p 0.4050 | Holm p 1.0000
+Information Technology     | W-L mean 0.076% | Ann -1.250% | Sharpe 0.043 | HAC p 0.9065 | Holm p 1.0000
+Materials                  | W-L mean 0.892% | Ann 8.620% | Sharpe 0.483 | HAC p 0.1303 | Holm p 1.0000
+Real Estate                | W-L mean 0.199% | Ann 1.179% | Sharpe 0.153 | HAC p 0.6410 | Holm p 1.0000
+Utilities                  | W-L mean -0.485% | Ann -6.970% | Sharpe -0.350 | HAC p 0.3854 | Holm p 1.0000
+
+==========================================================================================================================
+4. QUINTILE MONOTONICITY DIAGNOSTICS
+==========================================================================================================================
+Aggregate sector-neutral quintile means: Q1=0.905% | Q2=0.952% | Q3=0.902% | Q4=1.020% | Q5=1.091%
+Aggregate Q5-Q1 mean spread: 0.186%
+Aggregate adjacent quintile increases: 3 of 4
+Aggregate quintile-mean Spearman rho: 0.700
+
+==========================================================================================================================
+5. BENCHMARK AND RISK-ADJUSTED CONTEXT
+==========================================================================================================================
+DGS1MO source mode: EXISTING LOCAL CACHE
+DGS1MO aligned rows: 59
+Maximum DGS1MO observation age: 0 days
+WINNER | Ann Return 12.575% | Ann Vol 15.578% | Sharpe 0.629 | Max DD -16.448%
+LOSER  | Ann Return 9.482% | Ann Vol 18.980% | Sharpe 0.397 | Max DD -20.775%
+WML    | Ann Return 1.605% | Ann Vol 11.399% | Sharpe 0.196 | Max DD -13.234%
+SPY    | Ann Return 14.834% | Ann Vol 15.232% | Sharpe 0.774 | Max DD -23.927%
+SP500  | Ann Return 13.242% | Ann Vol 15.182% | Sharpe 0.683 | Max DD -24.770%
+
+CAPM / SPY market-factor context:
+WINNER | Alpha/mo -0.094% | Alpha/yr -1.123% | Alpha p 0.6834 | Beta 0.928 | R2 0.820
+LOSER  | Alpha/mo -0.362% | Alpha/yr -4.344% | Alpha p 0.3897 | Beta 1.012 | R2 0.651
+WML    | Alpha/mo 0.268% | Alpha/yr 3.221% | Alpha p 0.4601 | Beta -0.084 | R2 0.012
+SP500  | Alpha/mo -0.115% | Alpha/yr -1.376% | Alpha p <0.0001 | Beta 0.996 | R2 1.000
+
+Winner mean monthly active return vs SPY: -0.164%
+Winner mean monthly active return vs S&P 500 index: -0.046%
+
+==========================================================================================================================
+6. TARGET-WEIGHT TURNOVER AND IMPLEMENTATION COSTS
+==========================================================================================================================
+Winner mean one-way turnover including initial formation: 27.240%
+Loser mean one-way turnover including initial formation: 26.000%
+Trading cost = 5 bps:
+  Borrow   0 bps/year | Net wealth 1.0645 | Net ann 1.280%
+  Borrow  50 bps/year | Net wealth 1.0387 | Net ann 0.775%
+  Borrow 100 bps/year | Net wealth 1.0135 | Net ann 0.272%
+  Borrow 200 bps/year | Net wealth 0.9648 | Net ann -0.726%
+Trading cost = 10 bps:
+  Borrow   0 bps/year | Net wealth 1.0479 | Net ann 0.956%
+  Borrow  50 bps/year | Net wealth 1.0225 | Net ann 0.453%
+  Borrow 100 bps/year | Net wealth 0.9976 | Net ann -0.049%
+  Borrow 200 bps/year | Net wealth 0.9497 | Net ann -1.044%
+Trading cost = 20 bps:
+  Borrow   0 bps/year | Net wealth 1.0154 | Net ann 0.311%
+  Borrow  50 bps/year | Net wealth 0.9907 | Net ann -0.190%
+  Borrow 100 bps/year | Net wealth 0.9666 | Net ann -0.688%
+  Borrow 200 bps/year | Net wealth 0.9202 | Net ann -1.678%
+
+==========================================================================================================================
+7. CROSS-SECTOR CONCENTRATION ROBUSTNESS
+==========================================================================================================================
+Leave-one-sector-out positive mean W-L estimates: 11 of 11
+Largest additive sector share of aggregate arithmetic cumulative W-L: 50.719%
+Concentration criterion: FAIL
+Contribution convention: arithmetic monthly sector spreads are scaled by 1/11 so contributions add exactly to aggregate arithmetic W-L.
+
+==========================================================================================================================
+8. FINAL PREREGISTERED H2 DECISION
+==========================================================================================================================
+Primary mean W-L: 0.186%
+Primary HAC(3) p-value: 0.6043
+Primary statistical rule passed: NO
+Base-case net annualized W-L (10 bps + 100 bps borrow): -0.049%
+Base-case net positive: NO
+Cross-sector concentration criterion passed: NO
+
+H2 FINAL LABEL: NOT SUPPORTED
+Reason: Primary directional rule failed: mean W-L was not both positive and statistically significant at two-sided HAC(3) p < 0.05.
+
+==========================================================================================================================
+9. INTERPRETATION BOUNDARIES AND OUTPUTS
+==========================================================================================================================
+The primary H2 test is confirmatory relative to the committed preregistration.
+Sector-level tests are secondary and Holm-adjusted as one 11-test family.
+Benchmark, Sharpe, CAPM, monotonicity, turnover, cost, and concentration results are secondary robustness evidence.
+DGS1MO is a constant-maturity yield proxy, not the realized return of a specific Treasury bill.
+CAPM controls only for SPY market exposure.
+Trading and borrow costs are scenarios rather than reconstructed historical execution costs.
+Sector contribution concentration uses an additive arithmetic decomposition because compounded W-L is not exactly decomposable by sector.
+No H1 parameter or conclusion is modified by H2.
+
+Primary output: reports\analysis\h2_primary_inference.csv
+Sector inference: reports\analysis\h2_sector_inference.csv
+Quintile monotonicity: reports\analysis\h2_quintile_monotonicity.csv
+Risk-adjusted summary: reports\analysis\h2_risk_adjusted_summary.csv
+CAPM summary: reports\analysis\h2_capm_summary.csv
+Turnover: reports\analysis\h2_turnover_monthly.csv
+Cost/borrow sensitivity: reports\analysis\h2_cost_borrow_sensitivity.csv
+Leave-one-sector-out: reports\analysis\h2_leave_one_sector_out.csv
+Sector contribution: reports\analysis\h2_sector_contribution.csv
+Risk-free alignment: reports\analysis\h2_risk_free_monthly.csv
+
+H2_SECTOR_RELATIVE_MOMENTUM_ANALYSIS_COMPLETE

@@ -1,0 +1,73 @@
+============================================================================================
+AZURE SQL H2 SECTOR FORWARD-RETURN INTEGRITY AUDIT
+============================================================================================
+Mode: Azure SQL READ-ONLY
+Azure SQL modifications performed: 0
+Statistical / risk / cost interpretation: NOT PERFORMED
+
+============================================================================================
+1. SOURCE / CORE PRESERVATION
+============================================================================================
+PASS: core.security remains 593 rows.
+PASS: core.security_ticker_history remains 594 rows.
+PASS: core.index_membership remains 593 rows.
+PASS: core.security_price_eligibility remains 594 rows.
+PASS: core.daily_security_price remains 631,942 rows.
+PASS: core.benchmark_series remains 2 rows.
+PASS: core.daily_benchmark_price remains 2,510 rows.
+PASS: H2 portfolio source contains exactly 30,121 assignments.
+PASS: Security forward source contains exactly 30,121 rows.
+============================================================================================
+2. INDEPENDENT SECURITY-LEVEL JOIN
+============================================================================================
+PASS: Independent H2 portfolio/forward join preserves all 30,121 assignments.
+Security exact-field mismatch detail: none
+PASS: Every H2 security holding key/date/status field matches the independent source join using null-aware equality.
+PASS: Every H2 security target weight matches the fixed ranking source.
+PASS: Every H2 security forward return exactly matches the validated security forward-return source.
+PASS: H2 security layer has exactly 29,620 complete returns.
+PASS: H2 security layer has exactly 501 right-censored rows.
+PASS: All 501 right-censored December-2025 rows have null target_holding_end_date as expected.
+============================================================================================
+3. INDEPENDENT SECTOR-QUINTILE RECONSTRUCTION
+============================================================================================
+PASS: Independent and SQL sector/quintile populations are both 3,300 rows.
+PASS: Every sector/quintile count, label, completeness, and censoring field matches independent reconstruction.
+PASS: Every sector/quintile equal-weight return matches independent reconstruction.
+============================================================================================
+4. INDEPENDENT SECTOR-NEUTRAL LEGS / W-L
+============================================================================================
+PASS: Independent and SQL sector-neutral leg populations are 120 rows.
+PASS: Every sector-neutral Winner/Loser leg matches independent 11-sector equal-weight reconstruction.
+PASS: SQL H2 W-L layer contains exactly 60 rows.
+PASS: Every aggregate sector-neutral W-L observation matches independent reconstruction.
+============================================================================================
+5. COMPLETENESS / NO-INTERPRETATION CONTROL
+============================================================================================
+PASS: Exactly 3,245 sector/quintile returns are complete across months 1-59.
+PASS: Exactly 118 aggregate Winner/Loser legs are complete.
+PASS: Exactly 59 aggregate H2 W-L observations are complete.
+PASS: Only analysis month 60 is right-censored in aggregate H2 W-L.
+PASS: core.security final population remains 593.
+PASS: core.security_ticker_history final population remains 594.
+PASS: core.index_membership final population remains 593.
+PASS: core.security_price_eligibility final population remains 594.
+PASS: core.daily_security_price final population remains 631,942.
+PASS: core.benchmark_series final population remains 2.
+PASS: core.daily_benchmark_price final population remains 2,510.
+============================================================================================
+6. FINAL QUALITY GATE
+============================================================================================
+AZURE_SQL_H2_SECTOR_FORWARD_RETURN_INTEGRITY_AUDIT_PASSED
+Passed checks: 34
+H2 security holding rows: 30,121
+Complete H2 security returns: 29,620
+Sector/quintile rows: 3,300
+Winner/Loser sector rows: 1,320
+Sector-neutral leg rows: 120
+Aggregate W-L rows: 60
+Complete observable W-L months: 59
+Statistical / risk / cost interpretation performed: 0
+Azure SQL modifications performed by audit: 0
+Core rows modified: 0
+H2 forward-return population is independently validated. The next permitted step is the preregistered statistical, risk, turnover, and implementation-cost analysis.

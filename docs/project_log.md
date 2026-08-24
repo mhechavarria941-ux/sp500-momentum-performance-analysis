@@ -6560,16 +6560,305 @@ After that commit:
 
 ---
 
+## 3.46 H2 Sector-Relative Momentum Implementation, Validation, and Final Closeout
+
+**Date:** 2026-08-24
+
+### Objective
+
+Implement the preregistered H2 sector-relative 12-1 momentum experiment only after the point-in-time GICS prerequisite and preregistration checkpoint had been committed, validate each construction layer independently before exposing performance, then apply the frozen statistical, risk, turnover, implementation-cost, and cross-sector robustness rules.
+
+### Source
+
+H2 used only previously validated project sources:
+
+- corrected 12-1 constituent momentum features;
+- point-in-time S&P 500 ranking snapshots;
+- validated point-in-time GICS security-month assignments;
+- validated one-month security forward-return layer;
+- SPY and S&P 500 benchmark forward returns;
+- FRED DGS1MO risk-free proxy using the latest observation on or before the ranking date.
+
+No new membership, price, or GICS classification source was introduced during H2 performance analysis.
+
+### Files Created or Modified
+
+Canonical implementation:
+
+- `sql/analytics/010_create_h2_sector_relative_momentum_ranking.sql`
+- `sql/analytics/011_create_h2_sector_relative_forward_return_views.sql`
+- `src/analysis/apply_azure_sql_h2_sector_relative_rankings.py`
+- `src/analysis/audit_azure_sql_h2_sector_relative_rankings.py`
+- `src/analysis/apply_azure_sql_h2_sector_relative_forward_returns.py`
+- `src/analysis/audit_azure_sql_h2_sector_relative_forward_returns.py`
+- `src/analysis/analyze_h2_sector_relative_momentum.py`
+- `src/analysis/audit_h2_sector_relative_momentum_analysis.py`
+
+Analysis outputs:
+
+- `reports/analysis/h2_sector_relative_momentum_analysis.txt`
+- `reports/analysis/h2_primary_inference.csv`
+- `reports/analysis/h2_sector_inference.csv`
+- `reports/analysis/h2_quintile_monotonicity.csv`
+- `reports/analysis/h2_risk_adjusted_summary.csv`
+- `reports/analysis/h2_capm_summary.csv`
+- `reports/analysis/h2_turnover_monthly.csv`
+- `reports/analysis/h2_cost_borrow_sensitivity.csv`
+- `reports/analysis/h2_leave_one_sector_out.csv`
+- `reports/analysis/h2_sector_contribution.csv`
+- `reports/analysis/h2_risk_free_monthly.csv`
+
+Quality-control outputs:
+
+- `reports/data_quality/azure_sql_h2_sector_momentum_ranking_application.txt`
+- `reports/data_quality/azure_sql_h2_sector_momentum_ranking_integrity_audit.txt`
+- `reports/data_quality/azure_sql_h2_sector_forward_return_application.txt`
+- `reports/data_quality/azure_sql_h2_sector_forward_return_integrity_audit.txt`
+- `reports/data_quality/h2_sector_relative_momentum_analysis_integrity_audit.txt`
+
+### Ranking and Weighting Construction
+
+For each `(ranking_month, gics_sector)`:
+
+1. securities were ordered by `momentum_12_1 ASC, security_key ASC`;
+2. deterministic `NTILE(5)` assigned quintiles;
+3. Q1 was labeled `LOSER`;
+4. Q5 was labeled `WINNER`;
+5. stocks were equal-weighted within each sector/quintile sleeve;
+6. aggregate Winner and Loser legs equal-weighted the 11 GICS sector sleeves.
+
+The ranking application passed **41 checks**.
+
+Validated ranking population:
+
+- point-in-time GICS assignments loaded: 30,211
+- complete H2 12-1 rankings: 30,121
+- ranking months: 60
+- month/sector partitions: 660
+- month/sector/quintile rows: 3,300
+- minimum eligible securities per sector-month gate: passed
+- core rows modified: 0
+
+An independent Python reconstruction then matched the SQL rank, quintile, portfolio label, sleeve counts, and target weights.
+
+The final ranking integrity audit passed before forward-return construction.
+
+### Forward-Return Construction
+
+The fixed H2 assignments were joined to the already validated one-month security forward-return layer.
+
+Validated population:
+
+- H2 security holding rows: 30,121
+- complete security returns: 29,620
+- December-2025 right-censored security rows: 501
+- sector/quintile rows: 3,300
+- complete sector/quintile rows: 3,245
+- Winner/Loser sector rows: 1,320
+- complete Winner/Loser sector rows: 1,298
+- sector-neutral Winner/Loser legs: 120
+- complete aggregate legs: 118
+- aggregate W-L rows: 60
+- complete observable W-L months: 59
+- only analysis month 60 right-censored
+- core rows modified: 0
+
+The read-only independent forward-return integrity audit passed **34 checks** and independently reconstructed every sector/quintile return, every sector-neutral leg, and every aggregate W-L observation.
+
+### Implementation Issues Resolved Before Inference
+
+Several technical failures occurred before the final result was exposed. They did not alter the preregistered methodology.
+
+1. SQL Server `CREATE OR ALTER VIEW` batch framing:
+   - removed preceding `SET` statements from the migration so each view statement began its own batch.
+
+2. Python batch preflight regex:
+   - corrected an over-escaped regular expression that falsely flagged the leading SQL comment.
+
+3. Null-aware forward-return audit:
+   - matching `NaT` values for 501 right-censored December-2025 holding-end dates were treated as equal rather than mismatches.
+
+4. Risk-free datetime resolution:
+   - normalized Azure/pyodbc and FRED datetime keys to `datetime64[ns]` before `merge_asof`.
+
+No H2 performance result was inspected before the ranking and forward-return integrity gates had passed.
+
+### Primary Confirmatory Result
+
+Aggregate sector-neutral Winner-minus-Loser:
+
+- mean monthly W-L: **+0.186%**
+- arithmetic annualized mean: **+2.237%**
+- gross compounded wealth: **1.0814**
+- geometric annualized return: **+1.605%**
+- annualized volatility: **11.399%**
+- maximum drawdown: **-13.234%**
+
+Primary preregistered inference:
+
+- HAC / Newey-West lag: 3
+- two-sided alpha: 0.05
+- HAC z: 0.5182
+- HAC p-value: **0.6043**
+
+Support required a positive mean W-L and HAC(3) p < 0.05.
+
+The mean was positive, but the primary significance condition failed.
+
+### Secondary Inferential Evidence
+
+- ordinary t-test: p = 0.6650
+- 50,000-replication bootstrap 95% CI: **[-0.654%, +0.997%] per month**
+- Wilcoxon signed-rank: p = 0.4504
+- sign test: 33 positive / 26 negative months, p = 0.4350
+
+All secondary inferential checks were consistent with failure to reject zero.
+
+Sector-level tests:
+
+- 11 sector W-L tests performed
+- no sector significant under the preregistered HAC tests after multiple-testing control
+- all Holm-adjusted p-values = 1.0000
+
+### Quintile Monotonicity
+
+Aggregate sector-neutral mean monthly returns:
+
+- Q1: 0.905%
+- Q2: 0.952%
+- Q3: 0.902%
+- Q4: 1.020%
+- Q5: 1.091%
+
+Diagnostics:
+
+- Q5 - Q1: +0.186% monthly
+- adjacent increases: 3 of 4
+- Spearman quintile/mean-return correlation: 0.700
+
+This was suggestive descriptive ordering, not confirmatory evidence.
+
+### Risk-Adjusted Context
+
+Annualized gross return / volatility / Sharpe:
+
+- Winner: 12.575% / 15.578% / 0.629
+- Loser: 9.482% / 18.980% / 0.397
+- W-L: 1.605% / 11.399% / 0.196
+- SPY: 14.834% / 15.232% / 0.774
+- S&P 500 index: 13.242% / 15.182% / 0.683
+
+Winner active return:
+
+- versus SPY: -0.164% monthly
+- versus S&P 500 index: -0.046% monthly
+
+CAPM / SPY:
+
+- Winner annualized arithmetic alpha: -1.123%, p = 0.6834, beta = 0.928
+- Loser annualized arithmetic alpha: -4.344%, p = 0.3897, beta = 1.012
+- W-L annualized arithmetic alpha: +3.221%, p = 0.4601, beta = -0.084
+
+The W-L alpha remained statistically insignificant.
+
+### Turnover and Cost Sensitivity
+
+Mean one-way target-weight turnover including initial formation:
+
+- Winner: 27.240%
+- Loser: 26.000%
+
+Preregistered base case:
+
+`10 bps transaction cost + 100 bps annualized loser-leg borrow`
+
+Result:
+
+- net final wealth: 0.9976
+- net annualized return: **-0.049%**
+
+The gross H2 spread therefore did not survive the frozen base-case implementation assumptions.
+
+### Cross-Sector Robustness
+
+Leave-one-sector-out positive mean W-L estimates:
+
+**11 / 11**
+
+Largest additive sector share of aggregate arithmetic cumulative W-L:
+
+**50.719%**
+
+Preregistered broadness threshold:
+
+no single sector may exceed 50%.
+
+Therefore the cross-sector concentration criterion failed.
+
+The 50.719% result is close to the threshold, but the threshold was frozen before results and was not changed.
+
+### Decision
+
+**H2 FINAL LABEL: `NOT SUPPORTED`**
+
+Primary reason:
+
+The aggregate sector-neutral W-L was positive but statistically insignificant under the preregistered two-sided HAC(3) test:
+
+`mean = +0.186% per month; HAC p = 0.6043`
+
+Secondary evidence did not overturn the result:
+
+- bootstrap interval crossed zero;
+- ordinary t-test, Wilcoxon, and sign tests were insignificant;
+- no individual sector survived Holm adjustment;
+- Winner underperformed SPY and the S&P 500 on average;
+- the base-case cost-adjusted W-L was slightly negative;
+- the concentration criterion failed.
+
+### Interpretation Boundary
+
+H2 is closed.
+
+No post-result change to the signal, sector ranking, quintile cutoff, sector weighting, sample window, cost grid, concentration threshold, or inference rule may alter the H2 label.
+
+The following are permitted only as a separate exploratory/post-H2 phase:
+
+- winner persistence across months;
+- synchronous winner behavior across sectors;
+- correlations among winners after stripping SPY and own-sector returns;
+- company characteristic/theme commonality;
+- a candidate cross-sector winner commonality factor;
+- later social/cultural attention analysis under a separate hypothesis.
+
+### Output
+
+Final H2 conclusion:
+
+`CLOSED — NOT SUPPORTED IN THE PREREGISTERED 2021-2025 SAMPLE`
+
+### Next Step
+
+Commit the complete H2 implementation, audits, outputs, and this updated project log.
+
+After that checkpoint, begin a clearly labeled **post-H2 exploratory cross-sector winner commonality analysis** without modifying H1 or H2.
+
+### Git Commit
+
+`PENDING — final H2 closeout checkpoint.`
+
+---
+
 # Current Status
 
 Current phase:
 
-**H2 sector-relative momentum preregistered — point-in-time GICS prerequisite complete; H2 performance not yet inspected**
+**H2 sector-relative momentum closed — NOT SUPPORTED; post-H2 exploratory commonality phase is next**
 
 ## Completed Research Milestones
 
 - Project architecture and reproducibility framework
-- Verified 503-security State Street SPY constituent anchor as of 2026-08-10
+- verified 503-security State Street SPY constituent anchor as of 2026-08-10
 - 202-action official historical S&P 500 membership reference
 - 593 point-in-time membership security identities
 - 594 historical ticker segments
@@ -6577,208 +6866,159 @@ Current phase:
 - 783,086-row standardized price history
 - 631,942-row constituent membership-price bridge
 - 2,510-row benchmark history
-- Normalized Azure SQL core/staging market-data model
-- Exact 60-month 2021–2025 SPY ranking calendar
-- Corrected 72-month 2020–2025 feature-support calendar
+- normalized Azure SQL core/staging market-data model
+- exact 60-month 2021-2025 ranking calendar
+- corrected 72-month 2020-2025 feature-support calendar
 - 30,121 complete corrected canonical 12-1 momentum signals
-- 59 observable corrected forward-return months
-- 13-series corrected gross-performance panel
-- Formal H1 statistical testing
-- DGS1MO risk-free methodology
-- Sharpe and CAPM analysis
-- Transaction-cost and WML borrow-cost sensitivity
 - H1 canonical 12-1 momentum closeout
 - H1 result: `CLOSED — NOT SUPPORTED IN THE CORRECTED 2021-2025 SAMPLE`
-- Canonical SEC Select Sector SPDR historical source layer
-- 21 / 21 complete historical 11-sector partitions
-- 20 authoritative GICS transition dates
-- 13 audited residual identity overrides
-- 1 audited official membership-event GICS evidence correction
+- canonical SEC Select Sector SPDR historical GICS evidence
 - 593 / 593 continuous point-in-time GICS security intervals
 - 30,211 / 30,211 exact ranking-date GICS assignments
-- 0 missing ranking-date sector assignments
-- 0 duplicate security-month sector assignments
-- 0 unexplained in-membership sector evidence mismatches
-- all 11 canonical GICS sectors represented in every ranking month
-- H2 sector-relative momentum methodology preregistered before performance inspection
+- H2 methodology preregistered before performance inspection
+- H2 within-sector ranking / weighting quality gate passed
+- H2 ranking independent integrity audit passed
+- H2 forward-return population quality gate passed
+- H2 forward-return independent integrity audit passed with 34 checks
+- H2 final preregistered statistical / risk / cost analysis completed
+- H2 final analysis integrity audit passed
+- H2 result: `CLOSED — NOT SUPPORTED IN THE PREREGISTERED 2021-2025 SAMPLE`
 
-## Current Market-Data Quality State
+## Current H1 State
 
-- Total price requests: 596
-- PASS: 596
-- Critical failures: 0
-- Standardized rows: 783,086
-- Canonical-key duplicates: 0
-- Unexplained missing sessions: 0
-- Unexplained extra sessions: 0
-- Invalid OHLC relationships: 0
-- Required OHLCV nulls: 0
+Canonical H1:
 
-## Current Membership State
+**Market-wide corrected 12-1 momentum**
 
-- Anchor securities as of 2026-08-10: 503
-- Official membership actions: 202
-- Point-in-time membership intervals: 593
-- Unique security identities: 593
-- Historical ticker segments: 594
-- 2021-01-01 checkpoint: 505 securities
-- 2025-12-31 checkpoint: 503 securities
-- Membership integrity checks passed: 95
-- Membership/ticker interval gaps or overlaps: 0
-- Unexplained identity mappings: 0
-- Membership quality-gate result: PASSED
+Final status:
 
-## Current Azure SQL State
+`CLOSED — NOT SUPPORTED IN THE CORRECTED 2021-2025 SAMPLE`
 
-- Database: `sp500_analytics`
-- Compatibility level: 170
-- Core tables: 8
-- Staging tables: 7
-- Core security identities: 593
-- Core ticker-history segments: 594
-- Core membership intervals: 593
-- Core price-eligibility rows: 594
-- Core constituent price observations: 631,942
-- Core benchmark definitions: 2
-- Core benchmark price observations: 2,510
-- Total core daily observations: 634,452
-- Remaining staging rows: 0
-- Primary keys: 8
-- Trusted foreign keys: 8
-- Trusted check constraints: 22
-- Required supporting indexes: 2
-- Market-value decimal definition: `DECIMAL(38, 18)`
-- Source-to-SQL numeric aggregate differences: 0
-- Azure SQL market-data quality gate: PASSED
-
-## Current Corrected H1 Feature / Performance State
-
-- Feature-support months: 72
-- Feature-support span: 2020-01 through 2025-12
-- Ranking months: 60
-- Ranking-date constituent rows: 30,211
-- Complete corrected 12-1 signals: 30,121
-- Signals restored by pre-membership lookback support: 6,720
-- Corrected portfolio assignments: 30,121
-- Observable forward-return months: 59
-- Complete constituent forward returns: 29,620
-- December 2025 right-censored holdings: 501
-- Monthly analytical return-panel rows: 767
-- Corrected gross-performance months: 59
-- Risk-free proxy: FRED DGS1MO
-- D10 annualized gross return: 13.23%
-- SPY annualized return: 14.83%
-- D10 Sharpe ratio: 0.587
-- SPY Sharpe ratio: 0.774
-- D10 CAPM alpha annualized arithmetic: -1.152%
-- D10 alpha HAC p-value: 0.7764
-- WML annualized gross return: -0.33%
-- WML alpha HAC p-value: 0.5821
-- H1 interpretation status: FINAL
-- H1 conclusion: `CLOSED — NOT SUPPORTED IN THE CORRECTED 2021-2025 SAMPLE`
+No H1 parameter will be retuned.
 
 ## Current Point-in-Time GICS State
 
-- Canonical SEC holding rows: 10,577
-- SEC rows mapped to project `security_key`: 9,584
-- Unmapped SEC ETF rows retained for source audit: 993
-- Unique SEC holding identifiers bridged: 512
-- Audited residual identity overrides: 13
-- Official membership-event rows mapped: 178 / 178
-- Authoritative GICS transitions mapped: 20 / 20
-- Audited official membership-event GICS corrections: 1
-- Permanent GICS interval rows: 613
-- Membership identities with GICS intervals: 593 / 593
-- Interval overlaps: 0
-- Interval gaps: 0
-- Unresolved initial sector identities: 0
-- Unexplained in-membership evidence mismatches: 0
-- Ranking-date sector assignments: 30,211 / 30,211
-- Missing ranking-date assignments: 0
-- Duplicate security-month assignments: 0
-- Ranking months: 60
+- membership identities: 593 / 593
+- permanent interval rows: 613
+- mapped authoritative transitions: 20 / 20
+- ranking-date sector assignments: 30,211 / 30,211
+- missing assignments: 0
+- duplicate security-month assignments: 0
+- ranking months: 60
 - GICS sectors per ranking month: 11
-- Monthly security-count range: 502–505
-- Point-in-time GICS quality gate: PASSED
+- unexplained in-membership evidence mismatches: 0
+- point-in-time GICS quality gate: PASSED
 
-## Current H2 State
+## Current H2 Construction State
 
-Hypothesis:
+Frozen H2 signal:
 
-**Stocks with stronger corrected 12-1 momentum relative to stocks in their own point-in-time GICS sector subsequently outperform weaker sector-relative stocks over the next month.**
+**sector-relative corrected 12-1 momentum**
 
-Preregistration:
+Validated H2 ranking population:
 
-`docs/h2_sector_relative_momentum_preregistration.md`
+- ranking assignments: 30,121
+- ranking months: 60
+- month/sector partitions: 660
+- month/sector/quintile rows: 3,300
+- ranking / weighting integrity gate: PASSED
 
-Frozen primary construction:
+Validated H2 performance population:
 
-- corrected H1 12-1 signal
-- point-in-time S&P 500 universe
-- point-in-time GICS sector
-- within-sector deterministic quintiles
-- Q1 losers / Q5 winners
-- equal-weight stocks within each sector sleeve
-- equal-weight aggregation across all 11 sectors
-- one-month forward holding period
-- primary aggregate sector-neutral W-L series
+- security holding rows: 30,121
+- complete security forward returns: 29,620
+- right-censored December-2025 security rows: 501
+- complete sector/quintile returns: 3,245
+- complete Winner/Loser sector returns: 1,298
+- complete aggregate Winner/Loser legs: 118
+- complete aggregate W-L months: 59
+- forward-return integrity audit: PASSED
 
-Frozen primary inference:
+## Current H2 Result
 
-- two-sided HAC / Newey-West lag 3
-- alpha = 0.05
-- support requires positive mean W-L and HAC(3) p < 0.05
+Primary aggregate sector-neutral Winner-minus-Loser:
 
-Frozen implementation grid:
+- mean monthly W-L: +0.186%
+- arithmetic annualized mean: +2.237%
+- geometric annualized return: +1.605%
+- annualized volatility: 11.399%
+- maximum drawdown: -13.234%
+- primary HAC(3) p-value: 0.6043
 
-- one-way trading cost: 5 / 10 / 20 bps
-- loser-leg annual borrow: 0 / 50 / 100 / 200 bps
-- base-case net scenario: 10 bps trading + 100 bps annual borrow
+Primary decision rule:
 
-H2 performance results inspected:
+`FAIL`
 
-`NO`
+Supporting inference:
 
-H2 status:
+- t-test p = 0.6650
+- bootstrap 95% CI = [-0.654%, +0.997%] monthly
+- Wilcoxon p = 0.4504
+- sign-test p = 0.4350
+- no sector survives Holm adjustment
 
-`PREREGISTERED — READY FOR IMPLEMENTATION AFTER COMMIT`
+Risk / implementation:
+
+- Winner annualized return: 12.575%
+- SPY annualized return: 14.834%
+- W-L Sharpe: 0.196
+- W-L CAPM alpha annualized arithmetic: +3.221%, p = 0.4601
+- Winner mean one-way turnover: 27.240%
+- Loser mean one-way turnover: 26.000%
+- base-case net W-L annualized return: -0.049%
+
+Cross-sector robustness:
+
+- positive leave-one-sector-out estimates: 11 / 11
+- largest additive sector contribution: 50.719%
+- frozen concentration criterion: FAIL
+
+Final H2 label:
+
+`CLOSED — NOT SUPPORTED IN THE PREREGISTERED 2021-2025 SAMPLE`
+
+## Interpretation Boundary
+
+H1 and H2 are now closed confirmatory experiments.
+
+Neither conclusion may be changed by tuning parameters after results.
+
+Any analysis from this point that studies:
+
+- common traits of cross-sector winners;
+- winner persistence;
+- synchronous winner months;
+- residual correlations after market and sector controls;
+- cross-sector residual-return commonality;
+- themes, narratives, news, search attention, or cultural interest
+
+must be labeled exploratory or preregistered as a new hypothesis before confirmatory inference.
 
 ## Next Objective
 
-Create the Git checkpoint that freezes:
+Create the final H2 Git checkpoint.
 
-- final point-in-time GICS construction and audit
-- audited residual identity overrides
-- audited CoStar membership-event sector-evidence correction
-- H2 preregistration
-- this updated project log
+After that commit, begin the post-H2 exploratory cross-sector winner commonality layer:
 
-After the checkpoint is committed, implement the H2 within-sector quintile and sector-neutral forward-return layer without altering the preregistered methodology.
+1. construct month-by-month Winner membership history;
+2. quantify persistence and repeated Winner appearances;
+3. measure synchronous Winner behavior across sectors;
+4. strip SPY and own-sector return exposure from Winner returns;
+5. test residual correlation/commonality;
+6. characterize the companies contributing most strongly to any common residual pattern;
+7. only after the commonality layer is understood, design a separately preregistered attention/narrative hypothesis if warranted.
 
 ## Git Checkpoint Objective
 
-Commit the validated GICS quality-gate closure and H2 preregistration before any H2 performance result is viewed.
+Commit the completed H2 implementation, validation reports, final analytical outputs, and this updated project log.
 
-Recommended checkpoint files:
+Do not include:
 
-- `src/analysis/build_point_in_time_gics_security_intervals.py`
-- `data/reference/gics/gics_transition_effective_dates.csv`
-- `data/reference/gics/gics_security_key_identity_overrides.csv`
-- `data/reference/gics/gics_official_event_sector_overrides.csv`
-- `data/reference/gics/security_gics_sector_intervals_2021_2025.csv`
-- `data/reference/gics/sec_gics_identifier_security_key_bridge.csv`
-- `reports/data_quality/gics_monthly_sector_coverage.csv`
-- `reports/data_quality/point_in_time_gics_security_key_monthly_audit.txt`
-- `docs/h2_sector_relative_momentum_preregistration.md`
-- `docs/project_log.md`
-
-Continue to exclude:
-
-- `.env` and all credentials
-- reproducible datasets under `data/interim/`
-- failed or superseded reports
-- timestamped backup scripts
-- one-time diagnostic helpers unless intentionally retained as reproducibility documentation
+- `.env` or credentials
+- `data/interim/`
+- failed/superseded reports
+- temporary diagnostic scripts
+- packaging README files unless intentionally retained
 
 ---
 

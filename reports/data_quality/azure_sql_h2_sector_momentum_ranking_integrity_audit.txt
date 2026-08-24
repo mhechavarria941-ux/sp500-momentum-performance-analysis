@@ -1,0 +1,65 @@
+========================================================================================
+AZURE SQL H2 SECTOR-RELATIVE MOMENTUM RANKING INTEGRITY AUDIT
+========================================================================================
+Mode: LOCAL + Azure SQL READ-ONLY
+Database modifications performed: 0
+Forward-return / H2 performance inspection: NO
+
+========================================================================================
+1. SOURCE / CORE PRESERVATION
+========================================================================================
+PASS: Local validated GICS file remains exactly 30,211 rows.
+PASS: core.security remains 593 rows.
+PASS: core.security_ticker_history remains 594 rows.
+PASS: core.index_membership remains 593 rows.
+PASS: core.security_price_eligibility remains 594 rows.
+PASS: core.daily_security_price remains 631,942 rows.
+PASS: core.benchmark_series remains 2 rows.
+PASS: core.daily_benchmark_price remains 2,510 rows.
+PASS: Azure GICS table contains exactly 30,211 rows.
+PASS: Every Azure GICS value exactly matches the validated local file after deterministic Python-side ordering.
+========================================================================================
+2. INDEPENDENT H2 RANKING RECONSTRUCTION
+========================================================================================
+PASS: Corrected feature source contains exactly 30,121 eligible signals.
+PASS: Every corrected momentum signal joins to exactly one validated point-in-time GICS sector.
+PASS: Independent ranking reconstruction contains 30,121 rows.
+PASS: Independent reconstruction contains all 660 month/sector partitions.
+PASS: SQL H2 portfolio view contains exactly 30,121 rows.
+Numeric mismatch detail: momentum=0 | sector_equal_weight=0 | sector_neutral_leg_weight=0
+PASS: Every SQL ranking key, rank, quintile, label, date, and security count matches independent Python reconstruction.
+PASS: Every SQL momentum value and portfolio target weight matches independent Python reconstruction.
+========================================================================================
+3. PREREGISTERED QUINTILE / WEIGHTING CONTROLS
+========================================================================================
+PASS: SQL summary contains exactly 3,300 month/sector/quintile rows.
+PASS: Every sector-month has SQL NTILE(5) bucket sizes differing by at most one.
+PASS: Q1 is always the lower-momentum sleeve and Q5 the higher-momentum sleeve.
+PASS: Every sector/quintile sleeve is exactly equal-weighted to 1.
+PASS: Every sector/quintile sleeve contributes exactly 1/11 to the sector-neutral aggregate leg.
+========================================================================================
+4. LOOK-AHEAD / METHODOLOGY CONTROL
+========================================================================================
+PASS: H2 ranking layer has no dependency on forward-return or performance objects.
+PASS: SQL view definitions contain only ranking/weighting logic permitted before H2 performance construction.
+PASS: core.security final population remains 593.
+PASS: core.security_ticker_history final population remains 594.
+PASS: core.index_membership final population remains 593.
+PASS: core.security_price_eligibility final population remains 594.
+PASS: core.daily_security_price final population remains 631,942.
+PASS: core.benchmark_series final population remains 2.
+PASS: core.daily_benchmark_price final population remains 2,510.
+========================================================================================
+5. FINAL QUALITY GATE
+========================================================================================
+AZURE_SQL_H2_SECTOR_MOMENTUM_RANKING_INTEGRITY_AUDIT_PASSED
+Passed checks: 31
+Validated GICS rows: 30,211
+Eligible H2 ranking rows: 30,121
+Ranking months: 60
+Month/sector partitions: 660
+Month/sector/quintile rows: 3,300
+Forward-return / H2 performance results inspected: 0
+Azure SQL modifications performed by audit: 0
+Core rows modified: 0
+H2 ranking/weighting quality gate complete. The next permitted step is construction of the one-month forward-return sector sleeves.

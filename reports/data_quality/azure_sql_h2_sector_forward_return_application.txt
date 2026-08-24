@@ -1,0 +1,81 @@
+============================================================================================
+AZURE SQL H2 SECTOR FORWARD-RETURN APPLICATION
+============================================================================================
+Connection status: SUCCESS
+Credentials included in report: NO
+Migration: sql\analytics\011_create_h2_sector_relative_forward_return_views.sql
+Scope: fixed H2 assignments -> validated security forward returns -> sector sleeves -> sector-neutral W-L
+Statistical / risk / cost interpretation: NOT PERFORMED
+
+============================================================================================
+1. DEPENDENCY / SOURCE CONTROLS
+============================================================================================
+PASS: Both validated H2 ranking and security forward-return sources exist.
+PASS: Validated security forward-return view exposes all required fields.
+PASS: H2 fixed assignment layer remains exactly 30,121 rows.
+PASS: Validated security forward-return layer remains exactly 30,121 rows.
+PASS: Validated security forward-return source still contains 29,620 complete returns.
+PASS: Exactly 501 December-2025 security rows remain right-censored.
+PASS: core.security remains 593 rows.
+PASS: core.security_ticker_history remains 594 rows.
+PASS: core.index_membership remains 593 rows.
+PASS: core.security_price_eligibility remains 594 rows.
+PASS: core.daily_security_price remains 631,942 rows.
+PASS: core.benchmark_series remains 2 rows.
+PASS: core.daily_benchmark_price remains 2,510 rows.
+============================================================================================
+2. APPLY H2 FORWARD-RETURN VIEWS
+============================================================================================
+PASS: H2 forward-return migration contains exactly five SQL batches.
+PASS: Every SQL batch begins with CREATE OR ALTER VIEW as required by SQL Server.
+PASS: Executed SQL batch 1 / 5.
+PASS: Executed SQL batch 2 / 5.
+PASS: Executed SQL batch 3 / 5.
+PASS: Executed SQL batch 4 / 5.
+PASS: Executed SQL batch 5 / 5.
+============================================================================================
+3. SECURITY-LEVEL H2 HOLDING POPULATION
+============================================================================================
+PASS: H2 security holding layer preserves all 30,121 assignments.
+PASS: H2 security holding layer contains exactly 29,620 complete returns.
+PASS: Only the 501 final-month H2 assignments are right-censored.
+PASS: Every H2 month/security assignment has exactly one holding row.
+============================================================================================
+4. SECTOR / AGGREGATE RETURN POPULATIONS
+============================================================================================
+PASS: Sector/quintile layer contains 3,300 rows.
+PASS: Sector/quintile layer contains 3,245 complete rows (59 months x 11 sectors x 5 quintiles).
+PASS: Winner/Loser sector-sleeve layer contains 1,320 rows.
+PASS: Winner/Loser sector-sleeve layer contains 1,298 complete rows.
+PASS: Sector-neutral Winner/Loser leg layer contains 120 rows.
+PASS: Sector-neutral Winner/Loser layer contains 118 complete legs.
+PASS: Sector-neutral W-L layer contains all 60 ranking months.
+PASS: Sector-neutral W-L contains exactly 59 observable months.
+PASS: Exactly one H2 W-L row (December 2025) is right-censored.
+PASS: Every aggregate Winner/Loser leg contains all 11 sectors.
+PASS: Every sector/quintile sleeve retains total target weight 1.
+============================================================================================
+5. CENSORING / DEPENDENCY CONTROLS
+============================================================================================
+PASS: Every H2 assignment in months 1-59 has a complete return.
+PASS: Every H2 aggregate W-L row in months 1-59 is complete.
+PASS: H2 return construction has no dependency on H2 statistical output.
+PASS: core.security remains unchanged at 593 rows.
+PASS: core.security_ticker_history remains unchanged at 594 rows.
+PASS: core.index_membership remains unchanged at 593 rows.
+PASS: core.security_price_eligibility remains unchanged at 594 rows.
+PASS: core.daily_security_price remains unchanged at 631,942 rows.
+PASS: core.benchmark_series remains unchanged at 2 rows.
+PASS: core.daily_benchmark_price remains unchanged at 2,510 rows.
+
+AZURE_SQL_H2_SECTOR_FORWARD_RETURN_APPLICATION_PASSED
+Passed checks: 45
+H2 security holding rows: 30,121
+Complete H2 security holding returns: 29,620
+Sector/quintile rows: 3,300
+Sector-neutral leg rows: 120
+H2 W-L rows: 60
+Complete observable H2 W-L months: 59
+Statistical / risk / cost interpretation performed: 0
+Core rows modified: 0
+H2 forward-return population is ready for independent integrity audit. Do not run H2 inference yet.
