@@ -1,0 +1,42 @@
+============================================================================================================
+POST-H2 PHASE 3A RESEARCH TARGETS INTEGRITY AUDIT
+============================================================================================================
+Mode: local exploratory-output verification
+H1/H2 conclusion changes permitted: NO
+
+============================================================================================================
+1. SECURITY QUEUE
+============================================================================================================
+PASS: Security queue preserves every Phase 2 security summary row.
+PASS: Security queue contains one row per security/ticker.
+PASS: Security queue contains one canonical gics_sectors_seen field with no merge-suffix duplicates.
+PASS: Security priority ranks are contiguous from 1 to N.
+PASS: Security queue is sorted by cumulative absolute commonality contribution.
+============================================================================================================
+2. MONTH QUEUE
+============================================================================================================
+PASS: Month queue preserves all 59 observable Phase 2 months.
+PASS: Month queue is sorted by absolute commonality-factor magnitude.
+PASS: Top-month security detail covers exactly the selected top 15 months.
+PASS: Top-month sector detail covers exactly the selected top 15 months.
+============================================================================================================
+3. SIMILARITY / CO-OCCURRENCE OUTPUTS
+============================================================================================================
+PASS: Month similarity output contains all 15 choose 2 = 105 pairs.
+PASS: All finite month cosine similarities lie in [-1, 1].
+PASS: Security co-occurrence output contains all top-driver pair combinations (435).
+PASS: All finite security co-occurrence Jaccard values lie in [0, 1].
+============================================================================================================
+4. EXTERNAL RESEARCH MANIFEST
+============================================================================================================
+PASS: Research manifest contains the intended security and month targets.
+PASS: Research manifest contains only SECURITY and MONTH target types.
+PASS: Every research-manifest row records the no-Wikipedia source policy.
+============================================================================================================
+5. FINAL GATE
+============================================================================================================
+POST_H2_PHASE3A_RESEARCH_TARGETS_INTEGRITY_AUDIT_PASSED
+Passed checks: 16
+Security and month research queues are complete and deterministic.
+No qualitative theme labels were introduced.
+H1/H2 conclusions modified: 0

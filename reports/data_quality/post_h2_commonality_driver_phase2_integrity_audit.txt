@@ -1,0 +1,50 @@
+============================================================================================================
+POST-H2 COMMONALITY DRIVER PHASE 2 INTEGRITY AUDIT
+============================================================================================================
+Mode: Azure SQL READ-ONLY + local exact-decomposition verification
+H1/H2 conclusion changes permitted: NO
+Azure SQL modifications performed: 0
+
+============================================================================================================
+1. CORE PRESERVATION
+============================================================================================================
+PASS: core.security remains 593 rows.
+PASS: core.security_ticker_history remains 594 rows.
+PASS: core.index_membership remains 593 rows.
+PASS: core.security_price_eligibility remains 594 rows.
+PASS: core.daily_security_price remains 631,942 rows.
+PASS: core.benchmark_series remains 2 rows.
+PASS: core.daily_benchmark_price remains 2,510 rows.
+============================================================================================================
+2. EXACT CONTRIBUTION RECONSTRUCTION
+============================================================================================================
+PASS: Security contributions reconstruct a 59 x 11 sector residual panel.
+PASS: Security contributions reconstruct every Phase 1 sector residual (max error 7.008e-16).
+PASS: Security contributions reconstruct every Phase 1 aggregate commonality observation (max error 2.148e-15).
+============================================================================================================
+3. SECURITY / MONTH / SECTOR SUMMARY CONTROLS
+============================================================================================================
+PASS: Security summary contains one row per security/ticker.
+PASS: Security absolute-contribution shares sum to 1.
+PASS: Month-driver output contains exactly 59 observable months.
+PASS: Positive residual-sector counts are all in [0, 11].
+PASS: Sector variance contribution output has 11 rows and sums to 1.
+PASS: Residual pairwise network contains 11 choose 2 = 55 sector pairs.
+PASS: Residual PC1 score output contains exactly 59 months.
+PASS: Concentration output contains the six defined exploratory metrics.
+============================================================================================================
+4. FINAL GATE
+============================================================================================================
+PASS: core.security final population remains 593.
+PASS: core.security_ticker_history final population remains 594.
+PASS: core.index_membership final population remains 593.
+PASS: core.security_price_eligibility final population remains 594.
+PASS: core.daily_security_price final population remains 631,942.
+PASS: core.benchmark_series final population remains 2.
+PASS: core.daily_benchmark_price final population remains 2,510.
+POST_H2_COMMONALITY_DRIVER_PHASE2_INTEGRITY_AUDIT_PASSED
+Passed checks: 25
+Exact security -> sector -> aggregate commonality decomposition verified.
+Azure SQL modifications performed: 0
+Core rows modified: 0
+H1/H2 conclusions modified: 0

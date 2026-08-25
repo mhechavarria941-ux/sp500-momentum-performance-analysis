@@ -6560,30 +6560,32 @@ After that commit:
 
 ---
 
+---
+
 ## 3.46 H2 Sector-Relative Momentum Implementation, Validation, and Final Closeout
 
-**Date:** 2026-08-24
+### Date
+
+2026-08-24
 
 ### Objective
 
-Implement the preregistered H2 sector-relative 12-1 momentum experiment only after the point-in-time GICS prerequisite and preregistration checkpoint had been committed, validate each construction layer independently before exposing performance, then apply the frozen statistical, risk, turnover, implementation-cost, and cross-sector robustness rules.
+Implement the preregistered H2 sector-relative 12-1 momentum experiment, independently validate its ranking and forward-return layers, apply the frozen statistical/risk/cost rules, and close the hypothesis without post-result retuning.
 
 ### Source
 
-H2 used only previously validated project sources:
+H2 used only previously validated project inputs:
 
-- corrected 12-1 constituent momentum features;
+- corrected canonical 12-1 momentum features;
 - point-in-time S&P 500 ranking snapshots;
-- validated point-in-time GICS security-month assignments;
-- validated one-month security forward-return layer;
-- SPY and S&P 500 benchmark forward returns;
-- FRED DGS1MO risk-free proxy using the latest observation on or before the ranking date.
-
-No new membership, price, or GICS classification source was introduced during H2 performance analysis.
+- validated point-in-time GICS sector assignments;
+- validated one-month security forward returns;
+- SPY and S&P 500 benchmark returns;
+- FRED DGS1MO as the ex-ante risk-free proxy.
 
 ### Files Created or Modified
 
-Canonical implementation:
+Primary implementation:
 
 - `sql/analytics/010_create_h2_sector_relative_momentum_ranking.sql`
 - `sql/analytics/011_create_h2_sector_relative_forward_return_views.sql`
@@ -6594,7 +6596,7 @@ Canonical implementation:
 - `src/analysis/analyze_h2_sector_relative_momentum.py`
 - `src/analysis/audit_h2_sector_relative_momentum_analysis.py`
 
-Analysis outputs:
+Canonical H2 outputs include:
 
 - `reports/analysis/h2_sector_relative_momentum_analysis.txt`
 - `reports/analysis/h2_primary_inference.csv`
@@ -6608,244 +6610,737 @@ Analysis outputs:
 - `reports/analysis/h2_sector_contribution.csv`
 - `reports/analysis/h2_risk_free_monthly.csv`
 
-Quality-control outputs:
-
-- `reports/data_quality/azure_sql_h2_sector_momentum_ranking_application.txt`
-- `reports/data_quality/azure_sql_h2_sector_momentum_ranking_integrity_audit.txt`
-- `reports/data_quality/azure_sql_h2_sector_forward_return_application.txt`
-- `reports/data_quality/azure_sql_h2_sector_forward_return_integrity_audit.txt`
-- `reports/data_quality/h2_sector_relative_momentum_analysis_integrity_audit.txt`
-
-### Ranking and Weighting Construction
-
-For each `(ranking_month, gics_sector)`:
-
-1. securities were ordered by `momentum_12_1 ASC, security_key ASC`;
-2. deterministic `NTILE(5)` assigned quintiles;
-3. Q1 was labeled `LOSER`;
-4. Q5 was labeled `WINNER`;
-5. stocks were equal-weighted within each sector/quintile sleeve;
-6. aggregate Winner and Loser legs equal-weighted the 11 GICS sector sleeves.
-
-The ranking application passed **41 checks**.
-
-Validated ranking population:
-
-- point-in-time GICS assignments loaded: 30,211
-- complete H2 12-1 rankings: 30,121
-- ranking months: 60
-- month/sector partitions: 660
-- month/sector/quintile rows: 3,300
-- minimum eligible securities per sector-month gate: passed
-- core rows modified: 0
-
-An independent Python reconstruction then matched the SQL rank, quintile, portfolio label, sleeve counts, and target weights.
-
-The final ranking integrity audit passed before forward-return construction.
-
-### Forward-Return Construction
-
-The fixed H2 assignments were joined to the already validated one-month security forward-return layer.
-
-Validated population:
-
-- H2 security holding rows: 30,121
-- complete security returns: 29,620
-- December-2025 right-censored security rows: 501
-- sector/quintile rows: 3,300
-- complete sector/quintile rows: 3,245
-- Winner/Loser sector rows: 1,320
-- complete Winner/Loser sector rows: 1,298
-- sector-neutral Winner/Loser legs: 120
-- complete aggregate legs: 118
-- aggregate W-L rows: 60
-- complete observable W-L months: 59
-- only analysis month 60 right-censored
-- core rows modified: 0
-
-The read-only independent forward-return integrity audit passed **34 checks** and independently reconstructed every sector/quintile return, every sector-neutral leg, and every aggregate W-L observation.
-
-### Implementation Issues Resolved Before Inference
-
-Several technical failures occurred before the final result was exposed. They did not alter the preregistered methodology.
-
-1. SQL Server `CREATE OR ALTER VIEW` batch framing:
-   - removed preceding `SET` statements from the migration so each view statement began its own batch.
-
-2. Python batch preflight regex:
-   - corrected an over-escaped regular expression that falsely flagged the leading SQL comment.
-
-3. Null-aware forward-return audit:
-   - matching `NaT` values for 501 right-censored December-2025 holding-end dates were treated as equal rather than mismatches.
-
-4. Risk-free datetime resolution:
-   - normalized Azure/pyodbc and FRED datetime keys to `datetime64[ns]` before `merge_asof`.
-
-No H2 performance result was inspected before the ranking and forward-return integrity gates had passed.
-
-### Primary Confirmatory Result
-
-Aggregate sector-neutral Winner-minus-Loser:
-
-- mean monthly W-L: **+0.186%**
-- arithmetic annualized mean: **+2.237%**
-- gross compounded wealth: **1.0814**
-- geometric annualized return: **+1.605%**
-- annualized volatility: **11.399%**
-- maximum drawdown: **-13.234%**
-
-Primary preregistered inference:
-
-- HAC / Newey-West lag: 3
-- two-sided alpha: 0.05
-- HAC z: 0.5182
-- HAC p-value: **0.6043**
-
-Support required a positive mean W-L and HAC(3) p < 0.05.
-
-The mean was positive, but the primary significance condition failed.
-
-### Secondary Inferential Evidence
-
-- ordinary t-test: p = 0.6650
-- 50,000-replication bootstrap 95% CI: **[-0.654%, +0.997%] per month**
-- Wilcoxon signed-rank: p = 0.4504
-- sign test: 33 positive / 26 negative months, p = 0.4350
-
-All secondary inferential checks were consistent with failure to reject zero.
-
-Sector-level tests:
-
-- 11 sector W-L tests performed
-- no sector significant under the preregistered HAC tests after multiple-testing control
-- all Holm-adjusted p-values = 1.0000
-
-### Quintile Monotonicity
-
-Aggregate sector-neutral mean monthly returns:
-
-- Q1: 0.905%
-- Q2: 0.952%
-- Q3: 0.902%
-- Q4: 1.020%
-- Q5: 1.091%
-
-Diagnostics:
-
-- Q5 - Q1: +0.186% monthly
-- adjacent increases: 3 of 4
-- Spearman quintile/mean-return correlation: 0.700
-
-This was suggestive descriptive ordering, not confirmatory evidence.
-
-### Risk-Adjusted Context
-
-Annualized gross return / volatility / Sharpe:
-
-- Winner: 12.575% / 15.578% / 0.629
-- Loser: 9.482% / 18.980% / 0.397
-- W-L: 1.605% / 11.399% / 0.196
-- SPY: 14.834% / 15.232% / 0.774
-- S&P 500 index: 13.242% / 15.182% / 0.683
-
-Winner active return:
-
-- versus SPY: -0.164% monthly
-- versus S&P 500 index: -0.046% monthly
-
-CAPM / SPY:
-
-- Winner annualized arithmetic alpha: -1.123%, p = 0.6834, beta = 0.928
-- Loser annualized arithmetic alpha: -4.344%, p = 0.3897, beta = 1.012
-- W-L annualized arithmetic alpha: +3.221%, p = 0.4601, beta = -0.084
-
-The W-L alpha remained statistically insignificant.
-
-### Turnover and Cost Sensitivity
-
-Mean one-way target-weight turnover including initial formation:
-
-- Winner: 27.240%
-- Loser: 26.000%
-
-Preregistered base case:
-
-`10 bps transaction cost + 100 bps annualized loser-leg borrow`
-
-Result:
-
-- net final wealth: 0.9976
-- net annualized return: **-0.049%**
-
-The gross H2 spread therefore did not survive the frozen base-case implementation assumptions.
-
-### Cross-Sector Robustness
-
-Leave-one-sector-out positive mean W-L estimates:
-
-**11 / 11**
-
-Largest additive sector share of aggregate arithmetic cumulative W-L:
-
-**50.719%**
-
-Preregistered broadness threshold:
-
-no single sector may exceed 50%.
-
-Therefore the cross-sector concentration criterion failed.
-
-The 50.719% result is close to the threshold, but the threshold was frozen before results and was not changed.
+### Method / Transformation
+
+Within each `(ranking_month, gics_sector)`, securities were ordered by corrected `momentum_12_1 ASC, security_key ASC` and assigned deterministic quintiles.
+
+- Q1 = Loser
+- Q5 = Winner
+- securities equal weighted within each sector sleeve
+- all 11 sector sleeves equal weighted in the aggregate
+- primary spread = sector-neutral Winner minus Loser
+- one-month forward holding period
+- December 2025 retained as a ranking month but right-censored for realized performance
+
+Primary inference remained the preregistered two-sided HAC/Newey-West lag-3 mean test at `alpha = 0.05`.
+
+### Validation
+
+Final H2 ranking state:
+
+- ranking assignments: `30,121`
+- ranking months: `60`
+- month/sector partitions: `660`
+- month/sector/quintile rows: `3,300`
+- ranking/weighting integrity gate: `PASSED`
+
+Final H2 performance state:
+
+- security holding rows: `30,121`
+- complete security forward returns: `29,620`
+- right-censored December-2025 rows: `501`
+- complete sector/quintile returns: `3,245`
+- complete Winner/Loser sector returns: `1,298`
+- complete aggregate Winner/Loser legs: `118`
+- complete aggregate W-L months: `59`
+- forward-return integrity audit: `PASSED`
+
+### Result
+
+Aggregate sector-neutral W-L:
+
+- mean monthly return: `+0.186%`
+- arithmetic annualized mean: `+2.237%`
+- geometric annualized return: `+1.605%`
+- annualized volatility: `11.399%`
+- maximum drawdown: `-13.234%`
+- primary HAC(3) p-value: `0.6043`
+
+Robustness:
+
+- t-test p-value: `0.6650`
+- bootstrap 95% monthly mean interval: `[-0.654%, +0.997%]`
+- Wilcoxon p-value: `0.4504`
+- sign-test p-value: `0.4350`
+- no individual sector survived Holm adjustment
+- quintile adjacent increases: `3 of 4`
+
+Risk / implementation:
+
+- Winner annualized return: `12.575%`
+- Loser annualized return: `9.482%`
+- W-L Sharpe ratio: `0.196`
+- SPY annualized return: `14.834%`
+- SPY Sharpe ratio: `0.774`
+- W-L CAPM annualized arithmetic alpha: `+3.221%`
+- W-L alpha p-value: `0.4601`
+- Winner mean one-way turnover: `27.240%`
+- Loser mean one-way turnover: `26.000%`
+- base-case `10 bps + 100 bps borrow` net annualized W-L: `-0.049%`
+
+Cross-sector robustness:
+
+- positive leave-one-sector-out estimates: `11 / 11`
+- largest additive sector contribution: `50.719%`
+- preregistered concentration criterion: `FAIL`
 
 ### Decision
 
 **H2 FINAL LABEL: `NOT SUPPORTED`**
 
-Primary reason:
+The primary directional rule failed because the positive W-L estimate was not statistically significant under the frozen HAC(3) test. The base-case implementation result was slightly negative and the frozen cross-sector concentration threshold also failed.
 
-The aggregate sector-neutral W-L was positive but statistically insignificant under the preregistered two-sided HAC(3) test:
+No H1 or H2 parameter was retuned after results.
 
-`mean = +0.186% per month; HAC p = 0.6043`
+### Issues / Limitations
 
-Secondary evidence did not overturn the result:
-
-- bootstrap interval crossed zero;
-- ordinary t-test, Wilcoxon, and sign tests were insignificant;
-- no individual sector survived Holm adjustment;
-- Winner underperformed SPY and the S&P 500 on average;
-- the base-case cost-adjusted W-L was slightly negative;
-- the concentration criterion failed.
-
-### Interpretation Boundary
-
-H2 is closed.
-
-No post-result change to the signal, sector ranking, quintile cutoff, sector weighting, sample window, cost grid, concentration threshold, or inference rule may alter the H2 label.
-
-The following are permitted only as a separate exploratory/post-H2 phase:
-
-- winner persistence across months;
-- synchronous winner behavior across sectors;
-- correlations among winners after stripping SPY and own-sector returns;
-- company characteristic/theme commonality;
-- a candidate cross-sector winner commonality factor;
-- later social/cultural attention analysis under a separate hypothesis.
-
-### Output
-
-Final H2 conclusion:
-
-`CLOSED — NOT SUPPORTED IN THE PREREGISTERED 2021-2025 SAMPLE`
+- The 59-month sample is limited.
+- Cost and borrow values are scenarios rather than reconstructed execution costs.
+- DGS1MO is a constant-maturity yield proxy.
+- CAPM controls only for SPY market exposure.
+- The 50% concentration threshold was narrowly missed but was not relaxed after the result.
 
 ### Next Step
 
-Commit the complete H2 implementation, audits, outputs, and this updated project log.
-
-After that checkpoint, begin a clearly labeled **post-H2 exploratory cross-sector winner commonality analysis** without modifying H1 or H2.
+Open a separately labeled post-H2 exploratory branch to determine whether cross-sector Winner behavior contains residual commonality worth characterizing.
 
 ### Git Commit
 
-`PENDING — final H2 closeout checkpoint.`
+Checkpoint message: `research: close H2 and preserve preregistered sector-relative momentum result`
+
+---
+
+## 3.47 Post-H2 Winner Commonality — Phase 1 and Phase 2
+
+### Date
+
+2026-08-24
+
+### Objective
+
+Determine whether the sector-relative Winner sleeves exhibited common behavior after stripping broad market and own-sector return exposure, without altering H2.
+
+### Method
+
+Phase 1 constructed:
+
+- Winner membership and persistence histories;
+- cross-sector Winner correlations;
+- own-sector equal-weight return baselines;
+- per-sector regressions of Winner-sector return on SPY and own-sector return;
+- residual Winner return series;
+- an exploratory commonality factor equal to the cross-sector mean residual;
+- PCA and correlation diagnostics.
+
+Phase 2 decomposed the resulting commonality factor additively by security, month, and sector to identify the observations contributing most strongly to exploratory residual commonality.
+
+### Validation
+
+Phase 1:
+
+`POST_H2_WINNER_COMMONALITY_PHASE1_INTEGRITY_AUDIT_PASSED`
+
+Expected source populations included:
+
+- complete constituent forward-return rows: `29,620`
+- Winner-sector rows: `649`
+- benchmark rows: `118`
+
+Phase 2:
+
+`POST_H2_COMMONALITY_DRIVER_PHASE2_COMPLETE`
+
+and:
+
+`POST_H2_COMMONALITY_DRIVER_PHASE2_INTEGRITY_AUDIT_PASSED`
+
+### Decision
+
+The residual commonality factor is exploratory only. Its average is not itself treated as a new return anomaly, and no causal interpretation is attached to common residual behavior.
+
+### Next Step
+
+Freeze a deterministic research-target sample before collecting external narrative evidence.
+
+### Git Commit
+
+Checkpoint message: `research: add post-H2 residual winner commonality diagnostics`
+
+---
+
+## 3.48 Post-H2 Research Targets and External Evidence — Phase 3A / 3B
+
+### Date
+
+2026-08-24
+
+### Objective
+
+Select research targets deterministically from the completed commonality attribution before reviewing external narrative evidence, then collect authoritative evidence without coding themes during collection.
+
+### Method
+
+Phase 3A froze:
+
+- `30` security targets;
+- `15` extreme/commonality-relevant months;
+- a deterministic target priority queue;
+- target details, similarity, co-occurrence, and external-research manifest.
+
+Phase 3B then collected two evidence records per target across three batches using primary/official sources.
+
+### Validation
+
+Evidence collection produced:
+
+- `60` security evidence rows;
+- `30` month evidence rows;
+- `90` total merged evidence rows;
+- unique evidence IDs;
+- primary/official sources only;
+- no Wikipedia;
+- theme codes intentionally blank during collection;
+- support flags initially `UNCLEAR`.
+
+### Decision
+
+Evidence was collected before the thematic taxonomy was frozen to reduce the risk of coding evidence only into a preselected favored narrative.
+
+### Next Step
+
+Freeze a taxonomy independent of return-significance results, then code the already collected evidence.
+
+### Git Commit
+
+Checkpoint message: `research: freeze post-H2 research targets and authoritative evidence ledger`
+
+---
+
+## 3.49 Frozen Theme Taxonomy and Target Coding — Phase 3C / 3D
+
+### Date
+
+2026-08-24
+
+### Objective
+
+Freeze a descriptive taxonomy before full target coding, then code the 45 frozen targets under that unchanged taxonomy.
+
+### Taxonomy Freeze
+
+The frozen taxonomy contains 17 codes:
+
+Security structural themes:
+
+- `S01` AI / Compute / Digital Infrastructure
+- `S02` Power / Energy Infrastructure
+- `S03` Electrification / Energy Transition
+- `S04` Commodity / Resource Scarcity & Pricing
+- `S05` Capacity Expansion / Supply-Demand Imbalance
+- `S06` Digital Platform / Monetization Shift
+- `S07` Experiential / Consumer Demand
+- `S08` Real-Asset Occupancy / Demographic Demand
+- `S09` Strategic Consolidation / Portfolio Scale
+- `S10` Recurring Membership / Customer-Loyalty Economics
+
+Macro month themes:
+
+- `M01` Accommodative Monetary / Fiscal Support
+- `M02` Restrictive / Tightening Monetary Policy
+- `M03` Easing / Policy-Pivot Transition
+- `M04` Disinflation / Inflation Deceleration
+- `M05` Persistent / Sticky Inflation
+- `M06` Labor / Growth Resilience
+- `M07` Macro Uncertainty / Dual-Mandate Rebalancing
+
+Frozen taxonomy SHA-256:
+
+`1c7698cbe2facd069c7a12fda41cbf7399a9f657ed4f7a9f956d135f8f9d2576`
+
+Freeze gate:
+
+`PHASE3C_THEME_TAXONOMY_FREEZE_PASSED`
+
+### Phase 3D Validation
+
+- target matrix rows: `45`
+- evidence-to-theme bridge rows: `140`
+- unique target-code assignments: `98`
+- all evidence remained same-target
+- taxonomy checksum preserved
+
+Final gate:
+
+`POST_H2_PHASE3D_THEME_CODING_INTEGRITY_AUDIT_PASSED`
+
+### Descriptive Findings
+
+Most prevalent security themes among the selected top 30 security drivers included:
+
+- S05: `15 / 30`
+- S01: `9 / 30`
+- S03: `8 / 30`
+- S04: `8 / 30`
+- S09: `7 / 30`
+
+Because coding is multi-label, prevalence shares are overlapping and cannot be summed.
+
+### Decision
+
+Theme coding is descriptive evidence only. It does not establish synchronized behavior, predictive power, or causality.
+
+### Next Step
+
+Test whether securities sharing a frozen structural theme exhibit unusually synchronized contribution behavior relative to randomized same-size groups.
+
+### Git Commit
+
+Checkpoint message: `research: freeze post-H2 taxonomy and complete evidence coding`
+
+---
+
+## 3.50 Theme-Synchrony Test and Closeout — Phase 4A
+
+### Date
+
+2026-08-24
+
+### Objective
+
+Test whether the frozen structural themes explain residual Winner commonality through unusually synchronized monthly contribution behavior.
+
+### Frozen Test Design
+
+Universe:
+
+the same frozen top-30 security-driver sample.
+
+Monthly security contribution series:
+
+- exact Phase 2 contribution when the security is a Winner;
+- zero otherwise;
+- `59` months.
+
+Structural-theme metrics:
+
+1. average pairwise Pearson correlation of signed monthly contribution series;
+2. correlation between monthly active tagged-Winner count and absolute aggregate commonality factor.
+
+Randomization:
+
+- `20,000` same-sized random groups per eligible theme;
+- seed `20260824`;
+- one-sided greater-than-null Monte Carlo test;
+- Holm adjustment separately for metric A and metric B;
+- themes with fewer than three securities descriptive only.
+
+### Validation
+
+- themes analyzed: `10`
+- randomized themes: `8`
+- descriptive-only themes: `2`
+- monthly panel rows: `590`
+- taxonomy checksum preserved
+- audit checks passed: `13 / 13`
+
+Final gate:
+
+`POST_H2_PHASE4A_THEME_SYNCHRONY_INTEGRITY_AUDIT_PASSED`
+
+### Result
+
+No structural theme survived Holm adjustment.
+
+Notable nominal result:
+
+- S06 synchronization correlation: `+0.1879`
+- nominal Monte Carlo p-value: `0.0495`
+- Holm-adjusted p-value: `0.3960`
+
+Therefore S06 is **not** statistically significant after the preregistered multiple-testing adjustment.
+
+All presence-versus-absolute-commonality Holm-adjusted p-values were `1.0`.
+
+Macro codes were evaluated descriptively only on the selected extreme months; no macro inference was permitted.
+
+### Decision
+
+**Phase 4A final label: `CLOSED — NO ADJUSTED THEME-SYNCHRONY SIGNAL`**
+
+The taxonomy was not retuned after the null result.
+
+### Next Step
+
+Close the thematic-synchrony explanation branch and evaluate whether an independently measured external attention variable is feasible for a separately preregistered H3.
+
+### Git Commit
+
+Checkpoint message: `research: close Phase 4A with no adjusted theme-synchrony signal`
+
+---
+
+## 3.51 Candidate H3 Attention Research — Source Feasibility Protocol
+
+### Date
+
+2026-08-24
+
+### Objective
+
+Determine whether a historical external-attention dataset can be built cleanly before choosing an H3 transformation or testing any relationship with returns.
+
+### Candidate H3 Concept
+
+Potential future H3 outcomes include:
+
+1. next-month residual security return;
+2. next-month probability of entering the sector-relative Winner sleeve;
+3. Winner-status × attention interaction for next-month residual return.
+
+No primary outcome or attention transformation is selected based on observed predictive performance.
+
+Timing convention:
+
+`attention through month t → outcome at t+1`
+
+### Source Decision
+
+Google Trends was investigated as a search-attention source, but the official API is alpha and its rolling five-year window does not independently cover the entire January 2021–December 2025 project sample from the current 2026 research date.
+
+A Google Cloud / BigQuery implementation was explicitly rejected for practical infrastructure reasons because the project already uses Azure and there is no methodological need to introduce a second cloud platform solely for the attention layer.
+
+The historical pilot therefore uses direct GDELT downloads over HTTPS.
+
+### Decision
+
+Infrastructure boundary:
+
+- Google Cloud: `NO`
+- BigQuery: `NO`
+- unofficial Google Trends packages as primary source: `NO`
+- direct GDELT historical archive: `YES`
+- Azure SQL modification during feasibility: `NO`
+
+### Next Step
+
+Run a no-outcome-leakage direct-GDELT source/coverage/ambiguity pilot before building full history.
+
+### Git Commit
+
+Checkpoint message: `research: define H3 attention feasibility source and infrastructure boundary`
+
+---
+
+## 3.52 Direct GDELT Historical Feasibility Pilot
+
+### Date
+
+2026-08-24
+
+### Objective
+
+Test whether directly downloadable GDELT Global Knowledge Graph files can supply a reproducible historical company-news attention proxy across 2021–2025 without adding Google Cloud infrastructure.
+
+### Source / Metric
+
+Direct daily GDELT GKG archive:
+
+`https://data.gdeltproject.org/gkg/YYYYMMDD.gkg.csv.zip`
+
+Pilot company count:
+
+`15`
+
+Frozen historical anchor windows:
+
+`5`
+
+Seven days per anchor:
+
+`35 daily GKG archives`
+
+Company matching uses strict company aliases rather than bare stock tickers.
+
+Attention quantity:
+
+`matched_source_documents / total_source_documents`
+
+The older GKG daily stream's `NUMARTS` value is used as the source-document weight rather than counting every GKG nameset equally.
+
+### Implementation Note
+
+The first execution exposed Python's default CSV field-size limit:
+
+`131,072 bytes`
+
+A valid GDELT row exceeded that limit.
+
+The parser was corrected by raising `csv.field_size_limit()` to the largest platform-supported value before parsing. No attention methodology was changed.
+
+### Validation
+
+Final direct-GDELT pilot audit:
+
+- daily GKG files processed: `35 / 35`
+- company-date rows: `525 / 525`
+- company-anchor rows: `75 / 75`
+- historical anchor windows: `5 / 5`
+- pilot companies: `15 / 15`
+- all denominators positive
+- all attention shares in `[0, 1]`
+- parser field limit raised successfully
+- SHA-256 recorded for every downloaded archive
+- Google Cloud used: `NO`
+- Azure SQL used: `NO`
+- return/momentum/Winner/outcome columns: `0`
+- companies with strict nonzero coverage in at least `2 / 5` anchor windows: `15 / 15`
+- all HIGH-ambiguity companies had broad variants available for review
+
+Final gate:
+
+`H3_DIRECT_GDELT_DAILY_PILOT_FEASIBILITY_GATE_PASSED_WITH_AMBIGUITY_REVIEW_REQUIRED`
+
+### Decision
+
+Direct GDELT is historically accessible and operationally feasible enough to continue to an entity-name ambiguity gate.
+
+### Next Step
+
+Review high-ambiguity company-name variants before any larger extraction.
+
+### Git Commit
+
+Checkpoint message: `research: validate direct GDELT historical attention feasibility`
+
+---
+
+## 3.53 GDELT Company-Name Ambiguity Review and Closeout
+
+### Date
+
+2026-08-24
+
+### Objective
+
+Determine whether high-ambiguity company names can be queried with acceptable precision without expanding the strict alias set solely to maximize article counts.
+
+### Pilot Coverage
+
+Company coverage was strong:
+
+- 13 of 15 pilot companies had nonzero strict coverage in `4–5 / 5` windows;
+- NRG remained usable at `2 / 5`;
+- both HIGH-ambiguity companies had strict coverage in `5 / 5`.
+
+HIGH-ambiguity companies:
+
+- IRM — Iron Mountain Incorporated
+- MOS — The Mosaic Company
+
+### IRM Decision
+
+Retain strict aliases:
+
+- `iron mountain incorporated`
+- `iron mountain inc`
+
+Reject unrelated school, medical, library, academic, and geographic variants.
+
+Issuer-adjacent variants such as `iron mountain data centers` remain diagnostic-only rather than being promoted automatically.
+
+### MOS Decision
+
+Retain the strict company-name alias.
+
+Do not promote:
+
+- bare `mosaic`;
+- `mosaic co`.
+
+The broad variant list contained multiple unrelated community, health, cultural, religious, museum, finance, and other entities.
+
+### Decision
+
+**AMBIGUITY REVIEW CLOSED — CONSERVATIVE STRICT-ALIAS POLICY RETAINED**
+
+Precision is preferred over recall because both high-ambiguity companies already achieved full pilot-window coverage with strict aliases.
+
+No return or outcome data were used in this decision.
+
+### Next Step
+
+Scale identity/query preparation to all 593 historical security identities before downloading full 2021–2025 attention history.
+
+### Git Commit
+
+Checkpoint message: `research: close GDELT pilot ambiguity gate with conservative aliases`
+
+---
+
+## 3.54 Full-Universe H3 Company-Query Candidate Manifest — Stage 3A
+
+### Date
+
+2026-08-24
+
+### Objective
+
+Expand the successful pilot from 15 securities to the full canonical historical security identity universe while preserving a strict separation between current company names and point-in-time historical company-name validity.
+
+### Source
+
+Read-only Azure SQL identity tables:
+
+- `core.security`
+- `core.security_ticker_history`
+
+Actual canonical company-name source column:
+
+`company_name_reference`
+
+### Connectivity / Schema Corrections
+
+The first identity-export script encountered an Azure SQL ODBC timeout/connection-string issue. Connection handling was corrected without changing the requested data.
+
+The first candidate builder expected a generic company-name field and stopped when the actual schema showed:
+
+`company_name_reference`
+
+The builder was updated to recognize the real schema explicitly.
+
+The first audit also treated every short canonical issuer name that looked like a ticker as an automatic bare-ticker failure. This was too strict because some legitimate issuer names are themselves acronym/brand names.
+
+The final control therefore adds:
+
+`ticker_like_exact_name_flag`
+
+and requires such cases to remain HIGH ambiguity and enter authoritative review rather than automatically rejecting the source identity.
+
+Examples surfaced:
+
+- CRH
+- EQT
+- ETSY
+- FMC
+- LKQ
+- NOV
+- PTC
+- PVH
+
+### Candidate Manifest Result
+
+- security identities: `593`
+- ticker-history segments represented: `594`
+- identities with multiple ticker segments: `1`
+- duplicate exact normalized aliases: `0`
+- HIGH structural ambiguity: `210`
+- MEDIUM structural ambiguity: `220`
+- LOW structural ambiguity: `163`
+- ticker-like exact legal/current names: `8`
+- PIT/name-history review queue: `211`
+
+### Production Boundary
+
+This remains a **candidate** manifest.
+
+- current names are not assumed valid throughout 2021–2025;
+- suffix-stripped names are diagnostic only;
+- the normalized exact legal/current name is the only candidate alias;
+- no bare ticker is intentionally promoted as an attention query;
+- no row is marked point-in-time validated yet.
+
+### Validation State
+
+Candidate build:
+
+`H3_COMPANY_QUERY_MANIFEST_CANDIDATE_BUILD_COMPLETE`
+
+The final V4 audit logic was prepared to treat ticker-like legal issuer names as controlled review cases rather than automatic failures.
+
+At this checkpoint, the final post-V4 integrity-audit output has not been recorded in this log and must be confirmed before Stage 3A is considered closed.
+
+### Decision
+
+The 593-security identity universe is successfully represented, but authoritative company-name history remains required for 211 review identities and any issuer with historical-name evidence.
+
+### Next Step
+
+Use authoritative SEC identity/name-history sources to resolve CIKs, current filer names, and former-name evidence without fuzzy matching.
+
+### Git Commit
+
+Checkpoint message: `research: build full H3 company-query candidate manifest`
+
+---
+
+## 3.55 SEC Company Identity / Historical-Name Resolution Preparation — Stage 3B
+
+### Date
+
+2026-08-24
+
+### Objective
+
+Prepare the authoritative company-identity resolution layer needed before constructing point-in-time GDELT query aliases.
+
+### Planned Authoritative Sources
+
+SEC-only identity sources:
+
+1. `company_tickers.json`
+   - current ticker / CIK / conformed company-name associations;
+
+2. `cik-lookup-data.txt`
+   - cumulative SEC CIK/entity-name lookup evidence;
+
+3. SEC Submissions API:
+   - `https://data.sec.gov/submissions/CIK##########.json`
+   - current filer name, tickers, exchanges, and `formerNames`.
+
+### Frozen Mapping Policy
+
+No fuzzy name matching.
+
+Auto-resolution is allowed only when deterministic official-source conditions hold, such as:
+
+- project ticker and exact normalized company name agreeing on one CIK;
+- exact current ticker record plus exact normalized company name;
+- one unique exact normalized company-name CIK mapping.
+
+Ticker-only matches, conflicts, and non-unique mappings remain review cases.
+
+SEC `formerNames` records are retained as raw authoritative evidence and are not automatically converted into PIT alias intervals.
+
+### Files Prepared
+
+- `src/analysis/resolve_h3_sec_company_name_history.py`
+- `src/analysis/audit_h3_sec_company_name_history.py`
+- `docs/h3_stage3b_sec_name_history_resolution_protocol.md`
+
+Programmatic SEC access requires a user-supplied `SEC_USER_AGENT` containing a real contact email. This value is environment configuration and must not be committed.
+
+### Validation State
+
+Stage 3B implementation is prepared but has not yet been executed at this checkpoint.
+
+Therefore:
+
+- SEC mapping result: `PENDING`
+- SEC former-name extraction: `PENDING`
+- Stage 3B integrity audit: `PENDING`
+- PIT alias-interval construction: `NOT AUTHORIZED YET`
+- full 2021–2025 GDELT extraction: `NOT AUTHORIZED YET`
+- H3 inference: `NOT AUTHORIZED`
+
+### Next Step
+
+First confirm the final Stage 3A V4 integrity audit.
+
+Then execute Stage 3B against official SEC sources, audit deterministic CIK mapping and former-name evidence, and only after that construct point-in-time company-name alias intervals.
+
+### Git Commit
+
+Checkpoint message: `research: prepare SEC point-in-time company-name resolution for H3`
 
 ---
 
@@ -6853,227 +7348,120 @@ After that checkpoint, begin a clearly labeled **post-H2 exploratory cross-secto
 
 Current phase:
 
-**H2 sector-relative momentum closed — NOT SUPPORTED; post-H2 exploratory commonality phase is next**
+**H3 attention-data feasibility and point-in-time company-identity preparation**
 
-## Completed Research Milestones
+## Closed Confirmatory Research
 
-- Project architecture and reproducibility framework
-- verified 503-security State Street SPY constituent anchor as of 2026-08-10
-- 202-action official historical S&P 500 membership reference
-- 593 point-in-time membership security identities
-- 594 historical ticker segments
-- 596-request historical price acquisition and validation
-- 783,086-row standardized price history
-- 631,942-row constituent membership-price bridge
-- 2,510-row benchmark history
-- normalized Azure SQL core/staging market-data model
-- exact 60-month 2021-2025 ranking calendar
-- corrected 72-month 2020-2025 feature-support calendar
-- 30,121 complete corrected canonical 12-1 momentum signals
-- H1 canonical 12-1 momentum closeout
-- H1 result: `CLOSED — NOT SUPPORTED IN THE CORRECTED 2021-2025 SAMPLE`
-- canonical SEC Select Sector SPDR historical GICS evidence
-- 593 / 593 continuous point-in-time GICS security intervals
-- 30,211 / 30,211 exact ranking-date GICS assignments
-- H2 methodology preregistered before performance inspection
-- H2 within-sector ranking / weighting quality gate passed
-- H2 ranking independent integrity audit passed
-- H2 forward-return population quality gate passed
-- H2 forward-return independent integrity audit passed with 34 checks
-- H2 final preregistered statistical / risk / cost analysis completed
-- H2 final analysis integrity audit passed
-- H2 result: `CLOSED — NOT SUPPORTED IN THE PREREGISTERED 2021-2025 SAMPLE`
-
-## Current H1 State
-
-Canonical H1:
-
-**Market-wide corrected 12-1 momentum**
-
-Final status:
+H1 canonical market-wide 12-1 momentum:
 
 `CLOSED — NOT SUPPORTED IN THE CORRECTED 2021-2025 SAMPLE`
 
-No H1 parameter will be retuned.
-
-## Current Point-in-Time GICS State
-
-- membership identities: 593 / 593
-- permanent interval rows: 613
-- mapped authoritative transitions: 20 / 20
-- ranking-date sector assignments: 30,211 / 30,211
-- missing assignments: 0
-- duplicate security-month assignments: 0
-- ranking months: 60
-- GICS sectors per ranking month: 11
-- unexplained in-membership evidence mismatches: 0
-- point-in-time GICS quality gate: PASSED
-
-## Current H2 Construction State
-
-Frozen H2 signal:
-
-**sector-relative corrected 12-1 momentum**
-
-Validated H2 ranking population:
-
-- ranking assignments: 30,121
-- ranking months: 60
-- month/sector partitions: 660
-- month/sector/quintile rows: 3,300
-- ranking / weighting integrity gate: PASSED
-
-Validated H2 performance population:
-
-- security holding rows: 30,121
-- complete security forward returns: 29,620
-- right-censored December-2025 security rows: 501
-- complete sector/quintile returns: 3,245
-- complete Winner/Loser sector returns: 1,298
-- complete aggregate Winner/Loser legs: 118
-- complete aggregate W-L months: 59
-- forward-return integrity audit: PASSED
-
-## Current H2 Result
-
-Primary aggregate sector-neutral Winner-minus-Loser:
-
-- mean monthly W-L: +0.186%
-- arithmetic annualized mean: +2.237%
-- geometric annualized return: +1.605%
-- annualized volatility: 11.399%
-- maximum drawdown: -13.234%
-- primary HAC(3) p-value: 0.6043
-
-Primary decision rule:
-
-`FAIL`
-
-Supporting inference:
-
-- t-test p = 0.6650
-- bootstrap 95% CI = [-0.654%, +0.997%] monthly
-- Wilcoxon p = 0.4504
-- sign-test p = 0.4350
-- no sector survives Holm adjustment
-
-Risk / implementation:
-
-- Winner annualized return: 12.575%
-- SPY annualized return: 14.834%
-- W-L Sharpe: 0.196
-- W-L CAPM alpha annualized arithmetic: +3.221%, p = 0.4601
-- Winner mean one-way turnover: 27.240%
-- Loser mean one-way turnover: 26.000%
-- base-case net W-L annualized return: -0.049%
-
-Cross-sector robustness:
-
-- positive leave-one-sector-out estimates: 11 / 11
-- largest additive sector contribution: 50.719%
-- frozen concentration criterion: FAIL
-
-Final H2 label:
+H2 sector-relative 12-1 momentum:
 
 `CLOSED — NOT SUPPORTED IN THE PREREGISTERED 2021-2025 SAMPLE`
 
+## Closed Exploratory Theme Branch
+
+Post-H2 residual commonality:
+
+`EXPLORATORY — CONSTRUCTED AND ATTRIBUTED`
+
+Frozen evidence taxonomy:
+
+`COMPLETED`
+
+Phase 4A theme synchrony:
+
+`CLOSED — NO ADJUSTED THEME-SYNCHRONY SIGNAL`
+
+## H3 Attention Feasibility State
+
+Direct GDELT historical pilot:
+
+`PASSED`
+
+Pilot company coverage:
+
+`15 / 15 meet >=2/5 strict nonzero-window rule`
+
+High-ambiguity pilot review:
+
+`CLOSED — CONSERVATIVE STRICT-ALIAS POLICY RETAINED`
+
+Cloud architecture decision:
+
+- Google Cloud: `NO`
+- BigQuery: `NO`
+- direct GDELT downloads: `YES`
+- Azure SQL writes during feasibility: `NO`
+
+## Full-Universe H3 Identity State
+
+Canonical historical security identities:
+
+`593`
+
+Historical ticker segments:
+
+`594`
+
+Candidate company-query rows:
+
+`593`
+
+Duplicate exact normalized aliases:
+
+`0`
+
+Structural ambiguity:
+
+- HIGH: `210`
+- MEDIUM: `220`
+- LOW: `163`
+
+Ticker-like exact company names:
+
+`8`
+
+PIT/name-history review queue:
+
+`211`
+
+Current company names point-in-time validated:
+
+`NO`
+
+Final Stage 3A V4 integrity-audit confirmation:
+
+`PENDING`
+
+Stage 3B SEC resolution:
+
+`PREPARED — NOT YET EXECUTED`
+
 ## Interpretation Boundary
 
-H1 and H2 are now closed confirmatory experiments.
+No H3 predictive or return inference has been performed.
 
-Neither conclusion may be changed by tuning parameters after results.
+No attention transformation may be selected according to return performance.
 
-Any analysis from this point that studies:
+No full-history attention dataset may be joined to future returns until:
 
-- common traits of cross-sector winners;
-- winner persistence;
-- synchronous winner months;
-- residual correlations after market and sector controls;
-- cross-sector residual-return commonality;
-- themes, narratives, news, search attention, or cultural interest
+1. Stage 3A final candidate-manifest audit is confirmed;
+2. SEC company-name history is resolved and audited;
+3. PIT attention aliases are frozen;
+4. full attention coverage/missingness is audited;
+5. the usable H3 universe is frozen;
+6. the attention transformation is frozen;
+7. the residual-return/outcome model is frozen;
+8. H3 is formally preregistered.
 
-must be labeled exploratory or preregistered as a new hypothesis before confirmatory inference.
+## Immediate Next Step
 
-## Next Objective
+Confirm:
 
-Create the final H2 Git checkpoint.
+`H3_COMPANY_QUERY_MANIFEST_CANDIDATE_INTEGRITY_AUDIT_PASSED`
 
-After that commit, begin the post-H2 exploratory cross-sector winner commonality layer:
+from the V4 Stage 3A audit.
 
-1. construct month-by-month Winner membership history;
-2. quantify persistence and repeated Winner appearances;
-3. measure synchronous Winner behavior across sectors;
-4. strip SPY and own-sector return exposure from Winner returns;
-5. test residual correlation/commonality;
-6. characterize the companies contributing most strongly to any common residual pattern;
-7. only after the commonality layer is understood, design a separately preregistered attention/narrative hypothesis if warranted.
-
-## Git Checkpoint Objective
-
-Commit the completed H2 implementation, validation reports, final analytical outputs, and this updated project log.
-
-Do not include:
-
-- `.env` or credentials
-- `data/interim/`
-- failed/superseded reports
-- temporary diagnostic scripts
-- packaging README files unless intentionally retained
-
----
-
-# Logging Standard Going Forward
-
-Every meaningful project step should record:
-
-**Step ID**
-
-A sequential project identifier.
-
-**Date**
-
-When the step was performed.
-
-**Objective**
-
-What the step was intended to accomplish.
-
-**Source**
-
-Where the data or information originated.
-
-**Files Created or Modified**
-
-Exact project paths.
-
-**Method**
-
-Python, SQL, Power BI, manual acquisition, API, etc.
-
-**Transformation**
-
-Exactly what was changed.
-
-**Validation**
-
-Counts, duplicate checks, missing-value checks, reconciliation totals, or other tests.
-
-**Decision**
-
-Why a particular analytical or technical choice was made.
-
-**Output**
-
-Dataset, table, view, notebook, script, or analytical result produced.
-
-**Issues / Limitations**
-
-Anything that could affect interpretation or reproducibility.
-
-**Next Step**
-
-The immediate continuation point.
-
-**Git Commit**
-
-The commit hash or commit message corresponding to the completed milestone.
+Then run Stage 3B SEC company identity/name-history resolution and inspect the resulting review queue before creating point-in-time alias intervals.

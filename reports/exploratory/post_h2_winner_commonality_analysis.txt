@@ -1,0 +1,113 @@
+======================================================================================================================
+POST-H2 EXPLORATORY CROSS-SECTOR WINNER COMMONALITY — PHASE 1
+======================================================================================================================
+Status: EXPLORATORY / NON-CONFIRMATORY
+H1 conclusion modified: NO
+H2 conclusion modified: NO
+Azure SQL mode: READ-ONLY
+
+Purpose:
+1. quantify repeated Winner membership and persistence;
+2. measure synchronous Winner-sector behavior;
+3. remove broad SPY and own-sector equal-weight return exposure;
+4. measure remaining cross-sector residual commonality;
+5. create a descriptive commonality factor for later exploratory work.
+
+======================================================================================================================
+1. SOURCE / PRESERVATION CONTROLS
+======================================================================================================================
+PASS: core.security remains 593 rows.
+PASS: core.security_ticker_history remains 594 rows.
+PASS: core.index_membership remains 593 rows.
+PASS: core.security_price_eligibility remains 594 rows.
+PASS: core.daily_security_price remains 631,942 rows.
+PASS: core.benchmark_series remains 2 rows.
+PASS: core.daily_benchmark_price remains 2,510 rows.
+PASS: H2 ranking source spans 60 months.
+PASS: complete security forward source = 29,620 rows.
+PASS: complete Winner-sector source = 649 rows.
+PASS: complete benchmark source = 118 rows.
+
+======================================================================================================================
+2. WINNER MEMBERSHIP HISTORY AND PERSISTENCE
+======================================================================================================================
+Winner membership rows across 60 ranking months: 5,756
+Unique securities appearing as Winner at least once: 531
+Winner securities observed across more than one GICS sector during the sample: 10
+Mean sector-month current-Winner retention: 74.19%
+Mean sector-month Winner-set Jaccard similarity: 60.96%
+
+Most frequently recurring Winners:
+PWR      | Industrials                                   | Winner months 47/60 | Share 78.33% | Max streak 17
+LLY      | Health Care                                   | Winner months 44/60 | Share 73.33% | Max streak 35
+IRM      | Real Estate                                   | Winner months 42/60 | Share 70.00% | Max streak 30
+HWM      | Industrials                                   | Winner months 42/60 | Share 70.00% | Max streak 22
+GE       | Industrials                                   | Winner months 39/60 | Share 65.00% | Max streak 25
+NVDA     | Information Technology                        | Winner months 39/60 | Share 65.00% | Max streak 24
+ANET     | Information Technology                        | Winner months 39/60 | Share 65.00% | Max streak 18
+SPG      | Real Estate                                   | Winner months 38/60 | Share 63.33% | Max streak 13
+AVGO     | Information Technology                        | Winner months 36/60 | Share 60.00% | Max streak 11
+MCK      | Health Care                                   | Winner months 35/60 | Share 58.33% | Max streak 14
+NRG      | Utilities                                     | Winner months 34/60 | Share 56.67% | Max streak 17
+WMT      | Consumer Staples                              | Winner months 32/60 | Share 53.33% | Max streak 30
+CEG      | Utilities                                     | Winner months 32/36 | Share 88.89% | Max streak 26
+CAH      | Health Care                                   | Winner months 32/60 | Share 53.33% | Max streak 21
+COR      | Health Care                                   | Winner months 32/60 | Share 53.33% | Max streak 11
+
+======================================================================================================================
+3. WINNER SECTOR RETURN PANEL AND SYNCHRONY
+======================================================================================================================
+Average pairwise raw Winner-sector return correlation: 0.486
+Average pairwise Winner active-vs-sector correlation: 0.215
+Mean sectors with positive Winner return per month: 6.25 / 11
+Mean sectors where Winner beat own sector baseline: 5.63 / 11
+Months with >=8 positive Winner sectors: 27 / 59
+
+======================================================================================================================
+4. SPY + OWN-SECTOR RESIDUALIZATION
+======================================================================================================================
+Residualization model per sector: Winner return ~ intercept + SPY return + equal-weight own-sector return
+Average pairwise residual Winner correlation: 0.182
+Mean sectors with positive residual per month: 5.32 / 11
+Residual commonality-factor monthly volatility: 1.65%
+Residual commonality-factor mean: -0.0000% (mechanically near zero because sector regressions include intercepts)
+
+======================================================================================================================
+5. RAW / ACTIVE / RESIDUAL PCA COMMONALITY
+======================================================================================================================
+RAW_WINNER                | PC1 explained 54.33% | PC1+PC2 explained 64.02%
+ACTIVE_VS_SECTOR          | PC1 explained 29.79% | PC1+PC2 explained 42.49%
+RESIDUAL_SPY_PLUS_SECTOR  | PC1 explained 26.95% | PC1+PC2 explained 40.30%
+
+======================================================================================================================
+6. EXPLORATORY INTERPRETATION BOUNDARY
+======================================================================================================================
+These outputs are descriptive and exploratory.
+They do not alter the closed H2 label.
+The own-sector control is an equal-weight return of all H2-eligible stocks in that GICS sector.
+Because the Winner sleeve is part of its own sector baseline, the sector control is not an independent tradable benchmark.
+The SPY + sector residualization is in-sample OLS and should not be interpreted as an investable alpha estimate.
+PCA is performed on correlation matrices to study common movement rather than raw-volatility dominance.
+The equal-weight residual commonality factor has approximately zero full-sample mean by construction because each sector regression includes an intercept.
+If residual correlations and PCA still show meaningful common movement, the next phase should investigate which securities/months drive it.
+Narrative, news, search-attention, or social/cultural variables should not be introduced until this return-commonality layer is understood.
+
+======================================================================================================================
+7. OUTPUTS
+======================================================================================================================
+reports\exploratory\post_h2_winner_membership_history.csv
+reports\exploratory\post_h2_winner_persistence_by_security.csv
+reports\exploratory\post_h2_winner_transition_by_sector_month.csv
+reports\exploratory\post_h2_winner_persistence_by_sector.csv
+reports\exploratory\post_h2_sector_winner_return_panel.csv
+reports\exploratory\post_h2_winner_synchrony_monthly.csv
+reports\exploratory\post_h2_winner_market_sector_regressions.csv
+reports\exploratory\post_h2_winner_residual_panel.csv
+reports\exploratory\post_h2_winner_raw_correlation_matrix.csv
+reports\exploratory\post_h2_winner_sector_active_correlation_matrix.csv
+reports\exploratory\post_h2_winner_residual_correlation_matrix.csv
+reports\exploratory\post_h2_winner_pca_summary.csv
+reports\exploratory\post_h2_winner_pca_loadings.csv
+reports\exploratory\post_h2_winner_commonality_factor.csv
+
+POST_H2_WINNER_COMMONALITY_PHASE1_COMPLETE

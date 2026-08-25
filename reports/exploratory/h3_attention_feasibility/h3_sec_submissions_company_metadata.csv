@@ -1,0 +1,535 @@
+sec_cik,sec_current_name,sec_current_name_normalized,sec_tickers_pipe,sec_exchanges_pipe,former_name_count,entity_type,sic,sic_description
+0000001800,ABBOTT LABORATORIES,abbott laboratories,ABT,NYSE,0,operating,2834,Pharmaceutical Preparations
+0000002488,ADVANCED MICRO DEVICES INC,advanced micro devices inc,AMD,Nasdaq,0,operating,3674,Semiconductors & Related Devices
+0000002969,"Air Products & Chemicals, Inc.",air products and chemicals inc,APD,NYSE,1,operating,2810,Industrial Inorganic Chemicals
+0000004127,"SKYWORKS SOLUTIONS, INC.",skyworks solutions inc,SWKS,Nasdaq,2,operating,3674,Semiconductors & Related Devices
+0000004281,Howmet Aerospace Inc.,howmet aerospace inc,HWM,NYSE,4,operating,3350,Rolling Drawing & Extruding of  Nonferrous Metals
+0000004904,AMERICAN ELECTRIC POWER CO INC,american electric power co inc,,,1,operating,4911,Electric Services
+0000004962,AMERICAN EXPRESS CO,american express co,AXP,NYSE,0,operating,6199,Finance Services
+0000004977,AFLAC INC,aflac inc,AFL,NYSE,0,operating,6321,Accident & Health Insurance
+0000005272,"AMERICAN INTERNATIONAL GROUP, INC.",american international group inc,AIG,NYSE,1,operating,6331,"Fire, Marine & Casualty Insurance"
+0000005513,Unum Group,unum group,UNM|UNMA,NYSE|NYSE,4,operating,6321,Accident & Health Insurance
+0000006201,American Airlines Group Inc.,american airlines group inc,AAL,Nasdaq,1,operating,4512,"Air Transportation, Scheduled"
+0000006281,ANALOG DEVICES INC,analog devices inc,ADI,Nasdaq,0,operating,3674,Semiconductors & Related Devices
+0000007084,Archer-Daniels-Midland Co,archer daniels midland co,ADM,NYSE,2,operating,2070,Fats & Oils
+0000008670,AUTOMATIC DATA PROCESSING INC,automatic data processing inc,ADP,Nasdaq,0,operating,7374,Services-Computer Processing & Data Preparation
+0000008818,Avery Dennison Corp,avery dennison corp,AVY,NYSE,1,operating,2670,Converted Paper & Paperboard Prods (No Contaners/Boxes)
+0000009389,BALL Corp,ball corp,BALL,NYSE,0,operating,3411,Metal Cans
+0000010456,BAXTER INTERNATIONAL INC,baxter international inc,BAX,NYSE,0,operating,3841,Surgical & Medical Instruments & Apparatus
+0000010795,BECTON DICKINSON & CO,becton dickinson and co,BDX,NYSE,0,operating,3841,Surgical & Medical Instruments & Apparatus
+0000011544,BERKLEY W R CORP,berkley w r corp,WRB|WRB-PE|WRB-PF|WRB-PG|WRB-PH,NYSE|NYSE|NYSE|NYSE|NYSE,0,operating,6331,"Fire, Marine & Casualty Insurance"
+0000012208,"BIO-RAD LABORATORIES, INC.",bio rad laboratories inc,BIO|BIO-B,NYSE|NYSE,1,operating,3826,Laboratory Analytical Instruments
+0000012927,BOEING CO,boeing co,BA|BA-PA,NYSE|NYSE,0,operating,3721,Aircraft
+0000014272,BRISTOL MYERS SQUIBB CO,bristol myers squibb co,BMY|CELG-RI,NYSE|NYSE,0,operating,2834,Pharmaceutical Preparations
+0000014693,BROWN FORMAN CORP,brown forman corp,BF-A|BF-B,NYSE|NYSE,0,operating,2080,Beverages
+0000016732,CAMPBELL'S Co,campbell s co,CPB,Nasdaq,1,operating,2000,Food and Kindred Products
+0000016918,"CONSTELLATION BRANDS, INC.",constellation brands inc,STZ,NYSE,3,operating,2080,Beverages
+0000018230,CATERPILLAR INC,caterpillar inc,CAT,NYSE,0,operating,3531,Construction Machinery & Equip
+0000018926,"Lumen Technologies, Inc.",lumen technologies inc,LUMN,NYSE,3,operating,4813,Telephone Communications (No Radiotelephone)
+0000019617,JPMORGAN CHASE & CO,jpmorgan chase and co,JPM|JPM-PC|AMJB|JPM-PD|JPM-PJ|JPM-PK|JPM-PL|JPM-PM|VYLD,NYSE|NYSE|NYSE|NYSE|NYSE|NYSE|NYSE|NYSE|NYSE,4,operating,6021,National Commercial Banks
+0000020286,CINCINNATI FINANCIAL CORP,cincinnati financial corp,CINF,Nasdaq,0,operating,6331,"Fire, Marine & Casualty Insurance"
+0000021076,CLOROX CO /DE/,clorox co de,CLX,NYSE,1,operating,2842,"Specialty Cleaning, Polishing and Sanitation Preparations"
+0000021344,COCA COLA CO,coca cola co,KO,NYSE,0,operating,2080,Beverages
+0000021665,COLGATE PALMOLIVE CO,colgate palmolive co,CL,NYSE,1,operating,2844,"Perfumes, Cosmetics & Other Toilet Preparations"
+0000023217,CONAGRA BRANDS INC.,conagra brands inc,CAG,NYSE,2,operating,2000,Food and Kindred Products
+0000024545,MOLSON COORS BEVERAGE CO,molson coors beverage co,TAP-A|TAP,NYSE|NYSE,2,operating,2082,Malt Beverages
+0000024741,CORNING INC /NY,corning inc ny,GLW,NYSE,0,operating,3357,Drawing & Insulating of  Nonferrous Wire
+0000026172,CUMMINS INC,cummins inc,CMI,NYSE,1,operating,3510,Engines & Turbines
+0000027419,TARGET CORP,target corp,TGT,NYSE,1,operating,5331,Retail-Variety Stores
+0000027904,"DELTA AIR LINES, INC.",delta air lines inc,DAL,NYSE,1,operating,4512,"Air Transportation, Scheduled"
+0000029534,DOLLAR GENERAL CORP,dollar general corp,DG,NYSE,0,operating,5331,Retail-Variety Stores
+0000029905,DOVER Corp,dover corp,DOV,NYSE,0,operating,3530,"Construction, Mining & Materials Handling Machinery & Equip"
+0000029989,OMNICOM GROUP INC.,omnicom group inc,OMC,NYSE,1,operating,7311,Services-Advertising Agencies
+0000030625,FLOWSERVE CORP,flowserve corp,FLS,NYSE,2,operating,3561,Pumps & Pumping Equipment
+0000031462,ECOLAB INC.,ecolab inc,ECL,NYSE,1,operating,2840,"Soap, Detergents, Cleang Preparations, Perfumes, Cosmetics"
+0000031791,"REVVITY, INC.",revvity inc,RVTY,NYSE,2,operating,3826,Laboratory Analytical Instruments
+0000032604,EMERSON ELECTRIC CO,emerson electric co,EMR,NYSE,0,operating,3600,Electronic & Other Electrical Equipment (No Computer Equip)
+0000033185,EQUIFAX INC,equifax inc,EFX,NYSE,1,operating,7320,"Services-Consumer Credit Reporting, Collection Agencies"
+0000033213,EQT Corp,eqt corp,EQT,NYSE,1,operating,1311,Crude Petroleum & Natural Gas
+0000034903,FEDERAL REALTY INVESTMENT TRUST,federal realty investment trust,FRT|FRT-PC,NYSE|NYSE,0,operating,6798,Real Estate Investment Trusts
+0000035527,FIFTH THIRD BANCORP,fifth third bancorp,FITB|FITB-PA|FITB-PI|FITB-PK|FITB-PM,NYSE|NYSE|NYSE|NYSE|NYSE,0,operating,6022,State Commercial Banks
+0000036104,US BANCORP \DE\,us bancorp de,USB|USB-PA|USB-PH|USB-PP|USB-PQ|USB-PR|USB-PS,NYSE|NYSE|NYSE|NYSE|NYSE|NYSE|NYSE,1,operating,6021,National Commercial Banks
+0000036270,M&T BANK CORP,m and t bank corp,MTB|MTB-PH|MTB-PJ|MTB-PK|MTB-PL,NYSE|NYSE|NYSE|NYSE|NYSE,1,operating,6022,State Commercial Banks
+0000037785,FMC CORP,fmc corp,FMC,NYSE,0,operating,2800,Chemicals & Allied Products
+0000037996,FORD MOTOR CO,ford motor co,F|F-PB|F-PC|F-PD,NYSE|NYSE|NYSE|NYSE,0,operating,3711,Motor Vehicles & Passenger Car Bodies
+0000038777,FRANKLIN RESOURCES INC,franklin resources inc,BEN,NYSE,0,operating,6282,Investment Advice
+0000040533,GENERAL DYNAMICS CORP,general dynamics corp,GD,NYSE,0,operating,3730,Ship & Boat Building & Repairing
+0000040545,GENERAL ELECTRIC CO,general electric co,GE,NYSE,0,operating,3600,Electronic & Other Electrical Equipment (No Computer Equip)
+0000040704,GENERAL MILLS INC,general mills inc,GIS,NYSE,0,operating,2040,Grain Mill Products
+0000040987,GENUINE PARTS CO,genuine parts co,GPC,NYSE,0,operating,5013,Wholesale-Motor Vehicle Supplies & New Parts
+0000045012,HALLIBURTON CO,halliburton co,HAL,NYSE,0,operating,1389,"Oil & Gas Field Services, NEC"
+0000046080,"HASBRO, INC.",hasbro inc,HAS,Nasdaq,1,operating,3944,"Games, Toys & Children's Vehicles (No Dolls & Bicycles)"
+0000047111,HERSHEY CO,hershey co,HSY,NYSE,1,operating,2060,Sugar & Confectionery Products
+0000047217,HP INC,hp inc,HPQ,NYSE,1,operating,3570,Computer & office Equipment
+0000048465,HORMEL FOODS CORP /DE/,hormel foods corp de,HRL,NYSE,1,operating,2011,Meat Packing Plants
+0000048898,HUBBELL INC,hubbell inc,HUBB,NYSE,0,operating,3670,Electronic Components & Accessories
+0000049071,HUMANA INC,humana inc,HUM,NYSE,0,operating,6324,Hospital & Medical Service Plans
+0000049196,HUNTINGTON BANCSHARES INC /MD/,huntington bancshares inc md,HBAN|HBANL|HBANM|HBANP|HBANZ,Nasdaq|Nasdaq|Nasdaq|Nasdaq|Nasdaq,2,operating,6021,National Commercial Banks
+0000049826,ILLINOIS TOOL WORKS INC,illinois tool works inc,ITW,NYSE,0,operating,3560,General Industrial Machinery & Equipment
+0000050863,INTEL CORP,intel corp,INTC,Nasdaq,0,operating,3674,Semiconductors & Related Devices
+0000051143,INTERNATIONAL BUSINESS MACHINES CORP,international business machines corp,IBM,NYSE,0,operating,3570,Computer & office Equipment
+0000051253,INTERNATIONAL FLAVORS & FRAGRANCES INC,international flavors and fragrances inc,IFF,NYSE,0,operating,2860,Industrial Organic Chemicals
+0000052988,JACOBS SOLUTIONS INC.,jacobs solutions inc,J,NYSE,1,operating,1600,Heavy Construction Other Than Bldg Const - Contractors
+0000054480,KANSAS CITY SOUTHERN,kansas city southern,,,1,operating,4011,"Railroads, Line-Haul Operating"
+0000055067,KELLANOVA,kellanova,,,1,operating,2040,Grain Mill Products
+0000055785,KIMBERLY CLARK CORP,kimberly clark corp,KMB,Nasdaq,0,operating,2670,Converted Paper & Paperboard Prods (No Contaners/Boxes)
+0000056873,KROGER CO,kroger co,KR,NYSE,0,operating,5411,Retail-Grocery Stores
+0000058492,LEGGETT & PLATT INC,leggett and platt inc,LEG,NYSE,0,operating,2510,Household Furniture
+0000059478,ELI LILLY & Co,eli lilly and co,LLY,NYSE,2,operating,2834,Pharmaceutical Preparations
+0000059558,LINCOLN NATIONAL CORP,lincoln national corp,LNC|LNC-PD,NYSE|NYSE,1,operating,6311,Life Insurance
+0000060086,LOEWS CORP,loews corp,L,NYSE,0,operating,6331,"Fire, Marine & Casualty Insurance"
+0000060667,LOWES COMPANIES INC,lowes companies inc,LOW,NYSE,0,operating,5211,Retail-Lumber & Other Building Materials Dealers
+0000062709,"MARSH & MCLENNAN COMPANIES, INC.",marsh and mclennan companies inc,MRSH,NYSE,1,operating,6411,"Insurance Agents, Brokers & Service"
+0000062996,MASCO CORP /DE/,masco corp de,MAS,NYSE,0,operating,3430,"Heating Equip, Except Elec & Warm Air; & Plumbing Fixtures"
+0000063754,MCCORMICK & CO INC,mccormick and co inc,MKC|MKC-V,NYSE|NYSE,1,operating,2090,Miscellaneous Food Preparations & Kindred Products
+0000063908,MCDONALDS CORP,mcdonalds corp,MCD,NYSE,0,operating,5812,Retail-Eating  Places
+0000064040,S&P Global Inc.,s and p global inc,SPGI,NYSE,3,operating,7320,"Services-Consumer Credit Reporting, Collection Agencies"
+0000064803,CVS HEALTH Corp,cvs health corp,CVS,NYSE,4,operating,5912,Retail-Drug Stores and Proprietary Stores
+0000065984,ENTERGY CORP /DE/,entergy corp de,ETR,NYSE,1,operating,4911,Electric Services
+0000066740,3M CO,3m co,MMM,NYSE,1,operating,3841,Surgical & Medical Instruments & Apparatus
+0000068505,"Motorola Solutions, Inc.",motorola solutions inc,MSI,NYSE,1,operating,3663,Radio & Tv Broadcasting & Communications Equipment
+0000072331,NORDSON CORP,nordson corp,NDSN,Nasdaq,0,operating,3569,"General Industrial Machinery & Equipment, NEC"
+0000072741,EVERSOURCE ENERGY,eversource energy,ES,NYSE,2,operating,4911,Electric Services
+0000072903,XCEL ENERGY INC,xcel energy inc,XEL|XELLL,Nasdaq|Nasdaq,1,operating,4931,Electric & Other Services Combined
+0000072971,WELLS FARGO & COMPANY/MN,wells fargo and company mn,WFC|WFC-PY|WFC-PL|WFC-PC|WFCNP|WFC-PA|WFC-PD|WFC-PZ,NYSE|NYSE|NYSE|NYSE|OTC|NYSE|NYSE|NYSE,2,operating,6021,National Commercial Banks
+0000073124,NORTHERN TRUST CORP,northern trust corp,NTRS|NTRSO,Nasdaq|Nasdaq,0,operating,6022,State Commercial Banks
+0000073309,NUCOR CORP,nucor corp,NUE,NYSE,0,operating,3312,"Steel Works, Blast Furnaces & Rolling Mills (Coke Ovens)"
+0000074208,"UDR, Inc.",udr inc,UDR,NYSE,1,operating,6798,Real Estate Investment Trusts
+0000075362,PACCAR INC,paccar inc,PCAR,Nasdaq,0,operating,3711,Motor Vehicles & Passenger Car Bodies
+0000075677,PACKAGING CORP OF AMERICA,packaging corp of america,PKG,NYSE,0,operating,2650,Paperboard Containers & Boxes
+0000076334,Parker-Hannifin Corp,parker hannifin corp,PH,NYSE,1,operating,3490,Miscellaneous Fabricated Metal Products
+0000077360,PENTAIR plc,pentair plc,PNR,NYSE,2,operating,3550,Special Industry Machinery (No Metalworking Machinery)
+0000077476,PEPSICO INC,pepsico inc,PEP,Nasdaq,0,operating,2080,Beverages
+0000078003,PFIZER INC,pfizer inc,PFE,NYSE,1,operating,2834,Pharmaceutical Preparations
+0000078239,PVH CORP. /DE/,pvh corp de,PVH,NYSE,1,operating,2320,"Men's & Boys' Furnishgs, Work Clothg, & Allied Garments"
+0000079282,"BROWN & BROWN, INC.",brown and brown inc,BRO,NYSE,3,operating,6411,"Insurance Agents, Brokers & Service"
+0000079879,PPG INDUSTRIES INC,ppg industries inc,PPG,NYSE,0,operating,2851,"Paints, Varnishes, Lacquers, Enamels & Allied Prods"
+0000080424,PROCTER & GAMBLE Co,procter and gamble co,PG,NYSE,0,operating,2840,"Soap, Detergents, Cleang Preparations, Perfumes, Cosmetics"
+0000080661,PROGRESSIVE CORP/OH/,progressive corp oh,PGR,NYSE,0,operating,6331,"Fire, Marine & Casualty Insurance"
+0000084839,ROLLINS INC,rollins inc,ROL,NYSE,0,operating,7340,Services-To Dwellings & Other Buildings
+0000086312,"TRAVELERS COMPANIES, INC.",travelers companies inc,TRV,NYSE,3,operating,6331,"Fire, Marine & Casualty Insurance"
+0000087347,SLB LIMITED/NV,slb limited nv,SLB,NYSE,3,operating,1389,"Oil & Gas Field Services, NEC"
+0000089800,SHERWIN WILLIAMS CO,sherwin williams co,SHW,NYSE,0,operating,5200,"Retail-Building Materials, Hardware, Garden Supply"
+0000091142,SMITH A O CORP,smith a o corp,AOS,NYSE,0,operating,3630,Household Appliances
+0000091419,J M SMUCKER Co,j m smucker co,SJM,NYSE,1,operating,2033,"Canned, Fruits, Veg, Preserves, Jams & Jellies"
+0000091440,Snap-on Inc,snap on inc,SNA,NYSE,2,operating,3420,"Cutlery, Handtools & General Hardware"
+0000092122,SOUTHERN CO,southern co,SO|SOJC|SOJD|SOJE|SOJF|SOMN,NYSE|NYSE|NYSE|NYSE|NYSE|NYSE,1,operating,4911,Electric Services
+0000092230,TRUIST FINANCIAL CORP,truist financial corp,TFC|TFC-PI|TFC-PO|TFC-PR,NYSE|NYSE|NYSE|NYSE,2,operating,6021,National Commercial Banks
+0000092380,SOUTHWEST AIRLINES CO,southwest airlines co,LUV,NYSE,0,operating,4512,"Air Transportation, Scheduled"
+0000093410,CHEVRON CORP,chevron corp,CVX,NYSE,1,operating,2911,Petroleum Refining
+0000093556,"STANLEY BLACK & DECKER, INC.",stanley black and decker inc,SWK,NYSE,1,operating,3420,"Cutlery, Handtools & General Hardware"
+0000093751,STATE STREET CORP,state street corp,STT|STT-PG,NYSE|NYSE,3,operating,6022,State Commercial Banks
+0000096021,SYSCO CORP,sysco corp,SYY,NYSE,0,operating,5140,Wholesale-Groceries & Related Products
+0000096943,TELEFLEX INC,teleflex inc,TFX,NYSE,0,operating,3841,Surgical & Medical Instruments & Apparatus
+0000097210,"TERADYNE, INC",teradyne inc,TER,Nasdaq,1,operating,3825,Instruments For Meas & Testing of  Electricity & Elec Signals
+0000097476,TEXAS INSTRUMENTS INC,texas instruments inc,TXN,Nasdaq,0,operating,3674,Semiconductors & Related Devices
+0000097745,THERMO FISHER SCIENTIFIC INC.,thermo fisher scientific inc,TMO,NYSE,1,operating,3829,"Measuring & Controlling Devices, NEC"
+0000098246,TIFFANY & CO,tiffany and co,,,0,operating,5944,Retail-Jewelry Stores
+0000100493,"TYSON FOODS, INC.",tyson foods inc,TSN,NYSE,1,operating,2015,Poultry Slaughtering and Processing
+0000100517,"United Airlines Holdings, Inc.",united airlines holdings inc,UAL,Nasdaq,2,operating,4512,"Air Transportation, Scheduled"
+0000100885,UNION PACIFIC CORP,union pacific corp,UNP,NYSE,0,operating,4011,"Railroads, Line-Haul Operating"
+0000101829,RTX Corp,rtx corp,RTX,NYSE,2,operating,3724,Aircraft Engines & Engine Parts
+0000103379,V F CORP,v f corp,VFC,NYSE,2,operating,2320,"Men's & Boys' Furnishgs, Work Clothg, & Allied Garments"
+0000104169,Walmart Inc.,walmart inc,WMT,Nasdaq,2,operating,5331,Retail-Variety Stores
+0000105634,"EMCOR Group, Inc.",emcor group inc,EME,NYSE,2,operating,1731,Electrical Work
+0000105770,WEST PHARMACEUTICAL SERVICES INC,west pharmaceutical services inc,WST,NYSE,1,operating,3841,Surgical & Medical Instruments & Apparatus
+0000106040,WESTERN DIGITAL CORP,western digital corp,WDC,Nasdaq,0,operating,3572,Computer Storage Devices
+0000106535,WEYERHAEUSER CO,weyerhaeuser co,WY,NYSE,0,operating,6798,Real Estate Investment Trusts
+0000106640,WHIRLPOOL CORP /DE/,whirlpool corp de,WHR|WHR-PA,NYSE|NYSE,0,operating,3630,Household Appliances
+0000200406,JOHNSON & JOHNSON,johnson and johnson,JNJ,NYSE,1,operating,2834,Pharmaceutical Preparations
+0000202058,"L3HARRIS TECHNOLOGIES, INC. /DE/",l3harris technologies inc de,LHX,NYSE,1,operating,3812,"Search, Detection, Navigation, Guidance, Aeronautical Sys"
+0000217346,TEXTRON INC,textron inc,TXT,NYSE,0,operating,3720,Aircraft & Parts
+0000277948,CSX CORP,csx corp,CSX,Nasdaq,0,operating,4011,"Railroads, Line-Haul Operating"
+0000310158,"Merck & Co., Inc.",merck and co inc,MRK,NYSE,2,operating,2834,Pharmaceutical Preparations
+0000310764,STRYKER CORP,stryker corp,SYK,NYSE,0,operating,3841,Surgical & Medical Instruments & Apparatus
+0000313927,CHURCH & DWIGHT CO INC /DE/,church and dwight co inc de,CHD,NYSE,0,operating,2840,"Soap, Detergents, Cleang Preparations, Perfumes, Cosmetics"
+0000315189,DEERE & CO,deere and co,DE,NYSE,0,operating,3523,Farm Machinery & Equipment
+0000315213,ROBERT HALF INC.,robert half inc,RHI,NYSE,2,operating,7363,Services-Help Supply Services
+0000315293,Aon plc,aon plc,AON,NYSE,1,operating,6411,"Insurance Agents, Brokers & Service"
+0000316709,SCHWAB CHARLES CORP,schwab charles corp,SCHW|SCHW-PD|SCHW-PJ,NYSE|NYSE|NYSE,0,operating,6211,"Security Brokers, Dealers & Flotation Companies"
+0000318154,AMGEN INC,amgen inc,AMGN,Nasdaq,0,operating,2836,"Biological Products, (No Diagnostic Substances)"
+0000319201,KLA CORP,kla corp,KLAC,Nasdaq,2,operating,3827,Optical Instruments & Lenses
+0000320187,"NIKE, Inc.",nike inc,NKE,NYSE,1,operating,3021,Rubber & Plastics Footwear
+0000320193,Apple Inc.,apple inc,AAPL,Nasdaq,3,operating,3571,Electronic Computers
+0000320335,GLOBE LIFE INC.,globe life inc,GL|GL-PD,NYSE|NYSE,1,operating,6311,Life Insurance
+0000352541,ALLIANT ENERGY CORP,alliant energy corp,LNT,Nasdaq,3,operating,4931,Electric & Other Services Combined
+0000352915,UNIVERSAL HEALTH SERVICES INC,universal health services inc,UHS,NYSE,0,operating,8062,"Services-General Medical & Surgical Hospitals, NEC"
+0000354190,Arthur J. Gallagher & Co.,arthur j gallagher and co,AJG,NYSE,1,operating,6411,"Insurance Agents, Brokers & Service"
+0000354950,"HOME DEPOT, INC.",home depot inc,HD,NYSE,1,operating,5211,Retail-Lumber & Other Building Materials Dealers
+0000701985,"Bath & Body Works, Inc.",bath and body works inc,BBWI,NYSE,3,operating,5990,"Retail-Retail Stores, NEC"
+0000702165,NORFOLK SOUTHERN CORP,norfolk southern corp,NSC,NYSE,0,operating,4011,"Railroads, Line-Haul Operating"
+0000707549,LAM RESEARCH CORP,lam research corp,LRCX,Nasdaq,0,operating,3559,"Special Industry Machinery, NEC"
+0000711404,"COOPER COMPANIES, INC.",cooper companies inc,COO,Nasdaq,1,operating,3851,Ophthalmic Goods
+0000713676,"PNC FINANCIAL SERVICES GROUP, INC.",pnc financial services group inc,PNC,NYSE,2,operating,6021,National Commercial Banks
+0000715957,"DOMINION ENERGY, INC",dominion energy inc,D,NYSE,2,operating,4911,Electric Services
+0000719739,SVB FINANCIAL GROUP,svb financial group,,,1,operating,6022,State Commercial Banks
+0000719955,WILLIAMS SONOMA INC,williams sonoma inc,WSM,NYSE,0,operating,5700,"Retail-Home Furniture, Furnishings & Equipment Stores"
+0000720005,RAYMOND JAMES FINANCIAL INC,raymond james financial inc,RJF,NYSE,0,operating,6211,"Security Brokers, Dealers & Flotation Companies"
+0000721371,CARDINAL HEALTH INC,cardinal health inc,CAH,NYSE,2,operating,5122,"Wholesale-Drugs, Proprietaries & Druggists' Sundries"
+0000723125,MICRON TECHNOLOGY INC,micron technology inc,MU,Nasdaq,0,operating,3674,Semiconductors & Related Devices
+0000723254,CINTAS CORP,cintas corp,CTAS,Nasdaq,0,operating,2320,"Men's & Boys' Furnishgs, Work Clothg, & Allied Garments"
+0000723531,PAYCHEX INC,paychex inc,PAYX,Nasdaq,0,operating,8700,"Services-Engineering, Accounting, Research, Management"
+0000726728,REALTY INCOME CORP,realty income corp,O,NYSE,0,operating,6798,Real Estate Investment Trusts
+0000728535,HUNT J B TRANSPORT SERVICES INC,hunt j b transport services inc,JBHT,Nasdaq,0,operating,4213,Trucking (No Local)
+0000731766,UNITEDHEALTH GROUP INC,unitedhealth group inc,UNH,NYSE,1,operating,6324,Hospital & Medical Service Plans
+0000731802,ATMOS ENERGY CORP,atmos energy corp,ATO,NYSE,0,operating,4924,Natural Gas Distribution
+0000732712,VERIZON COMMUNICATIONS INC,verizon communications inc,VZ,NYSE,1,operating,4813,Telephone Communications (No Radiotelephone)
+0000732717,AT&T INC.,at and t inc,T|TBB|T-PA|T-PC,NYSE|NYSE|NYSE|NYSE,2,operating,4813,Telephone Communications (No Radiotelephone)
+0000740260,"Ventas, Inc.",ventas inc,VTR,NYSE,2,operating,6798,Real Estate Investment Trusts
+0000745732,"ROSS STORES, INC.",ross stores inc,ROST,Nasdaq,1,operating,5651,Retail-Family Clothing Stores
+0000746515,EXPEDITORS INTERNATIONAL OF WASHINGTON INC,expeditors international of washington inc,EXPD,NYSE,0,operating,4731,Arrangement of  Transportation of  Freight & Cargo
+0000749251,GARTNER INC,gartner inc,IT,NYSE,1,operating,8741,Services-Management Services
+0000753308,NEXTERA ENERGY INC,nextera energy inc,NEE|NEE-PN|NEE-PS|NEE-PT|NEE-PU|NEE-PV|NEE-PW,NYSE|NYSE|NYSE|NYSE|NYSE|NYSE|NYSE,1,operating,4911,Electric Services
+0000759944,CITIZENS FINANCIAL GROUP INC/RI,citizens financial group inc ri,CFG|CFG-PE|CFG-PH|CFG-PI,NYSE|NYSE|NYSE|NYSE,1,operating,6022,State Commercial Banks
+0000764180,"ALTRIA GROUP, INC.",altria group inc,MO,NYSE,2,operating,2111,Cigarettes
+0000764478,BEST BUY CO INC,best buy co inc,BBY,NYSE,0,operating,5731,"Retail-Radio, Tv & Consumer Electronics Stores"
+0000764622,PINNACLE WEST CAPITAL CORP,pinnacle west capital corp,PNW,NYSE,0,operating,4911,Electric Services
+0000765880,"HEALTHPEAK PROPERTIES, INC.",healthpeak properties inc,DOC,NYSE,2,operating,6798,Real Estate Investment Trusts
+0000766421,"ALASKA AIR GROUP, INC.",alaska air group inc,ALK,NYSE,1,operating,4512,"Air Transportation, Scheduled"
+0000766704,WELLTOWER INC.,welltower inc,WELL,NYSE,1,operating,6798,Real Estate Investment Trusts
+0000769397,"Autodesk, Inc.",autodesk inc,ADSK,Nasdaq,1,operating,7372,Services-Prepackaged Software
+0000773840,HONEYWELL INTERNATIONAL INC,honeywell international inc,HON,Nasdaq,2,operating,3724,Aircraft Engines & Engine Parts
+0000779152,JACK HENRY & ASSOCIATES INC,jack henry and associates inc,JKHY,Nasdaq,1,operating,7373,Services-Computer Integrated Systems Design
+0000783325,"WEC ENERGY GROUP, INC.",wec energy group inc,WEC,NYSE,1,operating,4931,Electric & Other Services Combined
+0000788784,PUBLIC SERVICE ENTERPRISE GROUP INC,public service enterprise group inc,PEG,NYSE,0,operating,4931,Electric & Other Services Combined
+0000789019,MICROSOFT CORP,microsoft corp,MSFT,Nasdaq,0,operating,7372,Services-Prepackaged Software
+0000789570,MGM Resorts International,mgm resorts international,MGM,NYSE,2,operating,7011,Hotels & Motels
+0000796343,ADOBE INC.,adobe inc,ADBE,Nasdaq,1,operating,7372,Services-Prepackaged Software
+0000797468,OCCIDENTAL PETROLEUM CORP /DE/,occidental petroleum corp de,OXY|OXY-WT,NYSE|NYSE,0,operating,1311,Crude Petroleum & Natural Gas
+0000798354,FISERV INC,fiserv inc,FISV,Nasdaq,0,operating,7389,"Services-Business Services, NEC"
+0000804328,QUALCOMM INC/DE,qualcomm inc de,QCOM,Nasdaq,0,operating,3663,Radio & Tv Broadcasting & Communications Equipment
+0000811156,CMS ENERGY CORP,cms energy corp,CMS|CMSA|CMSC|CMSD|CMS-PC,NYSE|NYSE|NYSE|NYSE|NYSE,0,operating,4931,Electric & Other Services Combined
+0000813672,CADENCE DESIGN SYSTEMS INC,cadence design systems inc,CDNS,Nasdaq,0,operating,7372,Services-Prepackaged Software
+0000814453,NEWELL BRANDS INC.,newell brands inc,NWL,Nasdaq,4,operating,3089,"Plastics Products, NEC"
+0000814547,FAIR ISAAC CORP,fair isaac corp,FICO,NYSE,1,operating,7389,"Services-Business Services, NEC"
+0000815097,Carnival Corp Ltd.,carnival corp ltd,CCL,NYSE,2,operating,4400,Water Transportation
+0000815556,FASTENAL CO,fastenal co,FAST,Nasdaq,1,operating,5200,"Retail-Building Materials, Hardware, Garden Supply"
+0000818479,DENTSPLY SIRONA Inc.,dentsply sirona inc,XRAY,Nasdaq,1,operating,3843,Dental Equipment & Supplies
+0000820027,AMERIPRISE FINANCIAL INC,ameriprise financial inc,AMP,NYSE,3,operating,6282,Investment Advice
+0000820313,AMPHENOL CORP /DE/,amphenol corp de,APH,NYSE,0,operating,3678,Electronic Connectors
+0000821189,EOG RESOURCES INC,eog resources inc,EOG,NYSE,1,operating,1311,Crude Petroleum & Natural Gas
+0000822416,PULTEGROUP INC/MI/,pultegroup inc mi,PHM,NYSE,2,operating,1531,Operative Builders
+0000823768,WASTE MANAGEMENT INC,waste management inc,WM,NYSE,1,operating,4953,Refuse Systems
+0000827052,EDISON INTERNATIONAL,edison international,EIX,NYSE,1,operating,4911,Electric Services
+0000827054,MICROCHIP TECHNOLOGY INC,microchip technology inc,MCHP|MCHPP,Nasdaq|Nasdaq,0,operating,3674,Semiconductors & Related Devices
+0000829224,STARBUCKS CORP,starbucks corp,SBUX,Nasdaq,0,operating,5810,Retail-Eating & Drinking Places
+0000831001,CITIGROUP INC,citigroup inc,C|C-PN|C-PR,NYSE|NYSE|NYSE,3,operating,6021,National Commercial Banks
+0000831259,FREEPORT-MCMORAN INC,freeport mcmoran inc,FCX,NYSE,1,operating,1000,Metal Mining
+0000832101,IDEX CORP /DE/,idex corp de,IEX,NYSE,0,operating,3561,Pumps & Pumping Equipment
+0000833444,Johnson Controls International plc,johnson controls international plc,JCI,NYSE,4,operating,3585,Air-Cond & Warm Air Heatg Equip & Comm & Indl Refrig Equip
+0000842023,BIO-TECHNE Corp,bio techne corp,TECH,Nasdaq,1,operating,2836,"Biological Products, (No Diagnostic Substances)"
+0000849395,CRH PUBLIC LTD CO,crh public ltd co,CRH,NYSE,0,operating,3241,"Cement, Hydraulic"
+0000849399,Gen Digital Inc.,gen digital inc,GEN|GENVR,Nasdaq|Nasdaq,2,operating,7372,Services-Prepackaged Software
+0000851968,MOHAWK INDUSTRIES INC,mohawk industries inc,MHK,NYSE,1,operating,2273,Carpets & Rugs
+0000857005,PTC INC.,ptc inc,PTC,Nasdaq,1,operating,7372,Services-Prepackaged Software
+0000858877,"CISCO SYSTEMS, INC.",cisco systems inc,CSCO,Nasdaq,2,operating,3576,Computer Communications Equipment
+0000860730,"HCA Healthcare, Inc.",hca healthcare inc,HCA,NYSE,7,operating,8062,"Services-General Medical & Surgical Hospitals, NEC"
+0000860731,TYLER TECHNOLOGIES INC,tyler technologies inc,TYL,NYSE,1,operating,7372,Services-Prepackaged Software
+0000864749,TRIMBLE INC.,trimble inc,TRMB,Nasdaq,1,operating,3829,"Measuring & Controlling Devices, NEC"
+0000865752,Monster Beverage Corp,monster beverage corp,MNST,Nasdaq,1,operating,2086,Bottled & Canned Soft Drinks & Carbonated Waters
+0000866787,AUTOZONE INC,autozone inc,AZO,NYSE,1,operating,5531,Retail-Auto & Home Supply Stores
+0000872589,"REGENERON PHARMACEUTICALS, INC.",regeneron pharmaceuticals inc,REGN,Nasdaq,1,operating,2834,Pharmaceutical Preparations
+0000874716,IDEXX LABORATORIES INC /DE,idexx laboratories inc de,IDXX,Nasdaq,0,operating,2835,In Vitro & In Vivo Diagnostic Substances
+0000874761,AES CORP,aes corp,AES,NYSE,1,operating,4991,Cogeneration Services & Small Power Producers
+0000874766,"HARTFORD INSURANCE GROUP, INC.",hartford insurance group inc,HIG|HIG-PG,NYSE|NYSE,4,operating,6331,"Fire, Marine & Casualty Insurance"
+0000875045,BIOGEN INC.,biogen inc,BIIB,Nasdaq,4,operating,2836,"Biological Products, (No Diagnostic Substances)"
+0000875320,VERTEX PHARMACEUTICALS INC / MA,vertex pharmaceuticals inc ma,VRTX,Nasdaq,0,operating,2834,Pharmaceutical Preparations
+0000877212,ZEBRA TECHNOLOGIES CORP,zebra technologies corp,ZBRA,Nasdaq,1,operating,3560,General Industrial Machinery & Equipment
+0000878927,"OLD DOMINION FREIGHT LINE, INC.",old dominion freight line inc,ODFL,Nasdaq,1,operating,4213,Trucking (No Local)
+0000879101,KIMCO REALTY CORP,kimco realty corp,KIM|KIM-PL|KIM-PM|KIM-PN,NYSE|NYSE|NYSE|NYSE,0,operating,6798,Real Estate Investment Trusts
+0000879169,INCYTE CORP,incyte corp,INCY,Nasdaq,3,operating,8731,Services-Commercial Physical & Biological Research
+0000882095,"GILEAD SCIENCES, INC.",gilead sciences inc,GILD,Nasdaq,1,operating,2836,"Biological Products, (No Diagnostic Substances)"
+0000882184,HORTON D R INC /DE/,horton d r inc de,DHI,NYSE,0,operating,1531,Operative Builders
+0000882835,ROPER TECHNOLOGIES INC,roper technologies inc,ROP,Nasdaq,3,operating,3823,"Industrial Instruments For Measurement, Display, and Control"
+0000883241,SYNOPSYS INC,synopsys inc,SNPS,Nasdaq,0,operating,7372,Services-Prepackaged Software
+0000884887,ROYAL CARIBBEAN CRUISES LTD,royal caribbean cruises ltd,RCL,NYSE,0,operating,4400,Water Transportation
+0000885725,BOSTON SCIENTIFIC CORP,boston scientific corp,BSX,NYSE,0,operating,3841,Surgical & Medical Instruments & Apparatus
+0000886982,GOLDMAN SACHS GROUP INC,goldman sachs group inc,GS|GSCE|GS-PA|GS-PC|GS-PD,NYSE|OTC|NYSE|NYSE|NYSE,1,operating,6211,"Security Brokers, Dealers & Flotation Companies"
+0000891103,"Match Group, Inc.",match group inc,MTCH,Nasdaq,6,operating,7370,"Services-Computer Programming, Data Processing, Etc."
+0000895126,EXPAND ENERGY Corp,expand energy corp,EXE,Nasdaq,1,operating,1311,Crude Petroleum & Natural Gas
+0000895421,MORGAN STANLEY,morgan stanley,MS|MS-PK|MS-PE|MS-PA|MS-PF|MS-PI|MS-PL|MS-PO|MS-PP|MS-PQ,NYSE|NYSE|NYSE|NYSE|NYSE|NYSE|NYSE|NYSE|NYSE|NYSE,5,operating,6211,"Security Brokers, Dealers & Flotation Companies"
+0000896159,Chubb Ltd,chubb ltd,CB,NYSE,2,operating,6331,"Fire, Marine & Casualty Insurance"
+0000896878,INTUIT INC.,intuit inc,INTU,Nasdaq,1,operating,7372,Services-Prepackaged Software
+0000898173,O REILLY AUTOMOTIVE INC,o reilly automotive inc,ORLY,Nasdaq,1,operating,5531,Retail-Auto & Home Supply Stores
+0000898293,JABIL INC,jabil inc,JBL,NYSE,1,operating,3672,Printed Circuit Boards
+0000899051,ALLSTATE CORP,allstate corp,ALL|ALL-PH|ALL-PB|ALL-PI|ALL-PJ,NYSE|NYSE|NYSE|NYSE|NYSE,0,operating,6331,"Fire, Marine & Casualty Insurance"
+0000899689,VORNADO REALTY TRUST,vornado realty trust,VNO|VNORP|VNO-PL|VNO-PM|VNO-PN|VNO-PO,NYSE|OTC|NYSE|NYSE|NYSE|NYSE,0,operating,6798,Real Estate Investment Trusts
+0000900075,COPART INC,copart inc,CPRT,Nasdaq,0,operating,5500,Retail-Auto Dealers & Gasoline Stations
+0000906163,NVR INC,nvr inc,NVR,NYSE,0,operating,1531,Operative Builders
+0000906345,CAMDEN PROPERTY TRUST,camden property trust,CPT,NYSE,0,operating,6798,Real Estate Investment Trusts
+0000908255,BORGWARNER INC,borgwarner inc,BWA,NYSE,1,operating,3714,Motor Vehicle Parts & Accessories
+0000909832,COSTCO WHOLESALE CORP /NEW,costco wholesale corp new,COST,Nasdaq,2,operating,5331,Retail-Variety Stores
+0000910521,DECKERS OUTDOOR CORP,deckers outdoor corp,DECK,NYSE,0,operating,3021,Rubber & Plastics Footwear
+0000910606,REGENCY CENTERS CORP,regency centers corp,REG|REGCO|REGCP,Nasdaq|Nasdaq|Nasdaq,1,operating,6798,Real Estate Investment Trusts
+0000912595,MID AMERICA APARTMENT COMMUNITIES INC.,mid america apartment communities inc,MAAI|MAA|MAA-PI,None|NYSE|NYSE,1,operating,6798,Real Estate Investment Trusts
+0000914208,Invesco Ltd.,invesco ltd,IVZ,NYSE,6,operating,6282,Investment Advice
+0000915389,EASTMAN CHEMICAL CO,eastman chemical co,EMN,NYSE,0,operating,2821,"Plastic Materials, Synth Resins & Nonvulcan Elastomers"
+0000915912,AVALONBAY COMMUNITIES INC,avalonbay communities inc,AVB,NYSE,2,operating,6798,Real Estate Investment Trusts
+0000915913,ALBEMARLE CORP,albemarle corp,ALB|ALB-PA,NYSE|NYSE,0,operating,2821,"Plastic Materials, Synth Resins & Nonvulcan Elastomers"
+0000916076,MARTIN MARIETTA MATERIALS INC,martin marietta materials inc,MLM,NYSE,0,operating,1400,Mining & Quarrying of  Nonmetallic Minerals (No Fuels)
+0000916365,TRACTOR SUPPLY CO /DE/,tractor supply co de,TSCO,Nasdaq,0,operating,5200,"Retail-Building Materials, Hardware, Garden Supply"
+0000920148,LABCORP HOLDINGS INC.,labcorp holdings inc,LH,NYSE,2,operating,8071,Services-Medical Laboratories
+0000920522,"ESSEX PROPERTY TRUST, INC.",essex property trust inc,ESS,NYSE,2,operating,6798,Real Estate Investment Trusts
+0000920760,LENNAR CORP /NEW/,lennar corp new,LEN|LEN-B,NYSE|NYSE,1,operating,1520,General Bldg Contractors - Residential Bldgs
+0000921738,"PENN Entertainment, Inc.",penn entertainment inc,PENN,Nasdaq,1,operating,7011,Hotels & Motels
+0000922224,PPL Corp,ppl corp,PPL|PPLC,NYSE|NYSE,1,operating,4911,Electric Services
+0000922621,ERIE INDEMNITY CO,erie indemnity co,ERIE,Nasdaq,0,operating,6411,"Insurance Agents, Brokers & Service"
+0000927066,DAVITA INC.,davita inc,DVA,NYSE,3,operating,8090,"Services-Misc Health & Allied Services, NEC"
+0000927628,CAPITAL ONE FINANCIAL CORP,capital one financial corp,COF|COF-PI|COF-PJ|COF-PK|COF-PL|COF-PN,NYSE|NYSE|NYSE|NYSE|NYSE|NYSE,0,operating,6021,National Commercial Banks
+0000927653,MCKESSON CORP,mckesson corp,MCK,NYSE,1,operating,5122,"Wholesale-Drugs, Proprietaries & Druggists' Sundries"
+0000935703,"DOLLAR TREE, INC.",dollar tree inc,DLTR,Nasdaq,2,operating,5331,Retail-Variety Stores
+0000936340,DTE ENERGY CO,dte energy co,DTE|DTW|DTB|DTG|DTK,NYSE|NYSE|NYSE|NYSE|NYSE,1,operating,4911,Electric Services
+0000936468,LOCKHEED MARTIN CORP,lockheed martin corp,LMT,NYSE,1,operating,3760,Guided Missiles & Space Vehicles & Parts
+0000940944,DARDEN RESTAURANTS INC,darden restaurants inc,DRI,NYSE,0,operating,5812,Retail-Eating  Places
+0000943452,WESTINGHOUSE AIR BRAKE TECHNOLOGIES CORP,westinghouse air brake technologies corp,WAB,NYSE,2,operating,3743,Railroad Equipment
+0000943819,RESMED INC,resmed inc,RMD|RSMDF,NYSE|OTC,0,operating,3841,Surgical & Medical Instruments & Apparatus
+0000945841,POOL CORP,pool corp,POOL,Nasdaq,1,operating,5090,Wholesale-Misc Durable Goods
+0000946581,TAKE TWO INTERACTIVE SOFTWARE INC,take two interactive software inc,TTWO,Nasdaq,0,operating,7372,Services-Prepackaged Software
+0000947484,ARCH CAPITAL GROUP LTD.,arch capital group ltd,ACGL|ACGLN|ACGLO,Nasdaq|Nasdaq|Nasdaq,2,operating,6331,"Fire, Marine & Casualty Insurance"
+0001000228,HENRY SCHEIN INC,henry schein inc,HSIC,Nasdaq,1,operating,5047,"Wholesale-Medical, Dental & Hospital Equipment & Supplies"
+0001001250,ESTEE LAUDER COMPANIES INC,estee lauder companies inc,EL,NYSE,0,operating,2844,"Perfumes, Cosmetics & Other Toilet Preparations"
+0001002047,"NetApp, Inc.",netapp inc,NTAP,Nasdaq,1,operating,3572,Computer Storage Devices
+0001002910,AMEREN CORP,ameren corp,AEE,NYSE,0,operating,4931,Electric & Other Services Combined
+0001004980,PG&E Corp,pg and e corp,PCG|PCG-PE|PCG-PD|PCG-PC|PCG-PH|PCG-PG|PCG-PI|PCG-PA|PCG-PB|PCG-PX,NYSE|NYSE|NYSE|NYSE|NYSE|NYSE|NYSE|NYSE|NYSE|NYSE,3,operating,4931,Electric & Other Services Combined
+0001013237,FACTSET RESEARCH SYSTEMS INC,factset research systems inc,FDS,NYSE,0,operating,7370,"Services-Computer Programming, Data Processing, Etc."
+0001013871,"NRG ENERGY, INC.",nrg energy inc,NRG,NYSE,2,operating,4911,Electric Services
+0001014473,VERISIGN INC/CA,verisign inc ca,VRSN,Nasdaq,0,operating,7371,Services-Computer Programming Services
+0001018724,AMAZON COM INC,amazon com inc,AMZN,Nasdaq,0,operating,5961,Retail-Catalog & Mail-Order Houses
+0001020569,IRON MOUNTAIN INC,iron mountain inc,IRM,NYSE,2,operating,6798,Real Estate Investment Trusts
+0001021860,NOV Inc.,nov inc,NOV,NYSE,2,operating,3533,Oil & Gas Field Machinery & Equipment
+0001022079,QUEST DIAGNOSTICS INC,quest diagnostics inc,DGX,NYSE,1,operating,8071,Services-Medical Laboratories
+0001022671,STEEL DYNAMICS INC,steel dynamics inc,STLD,Nasdaq,1,operating,3312,"Steel Works, Blast Furnaces & Rolling Mills (Coke Ovens)"
+0001024478,"ROCKWELL AUTOMATION, INC",rockwell automation inc,ROK,NYSE,4,operating,3829,"Measuring & Controlling Devices, NEC"
+0001031296,FIRSTENERGY CORP,firstenergy corp,FE,NYSE,0,operating,4911,Electric Services
+0001032208,SEMPRA,sempra,SRE|SREA,NYSE|NYSE,2,operating,4932,Gas & Other Services Combined
+0001034054,SBA COMMUNICATIONS CORP,sba communications corp,SBAC,Nasdaq,0,operating,6798,Real Estate Investment Trusts
+0001035267,INTUITIVE SURGICAL INC,intuitive surgical inc,ISRG,Nasdaq,0,operating,3842,"Orthopedic, Prosthetic & Surgical Appliances & Supplies"
+0001035443,"ALEXANDRIA REAL ESTATE EQUITIES, INC.",alexandria real estate equities inc,ARE,NYSE,2,operating,6798,Real Estate Investment Trusts
+0001035983,COMFORT SYSTEMS USA INC,comfort systems usa inc,FIX,NYSE,1,operating,1731,Electrical Work
+0001037038,RALPH LAUREN CORP,ralph lauren corp,RL,NYSE,1,operating,2320,"Men's & Boys' Furnishgs, Work Clothg, & Allied Garments"
+0001037540,"BXP, Inc.",bxp inc,BXP,NYSE,1,operating,6798,Real Estate Investment Trusts
+0001037646,METTLER TOLEDO INTERNATIONAL INC/,mettler toledo international inc,MTD,NYSE,3,operating,3826,Laboratory Analytical Instruments
+0001037868,AMETEK INC/,ametek inc,AME,NYSE,0,operating,3823,"Industrial Instruments For Measurement, Display, and Control"
+0001040971,SL GREEN REALTY CORP,sl green realty corp,SLG|SLG-PI,NYSE|NYSE,0,operating,6798,Real Estate Investment Trusts
+0001041061,YUM BRANDS INC,yum brands inc,YUM,NYSE,1,operating,5812,Retail-Eating  Places
+0001043277,"C. H. ROBINSON WORLDWIDE, INC.",c h robinson worldwide inc,CHRW,Nasdaq,1,operating,4731,Arrangement of  Transportation of  Freight & Cargo
+0001045609,"Prologis, Inc.",prologis inc,PLD|PLDGP,NYSE|OTC,1,operating,6798,Real Estate Investment Trusts
+0001045810,NVIDIA CORP,nvidia corp,NVDA,Nasdaq,1,operating,3674,Semiconductors & Related Devices
+0001047862,CONSOLIDATED EDISON INC,consolidated edison inc,ED,NYSE,0,operating,4931,Electric & Other Services Combined
+0001048286,MARRIOTT INTERNATIONAL INC /MD/,marriott international inc md,MAR,Nasdaq,2,operating,7011,Hotels & Motels
+0001048695,"F5, INC.",f5 inc,FFIV,Nasdaq,2,operating,3576,Computer Communications Equipment
+0001048911,FEDEX CORP,fedex corp,FDX,NYSE,1,operating,4513,Air Courier Services
+0001050915,"QUANTA SERVICES, INC.",quanta services inc,PWR,NYSE,1,operating,1731,Electrical Work
+0001051470,CROWN CASTLE INC.,crown castle inc,CCI,NYSE,1,operating,6798,Real Estate Investment Trusts
+0001057352,"COSTAR GROUP, INC.",costar group inc,CSGP,Nasdaq,3,operating,7389,"Services-Business Services, NEC"
+0001058090,CHIPOTLE MEXICAN GRILL INC,chipotle mexican grill inc,CMG,NYSE,0,operating,5812,Retail-Eating  Places
+0001058290,COGNIZANT TECHNOLOGY SOLUTIONS CORP,cognizant technology solutions corp,CTSH,Nasdaq,0,operating,7371,Services-Computer Programming Services
+0001059556,MOODYS CORP /DE/,moodys corp de,MCO,NYSE,2,operating,7320,"Services-Consumer Credit Reporting, Collection Agencies"
+0001060391,"REPUBLIC SERVICES, INC.",republic services inc,RSG,NYSE,1,operating,4953,Refuse Systems
+0001063761,SIMON PROPERTY GROUP INC.,simon property group inc,SPG|SPG-PJ,NYSE|NYSE,2,operating,6798,Real Estate Investment Trusts
+0001065088,EBAY INC,ebay inc,EBAY,Nasdaq,0,operating,7389,"Services-Business Services, NEC"
+0001065280,NETFLIX INC,netflix inc,NFLX,Nasdaq,1,operating,7841,Services-Video Tape Rental
+0001065696,LKQ CORP,lkq corp,LKQ,Nasdaq,1,operating,5010,Wholesale-Motor Vehicles & Motor Vehicle Parts & Supplies
+0001067701,"UNITED RENTALS, INC.",united rentals inc,URI,NYSE,1,operating,7359,"Services-Equipment Rental & Leasing, NEC"
+0001067983,BERKSHIRE HATHAWAY INC,berkshire hathaway inc,BRK-B|BRK-A,NYSE|NYSE,1,operating,6331,"Fire, Marine & Casualty Insurance"
+0001069183,"AXON ENTERPRISE, INC.",axon enterprise inc,AXON,Nasdaq,1,operating,3480,"Ordnance & Accessories, (No Vehicles/Guided Missiles)"
+0001069202,LENNOX INTERNATIONAL INC,lennox international inc,LII,NYSE,0,operating,3585,Air-Cond & Warm Air Heatg Equip & Comm & Indl Refrig Equip
+0001070750,"HOST HOTELS & RESORTS, INC.",host hotels and resorts inc,HST,Nasdaq,2,operating,6798,Real Estate Investment Trusts
+0001071739,CENTENE CORP,centene corp,CNC,NYSE,0,operating,6324,Hospital & Medical Service Plans
+0001075531,Booking Holdings Inc.,booking holdings inc,BKNG,Nasdaq,2,operating,4700,Transportation Services
+0001086222,AKAMAI TECHNOLOGIES INC,akamai technologies inc,AKAM,Nasdaq,0,operating,7389,"Services-Business Services, NEC"
+0001090012,DEVON ENERGY CORP/DE,devon energy corp de,DVN,NYSE,2,operating,1311,Crude Petroleum & Natural Gas
+0001090727,UNITED PARCEL SERVICE INC,united parcel service inc,UPS,NYSE,0,operating,4210,Trucking & Courier Services (No Air)
+0001090872,"AGILENT TECHNOLOGIES, INC.",agilent technologies inc,A,NYSE,1,operating,3826,Laboratory Analytical Instruments
+0001091667,"CHARTER COMMUNICATIONS, INC. /MO/",charter communications inc mo,CHTR|CHTRP,Nasdaq|Nasdaq,1,operating,4841,Cable & Other Pay Television Services
+0001093557,DEXCOM INC,dexcom inc,DXCM,Nasdaq,0,operating,3841,Surgical & Medical Instruments & Apparatus
+0001094285,TELEDYNE TECHNOLOGIES INC,teledyne technologies inc,TDY,NYSE,0,operating,3812,"Search, Detection, Navigation, Guidance, Aeronautical Sys"
+0001095073,"EVEREST GROUP, LTD.",everest group ltd,EG,NYSE,2,operating,6331,"Fire, Marine & Casualty Insurance"
+0001097149,ALIGN TECHNOLOGY INC,align technology inc,ALGN,Nasdaq,0,operating,3842,"Orthopedic, Prosthetic & Surgical Appliances & Supplies"
+0001097864,ON SEMICONDUCTOR CORP,on semiconductor corp,ON,Nasdaq,1,operating,3674,Semiconductors & Related Devices
+0001099219,METLIFE INC,metlife inc,MET|MET-PA|MET-PE|MET-PF,NYSE|NYSE|NYSE|NYSE,0,operating,6311,Life Insurance
+0001099800,Edwards Lifesciences Corp,edwards lifesciences corp,EW,NYSE,1,operating,3842,"Orthopedic, Prosthetic & Surgical Appliances & Supplies"
+0001100682,"CHARLES RIVER LABORATORIES INTERNATIONAL, INC.",charles river laboratories international inc,CRL,NYSE,2,operating,8731,Services-Commercial Physical & Biological Research
+0001101239,EQUINIX INC,equinix inc,EQIX,Nasdaq,0,operating,6798,Real Estate Investment Trusts
+0001103982,"Mondelez International, Inc.",mondelez international inc,MDLZ,Nasdaq,1,operating,2000,Food and Kindred Products
+0001108524,"Salesforce, Inc.",salesforce inc,CRM,NYSE,2,operating,7372,Services-Prepackaged Software
+0001109357,EXELON CORP,exelon corp,EXC,Nasdaq,0,operating,4931,Electric & Other Services Combined
+0001110803,"ILLUMINA, INC.",illumina inc,ILMN,Nasdaq,1,operating,3826,Laboratory Analytical Instruments
+0001111711,NISOURCE INC.,nisource inc,NI,NYSE,2,operating,4931,Electric & Other Services Combined
+0001111928,IPG PHOTONICS CORP,ipg photonics corp,IPGP,Nasdaq,0,operating,3674,Semiconductors & Related Devices
+0001116132,"TAPESTRY, INC.",tapestry inc,TPR,NYSE,1,operating,3100,Leather & Leather Products
+0001120193,"NASDAQ, INC.",nasdaq inc,NDAQ,Nasdaq,2,operating,6200,"Security & Commodity Brokers, Dealers, Exchanges & Services"
+0001121788,GARMIN LTD,garmin ltd,GRMN,NYSE,0,operating,3812,"Search, Detection, Navigation, Guidance, Aeronautical Sys"
+0001123360,GLOBAL PAYMENTS INC,global payments inc,GPN,NYSE,0,operating,7389,"Services-Business Services, NEC"
+0001126328,PRINCIPAL FINANCIAL GROUP INC,principal financial group inc,PFG,Nasdaq,0,operating,6321,Accident & Health Insurance
+0001130310,CENTERPOINT ENERGY INC,centerpoint energy inc,CNP,NYSE,2,operating,4911,Electric Services
+0001132979,FIRST REPUBLIC BANK,first republic bank,,,0,other,,
+0001136869,"ZIMMER BIOMET HOLDINGS, INC.",zimmer biomet holdings inc,ZBH,NYSE,1,operating,3842,"Orthopedic, Prosthetic & Surgical Appliances & Supplies"
+0001136893,"Fidelity National Information Services, Inc.",fidelity national information services inc,FIS,NYSE,2,operating,7389,"Services-Business Services, NEC"
+0001137774,PRUDENTIAL FINANCIAL INC,prudential financial inc,PRU|PFH|PRH|PRS,NYSE|NYSE|NYSE|NYSE,0,operating,6311,Life Insurance
+0001137789,Seagate Technology Holdings plc,seagate technology holdings plc,STX,Nasdaq,4,operating,3572,Computer Storage Devices
+0001138118,"CBRE GROUP, INC.",cbre group inc,CBRE,NYSE,3,operating,6500,Real Estate
+0001140536,WILLIS TOWERS WATSON PLC,willis towers watson plc,WTW,Nasdaq,2,operating,6411,"Insurance Agents, Brokers & Service"
+0001140859,"Cencora, Inc.",cencora inc,COR,NYSE,2,operating,5122,"Wholesale-Drugs, Proprietaries & Druggists' Sundries"
+0001141391,Mastercard Inc,mastercard inc,MA,NYSE,0,operating,7389,"Services-Business Services, NEC"
+0001145197,INSULET CORP,insulet corp,PODD,Nasdaq,0,operating,3841,Surgical & Medical Instruments & Apparatus
+0001156039,"Elevance Health, Inc.",elevance health inc,ELV,NYSE,4,operating,6324,Hospital & Medical Service Plans
+0001156375,CME GROUP INC.,cme group inc,CME,Nasdaq,1,operating,6200,"Security & Commodity Brokers, Dealers, Exchanges & Services"
+0001158449,ADVANCE AUTO PARTS INC,advance auto parts inc,AAP,NYSE,0,operating,5531,Retail-Auto & Home Supply Stores
+0001163165,CONOCOPHILLIPS,conocophillips,COP,NYSE,1,operating,2911,Petroleum Refining
+0001164727,NEWMONT Corp /DE/,newmont corp de,NEM|NEMCL,NYSE|OTC,3,operating,1040,Gold and Silver Ores
+0001166691,COMCAST CORP,comcast corp,CMCSA|CCZ,Nasdaq|NYSE,1,operating,4841,Cable & Other Pay Television Services
+0001170010,CARMAX INC,carmax inc,KMX,NYSE,0,operating,5500,Retail-Auto Dealers & Gasoline Stations
+0001174922,WYNN RESORTS LTD,wynn resorts ltd,WYNN,Nasdaq,0,operating,7011,Hotels & Motels
+0001175454,"CORPAY, INC.",corpay inc,CPAY,NYSE,1,operating,7389,"Services-Business Services, NEC"
+0001176948,Ares Management Corp,ares management corp,ARES|ARES-PB,NYSE|NYSE,1,operating,6282,Investment Advice
+0001179929,"MOLINA HEALTHCARE, INC.",molina healthcare inc,MOH,NYSE,1,operating,6324,Hospital & Medical Service Plans
+0001260221,TransDigm Group INC,transdigm group inc,TDG,NYSE,1,operating,3728,"Aircraft Parts & Auxiliary Equipment, NEC"
+0001262039,"Fortinet, Inc.",fortinet inc,FTNT,Nasdaq,1,operating,3577,"Computer Peripheral Equipment, NEC"
+0001267238,"ASSURANT, INC.",assurant inc,AIZ|AIZN,NYSE|NYSE,1,operating,6399,"Insurance Carriers, NEC"
+0001274494,"FIRST SOLAR, INC.",first solar inc,FSLR,Nasdaq,1,operating,3674,Semiconductors & Related Devices
+0001278021,MARKETAXESS HOLDINGS INC,marketaxess holdings inc,MKTX,Nasdaq,2,operating,6211,"Security Brokers, Dealers & Flotation Companies"
+0001280452,"MONOLITHIC POWER SYSTEMS, INC.",monolithic power systems inc,MPWR,Nasdaq,1,operating,3674,Semiconductors & Related Devices
+0001281761,REGIONS FINANCIAL CORP,regions financial corp,RF|RF-PC|RF-PE|RF-PF,NYSE|NYSE|NYSE|NYSE,1,operating,6021,National Commercial Banks
+0001283699,"T-Mobile US, Inc.",t mobile us inc,TMUS|TMUSI|TMUSL|TMUSZ,Nasdaq|Nasdaq|Nasdaq|Nasdaq,1,operating,4812,Radiotelephone Communications
+0001285785,MOSAIC CO,mosaic co,MOS,NYSE,1,operating,2870,Agricultural Chemicals
+0001286681,DOMINOS PIZZA INC,dominos pizza inc,DPZ,Nasdaq,0,operating,5140,Wholesale-Groceries & Related Products
+0001289490,Extra Space Storage Inc.,extra space storage inc,EXR,NYSE,0,operating,6798,Real Estate Investment Trusts
+0001297996,"DIGITAL REALTY TRUST, INC.",digital realty trust inc,DLR|DLR-PK|DLR-PJ|DLR-PL,NYSE|NYSE|NYSE|NYSE,0,operating,6798,Real Estate Investment Trusts
+0001300514,LAS VEGAS SANDS CORP,las vegas sands corp,LVS,NYSE,0,operating,7011,Hotels & Motels
+0001306830,Celanese Corp,celanese corp,CE,NYSE,0,operating,2820,"Plastic Material, Synth Resin/Rubber, Cellulos (No Glass)"
+0001316835,"Builders FirstSource, Inc.",builders firstsource inc,BLDR,NYSE,0,operating,5211,Retail-Lumber & Other Building Materials Dealers
+0001318605,"Tesla, Inc.",tesla inc,TSLA,Nasdaq,1,operating,3711,Motor Vehicles & Passenger Car Bodies
+0001321655,Palantir Technologies Inc.,palantir technologies inc,PLTR,Nasdaq,1,operating,7372,Services-Prepackaged Software
+0001324404,"CF Industries Holdings, Inc.",cf industries holdings inc,CF,NYSE,0,operating,2870,Agricultural Chemicals
+0001324424,"Expedia Group, Inc.",expedia group inc,EXPE,Nasdaq,1,operating,4700,Transportation Services
+0001326160,Duke Energy CORP,duke energy corp,DUK|DUKB|DUK-PA,NYSE|NYSE|NYSE,2,operating,4931,Electric & Other Services Combined
+0001326801,"Meta Platforms, Inc.",meta platforms inc,META,Nasdaq,1,operating,7370,"Services-Computer Programming, Data Processing, Etc."
+0001327567,Palo Alto Networks Inc,palo alto networks inc,PANW,Nasdaq,1,operating,3577,"Computer Peripheral Equipment, NEC"
+0001327811,"Workday, Inc.",workday inc,WDAY,Nasdaq,2,operating,7374,Services-Computer Processing & Data Preparation
+0001335258,"Live Nation Entertainment, Inc.",live nation entertainment inc,LYV,NYSE,2,operating,7900,Services-Amusement & Recreation Services
+0001336917,"Under Armour, Inc.",under armour inc,UAA|UA,NYSE|NYSE,0,operating,2300,Apparel & Other Finishd Prods of  Fabrics & Similar Matl
+0001336920,"Leidos Holdings, Inc.",leidos holdings inc,LDOS,NYSE,1,operating,7373,Services-Computer Integrated Systems Design
+0001341439,ORACLE CORP,oracle corp,ORCL|ORCL-PD,NYSE|NYSE,1,operating,7372,Services-Prepackaged Software
+0001352010,"EPAM Systems, Inc.",epam systems inc,EPAM,NYSE,1,operating,7371,Services-Computer Programming Services
+0001365135,Western Union CO,western union co,WU,NYSE,0,operating,7389,"Services-Business Services, NEC"
+0001370637,ETSY INC,etsy inc,ETSY,NYSE,0,operating,7389,"Services-Business Services, NEC"
+0001373715,"ServiceNow, Inc.",servicenow inc,NOW,NYSE,1,operating,7372,Services-Prepackaged Software
+0001374310,"Cboe Global Markets, Inc.",cboe global markets inc,CBOE,CBOE,1,operating,6200,"Security & Commodity Brokers, Dealers, Exchanges & Services"
+0001375365,"Super Micro Computer, Inc.",super micro computer inc,SMCI|SMCIP,Nasdaq|Nasdaq,0,operating,3571,Electronic Computers
+0001381197,"Interactive Brokers Group, Inc.",interactive brokers group inc,IBKR,Nasdaq,0,operating,6211,"Security Brokers, Dealers & Flotation Companies"
+0001383312,"BROADRIDGE FINANCIAL SOLUTIONS, INC.",broadridge financial solutions inc,BR,NYSE,3,operating,7389,"Services-Business Services, NEC"
+0001385157,TE Connectivity plc,te connectivity plc,TEL,NYSE,2,operating,5065,"Wholesale-Electronic Parts & Equipment, NEC"
+0001389170,Targa Resources Corp.,targa resources corp,TRGP,NYSE,2,operating,4922,Natural Gas Transmission
+0001390777,Bank of New York Mellon Corp,bank of new york mellon corp,BNY|BNY-PK,NYSE|NYSE,0,operating,6022,State Commercial Banks
+0001393311,Public Storage,public storage,PSA|PSA-PH|PSA-PU|PSA-PF|PSA-PG|PSA-PI|PSA-PJ|PSA-PK|PSA-PL|PSA-PM|PSA-PN|PSA-PO|PSA-PP|PSA-PQ|PSA-PR|PSA-PS|PSA-PT,NYSE|NYSE|NYSE|NYSE|NYSE|NYSE|NYSE|NYSE|NYSE|NYSE|NYSE|NYSE|NYSE|NYSE|NYSE|NYSE|NYSE,0,operating,6798,Real Estate Investment Trusts
+0001393612,Discover Financial Services,discover financial services,,,0,operating,6141,Personal Credit Institutions
+0001393818,Blackstone Inc.,blackstone inc,BX,NYSE,3,operating,6282,Investment Advice
+0001396009,Vulcan Materials CO,vulcan materials co,VMC,NYSE,1,operating,1400,Mining & Quarrying of  Nonmetallic Minerals (No Fuels)
+0001397187,lululemon athletica inc.,lululemon athletica inc,LULU,Nasdaq,1,operating,2300,Apparel & Other Finishd Prods of  Fabrics & Similar Matl
+0001402057,CDW Corp,cdw corp,CDW,Nasdaq,1,operating,5961,Retail-Catalog & Mail-Order Houses
+0001403161,VISA INC.,visa inc,V,NYSE,0,operating,7389,"Services-Business Services, NEC"
+0001403568,"Ulta Beauty, Inc.",ulta beauty inc,ULTA,Nasdaq,1,operating,5990,"Retail-Retail Stores, NEC"
+0001404912,KKR & Co. Inc.,kkr and co inc,KKR|KKR-PD|KKRS|KKRT,NYSE|NYSE|NYSE|NYSE,1,operating,6282,Investment Advice
+0001408198,MSCI Inc.,msci inc,MSCI,NYSE,0,operating,7389,"Services-Business Services, NEC"
+0001413329,Philip Morris International Inc.,philip morris international inc,PM,NYSE,0,operating,2111,Cigarettes
+0001413447,NXP Semiconductors N.V.,nxp semiconductors n v,NXPI,Nasdaq,1,operating,3674,Semiconductors & Related Devices
+0001418135,Keurig Dr Pepper Inc.,keurig dr pepper inc,KDP,Nasdaq,2,operating,2080,Beverages
+0001419612,"SOLAREDGE TECHNOLOGIES, INC.",solaredge technologies inc,SEDG,Nasdaq,1,operating,3674,Semiconductors & Related Devices
+0001437107,"Warner Bros. Discovery, Inc.",warner bros discovery inc,WBD,Nasdaq,2,operating,4841,Cable & Other Pay Television Services
+0001442145,"Verisk Analytics, Inc.",verisk analytics inc,VRSK,Nasdaq,0,operating,7374,Services-Computer Processing & Data Preparation
+0001463101,"Enphase Energy, Inc.",enphase energy inc,ENPH,Nasdaq,0,operating,3674,Semiconductors & Related Devices
+0001466258,Trane Technologies plc,trane technologies plc,TT,NYSE,1,operating,3822,Auto Controls For Regulating Residential & Comml Environments
+0001467373,Accenture plc,accenture plc,ACN,NYSE,1,operating,7389,"Services-Business Services, NEC"
+0001467858,General Motors Co,general motors co,GM,NYSE,0,operating,3711,Motor Vehicles & Passenger Car Bodies
+0001474735,GENERAC HOLDINGS INC.,generac holdings inc,GNRC,NYSE,0,operating,3621,Motors & Generators
+0001478242,IQVIA HOLDINGS INC.,iqvia holdings inc,IQV,NYSE,2,operating,8731,Services-Commercial Physical & Biological Research
+0001489393,LyondellBasell Industries N.V.,lyondellbasell industries n v,LYB,NYSE,0,operating,2860,Industrial Organic Chemicals
+0001501585,"HUNTINGTON INGALLS INDUSTRIES, INC.",huntington ingalls industries inc,HII,NYSE,2,operating,3730,Ship & Boat Building & Repairing
+0001506307,"KINDER MORGAN, INC.",kinder morgan inc,KMI|EP-PC,NYSE|NYSE,1,operating,4922,Natural Gas Transmission
+0001510295,Marathon Petroleum Corp,marathon petroleum corp,MPC,NYSE,0,operating,2911,Petroleum Refining
+0001512673,"Block, Inc.",block inc,XYZ|BSQKZ,NYSE|OTC,1,operating,7372,Services-Prepackaged Software
+0001513761,Norwegian Cruise Line Holdings Ltd.,norwegian cruise line holdings ltd,NCLH,NYSE,0,operating,4400,Water Transportation
+0001521332,Aptiv PLC,aptiv plc,APTV,NYSE,1,operating,3714,Motor Vehicle Parts & Accessories
+0001524472,Xylem Inc.,xylem inc,XYL,NYSE,1,operating,3561,Pumps & Pumping Equipment
+0001534701,Phillips 66,phillips 66,PSX,NYSE,0,operating,2911,Petroleum Refining
+0001535527,"CrowdStrike Holdings, Inc.",crowdstrike holdings inc,CRWD,Nasdaq,0,operating,7372,Services-Prepackaged Software
+0001539838,"Diamondback Energy, Inc.",diamondback energy inc,FANG,Nasdaq,1,operating,1311,Crude Petroleum & Natural Gas
+0001543151,"Uber Technologies, Inc",uber technologies inc,UBER,NYSE,0,operating,7389,"Services-Business Services, NEC"
+0001551152,AbbVie Inc.,abbvie inc,ABBV,NYSE,0,operating,2834,Pharmaceutical Preparations
+0001551182,Eaton Corp plc,eaton corp plc,ETN,NYSE,1,operating,3590,Misc Industrial & Commercial Machinery & Equipment
+0001555280,Zoetis Inc.,zoetis inc,ZTS,NYSE,0,operating,2834,Pharmaceutical Preparations
+0001559720,"Airbnb, Inc.",airbnb inc,ABNB,Nasdaq,1,operating,7340,Services-To Dwellings & Other Buildings
+0001561550,"Datadog, Inc.",datadog inc,DDOG,Nasdaq,0,operating,7372,Services-Prepackaged Software
+0001564708,NEWS CORP,news corp,NWSA|NWS|NWSLL,Nasdaq|Nasdaq|OTC,2,operating,2711,Newspapers: Publishing or  Publishing & Printing
+0001571949,"Intercontinental Exchange, Inc.",intercontinental exchange inc,ICE,NYSE,1,operating,6200,"Security & Commodity Brokers, Dealers, Exchanges & Services"
+0001571996,Dell Technologies Inc.,dell technologies inc,DELL,NYSE,2,operating,3571,Electronic Computers
+0001579241,Allegion plc,allegion plc,ALLE,NYSE,0,operating,7381,"Services-Detective, Guard & Armored Car Services"
+0001585364,PERRIGO Co plc,perrigo co plc,PRGO,NYSE,1,operating,2834,Pharmaceutical Preparations
+0001585689,Hilton Worldwide Holdings Inc.,hilton worldwide holdings inc,HLT,NYSE,0,operating,7011,Hotels & Motels
+0001590895,"Caesars Entertainment, Inc.",caesars entertainment inc,CZR,Nasdaq,2,operating,7011,Hotels & Motels
+0001590955,"Paycom Software, Inc.",paycom software inc,PAYC,NYSE,0,operating,7372,Services-Prepackaged Software
+0001596532,"Arista Networks, Inc.",arista networks inc,ANET,NYSE,0,operating,3576,Computer Communications Equipment
+0001601046,"Keysight Technologies, Inc.",keysight technologies inc,KEYS,NYSE,0,operating,3823,"Industrial Instruments For Measurement, Display, and Control"
+0001601712,Synchrony Financial,synchrony financial,SYF|SYF-PA|SYF-PB,NYSE|NYSE|NYSE,1,operating,6199,Finance Services
+0001604778,"Qorvo, Inc.",qorvo inc,QRVO,Nasdaq,1,operating,3674,Semiconductors & Related Devices
+0001609711,GoDaddy Inc.,godaddy inc,GDDY,NYSE,0,operating,7373,Services-Computer Integrated Systems Design
+0001613103,Medtronic plc,medtronic plc,MDT,NYSE,2,operating,3845,Electromedical & Electrotherapeutic Apparatus
+0001633917,"PayPal Holdings, Inc.",paypal holdings inc,PYPL,Nasdaq,0,operating,7389,"Services-Business Services, NEC"
+0001637459,Kraft Heinz Co,kraft heinz co,KHC,Nasdaq,1,operating,2030,"Canned, Frozen & Preservd Fruit, Veg & Food Specialties"
+0001645590,Hewlett Packard Enterprise Co,hewlett packard enterprise co,HPE|HPE-PC,NYSE|NYSE,0,operating,3570,Computer & office Equipment
+0001652044,Alphabet Inc.,alphabet inc,GOOGL|GOOG|GOOGM|GOOGN,Nasdaq|Nasdaq|Nasdaq|Nasdaq,0,operating,7370,"Services-Computer Programming, Data Processing, Etc."
+0001659166,Fortive Corp,fortive corp,FTV,NYSE,0,operating,3823,"Industrial Instruments For Measurement, Display, and Control"
+0001666700,"DuPont de Nemours, Inc.",dupont de nemours inc,DD,NYSE,1,operating,2821,"Plastic Materials, Synth Resins & Nonvulcan Elastomers"
+0001671933,"Trade Desk, Inc.",trade desk inc,TTD,Nasdaq,0,operating,7370,"Services-Computer Programming, Data Processing, Etc."
+0001679273,"Lamb Weston Holdings, Inc.",lamb weston holdings inc,LW,NYSE,0,operating,2030,"Canned, Frozen & Preservd Fruit, Veg & Food Specialties"
+0001679788,"Coinbase Global, Inc.",coinbase global inc,COIN,Nasdaq,0,operating,6199,Finance Services
+0001681459,TechnipFMC plc,technipfmc plc,FTI,NYSE,1,operating,3533,Oil & Gas Field Machinery & Equipment
+0001682852,"Moderna, Inc.",moderna inc,MRNA,Nasdaq,1,operating,2836,"Biological Products, (No Diagnostic Substances)"
+0001688568,DXC Technology Co,dxc technology co,DXC,NYSE,1,operating,7374,Services-Computer Processing & Data Preparation
+0001690820,CARVANA CO.,carvana co,CVNA,NYSE,0,operating,5500,Retail-Auto Dealers & Gasoline Stations
+0001692819,Vistra Corp.,vistra corp,VST,NYSE,2,operating,4911,Electric Services
+0001699150,Ingersoll Rand Inc.,ingersoll rand inc,IR,NYSE,1,operating,3560,General Industrial Machinery & Equipment
+0001701605,Baker Hughes Co,baker hughes co,BKR,Nasdaq,2,operating,3533,Oil & Gas Field Machinery & Equipment
+0001705696,VICI PROPERTIES INC.,vici properties inc,VICI,NYSE,0,operating,6798,Real Estate Investment Trusts
+0001707925,LINDE PLC,linde plc,LIN,Nasdaq,1,operating,2810,Industrial Inorganic Chemicals
+0001711269,"Evergy, Inc.",evergy inc,EVRG,Nasdaq,1,operating,4931,Electric & Other Services Combined
+0001730168,Broadcom Inc.,broadcom inc,AVGO,Nasdaq,1,operating,3674,Semiconductors & Related Devices
+0001739940,Cigna Group,cigna group,CI,NYSE,2,operating,6324,Hospital & Medical Service Plans
+0001744489,Walt Disney Co,walt disney co,DIS,NYSE,2,operating,7990,Services-Miscellaneous Amusement & Recreation
+0001748790,Amcor plc,amcor plc,AMCR|AMCCF,NYSE|OTC,1,operating,3990,Miscellaneous Manufacturing Industries
+0001751008,AppLovin Corp,applovin corp,APP,Nasdaq,0,operating,7370,"Services-Computer Programming, Data Processing, Etc."
+0001751788,DOW INC.,dow inc,DOW,NYSE,1,operating,2821,"Plastic Materials, Synth Resins & Nonvulcan Elastomers"
+0001754301,Fox Corp,fox corp,FOXA|FOX,Nasdaq|Nasdaq,1,operating,4833,Television Broadcasting Stations
+0001755672,"Corteva, Inc.",corteva inc,CTVA,NYSE,0,operating,0100,Agricultural Production-Crops
+0001757898,STERIS plc,steris plc,STE,NYSE,1,operating,3842,"Orthopedic, Prosthetic & Surgical Appliances & Supplies"
+0001770450,Xerox Holdings Corp,xerox holdings corp,XRX|XRXDW,Nasdaq|Nasdaq,0,operating,3577,"Computer Peripheral Equipment, NEC"
+0001781335,Otis Worldwide Corp,otis worldwide corp,OTIS,NYSE,0,operating,3600,Electronic & Other Electrical Equipment (No Computer Equip)
+0001783180,CARRIER GLOBAL Corp,carrier global corp,CARR,NYSE,0,operating,3585,Air-Cond & Warm Air Heatg Equip & Comm & Indl Refrig Equip
+0001783879,"Robinhood Markets, Inc.",robinhood markets inc,HOOD,Nasdaq,0,operating,6211,"Security Brokers, Dealers & Flotation Companies"
+0001786842,Vontier Corp,vontier corp,VNT,NYSE,1,operating,3824,Totalizing Fluid Meters & Counting Devices
+0001792044,Viatris Inc,viatris inc,VTRS,Nasdaq,1,operating,2834,Pharmaceutical Preparations
+0001792789,"DoorDash, Inc.",doordash inc,DASH,Nasdaq,2,operating,7389,"Services-Business Services, NEC"
+0001811074,Texas Pacific Land Corp,texas pacific land corp,TPL,NYSE,0,operating,6792,Oil Royalty Traders
+0001821825,Organon & Co.,organon and co,OGN,NYSE,0,operating,2834,Pharmaceutical Preparations
+0001841666,APA Corp,apa corp,APA,Nasdaq,0,operating,1311,Crude Petroleum & Natural Gas
+0001858681,"Apollo Global Management, Inc.",apollo global management inc,APO|APOS,NYSE|NYSE,1,operating,6282,Investment Advice
+0001868275,Constellation Energy Corp,constellation energy corp,CEG,Nasdaq,1,operating,4911,Electric Services
+0001932393,GE HealthCare Technologies Inc.,ge healthcare technologies inc,GEHC,Nasdaq,1,operating,3844,X-Ray Apparatus & Tubes & Related Irradiation Apparatus
+0001941365,"MasterBrand, Inc.",masterbrand inc,MBC,NYSE,0,operating,2511,"Wood Household Furniture, (No Upholstered)"
+0001944048,Kenvue Inc.,kenvue inc,KVUE,NYSE,1,operating,2844,"Perfumes, Cosmetics & Other Toilet Preparations"
+0001964738,Solventum Corp,solventum corp,SOLV,NYSE,1,operating,3841,Surgical & Medical Instruments & Apparatus
+0001965040,Fortrea Holdings Inc.,fortrea holdings inc,FTRE,Nasdaq,1,operating,8071,Services-Medical Laboratories
+0001967680,Veralto Corp,veralto corp,VLTO,NYSE,0,operating,3825,Instruments For Meas & Testing of  Electricity & Elec Signals
+0001968915,PHINIA INC.,phinia inc,PHIN,NYSE,0,operating,3714,Motor Vehicle Parts & Accessories
+0001973266,"TKO Group Holdings, Inc.",tko group holdings inc,TKO,NYSE,1,operating,7900,Services-Amusement & Recreation Services
+0001996810,GE Vernova Inc.,ge vernova inc,GEV,NYSE,1,operating,3600,Electronic & Other Electrical Equipment (No Computer Equip)
+0001996862,Bunge Global SA,bunge global sa,BG,NYSE,0,operating,2070,Fats & Oils
+0002005951,Smurfit Westrock plc,smurfit westrock plc,SW,NYSE,1,operating,2650,Paperboard Containers & Boxes
+0002011286,"Amentum Holdings, Inc.",amentum holdings inc,AMTM,NYSE,1,operating,7389,"Services-Business Services, NEC"
+0002012383,"BlackRock, Inc.",blackrock inc,BLK,NYSE,2,operating,6211,"Security Brokers, Dealers & Flotation Companies"
+0002023554,Sandisk Corp,sandisk corp,SNDK,Nasdaq,0,operating,3572,Computer Storage Devices
+0002041610,Paramount Skydance Corp,paramount skydance corp,PSKY,Nasdaq,1,operating,4833,Television Broadcasting Stations
+0002058873,"Qnity Electronics, Inc.",qnity electronics inc,Q,NYSE,1,operating,3674,Semiconductors & Related Devices
+0002064953,Solstice Advanced Materials Inc.,solstice advanced materials inc,SOLS,Nasdaq,1,operating,2800,Chemicals & Allied Products
+0002115436,ExxonMobil Holdings Corp,exxonmobil holdings corp,XOM,NYSE,0,operating,2911,Petroleum Refining

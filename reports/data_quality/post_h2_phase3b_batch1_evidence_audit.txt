@@ -1,0 +1,21 @@
+POST-H2 PHASE 3B BATCH 1 EVIDENCE AUDIT
+========================================================================
+PASS: row_count_30
+PASS: security_rows_20
+PASS: month_rows_10
+PASS: top10_security_coverage
+PASS: top5_month_coverage
+PASS: unique_evidence_ids
+PASS: all_primary
+PASS: all_urls_https
+PASS: no_wikipedia
+PASS: theme_codes_blank
+PASS: support_flags_unclear
+PASS: quotes_blank
+
+Rows: 30
+Unique sources: 30
+Security targets covered: 10 / 30
+Month targets covered: 5 / 15
+
+BATCH1_EVIDENCE_GATE_PASSED

@@ -1,0 +1,48 @@
+==========================================================================================================================
+POST-H2 EXPLORATORY PHASE 4A — THEME SYNCHRONY
+==========================================================================================================================
+Script version: 2026-08-24-v1-post-h2-phase4a-theme-synchrony
+Taxonomy SHA-256: 1c7698cbe2facd069c7a12fda41cbf7399a9f657ed4f7a9f956d135f8f9d2576
+Randomization replications per tested theme: 20,000
+Randomization seed: 20260824
+Control universe: same 30 Phase 3A top-driver securities
+H1/H2 conclusions modified: NO
+
+==========================================================================================================================
+1. SECURITY STRUCTURAL THEMES
+==========================================================================================================================
+S10 | Recurring Membership / Customer-Loyalty Economics | n= 2 | DESCRIPTIVE ONLY (<3 securities)
+S07 | Experiential / Consumer Demand                    | n= 2 | DESCRIPTIVE ONLY (<3 securities)
+S06 | Digital Platform / Monetization Shift             | n= 4 | sync=+0.1879 (MC p=0.0495, Holm=0.3960) | presence/|factor|=+0.1190 (MC p=0.3556, Holm=1.0000)
+S02 | Power / Energy Infrastructure                     | n= 5 | sync=+0.1359 (MC p=0.0942, Holm=0.6594) | presence/|factor|=+0.0883 (MC p=0.4569, Holm=1.0000)
+S04 | Commodity / Resource Scarcity & Pricing           | n= 8 | sync=+0.0913 (MC p=0.1912, Holm=1.0000) | presence/|factor|=+0.0349 (MC p=0.6813, Holm=1.0000)
+S03 | Electrification / Energy Transition               | n= 8 | sync=+0.0836 (MC p=0.2439, Holm=1.0000) | presence/|factor|=-0.0193 (MC p=0.8192, Holm=1.0000)
+S01 | AI / Compute / Digital Infrastructure             | n= 9 | sync=+0.0690 (MC p=0.3555, Holm=1.0000) | presence/|factor|=+0.0804 (MC p=0.5397, Holm=1.0000)
+S05 | Capacity Expansion / Supply-Demand Imbalance      | n=15 | sync=+0.0619 (MC p=0.4236, Holm=1.0000) | presence/|factor|=+0.0776 (MC p=0.6464, Holm=1.0000)
+S09 | Strategic Consolidation / Portfolio Scale         | n= 7 | sync=+0.0588 (MC p=0.4681, Holm=1.0000) | presence/|factor|=+0.0813 (MC p=0.5175, Holm=1.0000)
+S08 | Real-Asset Occupancy / Demographic Demand         | n= 3 | sync=+0.0126 (MC p=0.6697, Holm=1.0000) | presence/|factor|=-0.2234 (MC p=0.9742, Holm=1.0000)
+
+Exploratory flags require a positive statistic and Holm-adjusted p < 0.05.
+A flag is conditional on the selected top-30 control universe and is not a full-S&P-500 result.
+
+==========================================================================================================================
+2. MACRO THEME DESCRIPTIVES
+==========================================================================================================================
+M01 | Accommodative Monetary / Fiscal Support        | n= 2 | positive= 0 | negative= 2 | mean factor=-3.1091%
+M02 | Restrictive / Tightening Monetary Policy       | n= 7 | positive= 3 | negative= 4 | mean factor=-0.5285%
+M03 | Easing / Policy-Pivot Transition               | n= 3 | positive= 3 | negative= 0 | mean factor=+2.6185%
+M04 | Disinflation / Inflation Deceleration          | n= 7 | positive= 2 | negative= 5 | mean factor=-1.3676%
+M05 | Persistent / Sticky Inflation                  | n= 8 | positive= 6 | negative= 2 | mean factor=+1.1987%
+M06 | Labor / Growth Resilience                      | n= 2 | positive= 1 | negative= 1 | mean factor=-0.2971%
+M07 | Macro Uncertainty / Dual-Mandate Rebalancing   | n= 6 | positive= 4 | negative= 2 | mean factor=+0.9459%
+
+==========================================================================================================================
+3. INTERPRETATION BOUNDARY
+==========================================================================================================================
+Phase 4A is exploratory and conditional on the 30 preselected top-driver securities.
+Randomization tests whether evidence-defined groups are more synchronized than random same-sized groups from those same 30 securities.
+It does not establish causality, predictability, or a full-universe theme premium.
+Macro code summaries are descriptive only because the 15 months were selected by extreme absolute commonality and factor signs were already exposed in Phase 3D.
+No H1 or H2 parameter or conclusion is modified.
+
+POST_H2_PHASE4A_THEME_SYNCHRONY_COMPLETE

@@ -1,0 +1,31 @@
+ticker,variant_rank,normalized_organization_variant,weighted_source_documents,was_frozen_strict_alias,manual_review_decision,manual_review_rationale
+IRM,1,iron mountain incorporated,15,1,ACCEPT_FROZEN_STRICT_ALIAS,Exact parent-company name already frozen.
+IRM,2,iron mountain inc,11,1,ACCEPT_FROZEN_STRICT_ALIAS,Exact abbreviated parent-company legal name already frozen.
+IRM,3,iron mountain high school,5,0,REJECT_AMBIGUOUS_OR_OTHER_ENTITY,School; unrelated to Iron Mountain Incorporated.
+IRM,4,credit iron mountain va medical center,2,0,REJECT_AMBIGUOUS_OR_OTHER_ENTITY,Medical-center/location phrase; unrelated to parent issuer.
+IRM,5,iron mountain school board,2,0,REJECT_AMBIGUOUS_OR_OTHER_ENTITY,School-board entity; unrelated to parent issuer.
+IRM,6,dickinson county library in iron mountain,2,0,REJECT_AMBIGUOUS_OR_OTHER_ENTITY,Geographic/library reference; unrelated to parent issuer.
+IRM,7,leduc at iron mountain high school,2,0,REJECT_AMBIGUOUS_OR_OTHER_ENTITY,High-school reference; unrelated to parent issuer.
+IRM,8,iron mountain high school class,2,0,REJECT_AMBIGUOUS_OR_OTHER_ENTITY,High-school reference; unrelated to parent issuer.
+IRM,9,iron mountain processing,2,0,KEEP_DIAGNOSTIC_ONLY,Potential business phrase but insufficiently specific to the parent issuer.
+IRM,10,iron mountain incorporated united states,1,0,KEEP_DIAGNOSTIC_ONLY,"Looks issuer-related, but strict coverage is already complete; retain conservatively as diagnostic only."
+IRM,11,iron mountain data centers,1,0,KEEP_DIAGNOSTIC_ONLY,"Likely issuer business-unit/brand reference, but not the exact parent-company identity."
+IRM,12,boston iron mountain incorporated,1,0,KEEP_DIAGNOSTIC_ONLY,Likely issuer/location extraction artifact; not needed for strict coverage.
+IRM,13,services for iron mountain data centers,1,0,KEEP_DIAGNOSTIC_ONLY,"Likely business-unit context, not a clean parent-company entity name."
+IRM,14,iron mountain academic booster club,1,0,REJECT_AMBIGUOUS_OR_OTHER_ENTITY,Academic organization; unrelated to parent issuer.
+IRM,15,services for iron mountain data centres,1,0,KEEP_DIAGNOSTIC_ONLY,"Likely business-unit context, not a clean parent-company entity name."
+MOS,1,mosaic company,358,1,ACCEPT_FROZEN_STRICT_ALIAS,Exact parent-company name already frozen.
+MOS,2,grenfell memorial community mosaic,56,0,REJECT_AMBIGUOUS_OR_OTHER_ENTITY,Community/memorial phrase; unrelated to The Mosaic Company.
+MOS,3,mosaic co,22,0,KEEP_DIAGNOSTIC_ONLY,"Could denote The Mosaic Company, but is too short/ambiguous to promote when strict coverage already succeeds."
+MOS,4,mosaic sustainable finance corp,20,0,REJECT_AMBIGUOUS_OR_OTHER_ENTITY,Different named organization; do not attribute to The Mosaic Company.
+MOS,5,mosaic solutions,15,0,REJECT_AMBIGUOUS_OR_OTHER_ENTITY,Different/ambiguous organization.
+MOS,6,mosaic church,11,0,REJECT_AMBIGUOUS_OR_OTHER_ENTITY,Religious organization; unrelated.
+MOS,7,mosaic medical center,8,0,REJECT_AMBIGUOUS_OR_OTHER_ENTITY,Medical organization; unrelated.
+MOS,8,mosaic templars cultural center,7,0,REJECT_AMBIGUOUS_OR_OTHER_ENTITY,Cultural organization; unrelated.
+MOS,9,mosaic international south asian film festival,5,0,REJECT_AMBIGUOUS_OR_OTHER_ENTITY,Film festival; unrelated.
+MOS,10,mosaic company profile,5,0,KEEP_DIAGNOSTIC_ONLY,"Potential article/extraction phrase around issuer, not a clean entity alias."
+MOS,11,mosaic laboratories,4,0,REJECT_AMBIGUOUS_OR_OTHER_ENTITY,Different/ambiguous organization.
+MOS,12,gaziantep zeugma mosaic museum,4,0,REJECT_AMBIGUOUS_OR_OTHER_ENTITY,Museum reference; unrelated.
+MOS,13,mosaic family health inc,4,0,REJECT_AMBIGUOUS_OR_OTHER_ENTITY,Health organization; unrelated.
+MOS,14,mosaic family health non,4,0,REJECT_AMBIGUOUS_OR_OTHER_ENTITY,Health organization; unrelated.
+MOS,15,mosaic health solutions,3,0,REJECT_AMBIGUOUS_OR_OTHER_ENTITY,Health organization; unrelated.

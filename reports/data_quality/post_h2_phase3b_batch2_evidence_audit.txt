@@ -1,0 +1,22 @@
+POST-H2 PHASE 3B BATCH 2 EVIDENCE AUDIT
+============================================================================
+PASS: row_count_30
+PASS: security_rows_20
+PASS: month_rows_10
+PASS: security_ranks_11_20
+PASS: month_ranks_6_10
+PASS: unique_evidence_ids
+PASS: all_primary
+PASS: all_urls_https
+PASS: no_wikipedia
+PASS: theme_codes_blank
+PASS: support_flags_unclear
+PASS: quotes_blank
+
+Rows: 30
+Unique sources: 30
+Security targets covered: 10 / 10 batch targets
+Month targets covered: 5 / 5 batch targets
+Cumulative Phase 3B target coverage after Batch 1 + Batch 2: 20 / 30 securities; 10 / 15 months
+
+BATCH2_EVIDENCE_GATE_PASSED

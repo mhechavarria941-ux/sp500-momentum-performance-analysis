@@ -1,0 +1,354 @@
+ticker,canonical_company_name,ambiguity_tier,variant_rank,normalized_organization_variant,weighted_source_documents,nameset_rows,is_strict_alias
+NVDA,NVIDIA Corporation,LOW,1,nvidia,7251,7087,1
+NVDA,NVIDIA Corporation,LOW,2,nvidia corp,454,439,0
+NVDA,NVIDIA Corporation,LOW,3,nvidia corporation,78,72,1
+NVDA,NVIDIA Corporation,LOW,4,nvidia inc,8,8,0
+NVDA,NVIDIA Corporation,LOW,5,nvidia inception program,5,4,0
+NVDA,NVIDIA Corporation,LOW,6,nvidia co,5,5,0
+NVDA,NVIDIA Corporation,LOW,7,club name nvidia,4,4,0
+NVDA,NVIDIA Corporation,LOW,8,nvidia ai tech center,4,4,0
+NVDA,NVIDIA Corporation,LOW,9,chipmaker nvidia corp,3,3,0
+NVDA,NVIDIA Corporation,LOW,10,accenture nvidia business group,3,3,0
+NVDA,NVIDIA Corporation,LOW,11,bloomberg as nvidia corp,3,3,0
+NVDA,NVIDIA Corporation,LOW,12,nvidia joint center,2,2,0
+NVDA,NVIDIA Corporation,LOW,13,a nvidia corp,2,2,0
+NVDA,NVIDIA Corporation,LOW,14,bloomberg nvidia corp,2,2,0
+NVDA,NVIDIA Corporation,LOW,15,nvidia ai tech community,2,2,0
+NVDA,NVIDIA Corporation,LOW,16,nvidia corp gpus,2,2,0
+NVDA,NVIDIA Corporation,LOW,17,nvidia senior software director,1,1,0
+NVDA,NVIDIA Corporation,LOW,18,nvidia raised to buy from neutral research,1,1,0
+NVDA,NVIDIA Corporation,LOW,19,nvidia data center,1,1,0
+NVDA,NVIDIA Corporation,LOW,20,nvidia accelerated virtual radio access network,1,1,0
+NVDA,NVIDIA Corporation,LOW,21,nvidia america partner organization,1,1,0
+NVDA,NVIDIA Corporation,LOW,22,nvidia ai software,1,1,0
+NVDA,NVIDIA Corporation,LOW,23,nvidia ai foundation,1,1,0
+NVDA,NVIDIA Corporation,LOW,24,nvidia business group,1,1,0
+NVDA,NVIDIA Corporation,LOW,25,nvidia research,1,1,0
+NVDA,NVIDIA Corporation,LOW,26,nvidia collective communication library,1,1,0
+NVDA,NVIDIA Corporation,LOW,27,nvidia chips at center,1,1,0
+NVDA,NVIDIA Corporation,LOW,28,nvidia ai technology center,1,1,0
+NVDA,NVIDIA Corporation,LOW,29,u nvidia corp,1,1,0
+NVDA,NVIDIA Corporation,LOW,30,trump administration removes restrictions for nvidia,1,1,0
+NFLX,"Netflix, Inc.",LOW,1,netflix,36889,31202,1
+NFLX,"Netflix, Inc.",LOW,2,netflix inc,478,437,1
+NFLX,"Netflix, Inc.",LOW,3,netflix company profile,12,12,0
+NFLX,"Netflix, Inc.",LOW,4,netflix party,8,7,0
+NFLX,"Netflix, Inc.",LOW,5,netflix services united kingdom,7,6,0
+NFLX,"Netflix, Inc.",LOW,6,netflix co,6,6,0
+NFLX,"Netflix, Inc.",LOW,7,umbrella academy netflix,5,5,0
+NFLX,"Netflix, Inc.",LOW,8,netflix indigenous scholarship fund,5,5,0
+NFLX,"Netflix, Inc.",LOW,9,netflix outer bank,5,5,0
+NFLX,"Netflix, Inc.",LOW,10,netflix umbrella academy,4,4,0
+NFLX,"Netflix, Inc.",LOW,11,office netflix,4,4,0
+NFLX,"Netflix, Inc.",LOW,12,artemis rising foundation netflix,4,4,0
+NFLX,"Netflix, Inc.",LOW,13,netflix help center,4,4,0
+NFLX,"Netflix, Inc.",LOW,14,our great national parks netflix,3,3,0
+NFLX,"Netflix, Inc.",LOW,15,our great national parks on netflix,3,3,0
+NFLX,"Netflix, Inc.",LOW,16,netflix our great national parks,3,3,0
+NFLX,"Netflix, Inc.",LOW,17,netflix services korea,3,2,0
+NFLX,"Netflix, Inc.",LOW,18,netflix international,3,3,0
+NFLX,"Netflix, Inc.",LOW,19,television netflix,3,3,0
+NFLX,"Netflix, Inc.",LOW,20,netflix army of the,2,2,0
+NFLX,"Netflix, Inc.",LOW,21,umbrella academy on netflix,2,2,0
+NFLX,"Netflix, Inc.",LOW,22,office on netflix,2,2,0
+NFLX,"Netflix, Inc.",LOW,23,youtube netflix film club,2,2,0
+NFLX,"Netflix, Inc.",LOW,24,netflix media center,2,2,0
+NFLX,"Netflix, Inc.",LOW,25,united states network for netflix,2,2,0
+NFLX,"Netflix, Inc.",LOW,26,sparrow academy for the netflix,1,1,0
+NFLX,"Netflix, Inc.",LOW,27,netflix grand army,1,1,0
+NFLX,"Netflix, Inc.",LOW,28,netflix team,1,1,0
+NFLX,"Netflix, Inc.",LOW,29,television on netflix,1,1,0
+NFLX,"Netflix, Inc.",LOW,30,youtube channel of netflix film club,1,1,0
+NUE,Nucor Corporation,LOW,1,nucor corporation,42,42,1
+NUE,Nucor Corporation,LOW,2,nucor steel florida inc,9,7,0
+NUE,Nucor Corporation,LOW,3,nucor corp,7,7,0
+NUE,Nucor Corporation,LOW,4,nucor co,7,7,0
+NUE,Nucor Corporation,LOW,5,nucor company profile,4,4,0
+NUE,Nucor Corporation,LOW,6,nucor steel decatur,3,3,0
+NUE,Nucor Corporation,LOW,7,nucor steel connecticut inc,2,2,0
+NUE,Nucor Corporation,LOW,8,nucor group,1,1,0
+NUE,Nucor Corporation,LOW,9,nucor community room,1,1,0
+NUE,Nucor Corporation,LOW,10,nucor steel west virginia,1,1,0
+NUE,Nucor Corporation,LOW,11,nucor steel louisiana,1,1,0
+NUE,Nucor Corporation,LOW,12,nucor franklin industries u channel,1,1,0
+NUE,Nucor Corporation,LOW,13,nucor steel corp,1,1,0
+ALB,Albemarle Corporation,LOW,1,albemarle corporation,89,80,1
+ALB,Albemarle Corporation,LOW,2,albemarle corp,54,35,0
+ALB,Albemarle Corporation,LOW,3,albemarle regional health services,10,9,0
+ALB,Albemarle Corporation,LOW,4,albemarle county circuit court,8,8,0
+ALB,Albemarle Corporation,LOW,5,albemarle co,6,6,0
+ALB,Albemarle Corporation,LOW,6,albemarle high school,5,5,0
+ALB,Albemarle Corporation,LOW,7,albemarle high school in crozet,5,5,0
+ALB,Albemarle Corporation,LOW,8,albemarle high school in albemarle,5,4,0
+ALB,Albemarle Corporation,LOW,9,albemarle county school board,5,5,0
+ALB,Albemarle Corporation,LOW,10,college of the albemarle,4,4,0
+ALB,Albemarle Corporation,LOW,11,albemarle county circuit court on,4,4,0
+ALB,Albemarle Corporation,LOW,12,charlottesville albemarle airport authority,4,4,0
+ALB,Albemarle Corporation,LOW,13,museum of the albemarle,3,3,0
+ALB,Albemarle Corporation,LOW,14,albemarle corporation recent development,3,1,0
+ALB,Albemarle Corporation,LOW,15,albemarle corporation description,3,1,0
+ALB,Albemarle Corporation,LOW,16,albemarle corporation sales,3,1,0
+ALB,Albemarle Corporation,LOW,17,albemarle corporation corporation information,3,1,0
+ALB,Albemarle Corporation,LOW,18,albemarle corporation fine pharmaceutical chemicals products,3,1,0
+ALB,Albemarle Corporation,LOW,19,albemarle recent development,3,1,0
+ALB,Albemarle Corporation,LOW,20,albemarle corporation information,3,1,0
+ALB,Albemarle Corporation,LOW,21,albemarle inc,3,3,0
+ALB,Albemarle Corporation,LOW,22,albemarle pamlico national estuary partnership,2,2,0
+ALB,Albemarle Corporation,LOW,23,charlottesville albemarle convention visitors bureau,2,2,0
+ALB,Albemarle Corporation,LOW,24,albemarle corporation earnings conference call,2,2,0
+ALB,Albemarle Corporation,LOW,25,albemarle baking company,2,2,0
+ALB,Albemarle Corporation,LOW,26,albemarle company profile,2,2,0
+ALB,Albemarle Corporation,LOW,27,albemarle county police department,2,2,0
+ALB,Albemarle Corporation,LOW,28,albemarle county police,2,2,0
+ALB,Albemarle Corporation,LOW,29,albemarle corporation albemarle,2,2,0
+ALB,Albemarle Corporation,LOW,30,albemarle pamlico national estuary system,1,1,0
+WMT,Walmart Inc.,LOW,1,walmart,10827,9006,1
+WMT,Walmart Inc.,LOW,2,walmart inc,352,321,1
+WMT,Walmart Inc.,LOW,3,walmart neighborhood market,100,99,0
+WMT,Walmart Inc.,LOW,4,walmart international,78,78,0
+WMT,Walmart Inc.,LOW,5,walmart foundation,42,41,0
+WMT,Walmart Inc.,LOW,6,walmart sam club,31,30,0
+WMT,Walmart Inc.,LOW,7,walmart company profile,28,28,0
+WMT,Walmart Inc.,LOW,8,top reasons why people hate walmart stores,16,16,0
+WMT,Walmart Inc.,LOW,9,a walmart inc,13,8,0
+WMT,Walmart Inc.,LOW,10,walmart distribution center,12,11,0
+WMT,Walmart Inc.,LOW,11,walmart sams club,12,11,0
+WMT,Walmart Inc.,LOW,12,walmart health,11,11,0
+WMT,Walmart Inc.,LOW,13,walmart stores,9,8,0
+WMT,Walmart Inc.,LOW,14,walmart pet services,8,8,0
+WMT,Walmart Inc.,LOW,15,walmart customer care team,6,6,0
+WMT,Walmart Inc.,LOW,16,bloomberg walmart inc,5,5,0
+WMT,Walmart Inc.,LOW,17,walmart stores inc,5,4,0
+WMT,Walmart Inc.,LOW,18,walmart super center,5,5,0
+WMT,Walmart Inc.,LOW,19,walmart health virtual care,5,5,0
+WMT,Walmart Inc.,LOW,20,walmart legal discovery operations group,4,3,0
+WMT,Walmart Inc.,LOW,21,walmart corporation,4,4,0
+WMT,Walmart Inc.,LOW,22,paytm to walmart inc,4,4,0
+WMT,Walmart Inc.,LOW,23,walmart insurance service united states,4,2,0
+WMT,Walmart Inc.,LOW,24,walmart now closing every texas store,4,4,0
+WMT,Walmart Inc.,LOW,25,walmart sam club foundation,3,3,0
+WMT,Walmart Inc.,LOW,26,walmart money center,3,3,0
+WMT,Walmart Inc.,LOW,27,walmart electronics,3,3,0
+WMT,Walmart Inc.,LOW,28,walmart department,3,3,0
+WMT,Walmart Inc.,LOW,29,illinois walmart stores,3,3,0
+WMT,Walmart Inc.,LOW,30,massachusetts walmart stores,3,3,0
+META,"Meta Platforms, Inc.",MEDIUM,1,facebook,107606,89374,1
+META,"Meta Platforms, Inc.",MEDIUM,2,facebook inc,825,639,1
+META,"Meta Platforms, Inc.",MEDIUM,3,meta platforms inc,642,634,1
+META,"Meta Platforms, Inc.",MEDIUM,4,facebook clarence valley council,175,166,0
+META,"Meta Platforms, Inc.",MEDIUM,5,company on facebook,88,88,0
+META,"Meta Platforms, Inc.",MEDIUM,6,facebook group,81,78,0
+META,"Meta Platforms, Inc.",MEDIUM,7,tasmania police facebook,48,43,0
+META,"Meta Platforms, Inc.",MEDIUM,8,revelstoke community facebook,33,33,0
+META,"Meta Platforms, Inc.",MEDIUM,9,fargo police department facebook,33,33,0
+META,"Meta Platforms, Inc.",MEDIUM,10,facebook merseyside police contact centre,29,29,0
+META,"Meta Platforms, Inc.",MEDIUM,11,facebook companies,27,25,0
+META,"Meta Platforms, Inc.",MEDIUM,12,party facebook,25,5,0
+META,"Meta Platforms, Inc.",MEDIUM,13,meta platforms company profile,24,24,0
+META,"Meta Platforms, Inc.",MEDIUM,14,montgomery county sheriff office facebook,24,24,0
+META,"Meta Platforms, Inc.",MEDIUM,15,montgomery county sheriff office facebook after,24,24,0
+META,"Meta Platforms, Inc.",MEDIUM,16,facebook inc whatsapp,21,15,0
+META,"Meta Platforms, Inc.",MEDIUM,17,facebook company products,20,18,0
+META,"Meta Platforms, Inc.",MEDIUM,18,merseyside police contact centre on facebook,20,19,0
+META,"Meta Platforms, Inc.",MEDIUM,19,saugeen shores police service facebook,20,12,0
+META,"Meta Platforms, Inc.",MEDIUM,20,kandiyohi county sheriff office facebook,19,19,0
+META,"Meta Platforms, Inc.",MEDIUM,21,bureau of fire protection on facebook,17,17,0
+META,"Meta Platforms, Inc.",MEDIUM,22,licensing student forum facebook group,16,16,0
+META,"Meta Platforms, Inc.",MEDIUM,23,democratic party facebook,15,2,0
+META,"Meta Platforms, Inc.",MEDIUM,24,bernews sports facebook group,15,15,0
+META,"Meta Platforms, Inc.",MEDIUM,25,odesa company facebook,15,15,0
+META,"Meta Platforms, Inc.",MEDIUM,26,sheriff office facebook,14,14,0
+META,"Meta Platforms, Inc.",MEDIUM,27,club facebook,14,14,0
+META,"Meta Platforms, Inc.",MEDIUM,28,facebook inc mark zuckerberg,14,8,0
+META,"Meta Platforms, Inc.",MEDIUM,29,victoria police facebook,14,5,0
+META,"Meta Platforms, Inc.",MEDIUM,30,ballarat police service area facebook,14,13,0
+CEG,Constellation Energy Corporation,MEDIUM,1,constellation energy,123,116,1
+CEG,Constellation Energy Corporation,MEDIUM,2,constellation energy three mile island,14,14,0
+CEG,Constellation Energy Corporation,MEDIUM,3,constellation energy corporation,13,13,1
+CEG,Constellation Energy Corporation,MEDIUM,4,constellation energy corp,8,8,0
+CEG,Constellation Energy Corporation,MEDIUM,5,constellation energy generation,4,4,0
+CEG,Constellation Energy Corporation,MEDIUM,6,vistra and constellation energy performance,4,4,0
+CEG,Constellation Energy Corporation,MEDIUM,7,constellation energy league,2,2,0
+CEG,Constellation Energy Corporation,MEDIUM,8,constellation energy corporation nasdaq,2,2,0
+CEG,Constellation Energy Corporation,MEDIUM,9,constellation energy group,1,1,0
+CEG,Constellation Energy Corporation,MEDIUM,10,constellation energy stocks,1,1,0
+CEG,Constellation Energy Corporation,MEDIUM,11,utility constellation energy,1,1,0
+CEG,Constellation Energy Corporation,MEDIUM,12,university of california constellation energy,1,1,0
+CEG,Constellation Energy Corporation,MEDIUM,13,ceos of constellation energy corp,1,1,0
+CEG,Constellation Energy Corporation,MEDIUM,14,constellation energy to educate,1,1,0
+LLY,Eli Lilly and Company,MEDIUM,1,eli lilly,1937,1594,1
+LLY,Eli Lilly and Company,MEDIUM,2,lilly endowment inc,1494,1144,0
+LLY,Eli Lilly and Company,MEDIUM,3,eli lilly co,115,111,0
+LLY,Eli Lilly and Company,MEDIUM,4,eli lilly company,20,17,0
+LLY,Eli Lilly and Company,MEDIUM,5,company lilly,13,9,0
+LLY,Eli Lilly and Company,MEDIUM,6,lilly endowment community scholarship,13,13,0
+LLY,Eli Lilly and Company,MEDIUM,7,indiana university lilly family school of philanthropy,10,9,0
+LLY,Eli Lilly and Company,MEDIUM,8,lilly endowment community scholarship program,10,10,0
+LLY,Eli Lilly and Company,MEDIUM,9,lilly research laboratories,9,6,0
+LLY,Eli Lilly and Company,MEDIUM,10,lilly library,8,8,0
+LLY,Eli Lilly and Company,MEDIUM,11,eli lilly and co,7,6,0
+LLY,Eli Lilly and Company,MEDIUM,12,lilly endowment community scholarships,7,7,0
+LLY,Eli Lilly and Company,MEDIUM,13,lilly endowment community scholars,7,7,0
+LLY,Eli Lilly and Company,MEDIUM,14,lilly united states,5,5,0
+LLY,Eli Lilly and Company,MEDIUM,15,elanco animal health eli lilly,4,2,0
+LLY,Eli Lilly and Company,MEDIUM,16,eli lilly and company,4,2,1
+LLY,Eli Lilly and Company,MEDIUM,17,lilly cardiometabolic health,4,4,0
+LLY,Eli Lilly and Company,MEDIUM,18,lilly insulin value program,3,2,0
+LLY,Eli Lilly and Company,MEDIUM,19,lilly endowment community scholar,3,3,0
+LLY,Eli Lilly and Company,MEDIUM,20,lilly research labs,3,3,0
+LLY,Eli Lilly and Company,MEDIUM,21,lilly endowment pathways for tomorrow initiative,3,3,0
+LLY,Eli Lilly and Company,MEDIUM,22,bloomberg eli lilly co,2,2,0
+LLY,Eli Lilly and Company,MEDIUM,23,head of lilly china drug development,2,1,0
+LLY,Eli Lilly and Company,MEDIUM,24,lilly foundation,2,2,0
+LLY,Eli Lilly and Company,MEDIUM,25,lilly school of philanthropy,2,2,0
+LLY,Eli Lilly and Company,MEDIUM,26,monroe county lilly endowment community scholarship,2,2,0
+LLY,Eli Lilly and Company,MEDIUM,27,lilly endowment community scholars for monroe,2,2,0
+LLY,Eli Lilly and Company,MEDIUM,28,lilly scholars network,2,2,0
+LLY,Eli Lilly and Company,MEDIUM,29,obesity cardiometabolic research at lilly,2,2,0
+LLY,Eli Lilly and Company,MEDIUM,30,lilly endowment fund,2,2,0
+TSLA,"Tesla, Inc.",MEDIUM,1,tesla inc,1655,1496,1
+TSLA,"Tesla, Inc.",MEDIUM,2,tesla motors,82,68,0
+TSLA,"Tesla, Inc.",MEDIUM,3,tesla company profile,57,57,0
+TSLA,"Tesla, Inc.",MEDIUM,4,tesla club india,28,26,0
+TSLA,"Tesla, Inc.",MEDIUM,5,tesla motors inc,22,22,0
+TSLA,"Tesla, Inc.",MEDIUM,6,congrats tesla team,17,16,0
+TSLA,"Tesla, Inc.",MEDIUM,7,tesla network,16,16,0
+TSLA,"Tesla, Inc.",MEDIUM,8,bloomberg tesla inc,13,13,0
+TSLA,"Tesla, Inc.",MEDIUM,9,china passenger car association tesla china,13,1,0
+TSLA,"Tesla, Inc.",MEDIUM,10,tesla energy,13,13,0
+TSLA,"Tesla, Inc.",MEDIUM,11,tesla inc securities litigation,11,9,0
+TSLA,"Tesla, Inc.",MEDIUM,12,nikola tesla museum,10,10,0
+TSLA,"Tesla, Inc.",MEDIUM,13,tesla inc report,7,7,0
+TSLA,"Tesla, Inc.",MEDIUM,14,diaz v tesla inc,7,7,0
+TSLA,"Tesla, Inc.",MEDIUM,15,tesla media center,7,7,0
+TSLA,"Tesla, Inc.",MEDIUM,16,courtesy of tesla inc,6,6,0
+TSLA,"Tesla, Inc.",MEDIUM,17,tesla supercharger network,6,6,0
+TSLA,"Tesla, Inc.",MEDIUM,18,tesla inc on,5,3,0
+TSLA,"Tesla, Inc.",MEDIUM,19,a tesla inc,4,4,0
+TSLA,"Tesla, Inc.",MEDIUM,20,tesla cybertruck at tesla design center,4,4,0
+TSLA,"Tesla, Inc.",MEDIUM,21,tesla energy master plan,4,4,0
+TSLA,"Tesla, Inc.",MEDIUM,22,tesla service center,3,2,0
+TSLA,"Tesla, Inc.",MEDIUM,23,tesla owners club,3,3,0
+TSLA,"Tesla, Inc.",MEDIUM,24,tesla foundation,3,3,0
+TSLA,"Tesla, Inc.",MEDIUM,25,tesla service,3,3,0
+TSLA,"Tesla, Inc.",MEDIUM,26,tesla cybertruck forum,3,3,0
+TSLA,"Tesla, Inc.",MEDIUM,27,a company founded by former tesla,2,2,0
+TSLA,"Tesla, Inc.",MEDIUM,28,tesla motors ltd,2,2,0
+TSLA,"Tesla, Inc.",MEDIUM,29,tesla model y tesla inc,2,2,0
+TSLA,"Tesla, Inc.",MEDIUM,30,tesla club india on twitter,2,2,0
+MPC,Marathon Petroleum Corporation,MEDIUM,1,marathon petroleum,120,102,1
+MPC,Marathon Petroleum Corporation,MEDIUM,2,marathon petroleum corp,56,46,0
+MPC,Marathon Petroleum Corporation,MEDIUM,3,marathon petroleum corporation,50,47,1
+MPC,Marathon Petroleum Corporation,MEDIUM,4,news ratings for marathon petroleum daily,25,25,0
+MPC,Marathon Petroleum Corporation,MEDIUM,5,quarter for marathon petroleum,22,22,0
+MPC,Marathon Petroleum Corporation,MEDIUM,6,marathon petroleum co,22,22,0
+MPC,Marathon Petroleum Corporation,MEDIUM,7,marathon petroleum announces dividend,13,13,0
+MPC,Marathon Petroleum Corporation,MEDIUM,8,marathon petroleum dividend announcement,10,10,0
+MPC,Marathon Petroleum Corporation,MEDIUM,9,marathon petroleum profile,9,9,0
+MPC,Marathon Petroleum Corporation,MEDIUM,10,marathon petroleum company profile,7,7,0
+MPC,Marathon Petroleum Corporation,MEDIUM,11,marathon petroleum stock,7,7,0
+MPC,Marathon Petroleum Corporation,MEDIUM,12,marathon petroleum stock performance,6,6,0
+MPC,Marathon Petroleum Corporation,MEDIUM,13,marathon petroleum corpoation,6,6,0
+MPC,Marathon Petroleum Corporation,MEDIUM,14,marathon petroleum trading,5,5,0
+MPC,Marathon Petroleum Corporation,MEDIUM,15,marathon petroleum crop,4,3,0
+MPC,Marathon Petroleum Corporation,MEDIUM,16,marathon petroleum price performance,4,4,0
+MPC,Marathon Petroleum Corporation,MEDIUM,17,analyst recommendations for marathon petroleum,4,4,0
+MPC,Marathon Petroleum Corporation,MEDIUM,18,marathon petroleum stock down,3,3,0
+MPC,Marathon Petroleum Corporation,MEDIUM,19,a marathon petroleum,2,2,0
+MPC,Marathon Petroleum Corporation,MEDIUM,20,marathon petroleum refinery,2,2,0
+MPC,Marathon Petroleum Corporation,MEDIUM,21,insider activity at marathon petroleum,2,2,0
+MPC,Marathon Petroleum Corporation,MEDIUM,22,insider transactions at marathon petroleum,2,2,0
+MPC,Marathon Petroleum Corporation,MEDIUM,23,hedge funds weigh in on marathon petroleum,2,2,0
+MPC,Marathon Petroleum Corporation,MEDIUM,24,institutional trading of marathon petroleum,2,2,0
+MPC,Marathon Petroleum Corporation,MEDIUM,25,marathon petroleum company profile get rating,1,1,0
+MPC,Marathon Petroleum Corporation,MEDIUM,26,marathon petroleum corporation marathon,1,1,0
+MPC,Marathon Petroleum Corporation,MEDIUM,27,marathon petroleum in anacortes,1,1,0
+MPC,Marathon Petroleum Corporation,MEDIUM,28,marathon petroleum company,1,1,0
+MPC,Marathon Petroleum Corporation,MEDIUM,29,marathon petroleum standing right,1,1,0
+MPC,Marathon Petroleum Corporation,MEDIUM,30,analyst ratings for marathon petroleum,1,1,0
+NRG,"NRG Energy, Inc.",MEDIUM,1,nrg energy inc,3,3,1
+NRG,"NRG Energy, Inc.",MEDIUM,2,nrg energy,1,1,1
+WMB,"The Williams Companies, Inc.",MEDIUM,1,williams companies,33,33,1
+WMB,"The Williams Companies, Inc.",MEDIUM,2,williams companies inc,28,28,0
+WMB,"The Williams Companies, Inc.",MEDIUM,3,news ratings for williams companies daily,21,21,0
+WMB,"The Williams Companies, Inc.",MEDIUM,4,quarter for williams companies,19,19,0
+WMB,"The Williams Companies, Inc.",MEDIUM,5,williams companies dividend announcement,14,14,0
+WMB,"The Williams Companies, Inc.",MEDIUM,6,williams companies announces dividend,8,8,0
+WMB,"The Williams Companies, Inc.",MEDIUM,7,williams companies company profile,7,7,0
+WMB,"The Williams Companies, Inc.",MEDIUM,8,williams companies stock performance,6,6,0
+WMB,"The Williams Companies, Inc.",MEDIUM,9,williams companies price performance,6,6,0
+WMB,"The Williams Companies, Inc.",MEDIUM,10,williams companies trading down,5,5,0
+WMB,"The Williams Companies, Inc.",MEDIUM,11,williams companies profile,3,3,0
+WMB,"The Williams Companies, Inc.",MEDIUM,12,insider transactions at williams companies,3,3,0
+WMB,"The Williams Companies, Inc.",MEDIUM,13,hedge funds weigh in on williams companies,2,2,0
+WMB,"The Williams Companies, Inc.",MEDIUM,14,analyst recommendations for williams companies,2,2,0
+WMB,"The Williams Companies, Inc.",MEDIUM,15,institutional investors weigh in on williams companies,2,2,0
+WMB,"The Williams Companies, Inc.",MEDIUM,16,williams companies stock down,2,2,0
+WMB,"The Williams Companies, Inc.",MEDIUM,17,williams companies company profile get rating,1,1,0
+WMB,"The Williams Companies, Inc.",MEDIUM,18,williams companies trading,1,1,0
+WMB,"The Williams Companies, Inc.",MEDIUM,19,insider activity at williams companies,1,1,0
+WMB,"The Williams Companies, Inc.",MEDIUM,20,news ratings for williams companies inc,1,1,0
+WMB,"The Williams Companies, Inc.",MEDIUM,21,williams companies stock,1,1,0
+WMB,"The Williams Companies, Inc.",MEDIUM,22,institutional trading of williams companies,1,1,0
+IRM,Iron Mountain Incorporated,HIGH,1,iron mountain incorporated,15,13,1
+IRM,Iron Mountain Incorporated,HIGH,2,iron mountain inc,11,10,1
+IRM,Iron Mountain Incorporated,HIGH,3,iron mountain high school,5,5,0
+IRM,Iron Mountain Incorporated,HIGH,4,credit iron mountain va medical center,2,2,0
+IRM,Iron Mountain Incorporated,HIGH,5,iron mountain school board,2,2,0
+IRM,Iron Mountain Incorporated,HIGH,6,dickinson county library in iron mountain,2,2,0
+IRM,Iron Mountain Incorporated,HIGH,7,leduc at iron mountain high school,2,2,0
+IRM,Iron Mountain Incorporated,HIGH,8,iron mountain high school class,2,2,0
+IRM,Iron Mountain Incorporated,HIGH,9,iron mountain processing,2,2,0
+IRM,Iron Mountain Incorporated,HIGH,10,iron mountain incorporated united states,1,1,0
+IRM,Iron Mountain Incorporated,HIGH,11,iron mountain data centers,1,1,0
+IRM,Iron Mountain Incorporated,HIGH,12,boston iron mountain incorporated,1,1,0
+IRM,Iron Mountain Incorporated,HIGH,13,services for iron mountain data centers,1,1,0
+IRM,Iron Mountain Incorporated,HIGH,14,iron mountain academic booster club,1,1,0
+IRM,Iron Mountain Incorporated,HIGH,15,services for iron mountain data centres,1,1,0
+IRM,Iron Mountain Incorporated,HIGH,16,iron mountain school district,1,1,0
+IRM,Iron Mountain Incorporated,HIGH,17,iron mountain entertainment services,1,1,0
+IRM,Iron Mountain Incorporated,HIGH,18,courtesy of iron mountain entertainment services,1,1,0
+IRM,Iron Mountain Incorporated,HIGH,19,iron mountain police department,1,1,0
+IRM,Iron Mountain Incorporated,HIGH,20,iron mountain company profile,1,1,0
+IRM,Iron Mountain Incorporated,HIGH,21,iron mountain planning commission,1,1,0
+IRM,Iron Mountain Incorporated,HIGH,22,dickinson county library of iron mountain,1,1,0
+IRM,Iron Mountain Incorporated,HIGH,23,iron mountain city council,1,1,0
+IRM,Iron Mountain Incorporated,HIGH,24,iron mountain housing commission,1,1,0
+IRM,Iron Mountain Incorporated,HIGH,25,iron mountain,1,1,0
+IRM,Iron Mountain Incorporated,HIGH,26,cremation services of iron mountain,1,1,0
+MOS,The Mosaic Company,HIGH,1,mosaic company,358,342,1
+MOS,The Mosaic Company,HIGH,2,grenfell memorial community mosaic,56,2,0
+MOS,The Mosaic Company,HIGH,3,mosaic co,22,22,0
+MOS,The Mosaic Company,HIGH,4,mosaic sustainable finance corp,20,4,0
+MOS,The Mosaic Company,HIGH,5,mosaic solutions,15,15,0
+MOS,The Mosaic Company,HIGH,6,mosaic church,11,11,0
+MOS,The Mosaic Company,HIGH,7,mosaic medical center,8,8,0
+MOS,The Mosaic Company,HIGH,8,mosaic templars cultural center,7,7,0
+MOS,The Mosaic Company,HIGH,9,mosaic international south asian film festival,5,5,0
+MOS,The Mosaic Company,HIGH,10,mosaic company profile,5,5,0
+MOS,The Mosaic Company,HIGH,11,mosaic laboratories,4,4,0
+MOS,The Mosaic Company,HIGH,12,gaziantep zeugma mosaic museum,4,4,0
+MOS,The Mosaic Company,HIGH,13,mosaic family health inc,4,4,0
+MOS,The Mosaic Company,HIGH,14,mosaic family health non,4,4,0
+MOS,The Mosaic Company,HIGH,15,mosaic health solutions,3,2,0
+MOS,The Mosaic Company,HIGH,16,mosaic technology,3,1,0
+MOS,The Mosaic Company,HIGH,17,prince trust mosaic initiative,3,3,0
+MOS,The Mosaic Company,HIGH,18,mosaic family wealth partners,3,3,0
+MOS,The Mosaic Company,HIGH,19,zeugma mosaic museum,3,3,0
+MOS,The Mosaic Company,HIGH,20,mosaic fertilizer,3,3,0
+MOS,The Mosaic Company,HIGH,21,mosaic syndicate,3,3,0
+MOS,The Mosaic Company,HIGH,22,mosaic community services,2,1,0
+MOS,The Mosaic Company,HIGH,23,mosaic financial associates,2,2,0
+MOS,The Mosaic Company,HIGH,24,mosaic group,2,2,0
+MOS,The Mosaic Company,HIGH,25,mosaic pizza company at walmart,2,1,0
+MOS,The Mosaic Company,HIGH,26,solar mosaic,2,2,0
+MOS,The Mosaic Company,HIGH,27,mosaic corporation,2,2,0
+MOS,The Mosaic Company,HIGH,28,mosaic family health,2,2,0
+MOS,The Mosaic Company,HIGH,29,mosaic development,2,2,0
+MOS,The Mosaic Company,HIGH,30,mosaic advisors,2,2,0
+TPL,Texas Pacific Land Corporation,MEDIUM,1,texas pacific land corporation,14,14,1
+TPL,Texas Pacific Land Corporation,MEDIUM,2,texas pacific land co,8,8,0
+TPL,Texas Pacific Land Corporation,MEDIUM,3,texas pacific land corp,6,6,0
+TPL,Texas Pacific Land Corporation,MEDIUM,4,texas pacific land trust,3,3,0
+TPL,Texas Pacific Land Corporation,MEDIUM,5,texas pacific land,2,2,1
+TPL,Texas Pacific Land Corporation,MEDIUM,6,texas pacific land company profile,2,2,0

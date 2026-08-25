@@ -1,0 +1,39 @@
+======================================================================================================================
+POST-H2 PHASE 3B — AUTHORITATIVE EVIDENCE PREPARATION
+======================================================================================================================
+Status: EXPLORATORY / NON-CONFIRMATORY
+H1 conclusion modified: NO
+H2 conclusion modified: NO
+
+Purpose: freeze the external-research target set and evidence schema before qualitative coding.
+
+======================================================================================================================
+1. TARGET SET
+======================================================================================================================
+Security targets: 30
+Month targets: 15
+Total research targets: 45
+
+Security targets are the top Phase 3A contribution-ranked securities.
+Month targets are the top Phase 3A absolute-commonality-ranked months.
+No target was selected using external narratives.
+
+======================================================================================================================
+2. EVIDENCE RULES
+======================================================================================================================
+Primary-source preference: SEC, company IR, Federal Reserve, BLS, BEA, regulators/government, S&P/official index sources.
+Wikipedia: prohibited.
+Theme labels: not frozen yet.
+One target may have multiple evidence rows.
+Evidence timing relative to ranking/holding window must be recorded.
+Company-specific, sector, cross-sector, and macro evidence must remain distinguishable.
+Short quotations must remain <=25 words per source.
+
+======================================================================================================================
+3. OUTPUTS
+======================================================================================================================
+reports\exploratory\post_h2_phase3b_research_target_packet.csv
+reports\exploratory\post_h2_phase3b_evidence_ledger_template.csv
+reports\exploratory\post_h2_phase3b_evidence_coding_guide.csv
+
+POST_H2_PHASE3B_EVIDENCE_PREPARATION_COMPLETE

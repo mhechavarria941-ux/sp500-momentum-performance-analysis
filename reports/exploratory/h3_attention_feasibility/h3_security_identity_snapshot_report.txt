@@ -1,0 +1,17 @@
+==========================================================================================================
+H3 SECURITY IDENTITY SNAPSHOT
+==========================================================================================================
+core.security rows: 593
+core.security_ticker_history rows: 594
+core.security columns: 3
+core.security_ticker_history columns: 7
+Database modifications: 0
+Return/outcome fields queried: 0
+
+Security columns:
+security_key | company_name_reference | created_at_utc
+
+Ticker-history columns:
+security_key | ticker | ticker_valid_from | ticker_valid_to_exclusive | left_censored | right_censored | created_at_utc
+
+H3_SECURITY_IDENTITY_SNAPSHOT_COMPLETE

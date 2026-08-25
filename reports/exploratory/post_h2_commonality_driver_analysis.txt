@@ -1,0 +1,161 @@
+==========================================================================================================================
+POST-H2 EXPLORATORY WINNER COMMONALITY — PHASE 2 DRIVER ATTRIBUTION
+==========================================================================================================================
+Status: EXPLORATORY / NON-CONFIRMATORY
+H1 conclusion modified: NO
+H2 conclusion modified: NO
+Azure SQL mode: READ-ONLY
+
+Goal: identify the months, sectors, and Winner securities that drive the residual cross-sector commonality observed in Phase 1.
+
+Exact additive decomposition:
+sector residual_t = sum_i [sector Winner weight_i,t * (security return_i,t - fitted sector Winner return_t)]
+aggregate commonality_t = (1/11) * sum_sector(sector residual_t)
+security aggregate contribution_i,t = (1/11) * sector Winner weight_i,t * (security return_i,t - fitted sector Winner return_t)
+
+==========================================================================================================================
+1. SOURCE / PRESERVATION CONTROLS
+==========================================================================================================================
+PASS: core.security remains 593 rows.
+PASS: core.security_ticker_history remains 594 rows.
+PASS: core.index_membership remains 593 rows.
+PASS: core.security_price_eligibility remains 594 rows.
+PASS: core.daily_security_price remains 631,942 rows.
+PASS: core.benchmark_series remains 2 rows.
+PASS: core.daily_benchmark_price remains 2,510 rows.
+PASS: complete Winner security returns span 59 months.
+PASS: Winner security source contains 649 sector-month groups.
+PASS: Phase 1 residual panel shape = (59, 11).
+
+==========================================================================================================================
+2. EXACT SECURITY-LEVEL CONTRIBUTION DECOMPOSITION
+==========================================================================================================================
+PASS: sector residual reconstruction max absolute error = 2.984e-16.
+PASS: aggregate commonality reconstruction max absolute error = 1.665e-16.
+Security-month Winner contribution rows: 5,659.
+
+==========================================================================================================================
+3. SECURITY-LEVEL DRIVERS
+==========================================================================================================================
+Unique Winner securities in complete return months: 526
+Top 10 securities' share of absolute commonality contribution: 11.343%
+Top 25 securities' share of absolute commonality contribution: 22.507%
+Security absolute-contribution HHI: 0.00427
+
+Top 15 securities by cumulative absolute commonality contribution:
+NUE      | Months 26 | Abs share 1.353% | Signed cumulative 1.7466% | Materials
+CEG      | Months 31 | Abs share 1.321% | Signed cumulative 1.1095% | Utilities
+NFLX     | Months 29 | Abs share 1.281% | Signed cumulative 0.8339% | Communication Services
+META     | Months 23 | Abs share 1.239% | Signed cumulative 0.7201% | Communication Services
+NRG      | Months 33 | Abs share 1.176% | Signed cumulative 0.1732% | Utilities
+MOS      | Months 26 | Abs share 1.075% | Signed cumulative -0.9689% | Materials
+ALB      | Months 20 | Abs share 1.062% | Signed cumulative -0.3171% | Materials
+VST      | Months 17 | Abs share 0.990% | Signed cumulative 0.4852% | Utilities
+DVN      | Months 22 | Abs share 0.945% | Signed cumulative 1.1910% | Energy
+IRM      | Months 42 | Abs share 0.900% | Signed cumulative 0.9705% | Real Estate
+TSLA     | Months 31 | Abs share 0.873% | Signed cumulative -0.3559% | Consumer Discretionary
+MPC      | Months 23 | Abs share 0.869% | Signed cumulative 0.1661% | Energy
+FCX      | Months 19 | Abs share 0.854% | Signed cumulative 0.0266% | Materials
+CF       | Months 19 | Abs share 0.813% | Signed cumulative 0.7850% | Materials
+TRGP     | Months 19 | Abs share 0.778% | Signed cumulative 1.4536% | Energy
+
+==========================================================================================================================
+4. MONTH-LEVEL DRIVERS AND SYNCHRONY
+==========================================================================================================================
+Top 10 months by absolute residual commonality factor:
+Month 56 | Ranking 2025-08-29 | Factor 3.6804% | Positive residual sectors  9/11 | Largest sector activity share 25.219%
+Month  2 | Ranking 2021-02-26 | Factor -3.5612% | Positive residual sectors  1/11 | Largest sector activity share 26.698%
+Month 24 | Ranking 2022-12-30 | Factor -3.1212% | Positive residual sectors  2/11 | Largest sector activity share 17.384%
+Month 22 | Ranking 2022-10-31 | Factor -3.0405% | Positive residual sectors  1/11 | Largest sector activity share 25.647%
+Month 12 | Ranking 2021-12-31 | Factor -2.8993% | Positive residual sectors  1/11 | Largest sector activity share 24.586%
+Month 36 | Ranking 2023-12-29 | Factor 2.8179% | Positive residual sectors  9/11 | Largest sector activity share 18.866%
+Month  1 | Ranking 2021-01-29 | Factor -2.6571% | Positive residual sectors  3/11 | Largest sector activity share 34.965%
+Month 50 | Ranking 2025-02-28 | Factor -2.5373% | Positive residual sectors  1/11 | Largest sector activity share 23.264%
+Month 48 | Ranking 2024-12-31 | Factor 2.5270% | Positive residual sectors  9/11 | Largest sector activity share 29.689%
+Month 35 | Ranking 2023-11-30 | Factor -2.4661% | Positive residual sectors  1/11 | Largest sector activity share 20.024%
+
+==========================================================================================================================
+5. SECTOR VARIANCE CONTRIBUTION TO COMMONALITY
+==========================================================================================================================
+Sector shares of commonality-factor variance (additive covariance decomposition):
+Communication Services     | Variance share 12.350%
+Energy                     | Variance share 12.024%
+Information Technology     | Variance share 11.296%
+Materials                  | Variance share 10.316%
+Health Care                | Variance share 10.014%
+Utilities                  | Variance share 8.465%
+Financials                 | Variance share 7.889%
+Industrials                | Variance share 7.825%
+Consumer Discretionary     | Variance share 6.751%
+Real Estate                | Variance share 6.537%
+Consumer Staples           | Variance share 6.534%
+
+==========================================================================================================================
+6. RESIDUAL PAIRWISE NETWORK
+==========================================================================================================================
+Top 10 residual sector-pair correlations by absolute magnitude:
+Health Care                <-> Industrials                | corr 0.5421
+Consumer Discretionary     <-> Industrials                | corr 0.4874
+Financials                 <-> Industrials                | corr 0.4630
+Communication Services     <-> Information Technology     | corr 0.4072
+Industrials                <-> Utilities                  | corr 0.3273
+Financials                 <-> Utilities                  | corr 0.3244
+Financials                 <-> Health Care                | corr 0.3208
+Health Care                <-> Information Technology     | corr 0.3089
+Industrials                <-> Information Technology     | corr 0.3009
+Consumer Staples           <-> Materials                  | corr 0.2737
+
+==========================================================================================================================
+7. RESIDUAL PC1 MONTH SCORES
+==========================================================================================================================
+Residual PC1 explained variance: 26.948%
+Correlation of residual PC1 score with equal-weight residual commonality factor: 0.9634
+
+Strongest positive residual-PC1 months:
+Month 56 | Ranking 2025-08-29 | PC1 z 1.8480
+Month 36 | Ranking 2023-12-29 | PC1 z 1.7346
+Month 48 | Ranking 2024-12-31 | PC1 z 1.6186
+Month 37 | Ranking 2024-01-31 | PC1 z 1.5713
+Month 46 | Ranking 2024-10-31 | PC1 z 1.4386
+
+Strongest negative residual-PC1 months:
+Month 24 | Ranking 2022-12-30 | PC1 z -2.3528
+Month 12 | Ranking 2021-12-31 | PC1 z -2.0305
+Month 50 | Ranking 2025-02-28 | PC1 z -1.9115
+Month  2 | Ranking 2021-02-26 | PC1 z -1.8363
+Month 35 | Ranking 2023-11-30 | PC1 z -1.6170
+
+==========================================================================================================================
+8. CONCENTRATION SUMMARY
+==========================================================================================================================
+Top 10 securities / total absolute contribution: 11.343%
+Top 25 securities / total absolute contribution: 22.507%
+Top 10 months / total absolute factor magnitude: 37.792%
+Top 3 sectors / total absolute variance-share magnitude: 35.670%
+Residual factor vs residual PC1 correlation: 0.9634
+
+==========================================================================================================================
+9. EXPLORATORY INTERPRETATION BOUNDARY
+==========================================================================================================================
+This phase attributes the already-defined Phase 1 residual commonality; it does not create a new confirmatory effect.
+Security contributions are exact algebraic decompositions of sector Winner residuals using the Phase 1 in-sample regression coefficients.
+A security's contribution is not a causal attribution and is not an estimate of standalone alpha.
+Large cumulative absolute contribution can arise from repeated Winner membership, large idiosyncratic moves, or both.
+Sector variance shares may be negative because covariance contributions to a portfolio variance can be negative.
+PC1 scores measure the strongest residual co-movement direction and are not returns of a tradable portfolio.
+The next phase should use these ranked months/securities to characterize firm-level common traits and event/theme clustering.
+Narrative/attention variables should still be treated as a separate exploratory or preregistered hypothesis rather than retrofitted onto H2.
+
+==========================================================================================================================
+10. OUTPUTS
+==========================================================================================================================
+reports\exploratory\post_h2_commonality_security_month_contributions.csv
+reports\exploratory\post_h2_commonality_security_contributions.csv
+reports\exploratory\post_h2_commonality_month_drivers.csv
+reports\exploratory\post_h2_commonality_top_month_security_contributors.csv
+reports\exploratory\post_h2_commonality_sector_variance_contributions.csv
+reports\exploratory\post_h2_commonality_residual_pairwise_correlations.csv
+reports\exploratory\post_h2_commonality_pc1_scores.csv
+reports\exploratory\post_h2_commonality_concentration_summary.csv
+
+POST_H2_COMMONALITY_DRIVER_PHASE2_COMPLETE

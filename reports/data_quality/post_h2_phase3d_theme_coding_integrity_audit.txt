@@ -1,0 +1,25 @@
+POST-H2 PHASE 3D THEME CODING INTEGRITY AUDIT
+======================================================================================
+Frozen taxonomy SHA-256: 1c7698cbe2facd069c7a12fda41cbf7399a9f657ed4f7a9f956d135f8f9d2576
+
+PASS: taxonomy_checksum_matches_frozen
+PASS: matrix_targets_45
+PASS: matrix_security_targets_30
+PASS: matrix_month_targets_15
+PASS: all_targets_have_at_least_one_code
+PASS: bridge_codes_all_valid
+PASS: bridge_evidence_ids_all_exist
+PASS: bridge_checksum_all_match
+PASS: security_only_S_codes
+PASS: month_only_M_codes
+PASS: every_code_supported_by_same_target_evidence
+PASS: every_matrix_assignment_has_bridge_support
+PASS: no_theme_codes_added_after_freeze
+PASS: prevalence_counts_reconstruct_matrix
+
+Target-theme matrix rows: 45
+Evidence-to-theme bridge rows: 140
+Unique target-code assignments: 98
+Frozen taxonomy codes: 17
+
+POST_H2_PHASE3D_THEME_CODING_INTEGRITY_AUDIT_PASSED

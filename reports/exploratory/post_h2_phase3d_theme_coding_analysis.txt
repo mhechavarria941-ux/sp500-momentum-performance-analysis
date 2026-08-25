@@ -1,0 +1,128 @@
+======================================================================================================================
+POST-H2 EXPLORATORY PHASE 3D — FULL TARGET THEME CODING
+======================================================================================================================
+Status: EXPLORATORY / NON-CONFIRMATORY
+Frozen taxonomy SHA-256: 1c7698cbe2facd069c7a12fda41cbf7399a9f657ed4f7a9f956d135f8f9d2576
+Targets coded: 30 securities + 15 extreme commonality months
+Evidence base: 90 primary/official-source records
+Coding model: multi-label; every code assignment linked to same-target evidence
+H1 conclusion modified: NO
+H2 conclusion modified: NO
+
+======================================================================================================================
+1. SECURITY STRUCTURAL THEME PREVALENCE
+======================================================================================================================
+S05 | Capacity Expansion / Supply-Demand Imbalance      | 15/30 targets |  50.0% | sum abs-contribution share  13.36%
+S01 | AI / Compute / Digital Infrastructure             |  9/30 targets |  30.0% | sum abs-contribution share   8.56%
+S03 | Electrification / Energy Transition               |  8/30 targets |  26.7% | sum abs-contribution share   8.14%
+S04 | Commodity / Resource Scarcity & Pricing           |  8/30 targets |  26.7% | sum abs-contribution share   6.72%
+S09 | Strategic Consolidation / Portfolio Scale         |  7/30 targets |  23.3% | sum abs-contribution share   7.04%
+S02 | Power / Energy Infrastructure                     |  5/30 targets |  16.7% | sum abs-contribution share   4.64%
+S06 | Digital Platform / Monetization Shift             |  4/30 targets |  13.3% | sum abs-contribution share   3.70%
+S08 | Real-Asset Occupancy / Demographic Demand         |  3/30 targets |  10.0% | sum abs-contribution share   1.84%
+S07 | Experiential / Consumer Demand                    |  2/30 targets |   6.7% | sum abs-contribution share   1.42%
+S10 | Recurring Membership / Customer-Loyalty Economics |  2/30 targets |   6.7% | sum abs-contribution share   1.34%
+
+Because codes are multi-label, contribution shares across themes are overlapping and must not be summed.
+
+======================================================================================================================
+2. MONTH MACRO THEME PREVALENCE
+======================================================================================================================
+M05 | Persistent / Sticky Inflation                     |  8/15 months | positive-factor  6 | negative-factor  2
+M02 | Restrictive / Tightening Monetary Policy          |  7/15 months | positive-factor  3 | negative-factor  4
+M04 | Disinflation / Inflation Deceleration             |  7/15 months | positive-factor  2 | negative-factor  5
+M07 | Macro Uncertainty / Dual-Mandate Rebalancing      |  6/15 months | positive-factor  4 | negative-factor  2
+M03 | Easing / Policy-Pivot Transition                  |  3/15 months | positive-factor  3 | negative-factor  0
+M01 | Accommodative Monetary / Fiscal Support           |  2/15 months | positive-factor  0 | negative-factor  2
+M06 | Labor / Growth Resilience                         |  2/15 months | positive-factor  1 | negative-factor  1
+
+======================================================================================================================
+3. STRONGEST SECURITY THEME CO-OCCURRENCES
+======================================================================================================================
+S01 + S05 | co-coded targets  6 | Jaccard 0.333
+S03 + S05 | co-coded targets  5 | Jaccard 0.278
+S01 + S03 | co-coded targets  4 | Jaccard 0.308
+S02 + S05 | co-coded targets  4 | Jaccard 0.250
+S02 + S03 | co-coded targets  3 | Jaccard 0.300
+S03 + S09 | co-coded targets  3 | Jaccard 0.250
+S03 + S04 | co-coded targets  3 | Jaccard 0.231
+S05 + S09 | co-coded targets  3 | Jaccard 0.158
+S06 + S09 | co-coded targets  2 | Jaccard 0.222
+S02 + S09 | co-coded targets  2 | Jaccard 0.200
+S01 + S02 | co-coded targets  2 | Jaccard 0.167
+S04 + S09 | co-coded targets  2 | Jaccard 0.154
+
+======================================================================================================================
+4. STRONGEST MONTH-MACRO CO-OCCURRENCES
+======================================================================================================================
+M02 + M05 | co-coded months  5 | Jaccard 0.500
+M02 + M04 | co-coded months  4 | Jaccard 0.400
+M03 + M07 | co-coded months  3 | Jaccard 0.500
+M04 + M07 | co-coded months  3 | Jaccard 0.300
+M05 + M07 | co-coded months  3 | Jaccard 0.273
+M03 + M05 | co-coded months  2 | Jaccard 0.222
+M02 + M07 | co-coded months  2 | Jaccard 0.182
+M04 + M05 | co-coded months  2 | Jaccard 0.154
+M04 + M06 | co-coded months  1 | Jaccard 0.125
+M03 + M04 | co-coded months  1 | Jaccard 0.111
+
+======================================================================================================================
+5. TARGET CODE MAP
+======================================================================================================================
+MONTH    rank  1 | Month 56 | M03 | M05 | M07
+MONTH    rank  2 | Month  2 | M01
+MONTH    rank  3 | Month 24 | M04 | M06
+MONTH    rank  4 | Month 22 | M02 | M04 | M05
+MONTH    rank  5 | Month 12 | M02 | M05
+MONTH    rank  6 | Month 36 | M02 | M05 | M07
+MONTH    rank  7 | Month  1 | M01
+MONTH    rank  8 | Month 50 | M04 | M07
+MONTH    rank  9 | Month 48 | M05 | M06
+MONTH    rank 10 | Month 35 | M02 | M04
+MONTH    rank 11 | Month 42 | M02 | M04 | M07
+MONTH    rank 12 | Month 37 | M02 | M05
+MONTH    rank 13 | Month 46 | M03 | M05 | M07
+MONTH    rank 14 | Month 19 | M02 | M04 | M05
+MONTH    rank 15 | Month 43 | M03 | M04 | M07
+SECURITY rank  1 | NUE    | S01 | S03 | S05 | S09
+SECURITY rank  2 | CEG    | S01 | S02 | S03 | S05 | S09
+SECURITY rank  3 | NFLX   | S06
+SECURITY rank  4 | META   | S01 | S05
+SECURITY rank  5 | NRG    | S06 | S09
+SECURITY rank  6 | MOS    | S04
+SECURITY rank  7 | ALB    | S03 | S04 | S05
+SECURITY rank  8 | VST    | S02 | S03 | S05 | S09
+SECURITY rank  9 | DVN    | S04 | S09
+SECURITY rank 10 | IRM    | S01 | S05
+SECURITY rank 11 | TSLA   | S01 | S03 | S05
+SECURITY rank 12 | MPC    | S02 | S03
+SECURITY rank 13 | FCX    | S01 | S03 | S04
+SECURITY rank 14 | CF     | S03 | S04
+SECURITY rank 15 | TRGP   | S02 | S05
+SECURITY rank 16 | LYV    | S05 | S07
+SECURITY rank 17 | LLY    | S05
+SECURITY rank 18 | COST   | S10
+SECURITY rank 19 | TPL    | S04 | S05
+SECURITY rank 20 | NVDA   | S01
+SECURITY rank 21 | WMB    | S01 | S02 | S05
+SECURITY rank 22 | SPG    | S05 | S08
+SECURITY rank 23 | RCL    | S05 | S07
+SECURITY rank 24 | WBD    | S06 | S09
+SECURITY rank 25 | ADM    | S04
+SECURITY rank 26 | NEM    | S04 | S09
+SECURITY rank 27 | ANET   | S01
+SECURITY rank 28 | WMT    | S06 | S10
+SECURITY rank 29 | CBRE   | S08
+SECURITY rank 30 | WELL   | S05 | S08
+
+======================================================================================================================
+6. INTERPRETATION BOUNDARY
+======================================================================================================================
+These codes describe evidence-documented characteristics/events among a deliberately selected top-driver sample.
+They are NOT prevalence estimates for the full S&P 500 and are NOT causal explanations of returns.
+The security sample was selected for large contribution to post-H2 residual commonality; selection is endogenous to the exploratory question.
+The month sample consists of the 15 strongest absolute commonality months, not a random sample of all 59 observable months.
+Theme overlap is expected and intentional.
+The next quantitative step must compare coded targets against suitable non-target controls before any predictive or explanatory claim.
+
+POST_H2_PHASE3D_THEME_CODING_COMPLETE

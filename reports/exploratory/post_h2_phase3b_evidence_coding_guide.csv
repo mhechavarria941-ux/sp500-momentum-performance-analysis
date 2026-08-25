@@ -1,0 +1,10 @@
+field,allowed_or_guidance
+source_type,SEC_FILING | COMPANY_IR | FEDERAL_RESERVE | BLS | BEA | REGULATOR_GOVERNMENT | SP_INDEX_PROVIDER | OTHER_PRIMARY
+primary_source_flag,YES only for authoritative original-source evidence
+event_scope,COMPANY_SPECIFIC | SECTOR | CROSS_SECTOR | MARKETWIDE_MACRO
+event_category,Leave descriptive during collection; do not force a final taxonomy yet
+timing_relation_to_ranking,PRE_RANKING | RANKING_WINDOW | HOLDING_WINDOW | POST_HOLDING | BACKGROUND
+provisional_theme_code,Leave blank unless directly supported by evidence. Final theme taxonomy is frozen only after evidence collection.
+supports_cross_sector_commonality_flag,YES | NO | UNCLEAR
+confidence_level,HIGH | MEDIUM | LOW
+source_policy,Prefer SEC/company IR/Fed/BLS/BEA/regulators/S&P. No Wikipedia.

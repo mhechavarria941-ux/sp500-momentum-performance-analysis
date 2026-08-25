@@ -1,0 +1,12 @@
+H3 DIRECT GDELT DAILY FEASIBILITY PILOT — EXECUTED
+Pilot companies: 15
+Anchor windows: 5
+Daily GKG files processed: 35
+Companies with strict nonzero organization coverage in >=2/5 anchor windows: 15/15
+Compressed files retained after processing: NO
+Google Cloud used: NO
+BigQuery used: NO
+Azure SQL used: NO
+Returns/outcomes read: NO
+
+H3_DIRECT_GDELT_DAILY_PILOT_EXECUTION_COMPLETE

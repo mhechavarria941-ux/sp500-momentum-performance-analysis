@@ -1,0 +1,14 @@
+{
+  "script_version": "2026-08-24-v2-h3-direct-gdelt-csv-field-limit-fix",
+  "daily_files": 35,
+  "known_size_files": 35,
+  "unknown_size_files": 0,
+  "known_total_bytes": 1110330807,
+  "known_total_decimal_gb": 1.110330807,
+  "max_download_decimal_gb": 2.0,
+  "execute_requested": true,
+  "allow_unknown_size": false,
+  "keep_cache": false,
+  "google_cloud_used": false,
+  "azure_sql_used": false
+}

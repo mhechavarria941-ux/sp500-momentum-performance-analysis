@@ -1,0 +1,21 @@
+======================================================================================================================
+H3 FULL-UNIVERSE COMPANY QUERY MANIFEST — CANDIDATE BUILD
+======================================================================================================================
+Security identities: 593
+Ticker-history segments represented: 594
+Identities with multiple ticker segments: 1
+Duplicate exact normalized aliases: 0 identities
+HIGH structural ambiguity: 210
+MEDIUM structural ambiguity: 220
+LOW structural ambiguity: 163
+Ticker-like exact legal/current names: 8
+PIT/name-history review queue: 211
+
+IMPORTANT:
+Canonical company-name source column detected: company_name_reference
+This is a CANDIDATE manifest only. Current company names have not yet been validated point-in-time across 2021-2025.
+The suffix-stripped alias is diagnostic only and is NOT authorized as a production attention query.
+Production alias remains the normalized exact legal/current name until authoritative name-history review is completed.
+Return/outcome fields read: 0
+
+H3_COMPANY_QUERY_MANIFEST_CANDIDATE_BUILD_COMPLETE

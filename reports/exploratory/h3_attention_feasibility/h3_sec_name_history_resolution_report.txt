@@ -1,0 +1,29 @@
+====================================================================================================================
+H3 STAGE 3B — SEC COMPANY IDENTITY / NAME-HISTORY RESOLUTION
+====================================================================================================================
+Stage 3A identities: 593
+Identities with a candidate SEC CIK: 538
+Auto-resolved SEC mappings: 286
+Identities with SEC former-name evidence: 321
+Unique SEC submission files requested/reused: 534
+SEC submissions download failures: 0
+Stage 3B review queue: 525
+
+Mapping status counts:
+  AUTO_EXACT_TICKER_AND_NAME: 0
+  AUTO_SOURCE_AGREEMENT: 280
+  AUTO_UNIQUE_EXACT_NAME: 6
+  REVIEW_CONFLICT: 18
+  REVIEW_TICKER_ONLY: 252
+  UNRESOLVED: 37
+
+SEC company_tickers source: DOWNLOADED
+SEC CIK historical lookup source: DOWNLOADED
+Return/outcome fields read: 0
+GDELT full-history extraction performed: NO
+
+IMPORTANT:
+AUTO mapping means the CIK mapping is sufficiently deterministic for this resolution stage. It does NOT mean the company-name history is production-ready.
+SEC formerNames are retained as raw authoritative evidence. No PIT attention alias intervals are created in this script.
+
+H3_SEC_NAME_HISTORY_RESOLUTION_COMPLETE

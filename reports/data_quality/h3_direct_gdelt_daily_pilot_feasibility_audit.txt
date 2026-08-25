@@ -1,0 +1,26 @@
+==============================================================================================================
+H3 ATTENTION FEASIBILITY — DIRECT GDELT DAILY PILOT AUDIT
+==============================================================================================================
+Google Cloud / BigQuery permitted: NO
+Azure SQL used by pilot: NO
+Return/outcome analysis permitted: NO
+
+PASS: Exactly 35 frozen daily GKG files were processed.
+PASS: Daily coverage contains every company-date pair (525).
+PASS: Anchor coverage contains every company-window pair (75).
+PASS: All five frozen historical anchor windows are present.
+PASS: All 15 frozen pilot companies are present.
+PASS: Every company-anchor denominator is positive.
+PASS: Every attention share is bounded in [0, 1].
+PASS: CSV parser field limit was raised above Python's default 131,072 bytes for all processed GKG rows.
+PASS: Every downloaded archive has a recorded SHA-256.
+PASS: Pilot records zero Google Cloud and zero Azure SQL use.
+PASS: Pilot outputs contain no return/momentum/Winner/outcome columns.
+PASS: At least 10/15 pilot companies have strict nonzero organization coverage in >=2/5 anchor windows.
+PASS: Every HIGH-ambiguity company has broad organization variants available for manual review.
+
+Passed checks: 13
+Failed checks: 0
+Companies meeting >=2/5 strict nonzero-anchor rule: 15/15
+
+H3_DIRECT_GDELT_DAILY_PILOT_FEASIBILITY_GATE_PASSED_WITH_AMBIGUITY_REVIEW_REQUIRED

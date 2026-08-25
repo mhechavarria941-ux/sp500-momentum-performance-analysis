@@ -1,0 +1,29 @@
+================================================================================================================
+H3 STAGE 3B — SEC NAME-HISTORY RESOLUTION INTEGRITY AUDIT
+================================================================================================================
+Full-history GDELT extraction authorized: NO
+H3 return/outcome analysis authorized: NO
+
+PASS: Stage 3A manifest contains 593 identities.
+PASS: SEC mapping output contains all 593 identities.
+PASS: Every SEC mapping security key is unique.
+PASS: Every SEC mapping status is from the frozen status set.
+PASS: Every auto-resolved mapping has a 10-digit SEC CIK.
+PASS: SEC submissions metadata has one row per CIK.
+PASS: Every candidate SEC CIK has parsed submissions metadata.
+PASS: No SEC submissions request failed.
+PASS: Every former-name record belongs to a downloaded SEC filer.
+PASS: Stage 3B review queue exactly reconstructs resolution-review flags.
+PASS: Every non-auto SEC mapping is in the review queue.
+PASS: Every identity with SEC former-name evidence is in the review queue.
+PASS: Stage 3B outputs contain no return/momentum/Winner/outcome fields.
+
+Passed checks: 13
+Failed checks: 0
+SEC resolution review queue rows: 525
+Raw SEC former-name rows: 499
+
+H3_SEC_NAME_HISTORY_RESOLUTION_INTEGRITY_AUDIT_PASSED
+
+Passing this gate authorizes construction of PIT company-name alias intervals from authoritative evidence.
+It does NOT authorize full-history GDELT extraction or H3 inference.

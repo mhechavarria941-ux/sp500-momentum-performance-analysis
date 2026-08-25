@@ -1,0 +1,29 @@
+========================================================================================================
+POST-H2 PHASE 4A THEME SYNCHRONY INTEGRITY AUDIT
+========================================================================================================
+Taxonomy SHA-256: 1c7698cbe2facd069c7a12fda41cbf7399a9f657ed4f7a9f956d135f8f9d2576
+
+PASS: taxonomy_checksum
+PASS: all_10_structural_codes_present
+PASS: all_7_macro_codes_present
+PASS: monthly_panel_590_rows
+PASS: monthly_panel_all_months
+PASS: theme_sizes_match_matrix
+PASS: tested_themes_have_pvalues
+PASS: small_themes_not_tested
+PASS: all_finite_pvalues_bounded
+PASS: null_summary_two_metrics_per_tested_theme
+PASS: macro_inference_disabled
+PASS: sync_flags_reconstruct
+PASS: presence_flags_reconstruct
+
+Structural themes: 10
+Randomization-tested structural themes: 8
+Descriptive-only structural themes: 2
+Macro themes: 7
+
+POST_H2_PHASE4A_THEME_SYNCHRONY_INTEGRITY_AUDIT_PASSED
+Frozen taxonomy preserved.
+Published exploratory flags reconstruct exactly.
+Macro theme results remain descriptive only.
+H1/H2 conclusions modified: 0

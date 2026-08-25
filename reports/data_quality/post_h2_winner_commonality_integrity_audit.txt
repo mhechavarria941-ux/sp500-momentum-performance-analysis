@@ -1,0 +1,71 @@
+========================================================================================================
+POST-H2 WINNER COMMONALITY PHASE 1 INTEGRITY AUDIT
+========================================================================================================
+Mode: Azure SQL READ-ONLY + local output verification
+H1/H2 conclusion changes permitted: NO
+Azure SQL modifications performed: 0
+
+========================================================================================================
+1. CORE PRESERVATION
+========================================================================================================
+PASS: core.security remains 593 rows.
+PASS: core.security_ticker_history remains 594 rows.
+PASS: core.index_membership remains 593 rows.
+PASS: core.security_price_eligibility remains 594 rows.
+PASS: core.daily_security_price remains 631,942 rows.
+PASS: core.benchmark_series remains 2 rows.
+PASS: core.daily_benchmark_price remains 2,510 rows.
+========================================================================================================
+2. WINNER MEMBERSHIP / TRANSITION OUTPUTS
+========================================================================================================
+PASS: Winner membership history spans all 60 ranking months.
+PASS: Winner membership history contains all 11 canonical sectors.
+PASS: Winner transition output contains 59 x 11 = 649 rows.
+PASS: All Winner persistence rates are bounded in [0, 1].
+PASS: Winner persistence output contains exactly one row per security/ticker across its full point-in-time sector history.
+PASS: No security has more Winner months than eligible months.
+PASS: Winner persistence preserves sector-history metadata without splitting a security's persistence record.
+PASS: All security Winner-share values are bounded in [0, 1].
+========================================================================================================
+3. RETURN PANELS / RESIDUALIZATION
+========================================================================================================
+PASS: Winner sector return panel contains 59 x 11 = 649 rows.
+PASS: Winner synchrony output contains 59 observable months.
+PASS: Residualization output contains one regression per GICS sector.
+PASS: Residual Winner panel has shape 59 x 11.
+PASS: Residual Winner panel has no missing values.
+PASS: Every in-sample sector residual series has mean approximately zero.
+========================================================================================================
+4. CORRELATION / PCA / COMMONALITY CONTROLS
+========================================================================================================
+PASS: raw correlation matrix is 11 x 11.
+PASS: raw correlation matrix is symmetric.
+PASS: raw correlation matrix diagonal equals 1.
+PASS: active correlation matrix is 11 x 11.
+PASS: active correlation matrix is symmetric.
+PASS: active correlation matrix diagonal equals 1.
+PASS: residual correlation matrix is 11 x 11.
+PASS: residual correlation matrix is symmetric.
+PASS: residual correlation matrix diagonal equals 1.
+PASS: PCA output contains raw, sector-active, and residual stages.
+PASS: PCA explained-variance ratios sum to 1 for every stage.
+PASS: Stored residual commonality factor equals the mean of 11 sector residuals.
+Raw average pairwise correlation: 0.4860
+Sector-active average pairwise correlation: 0.2153
+Residual average pairwise correlation: 0.1823
+========================================================================================================
+5. FINAL GATE
+========================================================================================================
+PASS: core.security final population remains 593.
+PASS: core.security_ticker_history final population remains 594.
+PASS: core.index_membership final population remains 593.
+PASS: core.security_price_eligibility final population remains 594.
+PASS: core.daily_security_price final population remains 631,942.
+PASS: core.benchmark_series final population remains 2.
+PASS: core.daily_benchmark_price final population remains 2,510.
+POST_H2_WINNER_COMMONALITY_PHASE1_INTEGRITY_AUDIT_PASSED
+Passed checks: 40
+Azure SQL modifications performed: 0
+Core rows modified: 0
+H1/H2 conclusions modified: 0
+Exploratory Winner persistence, synchrony, residualization, correlation, PCA, and commonality outputs are internally consistent.

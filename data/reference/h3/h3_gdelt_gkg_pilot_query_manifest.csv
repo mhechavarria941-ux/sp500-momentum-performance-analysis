@@ -1,0 +1,16 @@
+ticker,canonical_company_name,ambiguity_tier,broad_variant_regex,exact_v2organization_regex,historical_alias_note,review_note
+NVDA,NVIDIA Corporation,LOW,nvidia,"(^|;)(nvidia|nvidia corporation),[0-9]+",,Distinctive company name; bare ticker intentionally excluded.
+NFLX,"Netflix, Inc.",LOW,netflix,"(^|;)(netflix|netflix inc),[0-9]+",,Distinctive company/brand name.
+NUE,Nucor Corporation,LOW,nucor,"(^|;)(nucor|nucor corporation),[0-9]+",,Distinctive issuer name.
+ALB,Albemarle Corporation,LOW,albemarle,"(^|;)(albemarle|albemarle corporation),[0-9]+",,Distinctive issuer name.
+WMT,Walmart Inc.,LOW,walmart,"(^|;)(walmart|walmart inc),[0-9]+",,Distinctive company/brand name.
+META,"Meta Platforms, Inc.",MEDIUM,(meta platforms|facebook),"(^|;)(meta platforms|meta platforms inc|facebook),[0-9]+","Facebook, Inc. renamed Meta Platforms, Inc. during the project period.",Historical alias must remain frozen; generic bare 'Meta' excluded.
+CEG,Constellation Energy Corporation,MEDIUM,constellation energy,"(^|;)(constellation energy|constellation energy corporation),[0-9]+",Public-company history begins with 2022 separation from Exelon.,Exact energy-company phrase used to avoid generic 'constellation'.
+LLY,Eli Lilly and Company,MEDIUM,(eli lilly|lilly),"(^|;)(eli lilly|eli lilly and company|lilly),[0-9]+",,Review whether extracted 'lilly' variants refer to the issuer versus persons.
+TSLA,"Tesla, Inc.",MEDIUM,tesla,"(^|;)(tesla|tesla inc),[0-9]+",,"Company/brand is common in business news, but context review remains required."
+MPC,Marathon Petroleum Corporation,MEDIUM,marathon petroleum,"(^|;)(marathon petroleum|marathon petroleum corporation),[0-9]+",,Full issuer phrase prevents confusion with other Marathon entities/events.
+NRG,"NRG Energy, Inc.",MEDIUM,nrg energy,"(^|;)(nrg energy|nrg energy inc),[0-9]+",,Full issuer phrase preferred over NRG abbreviation alone.
+WMB,"The Williams Companies, Inc.",MEDIUM,(williams companies|the williams companies),"(^|;)(williams companies|the williams companies|the williams companies inc),[0-9]+",,Bare 'Williams' excluded because of extreme name ambiguity.
+IRM,Iron Mountain Incorporated,HIGH,iron mountain,"(^|;)(iron mountain|iron mountain incorporated),[0-9]+",,Phrase can also refer to geographic locations or unrelated businesses; variant/context audit mandatory.
+MOS,The Mosaic Company,HIGH,(mosaic company|the mosaic company|mosaic),"(^|;)(the mosaic company|mosaic company|mosaic),[0-9]+",,Bare 'Mosaic' is highly ambiguous; exact extracted-organization variants must be inspected before expansion.
+TPL,Texas Pacific Land Corporation,MEDIUM,texas pacific land,"(^|;)(texas pacific land|texas pacific land corporation),[0-9]+",Converted corporate form during historical life; project-period issuer name is stable enough for pilot.,Use full name only; TPL ticker excluded.

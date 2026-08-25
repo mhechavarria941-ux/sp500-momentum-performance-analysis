@@ -1,0 +1,123 @@
+==========================================================================================================================
+POST-H2 EXPLORATORY COMMONALITY — PHASE 3A RESEARCH TARGETS
+==========================================================================================================================
+Status: EXPLORATORY / NON-CONFIRMATORY
+Purpose: convert Phase 1-2 return-commonality findings into a structured research queue
+H1 conclusion modified: NO
+H2 conclusion modified: NO
+
+This phase does NOT assign narrative/theme labels.
+It objectively identifies the securities and months that deserve external-source research next.
+
+==========================================================================================================================
+1. SECURITY RESEARCH QUEUE
+==========================================================================================================================
+Security research queue rows: 526
+Tier 1 securities: 10
+Tier 2 cumulative securities: 30
+
+Top 15 research-priority securities:
+ 1. NUE      | Abs share 1.35% | Winner months 27/60 | Max streak 15 | Materials
+ 2. CEG      | Abs share 1.32% | Winner months 32/36 | Max streak 26 | Utilities
+ 3. NFLX     | Abs share 1.28% | Winner months 29/60 | Max streak 13 | Communication Services
+ 4. META     | Abs share 1.24% | Winner months 23/60 | Max streak 21 | Communication Services
+ 5. NRG      | Abs share 1.18% | Winner months 34/60 | Max streak 17 | Utilities
+ 6. MOS      | Abs share 1.08% | Winner months 26/60 | Max streak 11 | Materials
+ 7. ALB      | Abs share 1.06% | Winner months 21/60 | Max streak 12 | Materials
+ 8. VST      | Abs share 0.99% | Winner months 18/20 | Max streak 12 | Utilities
+ 9. DVN      | Abs share 0.94% | Winner months 22/60 | Max streak 22 | Energy
+10. IRM      | Abs share 0.90% | Winner months 42/60 | Max streak 30 | Real Estate
+11. TSLA     | Abs share 0.87% | Winner months 31/60 | Max streak  9 | Consumer Discretionary
+12. MPC      | Abs share 0.87% | Winner months 24/60 | Max streak 20 | Energy
+13. FCX      | Abs share 0.85% | Winner months 19/60 | Max streak 13 | Materials
+14. CF       | Abs share 0.81% | Winner months 19/60 | Max streak 16 | Materials
+15. TRGP     | Abs share 0.78% | Winner months 19/39 | Max streak 15 | Energy
+
+==========================================================================================================================
+2. MONTH RESEARCH QUEUE
+==========================================================================================================================
+Month research queue rows: 59
+
+Top 15 research-priority months:
+ 1. Month 56 | Ranking 2025-08-29 | Factor 3.6804% | |Factor| 3.6804% | Positive residual sectors  9/11 | PC1 z 1.848
+ 2. Month  2 | Ranking 2021-02-26 | Factor -3.5612% | |Factor| 3.5612% | Positive residual sectors  1/11 | PC1 z -1.836
+ 3. Month 24 | Ranking 2022-12-30 | Factor -3.1212% | |Factor| 3.1212% | Positive residual sectors  2/11 | PC1 z -2.353
+ 4. Month 22 | Ranking 2022-10-31 | Factor -3.0405% | |Factor| 3.0405% | Positive residual sectors  1/11 | PC1 z -1.498
+ 5. Month 12 | Ranking 2021-12-31 | Factor -2.8993% | |Factor| 2.8993% | Positive residual sectors  1/11 | PC1 z -2.030
+ 6. Month 36 | Ranking 2023-12-29 | Factor 2.8179% | |Factor| 2.8179% | Positive residual sectors  9/11 | PC1 z 1.735
+ 7. Month  1 | Ranking 2021-01-29 | Factor -2.6571% | |Factor| 2.6571% | Positive residual sectors  3/11 | PC1 z -1.129
+ 8. Month 50 | Ranking 2025-02-28 | Factor -2.5373% | |Factor| 2.5373% | Positive residual sectors  1/11 | PC1 z -1.912
+ 9. Month 48 | Ranking 2024-12-31 | Factor 2.5270% | |Factor| 2.5270% | Positive residual sectors  9/11 | PC1 z 1.619
+10. Month 35 | Ranking 2023-11-30 | Factor -2.4661% | |Factor| 2.4661% | Positive residual sectors  1/11 | PC1 z -1.617
+11. Month 42 | Ranking 2024-06-28 | Factor -2.4609% | |Factor| 2.4609% | Positive residual sectors  3/11 | PC1 z -1.421
+12. Month 37 | Ranking 2024-01-31 | Factor 2.3165% | |Factor| 2.3165% | Positive residual sectors 10/11 | PC1 z 1.571
+13. Month 46 | Ranking 2024-10-31 | Factor 2.1547% | |Factor| 2.1547% | Positive residual sectors  7/11 | PC1 z 1.439
+14. Month 19 | Ranking 2022-07-29 | Factor 2.0327% | |Factor| 2.0327% | Positive residual sectors  9/11 | PC1 z 1.371
+15. Month 43 | Ranking 2024-07-31 | Factor 2.0205% | |Factor| 2.0205% | Positive residual sectors  9/11 | PC1 z 1.316
+
+==========================================================================================================================
+3. TOP MONTH SECURITY / SECTOR DRIVER DETAIL
+==========================================================================================================================
+Top-month security driver rows: 180
+Top-month sector driver rows: 75
+
+==========================================================================================================================
+4. MONTH-TO-MONTH DRIVER SIMILARITY
+==========================================================================================================================
+Most similar top-commonality month pairs by contribution pattern:
+Month 48 <-> Month 42 | cosine -0.680
+Month 50 <-> Month 48 | cosine -0.664
+Month 48 <-> Month 37 | cosine 0.634
+Month 22 <-> Month 19 | cosine -0.611
+Month 36 <-> Month 42 | cosine -0.542
+Month 42 <-> Month 43 | cosine -0.535
+Month 36 <-> Month 43 | cosine 0.532
+Month 37 <-> Month 43 | cosine 0.498
+Month 46 <-> Month 43 | cosine 0.493
+Month 48 <-> Month 43 | cosine 0.489
+
+==========================================================================================================================
+5. TOP-SECURITY CO-OCCURRENCE
+==========================================================================================================================
+Most frequent top-driver Winner co-occurrences:
+IRM     + LLY     | Co-Winner months 38 | Jaccard 0.809
+LLY     + ANET    | Co-Winner months 35 | Jaccard 0.745
+IRM     + ANET    | Co-Winner months 33 | Jaccard 0.688
+NVDA    + ANET    | Co-Winner months 31 | Jaccard 0.660
+IRM     + NVDA    | Co-Winner months 31 | Jaccard 0.620
+LLY     + NVDA    | Co-Winner months 31 | Jaccard 0.608
+RCL     + WMT     | Co-Winner months 29 | Jaccard 0.879
+NVDA    + SPG     | Co-Winner months 29 | Jaccard 0.617
+NRG     + WMT     | Co-Winner months 27 | Jaccard 0.711
+IRM     + SPG     | Co-Winner months 27 | Jaccard 0.519
+
+==========================================================================================================================
+6. EXTERNAL RESEARCH MANIFEST
+==========================================================================================================================
+External research manifest rows: 45 (30 securities + 15 months).
+No qualitative theme labels were assigned in this phase.
+
+==========================================================================================================================
+7. INTERPRETATION BOUNDARY / NEXT STEP
+==========================================================================================================================
+Phase 3A is a target-selection and clustering precursor, not a narrative result.
+The research queue is generated only from validated post-H2 return-commonality outputs.
+Month similarity uses the signed contribution vectors of the top 30 security drivers.
+Security co-occurrence measures simultaneous Winner membership, not causal linkage.
+The external research manifest intentionally specifies fields before qualitative coding begins.
+The next phase is Phase 3B: collect authoritative primary-source evidence for the Tier 1 securities and Tier 1/Tier 2 months, then code themes using a documented evidence ledger.
+Theme coding must distinguish company-specific events, sector shocks, and marketwide/macroeconomic events.
+No attention/news/search variable should be tested against returns until the evidence-led theme taxonomy is frozen.
+
+==========================================================================================================================
+8. OUTPUTS
+==========================================================================================================================
+reports\exploratory\post_h2_phase3a_security_research_queue.csv
+reports\exploratory\post_h2_phase3a_month_research_queue.csv
+reports\exploratory\post_h2_phase3a_month_security_driver_detail.csv
+reports\exploratory\post_h2_phase3a_month_sector_driver_detail.csv
+reports\exploratory\post_h2_phase3a_month_driver_similarity.csv
+reports\exploratory\post_h2_phase3a_security_cooccurrence.csv
+reports\exploratory\post_h2_phase3a_external_research_manifest.csv
+
+POST_H2_PHASE3A_RESEARCH_TARGETS_COMPLETE

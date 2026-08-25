@@ -1,0 +1,75 @@
+================================================================================================================
+H3 ATTENTION FEASIBILITY — GDELT PILOT AMBIGUITY REVIEW
+================================================================================================================
+Scope: company-name coverage and organization-variant review only
+Return/outcome analysis permitted: NO
+
+Pilot companies: 15
+Historical anchor windows per company: 5
+
+================================================================================================================
+1. COMPANY COVERAGE
+================================================================================================================
+META  | MEDIUM | nonzero 5/5 | mean 3066.1979 per 100k | STRONG_4_TO_5_OF_5
+NFLX  | LOW    | nonzero 5/5 | mean 1079.6237 per 100k | STRONG_4_TO_5_OF_5
+WMT   | LOW    | nonzero 5/5 | mean 317.6473 per 100k | STRONG_4_TO_5_OF_5
+NVDA  | LOW    | nonzero 5/5 | mean 219.5112 per 100k | STRONG_4_TO_5_OF_5
+LLY   | MEDIUM | nonzero 5/5 | mean 55.2495 per 100k | STRONG_4_TO_5_OF_5
+TSLA  | MEDIUM | nonzero 5/5 | mean 48.0348 per 100k | STRONG_4_TO_5_OF_5
+MOS   | HIGH   | nonzero 5/5 | mean 10.3636 per 100k | STRONG_4_TO_5_OF_5
+MPC   | MEDIUM | nonzero 5/5 | mean 3.9402 per 100k | STRONG_4_TO_5_OF_5
+ALB   | LOW    | nonzero 5/5 | mean 2.5462 per 100k | STRONG_4_TO_5_OF_5
+NUE   | LOW    | nonzero 5/5 | mean 1.1905 per 100k | STRONG_4_TO_5_OF_5
+IRM   | HIGH   | nonzero 5/5 | mean 0.7748 per 100k | STRONG_4_TO_5_OF_5
+TPL   | MEDIUM | nonzero 5/5 | mean 0.4282 per 100k | STRONG_4_TO_5_OF_5
+CEG   | MEDIUM | nonzero 4/5 | mean 4.0608 per 100k | STRONG_4_TO_5_OF_5
+WMB   | MEDIUM | nonzero 4/5 | mean 0.9914 per 100k | STRONG_4_TO_5_OF_5
+NRG   | MEDIUM | nonzero 2/5 | mean 0.1106 per 100k | USABLE_2_TO_3_OF_5
+
+================================================================================================================
+2. HIGH-AMBIGUITY VARIANTS
+================================================================================================================
+
+IRM:
+  rank  1 | docs      15 | strict 1 | iron mountain incorporated
+  rank  2 | docs      11 | strict 1 | iron mountain inc
+  rank  3 | docs       5 | strict 0 | iron mountain high school
+  rank  4 | docs       2 | strict 0 | credit iron mountain va medical center
+  rank  5 | docs       2 | strict 0 | iron mountain school board
+  rank  6 | docs       2 | strict 0 | dickinson county library in iron mountain
+  rank  7 | docs       2 | strict 0 | leduc at iron mountain high school
+  rank  8 | docs       2 | strict 0 | iron mountain high school class
+  rank  9 | docs       2 | strict 0 | iron mountain processing
+  rank 10 | docs       1 | strict 0 | iron mountain incorporated united states
+  rank 11 | docs       1 | strict 0 | iron mountain data centers
+  rank 12 | docs       1 | strict 0 | boston iron mountain incorporated
+  rank 13 | docs       1 | strict 0 | services for iron mountain data centers
+  rank 14 | docs       1 | strict 0 | iron mountain academic booster club
+  rank 15 | docs       1 | strict 0 | services for iron mountain data centres
+
+MOS:
+  rank  1 | docs     358 | strict 1 | mosaic company
+  rank  2 | docs      56 | strict 0 | grenfell memorial community mosaic
+  rank  3 | docs      22 | strict 0 | mosaic co
+  rank  4 | docs      20 | strict 0 | mosaic sustainable finance corp
+  rank  5 | docs      15 | strict 0 | mosaic solutions
+  rank  6 | docs      11 | strict 0 | mosaic church
+  rank  7 | docs       8 | strict 0 | mosaic medical center
+  rank  8 | docs       7 | strict 0 | mosaic templars cultural center
+  rank  9 | docs       5 | strict 0 | mosaic international south asian film festival
+  rank 10 | docs       5 | strict 0 | mosaic company profile
+  rank 11 | docs       4 | strict 0 | mosaic laboratories
+  rank 12 | docs       4 | strict 0 | gaziantep zeugma mosaic museum
+  rank 13 | docs       4 | strict 0 | mosaic family health inc
+  rank 14 | docs       4 | strict 0 | mosaic family health non
+  rank 15 | docs       3 | strict 0 | mosaic health solutions
+
+================================================================================================================
+3. REVIEW RULE
+================================================================================================================
+Only variants already present in the frozen strict-alias manifest are accepted automatically.
+Every other variant remains unaccepted until manually reviewed. No broad variant may be promoted simply because it is frequent.
+HIGH-ambiguity companies must have every displayed non-strict variant explicitly classified before the pilot ambiguity gate can close.
+MEDIUM/LOW companies may retain their current strict aliases if coverage is adequate; non-strict variants are informational unless there is clear issuer-specific evidence to add them in a later mapping version.
+
+H3_GDELT_PILOT_AMBIGUITY_REVIEW_WORKLIST_COMPLETE

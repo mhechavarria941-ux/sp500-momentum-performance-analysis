@@ -1,0 +1,532 @@
+security_key,project_ticker,winner_months,first_winner_month,last_winner_month,eligible_months,gics_sectors_seen,winner_sector_count,latest_winner_sector,max_consecutive_winner_streak,winner_share_of_eligible_months
+PWR,PWR,47,1,60,60,Industrials,1,Industrials,17,0.7833333333333333
+LLY,LLY,44,2,60,60,Health Care,1,Health Care,35,0.7333333333333333
+IRM,IRM,42,2,50,60,Real Estate,1,Real Estate,30,0.7
+HWM,HWM,42,3,60,60,Industrials,1,Industrials,22,0.7
+GE,GE,39,5,60,60,Industrials,1,Industrials,25,0.65
+NVDA,NVDA,39,1,57,60,Information Technology,1,Information Technology,24,0.65
+ANET,ANET,39,8,57,60,Information Technology,1,Information Technology,18,0.65
+SPG,SPG,38,3,60,60,Real Estate,1,Real Estate,13,0.6333333333333333
+AVGO,AVGO,36,2,60,60,Information Technology,1,Information Technology,11,0.6
+MCK,MCK,35,14,60,60,Health Care,1,Health Care,14,0.5833333333333334
+NRG,NRG,34,1,60,60,Utilities,1,Utilities,17,0.5666666666666667
+WMT,WMT,32,1,59,60,Consumer Staples,1,Consumer Staples,30,0.5333333333333333
+CEG,CEG,32,25,60,36,Utilities,1,Utilities,26,0.8888888888888888
+CAH,CAH,32,21,60,60,Health Care,1,Health Care,21,0.5333333333333333
+COR,COR,32,14,60,60,Health Care,1,Health Care,11,0.5333333333333333
+URI,URI,31,1,48,60,Industrials,1,Industrials,12,0.5166666666666667
+TSLA,TSLA,31,1,59,60,Consumer Discretionary,1,Consumer Discretionary,9,0.5166666666666667
+RCL,RCL,30,3,58,60,Consumer Discretionary,1,Consumer Discretionary,29,0.5
+COST,COST,30,1,55,60,Consumer Staples,1,Consumer Staples,20,0.5
+CBRE,CBRE,30,3,60,60,Real Estate,1,Real Estate,17,0.5
+NFLX,NFLX,29,1,57,60,Communication Services,1,Communication Services,13,0.48333333333333334
+PGR,PGR,29,1,54,60,Financials,1,Financials,13,0.48333333333333334
+BSX,BSX,28,28,57,60,Health Care,1,Health Care,25,0.4666666666666667
+NUE,NUE,27,4,60,60,Materials,1,Materials,15,0.45
+WELL,WELL,27,32,60,60,Real Estate,1,Real Estate,14,0.45
+HCA,HCA,27,3,60,60,Health Care,1,Health Care,13,0.45
+FICO,FICO,26,27,53,34,Information Technology,1,Information Technology,14,0.7647058823529411
+ISRG,ISRG,26,5,55,60,Health Care,1,Health Care,13,0.43333333333333335
+MOS,MOS,26,3,59,60,Materials,1,Materials,11,0.43333333333333335
+GS,GS,26,2,60,60,Financials,1,Financials,10,0.43333333333333335
+PH,PH,26,1,60,60,Industrials,1,Industrials,8,0.43333333333333335
+KLAC,KLAC,26,2,60,60,Information Technology,1,Information Technology,7,0.43333333333333335
+AXON,AXON,25,29,58,32,Industrials,1,Industrials,18,0.78125
+AJG,AJG,25,1,54,60,Financials,1,Financials,11,0.4166666666666667
+MPC,MPC,24,22,60,60,Energy,1,Energy,20,0.4
+GWW,GWW,24,1,44,60,Industrials,1,Industrials,18,0.4
+ADM,ADM,24,2,60,60,Consumer Staples,1,Consumer Staples,15,0.4
+TT,TT,24,1,55,60,Industrials,1,Industrials,13,0.4
+KR,KR,24,9,57,60,Consumer Staples,1,Consumer Staples,11,0.4
+META,META,23,13,56,60,Communication Services,1,Communication Services,21,0.38333333333333336
+PM,PM,23,6,60,60,Consumer Staples,1,Consumer Staples,17,0.38333333333333336
+TPR,TPR,23,3,60,60,Consumer Discretionary,1,Consumer Discretionary,15,0.38333333333333336
+FTNT,FTNT,23,7,55,60,Information Technology,1,Information Technology,13,0.38333333333333336
+VRTX,VRTX,23,17,52,60,Health Care,1,Health Care,11,0.38333333333333336
+SYF,SYF,23,3,57,60,Financials,1,Financials,9,0.38333333333333336
+RTX,RTX,23,10,60,60,Industrials,1,Industrials,7,0.38333333333333336
+DVN,DVN,22,2,23,60,Energy,1,Energy,22,0.36666666666666664
+JCI,JCI,22,3,60,60,Industrials,1,Industrials,12,0.36666666666666664
+PEG,PEG,22,1,50,60,Utilities,1,Utilities,12,0.36666666666666664
+CNP,CNP,22,3,58,60,Utilities,1,Utilities,11,0.36666666666666664
+COF,COF,22,3,58,60,Financials,1,Financials,10,0.36666666666666664
+MNST,MNST,22,1,60,60,Consumer Staples,1,Consumer Staples,9,0.36666666666666664
+LRCX,LRCX,22,1,60,60,Information Technology,1,Information Technology,8,0.36666666666666664
+MS,MS,22,1,60,60,Financials,1,Financials,7,0.36666666666666664
+RL,RL,22,10,60,60,Consumer Discretionary,1,Consumer Discretionary,7,0.36666666666666664
+PHM,PHM,21,27,47,60,Consumer Discretionary,1,Consumer Discretionary,21,0.35
+IPG,IPG,21,5,31,58,Communication Services,1,Communication Services,14,0.3620689655172414
+ALB,ALB,21,1,60,60,Materials,1,Materials,12,0.35
+STX,STX,21,5,60,60,Information Technology,1,Information Technology,11,0.35
+WRB,WRB,21,16,60,60,Financials,1,Financials,11,0.35
+DFS,DFS,21,1,52,52,Financials,1,Financials,10,0.40384615384615385
+CTVA,CTVA,21,17,58,60,Materials,1,Materials,10,0.35
+ENPH,ENPH,21,1,28,56,Information Technology,1,Information Technology,9,0.375
+WFC,WFC,21,8,59,60,Financials,1,Financials,8,0.35
+TDG,TDG,20,27,46,60,Industrials,1,Industrials,20,0.3333333333333333
+ETN,ETN,20,8,48,60,Industrials,1,Industrials,15,0.3333333333333333
+ORLY,ORLY,20,13,57,60,Consumer Discretionary,1,Consumer Discretionary,14,0.3333333333333333
+VTR,VTR,20,3,60,60,Real Estate,1,Real Estate,14,0.3333333333333333
+LYV,LYV,20,6,57,60,Communication Services,1,Communication Services,13,0.3333333333333333
+ABBV,ABBV,20,14,59,60,Health Care,1,Health Care,12,0.3333333333333333
+GILD,GILD,20,24,60,60,Health Care,1,Health Care,12,0.3333333333333333
+MO,MO,20,4,58,60,Consumer Staples,1,Consumer Staples,12,0.3333333333333333
+AMAT,AMAT,20,3,43,60,Information Technology,1,Information Technology,11,0.3333333333333333
+DE,DE,20,1,56,60,Industrials,1,Industrials,9,0.3333333333333333
+PCAR,PCAR,20,19,41,60,Industrials,1,Industrials,8,0.3333333333333333
+CDNS,CDNS,20,1,36,60,Information Technology,1,Information Technology,7,0.3333333333333333
+JPM,JPM,20,27,60,60,Financials,1,Financials,5,0.3333333333333333
+MRO,MRO,19,3,23,46,Energy,1,Energy,17,0.41304347826086957
+BNY,BNY,19,14,60,60,Financials,1,Financials,16,0.31666666666666665
+CF,CF,19,10,56,60,Materials,1,Materials,16,0.31666666666666665
+TRGP,TRGP,19,34,53,39,Energy,1,Energy,15,0.48717948717948717
+FCX,FCX,19,1,41,60,Materials,1,Materials,13,0.31666666666666665
+BKNG,BKNG,19,30,57,60,Consumer Discretionary,1,Consumer Discretionary,9,0.31666666666666665
+DVA,DVA,18,1,50,60,Health Care,1,Health Care,17,0.3
+HSY,HSY,18,12,30,60,Consumer Staples,1,Consumer Staples,15,0.3
+LW,LW,18,7,37,60,Consumer Staples,1,Consumer Staples,14,0.3
+VST,VST,18,41,60,20,Utilities,1,Utilities,12,0.9
+IT,IT,18,6,31,60,Information Technology,1,Information Technology,12,0.3
+RSG,RSG,18,11,55,60,Industrials,1,Industrials,12,0.3
+DLR,DLR,18,1,57,60,Real Estate,1,Real Estate,11,0.3
+IDXX,IDXX,18,1,60,60,Health Care,1,Health Care,9,0.3
+MSI,MSI,18,12,52,60,Information Technology,1,Information Technology,9,0.3
+ULTA,ULTA,18,10,59,60,Consumer Discretionary,1,Consumer Discretionary,9,0.3
+AMD,AMD,18,1,60,60,Information Technology,1,Information Technology,8,0.3
+AMP,AMP,18,1,40,60,Financials,1,Financials,8,0.3
+FITB,FITB,18,3,47,60,Financials,1,Financials,8,0.3
+WST,WST,18,1,37,60,Health Care,1,Health Care,7,0.3
+SNPS,SNPS,18,1,36,60,Information Technology,1,Information Technology,6,0.3
+ORCL,ORCL,18,10,58,60,Information Technology,1,Information Technology,5,0.3
+PCG,PCG,17,23,39,39,Utilities,1,Utilities,17,0.4358974358974359
+ON,ON,17,18,34,43,Information Technology,1,Information Technology,17,0.3953488372093023
+AZO,AZO,17,11,53,60,Consumer Discretionary,1,Consumer Discretionary,16,0.2833333333333333
+EG,EG,17,19,36,60,Financials,1,Financials,16,0.2833333333333333
+AFL,AFL,17,21,52,60,Financials,1,Financials,15,0.2833333333333333
+WMB,WMB,17,1,57,60,Energy,1,Energy,14,0.2833333333333333
+DHI,DHI,17,12,46,60,Consumer Discretionary,1,Consumer Discretionary,13,0.2833333333333333
+DLTR,DLTR,17,14,60,60,Consumer Discretionary | Consumer Staples,2,Consumer Staples,12,0.2833333333333333
+UBER,UBER,17,36,60,25,Industrials,1,Industrials,11,0.68
+AES,AES,17,1,29,60,Utilities,1,Utilities,11,0.2833333333333333
+NI,NI,17,13,57,60,Utilities,1,Utilities,11,0.2833333333333333
+CCL,CCL,17,10,57,60,Consumer Discretionary,1,Consumer Discretionary,10,0.2833333333333333
+GL,GL,17,20,59,60,Financials,1,Financials,10,0.2833333333333333
+TAP,TAP,17,5,40,60,Consumer Staples,1,Consumer Staples,9,0.2833333333333333
+CMA,CMA,17,3,41,41,Financials,1,Financials,7,0.4146341463414634
+BRO,BRO,17,13,52,52,Financials,1,Financials,6,0.3269230769230769
+FISV,FISV,17,22,52,60,Financials | Information Technology,2,Financials,6,0.2833333333333333
+GOOG,GOOG,17,8,60,60,Communication Services,1,Communication Services,6,0.2833333333333333
+CAT,CAT,17,1,60,60,Industrials,1,Industrials,4,0.2833333333333333
+PLTR,PLTR,16,45,60,16,Information Technology,1,Information Technology,16,1.0
+PODD,PODD,16,28,59,34,Health Care,1,Health Care,12,0.47058823529411764
+EQIX,EQIX,16,1,54,60,Real Estate,1,Real Estate,12,0.26666666666666666
+GD,GD,16,11,59,60,Industrials,1,Industrials,12,0.26666666666666666
+ETR,ETR,16,40,60,60,Utilities,1,Utilities,11,0.26666666666666666
+WAB,WAB,16,16,55,60,Industrials,1,Industrials,11,0.26666666666666666
+T,T,16,18,54,60,Communication Services,1,Communication Services,10,0.26666666666666666
+EBAY,EBAY,16,1,60,60,Consumer Discretionary,1,Consumer Discretionary,9,0.26666666666666666
+FANG,FANG,16,5,44,60,Energy,1,Energy,7,0.26666666666666666
+GLW,GLW,16,4,60,60,Information Technology,1,Information Technology,7,0.26666666666666666
+CMG,CMG,16,1,45,60,Consumer Discretionary,1,Consumer Discretionary,5,0.26666666666666666
+RJF,RJF,16,4,57,60,Financials,1,Financials,5,0.26666666666666666
+SCHW,SCHW,16,1,60,60,Financials,1,Financials,5,0.26666666666666666
+ACGL,ACGL,15,23,43,38,Financials,1,Financials,14,0.39473684210526316
+GRMN,GRMN,15,9,57,60,Consumer Discretionary,1,Consumer Discretionary,13,0.25
+OMC,OMC,15,16,32,60,Communication Services,1,Communication Services,13,0.25
+EL,EL,15,1,60,60,Consumer Staples,1,Consumer Staples,11,0.25
+F,F,15,4,60,60,Consumer Discretionary,1,Consumer Discretionary,11,0.25
+OXY,OXY,15,5,25,60,Energy,1,Energy,10,0.25
+ZBRA,ZBRA,15,1,49,60,Information Technology,1,Information Technology,10,0.25
+TMUS,TMUS,15,1,51,60,Communication Services,1,Communication Services,9,0.25
+LEN,LEN,15,28,46,60,Consumer Discretionary,1,Consumer Discretionary,8,0.25
+AXP,AXP,15,10,59,60,Financials,1,Financials,7,0.25
+EXR,EXR,15,7,46,60,Real Estate,1,Real Estate,7,0.25
+GOOGL,GOOGL,15,8,60,60,Communication Services,1,Communication Services,7,0.25
+MLM,MLM,15,8,59,60,Materials,1,Materials,7,0.25
+PNR,PNR,15,2,50,60,Industrials,1,Industrials,6,0.25
+MPWR,MPWR,15,2,59,59,Information Technology,1,Information Technology,4,0.2542372881355932
+CMI,CMI,15,1,60,60,Industrials,1,Industrials,4,0.25
+CTAS,CTAS,15,16,53,60,Industrials,1,Industrials,3,0.25
+ED,ED,14,14,27,60,Utilities,1,Utilities,14,0.23333333333333334
+EXC,EXC,14,8,21,60,Utilities,1,Utilities,14,0.23333333333333334
+BBWI,BBWI,14,1,42,45,Consumer Discretionary,1,Consumer Discretionary,13,0.3111111111111111
+UAL,UAL,14,30,57,60,Industrials,1,Industrials,11,0.23333333333333334
+STLD,STLD,14,24,60,37,Materials,1,Materials,10,0.3783783783783784
+ADP,ADP,14,17,54,60,Industrials | Information Technology,2,Industrials,10,0.23333333333333334
+DG,DG,14,17,60,60,Consumer Discretionary | Consumer Staples,2,Consumer Staples,8,0.23333333333333334
+EIX,EIX,14,17,45,60,Utilities,1,Utilities,8,0.23333333333333334
+PAYX,PAYX,14,13,54,60,Industrials | Information Technology,2,Industrials,8,0.23333333333333334
+NTAP,NTAP,14,6,46,60,Information Technology,1,Information Technology,7,0.23333333333333334
+CBOE,CBOE,14,27,60,60,Financials,1,Financials,6,0.23333333333333334
+LH,LH,14,3,58,60,Health Care,1,Health Care,6,0.23333333333333334
+UHS,UHS,14,6,60,60,Health Care,1,Health Care,6,0.23333333333333334
+HST,HST,14,18,42,60,Real Estate,1,Real Estate,5,0.23333333333333334
+HIG,HIG,14,10,60,60,Financials,1,Financials,4,0.23333333333333334
+REG,REG,14,7,54,60,Real Estate,1,Real Estate,4,0.23333333333333334
+GDDY,GDDY,13,42,54,19,Information Technology,1,Information Technology,13,0.6842105263157895
+SIVB,SIVB,13,1,13,26,Financials,1,Financials,13,0.5
+VICI,VICI,13,20,58,43,Real Estate,1,Real Estate,11,0.3023255813953488
+K,K,13,22,55,59,Consumer Staples,1,Consumer Staples,11,0.22033898305084745
+MMM,MMM,13,44,60,60,Industrials,1,Industrials,11,0.21666666666666667
+O,O,13,19,60,60,Real Estate,1,Real Estate,11,0.21666666666666667
+SYK,SYK,13,28,48,60,Health Care,1,Health Care,11,0.21666666666666667
+ALGN,ALGN,13,1,34,60,Health Care,1,Health Care,10,0.21666666666666667
+CARR,CARR,13,3,34,58,Industrials,1,Industrials,8,0.22413793103448276
+EQT,EQT,13,22,60,39,Energy,1,Energy,7,0.3333333333333333
+MRK,MRK,13,17,43,60,Health Care,1,Health Care,7,0.21666666666666667
+AIG,AIG,13,4,41,60,Financials,1,Financials,5,0.21666666666666667
+ECL,ECL,13,35,59,60,Materials,1,Materials,5,0.21666666666666667
+MU,MU,13,3,60,60,Information Technology,1,Information Technology,5,0.21666666666666667
+ODFL,ODFL,13,1,36,60,Industrials,1,Industrials,5,0.21666666666666667
+ATO,ATO,13,21,58,60,Utilities,1,Utilities,4,0.21666666666666667
+TXT,TXT,12,4,15,60,Industrials,1,Industrials,12,0.2
+RHI,RHI,12,3,17,41,Industrials,1,Industrials,11,0.2926829268292683
+NEM,NEM,12,45,60,60,Materials,1,Materials,11,0.2
+GNRC,GNRC,12,3,50,58,Industrials,1,Industrials,10,0.20689655172413793
+IVZ,IVZ,12,2,60,60,Financials,1,Financials,9,0.2
+KMI,KMI,12,45,57,60,Energy,1,Energy,9,0.2
+NWSA,NWSA,12,2,45,60,Communication Services,1,Communication Services,9,0.2
+WYNN,WYNN,12,26,60,60,Consumer Discretionary,1,Consumer Discretionary,9,0.2
+CI,CI,12,20,42,60,Health Care,1,Health Care,8,0.2
+IR,IR,12,27,44,60,Industrials,1,Industrials,8,0.2
+WAT,WAT,12,4,52,60,Health Care,1,Health Care,8,0.2
+APH,APH,12,22,60,60,Information Technology,1,Information Technology,7,0.2
+CHRW,CHRW,12,17,60,60,Industrials,1,Industrials,6,0.2
+IBM,IBM,12,19,55,60,Information Technology,1,Information Technology,6,0.2
+WDC,WDC,12,8,60,60,Information Technology,1,Information Technology,6,0.2
+AAPL,AAPL,12,1,52,60,Information Technology,1,Information Technology,5,0.2
+CFG,CFG,12,3,60,60,Financials,1,Financials,5,0.2
+PKG,PKG,12,1,49,60,Materials,1,Materials,5,0.2
+REGN,REGN,12,14,45,60,Health Care,1,Health Care,5,0.2
+EXPE,EXPE,12,3,60,60,Consumer Discretionary,1,Consumer Discretionary,3,0.2
+CPRT,CPRT,11,28,38,60,Industrials,1,Industrials,11,0.18333333333333332
+GIS,GIS,11,19,29,60,Consumer Staples,1,Consumer Staples,11,0.18333333333333332
+LMT,LMT,11,15,25,60,Industrials,1,Industrials,11,0.18333333333333332
+LVS,LVS,11,22,32,60,Consumer Discretionary,1,Consumer Discretionary,11,0.18333333333333332
+NOC,NOC,11,15,25,60,Industrials,1,Industrials,11,0.18333333333333332
+PSA,PSA,11,14,46,60,Real Estate,1,Real Estate,10,0.18333333333333332
+CHD,CHD,11,31,43,60,Consumer Staples,1,Consumer Staples,9,0.18333333333333332
+LIN,LIN,11,27,53,60,Materials,1,Materials,9,0.18333333333333332
+KIM,KIM,11,3,24,60,Real Estate,1,Real Estate,8,0.18333333333333332
+PFG,PFG,11,18,31,60,Financials,1,Financials,8,0.18333333333333332
+ALL,ALL,11,22,45,60,Financials,1,Financials,7,0.18333333333333332
+AMZN,AMZN,11,1,50,60,Consumer Discretionary,1,Consumer Discretionary,7,0.18333333333333332
+BA,BA,11,28,59,60,Industrials,1,Industrials,7,0.18333333333333332
+FDX,FDX,11,1,36,60,Industrials,1,Industrials,7,0.18333333333333332
+MAA,MAA,11,8,53,60,Real Estate,1,Real Estate,7,0.18333333333333332
+TSCO,TSCO,11,1,25,60,Consumer Discretionary,1,Consumer Discretionary,7,0.18333333333333332
+MTB,MTB,11,18,51,60,Financials,1,Financials,6,0.18333333333333332
+TSN,TSN,11,10,47,60,Consumer Staples,1,Consumer Staples,6,0.18333333333333332
+LDOS,LDOS,11,20,48,60,Industrials,1,Industrials,5,0.18333333333333332
+MGM,MGM,11,3,32,60,Consumer Discretionary,1,Consumer Discretionary,5,0.18333333333333332
+LKQ,LKQ,11,9,27,59,Consumer Discretionary,1,Consumer Discretionary,4,0.1864406779661017
+AMGN,AMGN,11,22,60,60,Health Care,1,Health Care,4,0.18333333333333332
+DXCM,DXCM,11,1,56,60,Health Care,1,Health Care,4,0.18333333333333332
+HLT,HLT,11,13,48,60,Consumer Discretionary,1,Consumer Discretionary,4,0.18333333333333332
+SHW,SHW,11,37,54,60,Materials,1,Materials,4,0.18333333333333332
+MRSH,MRSH,11,13,35,60,Financials,1,Financials,3,0.18333333333333332
+GEV,GEV,10,51,60,10,Industrials,1,Industrials,10,1.0
+KKR,KKR,10,42,51,19,Financials,1,Financials,10,0.5263157894736842
+GPC,GPC,10,18,27,60,Consumer Discretionary,1,Consumer Discretionary,10,0.16666666666666666
+FSLR,FSLR,10,24,46,37,Information Technology,1,Information Technology,9,0.2702702702702703
+CZR,CZR,10,3,33,54,Consumer Discretionary,1,Consumer Discretionary,9,0.18518518518518517
+CRL,CRL,10,5,40,56,Health Care,1,Health Care,9,0.17857142857142858
+PNW,PNW,10,25,35,60,Utilities,1,Utilities,9,0.16666666666666666
+A,A,10,3,28,60,Health Care,1,Health Care,8,0.16666666666666666
+MAR,MAR,10,16,39,60,Consumer Discretionary,1,Consumer Discretionary,8,0.16666666666666666
+RMD,RMD,10,9,54,60,Health Care,1,Health Care,8,0.16666666666666666
+AIZ,AIZ,10,17,41,60,Financials,1,Financials,7,0.16666666666666666
+FE,FE,10,7,32,60,Utilities,1,Utilities,7,0.16666666666666666
+HII,HII,10,19,60,60,Industrials,1,Industrials,7,0.16666666666666666
+TGT,TGT,10,1,46,60,Consumer Discretionary | Consumer Staples,2,Consumer Staples,7,0.16666666666666666
+ELV,ELV,10,13,42,60,Health Care,1,Health Care,6,0.16666666666666666
+TRV,TRV,10,18,54,60,Financials,1,Financials,6,0.16666666666666666
+BX,BX,10,33,49,28,Financials,1,Financials,5,0.35714285714285715
+BKR,BKR,10,1,59,60,Energy,1,Energy,5,0.16666666666666666
+CB,CB,10,15,42,60,Financials,1,Financials,5,0.16666666666666666
+CME,CME,10,34,59,60,Financials,1,Financials,5,0.16666666666666666
+CVS,CVS,10,13,60,60,Health Care,1,Health Care,5,0.16666666666666666
+FOXA,FOXA,10,14,54,60,Communication Services,1,Communication Services,5,0.16666666666666666
+HPQ,HPQ,10,4,21,60,Information Technology,1,Information Technology,5,0.16666666666666666
+IQV,IQV,10,3,40,60,Health Care,1,Health Care,5,0.16666666666666666
+NOW,NOW,10,1,54,60,Information Technology,1,Information Technology,5,0.16666666666666666
+NWS,NWS,10,3,43,60,Communication Services,1,Communication Services,5,0.16666666666666666
+MOH,MOH,10,15,41,46,Health Care,1,Health Care,4,0.21739130434782608
+BRK.B,BRK.B,10,16,53,60,Financials,1,Financials,3,0.16666666666666666
+GM,GM,10,2,60,60,Consumer Discretionary,1,Consumer Discretionary,3,0.16666666666666666
+V,V,10,23,55,60,Financials | Information Technology,2,Financials,3,0.16666666666666666
+DASH,DASH,9,51,59,10,Consumer Discretionary,1,Consumer Discretionary,9,0.9
+BIIB,BIIB,9,24,32,60,Health Care,1,Health Care,9,0.15
+CL,CL,9,38,46,60,Consumer Staples,1,Consumer Staples,9,0.15
+CPB,CPB,9,20,28,60,Consumer Staples,1,Consumer Staples,9,0.15
+JKHY,JKHY,9,17,25,60,Information Technology,1,Information Technology,9,0.15
+MCD,MCD,9,16,24,60,Consumer Discretionary,1,Consumer Discretionary,9,0.15
+PSX,PSX,9,34,43,60,Energy,1,Energy,8,0.15
+DECK,DECK,9,39,49,22,Consumer Discretionary,1,Consumer Discretionary,7,0.4090909090909091
+ATVI,ATVI,9,1,25,33,Communication Services,1,Communication Services,7,0.2727272727272727
+CE,CE,9,6,42,50,Materials,1,Materials,7,0.18
+DGX,DGX,9,49,58,60,Health Care,1,Health Care,7,0.15
+EFX,EFX,9,9,46,60,Industrials,1,Industrials,7,0.15
+SRE,SRE,9,16,26,60,Utilities,1,Utilities,7,0.15
+SW,SW,9,2,51,60,Materials,1,Materials,7,0.15
+JNPR,JNPR,9,14,23,54,Information Technology,1,Information Technology,6,0.16666666666666666
+C,C,9,43,60,60,Financials,1,Financials,6,0.15
+IP,IP,9,42,52,60,Materials,1,Materials,6,0.15
+ETSY,ETSY,9,1,12,44,Consumer Discretionary,1,Consumer Discretionary,5,0.20454545454545456
+APA,APA,9,3,21,60,Energy,1,Energy,5,0.15
+MTD,MTD,9,1,46,60,Health Care,1,Health Care,5,0.15
+TRMB,TRMB,9,3,56,60,Information Technology,1,Information Technology,5,0.15
+CTLT,CTLT,9,1,47,47,Health Care,1,Health Care,4,0.19148936170212766
+MHK,MHK,9,4,47,59,Consumer Discretionary,1,Consumer Discretionary,4,0.15254237288135594
+DRI,DRI,9,8,55,60,Consumer Discretionary,1,Consumer Discretionary,4,0.15
+NEE,NEE,9,1,46,60,Utilities,1,Utilities,4,0.15
+PLD,PLD,9,2,60,60,Real Estate,1,Real Estate,4,0.15
+WM,WM,9,13,43,60,Industrials,1,Industrials,4,0.15
+CSGP,CSGP,9,26,58,40,Industrials | Real Estate,2,Real Estate,3,0.225
+BMY,BMY,9,17,53,60,Health Care,1,Health Care,3,0.15
+INCY,INCY,9,26,60,60,Health Care,1,Health Care,3,0.15
+MA,MA,9,20,38,60,Financials | Information Technology,2,Financials,3,0.15
+RVTY,RVTY,9,1,50,60,Health Care,1,Health Care,3,0.15
+VMC,VMC,9,30,58,60,Materials,1,Materials,3,0.15
+NCLH,NCLH,9,3,56,60,Consumer Discretionary,1,Consumer Discretionary,2,0.15
+TPL,TPL,8,47,54,14,Energy,1,Energy,8,0.5714285714285714
+FFIV,FFIV,8,50,57,60,Information Technology,1,Information Technology,8,0.13333333333333333
+PFE,PFE,8,12,19,60,Health Care,1,Health Care,8,0.13333333333333333
+INTU,INTU,8,9,41,60,Information Technology,1,Information Technology,7,0.13333333333333333
+SMCI,SMCI,8,39,58,22,Information Technology,1,Information Technology,6,0.36363636363636365
+JBHT,JBHT,8,2,18,60,Industrials,1,Industrials,6,0.13333333333333333
+MDLZ,MDLZ,8,29,38,60,Consumer Staples,1,Consumer Staples,6,0.13333333333333333
+RF,RF,8,2,46,60,Financials,1,Financials,6,0.13333333333333333
+TJX,TJX,8,22,33,60,Consumer Discretionary,1,Consumer Discretionary,6,0.13333333333333333
+UNH,UNH,8,13,22,60,Health Care,1,Health Care,6,0.13333333333333333
+JBL,JBL,8,37,58,25,Information Technology,1,Information Technology,5,0.32
+PANW,PANW,8,31,53,31,Information Technology,1,Information Technology,5,0.25806451612903225
+DAL,DAL,8,31,56,60,Industrials,1,Industrials,5,0.13333333333333333
+ROK,ROK,8,1,60,60,Industrials,1,Industrials,5,0.13333333333333333
+CRWD,CRWD,8,42,58,19,Information Technology,1,Information Technology,4,0.42105263157894735
+DRE,DRE,8,1,21,21,Real Estate,1,Real Estate,4,0.38095238095238093
+DUK,DUK,8,6,44,60,Utilities,1,Utilities,4,0.13333333333333333
+VLO,VLO,8,25,60,60,Energy,1,Energy,4,0.13333333333333333
+EVRG,EVRG,8,9,60,60,Utilities,1,Utilities,3,0.13333333333333333
+NDAQ,NDAQ,8,2,56,60,Financials,1,Financials,3,0.13333333333333333
+NVR,NVR,8,29,47,60,Consumer Discretionary,1,Consumer Discretionary,3,0.13333333333333333
+OKE,OKE,8,4,48,60,Energy,1,Energy,3,0.13333333333333333
+TTWO,TTWO,8,1,58,60,Communication Services,1,Communication Services,3,0.13333333333333333
+WY,WY,8,1,20,60,Real Estate,1,Real Estate,3,0.13333333333333333
+SO,SO,8,18,43,60,Utilities,1,Utilities,2,0.13333333333333333
+MRNA,MRNA,7,7,13,54,Health Care,1,Health Care,7,0.12962962962962962
+ADBE,ADBE,7,32,38,60,Information Technology,1,Information Technology,7,0.11666666666666667
+FOX,FOX,7,48,54,60,Communication Services,1,Communication Services,7,0.11666666666666667
+TWTR,TWTR,7,1,8,21,Communication Services,1,Communication Services,6,0.3333333333333333
+BLDR,BLDR,7,36,46,25,Industrials,1,Industrials,6,0.28
+ABT,ABT,7,51,58,60,Health Care,1,Health Care,6,0.11666666666666667
+VRSN,VRSN,7,29,57,60,Information Technology,1,Information Technology,6,0.11666666666666667
+FDS,FDS,7,13,21,49,Financials,1,Financials,5,0.14285714285714285
+PTC,PTC,7,4,27,57,Information Technology,1,Information Technology,5,0.12280701754385964
+SYY,SYY,7,3,19,60,Consumer Staples,1,Consumer Staples,5,0.11666666666666667
+HES,HES,7,1,31,54,Energy,1,Energy,4,0.12962962962962962
+APD,APD,7,26,52,60,Materials,1,Materials,4,0.11666666666666667
+DPZ,DPZ,7,14,43,60,Consumer Discretionary,1,Consumer Discretionary,4,0.11666666666666667
+MET,MET,7,18,41,60,Financials,1,Financials,4,0.11666666666666667
+PSKY,PSKY,7,2,60,60,Communication Services,1,Communication Services,4,0.11666666666666667
+ROL,ROL,7,1,53,60,Industrials,1,Industrials,4,0.11666666666666667
+AON,AON,7,16,53,60,Financials,1,Financials,3,0.11666666666666667
+DD,DD,7,1,49,60,Materials,1,Materials,3,0.11666666666666667
+EW,EW,7,10,59,60,Health Care,1,Health Care,3,0.11666666666666667
+KEY,KEY,7,5,46,60,Financials,1,Financials,3,0.11666666666666667
+MCO,MCO,7,30,38,60,Financials,1,Financials,3,0.11666666666666667
+CLX,CLX,7,1,49,60,Consumer Staples,1,Consumer Staples,2,0.11666666666666667
+QCOM,QCOM,7,1,44,60,Information Technology,1,Information Technology,2,0.11666666666666667
+PVH,PVH,6,5,10,20,Consumer Discretionary,1,Consumer Discretionary,6,0.3
+DXC,DXC,6,5,10,33,Information Technology,1,Information Technology,6,0.18181818181818182
+TECH,TECH,6,8,13,53,Health Care,1,Health Care,6,0.11320754716981132
+CPAY,CPAY,6,33,38,60,Financials,1,Financials,6,0.1
+NTRS,NTRS,6,55,60,60,Financials,1,Financials,6,0.1
+SJM,SJM,6,26,31,60,Consumer Staples,1,Consumer Staples,6,0.1
+LHX,LHX,6,15,23,60,Industrials,1,Industrials,5,0.1
+LOW,LOW,6,1,15,60,Consumer Discretionary,1,Consumer Discretionary,5,0.1
+SLB,SLB,6,27,33,60,Energy,1,Energy,5,0.1
+BG,BG,6,33,60,34,Consumer Staples,1,Consumer Staples,4,0.17647058823529413
+DTE,DTE,6,3,40,60,Utilities,1,Utilities,4,0.1
+POOL,POOL,6,1,15,60,Consumer Discretionary,1,Consumer Discretionary,4,0.1
+XYL,XYL,6,8,45,60,Industrials,1,Industrials,4,0.1
+APTV,APTV,6,1,59,60,Consumer Discretionary,1,Consumer Discretionary,3,0.1
+CRM,CRM,6,29,38,60,Information Technology,1,Information Technology,3,0.1
+HUM,HUM,6,20,27,60,Health Care,1,Health Care,3,0.1
+KHC,KHC,6,1,25,60,Consumer Staples,1,Consumer Staples,3,0.1
+FAST,FAST,6,1,57,60,Industrials,1,Industrials,2,0.1
+HPE,HPE,6,10,50,60,Information Technology,1,Information Technology,2,0.1
+ICE,ICE,6,1,53,60,Financials,1,Financials,2,0.1
+MSCI,MSCI,6,1,32,60,Financials,1,Financials,2,0.1
+PG,PG,6,17,48,60,Consumer Staples,1,Consumer Staples,2,0.1
+VRSK,VRSK,6,17,52,60,Industrials,1,Industrials,2,0.1
+IBKR,IBKR,5,56,60,5,Financials,1,Financials,5,1.0
+COIN,COIN,5,55,59,8,Financials,1,Financials,5,0.625
+GPS,GPS,5,3,7,13,Consumer Discretionary,1,Consumer Discretionary,5,0.38461538461538464
+DELL,DELL,5,45,49,16,Information Technology,1,Information Technology,5,0.3125
+PENN,PENN,5,3,7,18,Consumer Discretionary,1,Consumer Discretionary,5,0.2777777777777778
+NXPI,NXPI,5,3,7,58,Information Technology,1,Information Technology,5,0.08620689655172414
+PAYC,PAYC,5,53,57,60,Industrials,1,Industrials,5,0.08333333333333333
+TER,TER,5,1,5,60,Information Technology,1,Information Technology,5,0.08333333333333333
+XOM,XOM,5,26,30,60,Energy,1,Energy,5,0.08333333333333333
+HUBB,HUBB,5,34,40,27,Industrials,1,Industrials,4,0.18518518518518517
+SEE,SEE,5,13,19,35,Materials,1,Materials,4,0.14285714285714285
+ZION,ZION,5,9,15,38,Financials,1,Financials,4,0.13157894736842105
+BR,BR,5,35,52,60,Industrials,1,Industrials,4,0.08333333333333333
+CNC,CNC,5,16,22,60,Health Care,1,Health Care,4,0.08333333333333333
+PYPL,PYPL,5,1,50,60,Financials | Information Technology,2,Financials,4,0.08333333333333333
+ROST,ROST,5,24,30,60,Consumer Discretionary,1,Consumer Discretionary,4,0.08333333333333333
+LNC,LNC,5,3,10,32,Financials,1,Financials,3,0.15625
+ALK,ALK,5,3,10,35,Industrials,1,Industrials,3,0.14285714285714285
+AVY,AVY,5,5,42,60,Materials,1,Materials,3,0.08333333333333333
+INTC,INTC,5,36,60,60,Information Technology,1,Information Technology,3,0.08333333333333333
+STZ,STZ,5,3,40,60,Consumer Staples,1,Consumer Staples,3,0.08333333333333333
+VTRS,VTRS,5,27,48,60,Health Care,1,Health Care,3,0.08333333333333333
+TKO,TKO,5,51,58,10,Communication Services,1,Communication Services,2,0.5
+ADI,ADI,5,20,28,60,Information Technology,1,Information Technology,2,0.08333333333333333
+ESS,ESS,5,35,51,60,Real Estate,1,Real Estate,2,0.08333333333333333
+KEYS,KEYS,5,9,26,60,Information Technology,1,Information Technology,2,0.08333333333333333
+MCHP,MCHP,5,3,32,60,Information Technology,1,Information Technology,2,0.08333333333333333
+MSFT,MSFT,5,11,35,60,Information Technology,1,Information Technology,2,0.08333333333333333
+SNA,SNA,5,3,52,60,Industrials,1,Industrials,2,0.08333333333333333
+UPS,UPS,5,1,15,60,Industrials,1,Industrials,2,0.08333333333333333
+APP,APP,4,57,60,4,Information Technology,1,Information Technology,4,1.0
+EME,EME,4,57,60,4,Industrials,1,Industrials,4,1.0
+HOOD,HOOD,4,57,60,4,Financials,1,Financials,4,1.0
+SBNY,SBNY,4,12,15,15,Financials,1,Financials,4,0.26666666666666666
+ABMD,ABMD,4,1,4,23,Health Care,1,Health Care,4,0.17391304347826086
+WBA,WBA,4,8,11,55,Consumer Staples,1,Consumer Staples,4,0.07272727272727272
+CSCO,CSCO,4,52,55,60,Information Technology,1,Information Technology,4,0.06666666666666667
+IFF,IFF,4,44,47,60,Materials,1,Materials,4,0.06666666666666667
+ALXN,ALXN,4,1,6,6,Health Care,1,Health Care,3,0.6666666666666666
+KVUE,KVUE,4,50,54,20,Consumer Staples,1,Consumer Staples,3,0.2
+ABNB,ABNB,4,34,41,28,Consumer Discretionary,1,Consumer Discretionary,3,0.14285714285714285
+WBD,WBD,4,56,60,45,Communication Services,1,Communication Services,3,0.08888888888888889
+EMN,EMN,4,1,46,58,Materials,1,Materials,3,0.06896551724137931
+AOS,AOS,4,12,35,60,Industrials,1,Industrials,3,0.06666666666666667
+EA,EA,4,22,26,60,Communication Services,1,Communication Services,3,0.06666666666666667
+GEN,GEN,4,14,52,60,Information Technology,1,Information Technology,3,0.06666666666666667
+KSU,KSU,4,4,11,11,Industrials,1,Industrials,2,0.36363636363636365
+UA,UA,4,5,9,17,Consumer Discretionary,1,Consumer Discretionary,2,0.23529411764705882
+UAA,UAA,4,5,9,17,Consumer Discretionary,1,Consumer Discretionary,2,0.23529411764705882
+SEDG,SEDG,4,19,25,24,Information Technology,1,Information Technology,2,0.16666666666666666
+AAP,AAP,4,11,17,31,Consumer Discretionary,1,Consumer Discretionary,2,0.12903225806451613
+FMC,FMC,4,20,25,50,Materials,1,Materials,2,0.08
+MKTX,MKTX,4,1,29,56,Financials,1,Financials,2,0.07142857142857142
+AWK,AWK,4,1,5,60,Utilities,1,Utilities,2,0.06666666666666667
+BAC,BAC,4,11,42,60,Financials,1,Financials,2,0.06666666666666667
+BXP,BXP,4,40,47,60,Real Estate,1,Real Estate,2,0.06666666666666667
+HAL,HAL,4,3,33,60,Energy,1,Energy,2,0.06666666666666667
+KO,KO,4,15,51,60,Consumer Staples,1,Consumer Staples,2,0.06666666666666667
+L,L,4,18,60,60,Financials,1,Financials,2,0.06666666666666667
+LYB,LYB,4,3,35,60,Materials,1,Materials,2,0.06666666666666667
+PRU,PRU,4,16,42,60,Financials,1,Financials,2,0.06666666666666667
+SBUX,SBUX,4,26,51,60,Consumer Discretionary,1,Consumer Discretionary,2,0.06666666666666667
+ZTS,ZTS,4,13,37,60,Health Care,1,Health Care,2,0.06666666666666667
+DHR,DHR,4,2,42,60,Health Care,1,Health Care,1,0.06666666666666667
+STT,STT,4,28,59,60,Financials,1,Financials,1,0.06666666666666667
+WTW,WTW,4,26,52,60,Financials,1,Financials,1,0.06666666666666667
+APO,APO,3,48,50,13,Financials,1,Financials,3,0.23076923076923078
+DISCA,DISCA,3,2,4,15,Communication Services,1,Communication Services,3,0.2
+ERIE,ERIE,3,45,47,16,Financials,1,Financials,3,0.1875
+NLSN,NLSN,3,19,21,21,Industrials,1,Industrials,3,0.14285714285714285
+FBHS,FBHS,3,2,4,23,Industrials,1,Industrials,3,0.13043478260869565
+QRVO,QRVO,3,3,5,47,Information Technology,1,Information Technology,3,0.06382978723404255
+AEE,AEE,3,51,53,60,Utilities,1,Utilities,3,0.05
+CMCSA,CMCSA,3,32,34,60,Communication Services,1,Communication Services,3,0.05
+COO,COO,3,32,34,60,Health Care,1,Health Care,3,0.05
+HD,HD,3,12,14,60,Consumer Discretionary,1,Consumer Discretionary,3,0.05
+HOLX,HOLX,3,2,4,60,Health Care,1,Health Care,3,0.05
+JNJ,JNJ,3,58,60,60,Health Care,1,Health Care,3,0.05
+SPGI,SPGI,3,36,38,60,Financials,1,Financials,3,0.05
+STE,STE,3,33,35,60,Health Care,1,Health Care,3,0.05
+WEC,WEC,3,52,54,60,Utilities,1,Utilities,3,0.05
+EXE,EXE,3,55,60,10,Energy,1,Energy,2,0.3
+XLNX,XLNX,3,1,13,13,Information Technology,1,Information Technology,2,0.23076923076923078
+CERN,CERN,3,14,17,17,Health Care,1,Health Care,2,0.17647058823529413
+LUMN,LUMN,3,12,19,26,Communication Services,1,Communication Services,2,0.11538461538461539
+FRC,FRC,3,1,11,28,Financials,1,Financials,2,0.10714285714285714
+EPAM,EPAM,3,12,26,49,Information Technology,1,Information Technology,2,0.061224489795918366
+AEP,AEP,3,44,60,60,Utilities,1,Utilities,2,0.05
+CDW,CDW,3,13,27,60,Information Technology,1,Information Technology,2,0.05
+CTRA,CTRA,3,1,20,60,Energy,1,Energy,2,0.05
+DOV,DOV,3,11,14,60,Industrials,1,Industrials,2,0.05
+FIS,FIS,3,42,47,60,Financials,1,Financials,2,0.05
+SBAC,SBAC,3,1,54,60,Real Estate,1,Real Estate,2,0.05
+TMO,TMO,3,1,12,60,Health Care,1,Health Care,2,0.05
+TYL,TYL,3,47,51,60,Information Technology,1,Information Technology,2,0.05
+AAL,AAL,3,5,10,44,Industrials,1,Industrials,1,0.06818181818181818
+CAG,CAG,3,2,29,60,Consumer Staples,1,Consumer Staples,1,0.05
+CINF,CINF,3,5,48,60,Financials,1,Financials,1,0.05
+UNP,UNP,3,16,21,60,Industrials,1,Industrials,1,0.05
+UNM,UNM,2,5,6,8,Financials,1,Financials,2,0.25
+SOLV,SOLV,2,54,55,10,Health Care,1,Health Care,2,0.2
+INFO,INFO,2,12,13,13,Industrials,1,Industrials,2,0.15384615384615385
+IPGP,IPGP,2,1,2,17,Information Technology,1,Information Technology,2,0.11764705882352941
+OGN,OGN,2,18,19,17,Health Care,1,Health Care,2,0.11764705882352941
+LULU,LULU,2,37,38,27,Consumer Discretionary,1,Consumer Discretionary,2,0.07407407407407407
+CPT,CPT,2,16,17,45,Real Estate,1,Real Estate,2,0.044444444444444446
+BWA,BWA,2,27,28,50,Consumer Discretionary,1,Consumer Discretionary,2,0.04
+ACN,ACN,2,13,14,60,Information Technology,1,Information Technology,2,0.03333333333333333
+BEN,BEN,2,27,28,60,Financials,1,Financials,2,0.03333333333333333
+BLK,BLK,2,1,2,60,Financials,1,Financials,2,0.03333333333333333
+IEX,IEX,2,26,27,60,Industrials,1,Industrials,2,0.03333333333333333
+TFC,TFC,2,44,45,60,Financials,1,Financials,2,0.03333333333333333
+TROW,TROW,2,1,2,60,Financials,1,Financials,2,0.03333333333333333
+ZBH,ZBH,2,31,32,60,Health Care,1,Health Care,2,0.03333333333333333
+XRAY,XRAY,2,4,7,39,Health Care,1,Health Care,1,0.05128205128205128
+PXD,PXD,2,4,38,40,Energy,1,Energy,1,0.05
+BIO,BIO,2,1,11,44,Health Care,1,Health Care,1,0.045454545454545456
+AVB,AVB,2,35,50,60,Real Estate,1,Real Estate,1,0.03333333333333333
+EMR,EMR,2,49,56,60,Industrials,1,Industrials,1,0.03333333333333333
+FRT,FRT,2,10,41,60,Real Estate,1,Real Estate,1,0.03333333333333333
+PEP,PEP,2,14,16,60,Consumer Staples,1,Consumer Staples,1,0.03333333333333333
+PNC,PNC,2,44,46,60,Financials,1,Financials,1,0.03333333333333333
+TDY,TDY,2,52,54,60,Information Technology,1,Information Technology,1,0.03333333333333333
+YUM,YUM,2,18,25,60,Consumer Discretionary,1,Consumer Discretionary,1,0.03333333333333333
+CRH,CRH,1,60,60,1,Materials,1,Materials,1,1.0
+CVNA,CVNA,1,60,60,1,Consumer Discretionary,1,Consumer Discretionary,1,1.0
+FIX,FIX,1,60,60,1,Industrials,1,Industrials,1,1.0
+VAR,VAR,1,3,3,3,Health Care,1,Health Care,1,0.3333333333333333
+WSM,WSM,1,58,58,10,Consumer Discretionary,1,Consumer Discretionary,1,0.1
+LII,LII,1,49,49,13,Industrials,1,Industrials,1,0.07692307692307693
+CTXS,CTXS,1,19,19,21,Information Technology,1,Information Technology,1,0.047619047619047616
+GEHC,GEHC,1,36,36,25,Health Care,1,Health Care,1,0.04
+DAY,CDAY,1,28,28,29,Industrials,1,Industrials,1,0.034482758620689655
+DISH,DISH,1,10,10,29,Communication Services,1,Communication Services,1,0.034482758620689655
+NWL,NWL,1,2,2,32,Consumer Discretionary,1,Consumer Discretionary,1,0.03125
+INVH,INVH,1,36,36,40,Real Estate,1,Real Estate,1,0.025
+ANSS,ANSS,1,29,29,54,Information Technology,1,Information Technology,1,0.018518518518518517
+KMX,KMX,1,12,12,57,Consumer Discretionary,1,Consumer Discretionary,1,0.017543859649122806
+OTIS,OTIS,1,14,14,58,Industrials,1,Industrials,1,0.017241379310344827
+ADSK,ADSK,1,53,53,60,Information Technology,1,Information Technology,1,0.016666666666666666
+AKAM,AKAM,1,38,38,60,Information Technology,1,Information Technology,1,0.016666666666666666
+ALLE,ALLE,1,58,58,60,Industrials,1,Industrials,1,0.016666666666666666
+AMCR,AMCR,1,19,19,60,Materials,1,Materials,1,0.016666666666666666
+AME,AME,1,30,30,60,Industrials,1,Industrials,1,0.016666666666666666
+AMT,AMT,1,52,52,60,Real Estate,1,Real Estate,1,0.016666666666666666
+ARE,ARE,1,1,1,60,Real Estate,1,Real Estate,1,0.016666666666666666
+BDX,BDX,1,35,35,60,Health Care,1,Health Care,1,0.016666666666666666
+CHTR,CHTR,1,33,33,60,Communication Services,1,Communication Services,1,0.016666666666666666
+CTSH,CTSH,1,17,17,60,Information Technology,1,Information Technology,1,0.016666666666666666
+D,D,1,46,46,60,Utilities,1,Utilities,1,0.016666666666666666
+DOC,DOC,1,50,50,60,Real Estate,1,Real Estate,1,0.016666666666666666
+EOG,EOG,1,14,14,60,Energy,1,Energy,1,0.016666666666666666
+ES,ES,1,59,59,60,Utilities,1,Utilities,1,0.016666666666666666
+EXPD,EXPD,1,13,13,60,Industrials,1,Industrials,1,0.016666666666666666
+GPN,GPN,1,23,23,60,Information Technology,1,Information Technology,1,0.016666666666666666
+HAS,HAS,1,60,60,60,Consumer Discretionary,1,Consumer Discretionary,1,0.016666666666666666
+HRL,HRL,1,21,21,60,Consumer Staples,1,Consumer Staples,1,0.016666666666666666
+ITW,ITW,1,28,28,60,Industrials,1,Industrials,1,0.016666666666666666
+J,J,1,18,18,60,Industrials,1,Industrials,1,0.016666666666666666
+KMB,KMB,1,43,43,60,Consumer Staples,1,Consumer Staples,1,0.016666666666666666
+LNT,LNT,1,14,14,60,Utilities,1,Utilities,1,0.016666666666666666
+LUV,LUV,1,52,52,60,Industrials,1,Industrials,1,0.016666666666666666
+MAS,MAS,1,39,39,60,Industrials,1,Industrials,1,0.016666666666666666
+NKE,NKE,1,1,1,60,Consumer Discretionary,1,Consumer Discretionary,1,0.016666666666666666
+PPG,PPG,1,29,29,60,Materials,1,Materials,1,0.016666666666666666
+PPL,PPL,1,26,26,60,Utilities,1,Utilities,1,0.016666666666666666
+SWKS,SWKS,1,2,2,60,Information Technology,1,Information Technology,1,0.016666666666666666
+TEL,TEL,1,60,60,60,Information Technology,1,Information Technology,1,0.016666666666666666
+VZ,VZ,1,19,19,60,Communication Services,1,Communication Services,1,0.016666666666666666
+XEL,XEL,1,51,51,60,Utilities,1,Utilities,1,0.016666666666666666

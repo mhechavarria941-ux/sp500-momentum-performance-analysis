@@ -1,0 +1,20 @@
+========================================================================================================
+H3 AZURE SQL CONNECTION DIAGNOSTIC
+========================================================================================================
+Script version: 2026-08-24-v2-h3-security-identity-snapshot-connection-fix
+Connection source: component_env_vars
+ODBC driver: ODBC Driver 18 for SQL Server
+Server (raw): cap2761c-hechavarria-01.database.windows.net
+Server (normalized): tcp:cap2761c-hechavarria-01.database.windows.net,1433
+Hostname: cap2761c-hechavarria-01.database.windows.net
+Port: 1433
+Database: sp500_analytics
+Username present: True
+Password present: True
+
+TCP probe: PASS
+TCP connection to cap2761c-hechavarria-01.database.windows.net:1433 succeeded.
+
+Connection candidate 1: DRIVER={ODBC Driver 18 for SQL Server};SERVER=tcp:cap2761c-hechavarria-01.database.windows.net,1433;DATABASE=sp500_analytics;UID=***REDACTED***;PWD=***REDACTED***;)};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=60;
+Candidate 1: CONNECTION SUCCEEDED
+

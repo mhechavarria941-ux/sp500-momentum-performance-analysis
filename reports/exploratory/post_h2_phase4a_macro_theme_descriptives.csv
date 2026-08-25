@@ -1,0 +1,8 @@
+theme_code,theme_name,coded_extreme_month_count,positive_factor_months,negative_factor_months,mean_signed_commonality_factor,mean_absolute_commonality_factor,inferential_test_performed
+M01,Accommodative Monetary / Fiscal Support,2,0,2,-0.03109135046537955,0.03109135046537955,0
+M02,Restrictive / Tightening Monetary Policy,7,3,4,-0.005285463416055028,0.025762718866383805,0
+M03,Easing / Policy-Pivot Transition,3,3,0,0.0261851776640715,0.0261851776640715,0
+M04,Disinflation / Inflation Deceleration,7,2,5,-0.01367554203102263,0.025256072329915485,0
+M05,Persistent / Sticky Inflation,8,6,2,0.011986637767388925,0.0268361184550376,0
+M06,Labor / Growth Resilience,2,1,1,-0.00297112047889375,0.028240920780829848,0
+M07,Macro Uncertainty / Dual-Mandate Rebalancing,6,4,2,0.009458604677910333,0.0261194316465802,0

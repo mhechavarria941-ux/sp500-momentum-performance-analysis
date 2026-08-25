@@ -1,0 +1,16 @@
+ticker,canonical_company_name,ambiguity_tier,strict_aliases_pipe,broad_variant_regex,historical_alias_note,review_note
+NVDA,NVIDIA Corporation,LOW,nvidia|nvidia corporation,\bnvidia\b,,Distinctive company name; bare ticker excluded.
+NFLX,"Netflix, Inc.",LOW,netflix|netflix inc,\bnetflix\b,,Distinctive brand/company name.
+NUE,Nucor Corporation,LOW,nucor|nucor corporation,\bnucor\b,,Distinctive issuer name.
+ALB,Albemarle Corporation,LOW,albemarle|albemarle corporation,\balbemarle\b,,Distinctive issuer name.
+WMT,Walmart Inc.,LOW,walmart|walmart inc,\bwalmart\b,,Distinctive company/brand name.
+META,"Meta Platforms, Inc.",MEDIUM,meta platforms|meta platforms inc|facebook|facebook inc,\b(meta platforms|facebook)\b,"Facebook, Inc. renamed Meta Platforms, Inc. during the project period.",Generic bare 'Meta' deliberately excluded.
+CEG,Constellation Energy Corporation,MEDIUM,constellation energy|constellation energy corporation,\bconstellation energy\b,Standalone public-company period begins in 2022 after separation from Exelon.,Generic 'Constellation' deliberately excluded.
+LLY,Eli Lilly and Company,MEDIUM,eli lilly|eli lilly and company,\b(eli lilly|lilly)\b,,Broad diagnostic may surface person-name ambiguity; strict match excludes bare Lilly.
+TSLA,"Tesla, Inc.",MEDIUM,tesla|tesla inc,\btesla\b,,Brand/company overlap is intentional but must be interpreted as issuer/brand attention.
+MPC,Marathon Petroleum Corporation,MEDIUM,marathon petroleum|marathon petroleum corporation,\bmarathon petroleum\b,,Full issuer phrase avoids other Marathon entities and ordinary marathon events.
+NRG,"NRG Energy, Inc.",MEDIUM,nrg energy|nrg energy inc,\bnrg energy\b,,NRG abbreviation alone excluded.
+WMB,"The Williams Companies, Inc.",MEDIUM,williams companies|the williams companies|the williams companies inc,\b(the )?williams companies\b,,Bare Williams excluded because of severe ambiguity.
+IRM,Iron Mountain Incorporated,HIGH,iron mountain incorporated|iron mountain inc,\biron mountain\b,,Strict match avoids bare Iron Mountain; broad variants are mandatory for ambiguity review.
+MOS,The Mosaic Company,HIGH,the mosaic company|mosaic company,\bmosaic\b,,Bare Mosaic excluded from strict coverage because it is highly ambiguous.
+TPL,Texas Pacific Land Corporation,MEDIUM,texas pacific land|texas pacific land corporation,\btexas pacific land\b,,Full issuer phrase only; ticker excluded.

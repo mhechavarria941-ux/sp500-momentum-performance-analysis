@@ -1,0 +1,4 @@
+COLUMN_NAME,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH,NUMERIC_PRECISION,NUMERIC_SCALE,IS_NULLABLE,ORDINAL_POSITION
+security_key,varchar,32.0,,,NO,1
+company_name_reference,nvarchar,255.0,,,NO,2
+created_at_utc,datetime2,,,,NO,3
