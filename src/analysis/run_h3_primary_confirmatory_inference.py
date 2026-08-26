@@ -24,7 +24,7 @@ except ImportError as exc:
     ) from exc
 
 
-SCRIPT_VERSION = "2026-08-26-v1-h3-primary-confirmatory-inference"
+SCRIPT_VERSION = "2026-08-26-v2-h3-primary-confirmatory-inference-pre-model-gate-fix"
 
 ROOT = Path(__file__).resolve().parents[2]
 H3_DIR = ROOT / "reports" / "confirmatory" / "h3"
@@ -411,10 +411,45 @@ def structural_revalidation(panel: pd.DataFrame) -> None:
         f"H3B positive Winner-entry count changed: {positive_events}.",
     )
 
+    h3ac = panel.loc[panel["h3a_h3c_eligible"].eq(1)].copy()
+    h3b = panel.loc[panel["h3b_eligible"].eq(1)].copy()
+
+    current_miss = panel["current_join_status"].ne("both")
+    next_miss = panel["next_join_status"].ne("both")
+
     assert_check(
-        panel["current_join_status"].eq("both").all(),
-        "Every frozen predictor row still matches the current H1 layer.",
-        "At least one frozen predictor row no longer matches the current H1 layer.",
+        h3ac["current_join_status"].eq("both").all(),
+        "Every H3A/H3C eligible row matches the required current H1 layer.",
+        "At least one H3A/H3C eligible row lacks the required current H1 join.",
+    )
+    assert_check(
+        h3b["current_join_status"].eq("both").all(),
+        "Every H3B eligible row matches the required current H1 layer.",
+        "At least one H3B eligible row lacks the required current H1 join.",
+    )
+    assert_check(
+        h3b["next_join_status"].eq("both").all(),
+        "Every H3B eligible row matches the required t+1 momentum-assignment layer.",
+        "At least one H3B eligible row lacks the required t+1 momentum assignment.",
+    )
+    assert_check(
+        (
+            panel.loc[current_miss, "h3a_h3c_eligible"].fillna(0).eq(0)
+            & panel.loc[current_miss, "h3b_eligible"].fillna(0).eq(0)
+        ).all(),
+        "Predictor rows lacking the current H1 join are excluded from all primary H3 model samples.",
+        "A predictor row lacking the current H1 join remains eligible for a primary H3 model.",
+    )
+    assert_check(
+        panel.loc[next_miss, "h3b_eligible"].fillna(0).eq(0).all(),
+        "Predictor rows lacking the t+1 momentum join are excluded from H3B.",
+        "A predictor row lacking the t+1 momentum join remains eligible for H3B.",
+    )
+
+    print(
+        "Structural join-status diagnostics: "
+        f"current-H1 unmatched predictor rows={int(current_miss.sum()):,}; "
+        f"t+1-momentum unmatched predictor rows={int(next_miss.sum()):,}."
     )
 
     if failures:
