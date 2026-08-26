@@ -1,0 +1,18 @@
+{
+  "script_version": "2026-08-26-v1-h3-preregistered-predictor-outcome-join",
+  "preregistration_id": "H3_STATISTICAL_PREREGISTRATION_V2",
+  "preregistration_version": "2026-08-26-v2",
+  "predictor_path": "reports\\exploratory\\h3_attention_feasibility\\h3_preregistered_attention_predictor_panel.csv",
+  "predictor_sha256": "ef971765c18be4060bffe9a061784da06417d264274cd8c493eb14a8cd0c3f42",
+  "preregistration_path": "data\\reference\\h3\\h3_statistical_preregistration_v2.json",
+  "preregistration_sha256": "95e88d99f2b0c9beca50073844b9dadc32c11a6aa820fe04cf3ed12e94841506",
+  "panel_path": "reports\\confirmatory\\h3\\h3_preregistered_predictor_outcome_panel.csv",
+  "panel_sha256": "8ad29c02180efb9b2cc46ef640699a4c7e339cbd45ac7d1a9ab869d1c979729c",
+  "sql_table": "analytics.h3_preregistered_predictor_outcome_panel",
+  "primary_return_source": "analytics.v_security_monthly_forward_return_1m",
+  "pit_sector_source": "analytics.security_month_end_gics_sector",
+  "next_month_momentum_source": "analytics.v_security_monthly_momentum_ranking",
+  "sector_residual_rule": "sector_relative_return_i,t+1 = security_forward_return_i,t+1 - equal-weight mean forward return of all OTHER valid securities in the same PIT GICS sector at t.",
+  "h3b_entry_definition": "Among securities that are NOT D10 at month t and have a valid momentum assignment at t+1, entry_i,t+1 = 1 if D10 at t+1, otherwise 0.",
+  "regression_inference_executed": false
+}

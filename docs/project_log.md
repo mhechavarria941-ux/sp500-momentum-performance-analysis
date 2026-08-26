@@ -95,6 +95,12 @@ The purpose is to make the project reproducible
 * H2 sector-relative 12-1 momentum preregistration
 * Within-sector quintile and sector-neutral portfolio testing
 * Post-H2 commonality and residual-winner exploration
+* H3 external-attention source feasibility and company-identity resolution
+* Point-in-time attention-alias construction and GDELT historical extraction
+* Fail-closed attention coverage policy and statistical preregistration
+* Frozen issuer-level attention predictor
+* H3 predictor-to-outcome analytical-panel construction
+* H3 primary confirmatory inference freeze
 
 ## Phase 8 — SQL Analytics
 
@@ -7344,11 +7350,1238 @@ Checkpoint message: `research: prepare SEC point-in-time company-name resolution
 
 ---
 
+---
+
+## 3.56 H3 SEC Identity Resolution Execution and PIT Name-Evidence Consolidation — Stages 3B / 3B2
+
+### Date
+
+2026-08-25
+
+### Objective
+
+Execute the previously prepared SEC identity/name-history resolution and consolidate point-in-time historical issuer-name evidence before authorizing any production GDELT alias interval.
+
+The H3 outcome firewall remained active throughout these stages.
+
+### Stage 3B — SEC Company Identity / Name-History Resolution
+
+Primary implementation:
+
+- `src/analysis/resolve_h3_sec_company_name_history.py`
+- `src/analysis/audit_h3_sec_company_name_history.py`
+
+Authoritative sources:
+
+- SEC `company_tickers.json`
+- SEC cumulative CIK/entity-name lookup data
+- SEC Submissions JSON and `formerNames`
+
+Stage 3B result:
+
+- Stage 3A identities: `593`
+- identities with candidate SEC CIK: `538`
+- auto-resolved SEC mappings: `286`
+- identities with SEC former-name evidence: `321`
+- unique SEC submission files requested/reused: `534`
+- SEC submission download failures: `0`
+- Stage 3B review queue: `525`
+
+Mapping status counts:
+
+- `AUTO_SOURCE_AGREEMENT: 280`
+- `AUTO_UNIQUE_EXACT_NAME: 6`
+- `REVIEW_CONFLICT: 18`
+- `REVIEW_TICKER_ONLY: 252`
+- `UNRESOLVED: 37`
+
+No fuzzy matching was introduced.
+
+An auto-resolved CIK was treated only as deterministic issuer-identity evidence. It did not automatically authorize a historical company name as a production attention alias.
+
+Return/outcome fields read:
+
+`0`
+
+Full-history GDELT extraction performed:
+
+`NO`
+
+### Stage 3B2 — Point-in-Time Name-Evidence Consolidation
+
+The next layer combined SEC/N-PORT historical issuer-name observations, the project membership identity model, deterministic CIK mappings, and known alias/name events.
+
+Primary implementation:
+
+- `src/analysis/build_h3_pit_name_evidence_consolidation.py`
+- `src/analysis/audit_h3_pit_name_evidence_consolidation.py`
+
+Primary outputs included:
+
+- `reports/exploratory/h3_attention_feasibility/h3_pit_name_evidence_security_summary.csv`
+- `reports/exploratory/h3_attention_feasibility/h3_pit_name_evidence_review_queue.csv`
+- `reports/exploratory/h3_attention_feasibility/h3_pit_name_state_observations.csv`
+- `reports/exploratory/h3_attention_feasibility/h3_pit_name_transition_candidates.csv`
+
+Focused Stage 3B2 review identities:
+
+`233`
+
+Historical point-in-time name observations retained in the later audited evidence layer:
+
+`9,584`
+
+The audit required all observations to map back to known project security identities and prohibited return, momentum, Winner, or other H3 outcome fields.
+
+### Decision
+
+Historical issuer-name evidence was now structured sufficiently to begin exact transition-date resolution.
+
+No production GDELT alias interval was yet authorized from unresolved quarterly name-state changes.
+
+### Next Step
+
+Resolve bounded company-name transitions conservatively and isolate every remaining project-period name-state conflict for authoritative closeout.
+
+---
+
+## 3.57 Exact Transition Resolution and Deterministic Name-State Reconciliation — Stages 3C through 3F
+
+### Date
+
+2026-08-25
+
+### Objective
+
+Convert historical issuer-name evidence into defensible point-in-time name states without inferring exact dates from quarterly observations or forcing company-name agreement through fuzzy normalization.
+
+### Stage 3C — Exact Company-Name Transition Resolution
+
+Primary implementation:
+
+- `src/analysis/resolve_h3_exact_name_transitions.py`
+- `src/analysis/audit_h3_exact_name_transitions.py`
+
+Result:
+
+- Stage 3B2 focused review identities: `233`
+- bounded SEC N-PORT name-transition candidates: `23`
+- automatically exact-resolved transitions: `1`
+- unresolved bounded transitions: `22`
+- additional project-period name-state reconciliation cases: `119`
+- targeted authoritative research-manifest rows: `141`
+- project-period relevant SEC former-name evidence rows: `100`
+
+Automatic exact-date resolution was intentionally narrow.
+
+An exact date could be assigned automatically only when a dated project security-alias event exactly matched the normalized old/new names and fell inside the SEC N-PORT transition bound.
+
+SEC `formerNames` remained corroborating evidence and was not automatically treated as an exact rename date.
+
+Result token:
+
+`H3_EXACT_NAME_TRANSITION_RESOLUTION_COMPLETE`
+
+### Stage 3D — Authoritative Exact-Transition Closeout
+
+The unresolved bounded transitions were researched against authoritative sources and recorded separately from automatic resolutions.
+
+Key files:
+
+- `src/analysis/apply_h3_authoritative_exact_transition_resolutions.py`
+- `src/analysis/audit_h3_authoritative_exact_transition_resolutions.py`
+- `data/reference/h3/h3_authoritative_exact_name_transition_resolutions.csv`
+- `reports/data_quality/h3_authoritative_exact_transition_closeout_integrity_audit.txt`
+
+The authoritative closeout remained outcome-blind.
+
+### Stage 3E — Deterministic Name-State Reconciliation
+
+Primary implementation:
+
+- `src/analysis/reconcile_h3_remaining_name_states.py`
+- `src/analysis/audit_h3_remaining_name_state_reconciliation.py`
+
+Input reconciliation identities:
+
+`119`
+
+Automatically reconciled:
+
+`1`
+
+Remaining targeted research identities:
+
+`118`
+
+Already resolved transition rows used as evidence:
+
+`23`
+
+Status counts:
+
+- `RESEARCH_MULTIPLE_UNEXPLAINED_NPORT_STATES: 1`
+- `RESEARCH_PROJECT_PERIOD_SEC_FORMER_NAME_EVIDENCE: 63`
+- `RESEARCH_PROJECT_VS_NPORT_NAME_CORE_CONFLICT: 54`
+- `RESOLVED_STABLE_LEGAL_STYLE_EQUIVALENT: 1`
+
+No fuzzy matching was used.
+
+Semantic words such as `GROUP`, `HOLDINGS`, `INTERNATIONAL`, `TECHNOLOGIES`, `ENERGY`, `FINANCIAL`, `SYSTEMS`, or `HEALTH` were not stripped merely to manufacture agreement.
+
+Result token:
+
+`H3_DETERMINISTIC_NAME_STATE_RECONCILIATION_COMPLETE`
+
+### Stage 3F — Authoritative Name Convergence
+
+Primary implementation:
+
+- `src/analysis/reconcile_h3_authoritative_name_convergence.py`
+- `src/analysis/audit_h3_authoritative_name_convergence.py`
+
+Input Stage 3E research identities:
+
+`118`
+
+Automatically reconciled:
+
+`84`
+
+Remaining primary-source research identities:
+
+`34`
+
+Project-overlapping SEC former-name detail rows inspected:
+
+`71`
+
+Status counts:
+
+- `RESEARCH_AUTHORITATIVE_NAME_CONVERGENCE_NOT_ESTABLISHED: 13`
+- `RESEARCH_MULTIPLE_UNEXPLAINED_NPORT_STATES: 1`
+- `RESEARCH_SUBSTANTIVE_OR_DISTINCT_SEC_FORMER_NAME: 20`
+- `RESOLVED_AUTHORITATIVE_SEC_NPORT_AGREEMENT_PROJECT_REFERENCE_PRESENTATION_DIFFERENCE: 41`
+- `RESOLVED_SEC_FORMER_NAMES_REGISTRY_STYLE_EQUIVALENT: 43`
+
+### Methodological Correction
+
+A provider-style `company_name_reference` was not required to equal the historical attention alias when authoritative SEC current identity and SEC-filed N-PORT historical issuer names converged on the same issuer.
+
+Likewise, an SEC former-name record did not automatically force review when all project-overlapping former-name records reduced to the same conservative registry core and had complete date boundaries.
+
+Result token:
+
+`H3_AUTHORITATIVE_NAME_CONVERGENCE_COMPLETE`
+
+### Outcome Firewall
+
+Across Stages 3C through 3F:
+
+- production PIT attention alias intervals were not created prematurely;
+- full-history GDELT extraction was not performed;
+- return/outcome fields read: `0`.
+
+### Next Step
+
+Close the remaining authoritative research cases, prove full-universe name-resolution coverage, and separately resolve identities lacking N-PORT support.
+
+---
+
+## 3.58 Full-Universe Authoritative Name-State Closure — Stages 3G through 3I
+
+### Date
+
+2026-08-25
+
+### Objective
+
+Close the remaining issuer-name research cases and prove that the complete 593-security historical universe could be represented under deterministic, point-in-time attention-name rules before constructing the production alias manifest.
+
+### Stage 3G — Authoritative Name-State Closeout
+
+Primary files:
+
+- `src/analysis/apply_h3_authoritative_name_state_closeout.py`
+- `src/analysis/audit_h3_authoritative_name_state_closeout.py`
+- `data/reference/h3/h3_authoritative_name_state_resolutions_stage3g.csv`
+- `reports/exploratory/h3_attention_feasibility/h3_authoritative_name_state_closeout.csv`
+- `reports/data_quality/h3_authoritative_name_state_closeout_integrity_audit.txt`
+
+The Stage 3F primary-source research population was closed using explicit source-backed dispositions rather than widening automated matching rules.
+
+Representative controls included issuer-history treatment for cases such as Exxon Mobil (`XOM`) and TJX (`TJX`).
+
+### Stage 3H — Full-Universe Name-Resolution Closure
+
+Primary files:
+
+- `src/analysis/build_h3_full_universe_name_resolution_closure.py`
+- `src/analysis/audit_h3_full_universe_name_resolution_closure.py`
+- `docs/h3_stage3h_full_universe_name_resolution_closure_protocol.md`
+- `reports/exploratory/h3_attention_feasibility/h3_full_universe_name_resolution_coverage_v2.csv`
+- `reports/data_quality/h3_full_universe_name_resolution_closure_integrity_audit.txt`
+
+The closure reconciled the full Stage 3A candidate universe against all later authoritative evidence layers and ensured that each security identity had exactly one final resolution disposition.
+
+Canonical H3 historical security universe:
+
+`593`
+
+### Stage 3I — Definitive No-NPORT Closure
+
+Some security identities could not rely on the same N-PORT evidence path.
+
+They were handled through a separately documented definitive closure using project membership events, SEC identity/former-name evidence, and known public name/ticker transitions.
+
+Primary files:
+
+- `src/analysis/close_h3_no_nport_identity_batch.py`
+- `src/analysis/audit_h3_no_nport_identity_batch.py`
+- `docs/h3_stage3i_definitive_no_nport_closure_protocol.md`
+- `docs/h3_stage3i_v2_lumen_resolution.md`
+- `data/reference/h3/h3_no_nport_known_name_state_events.csv`
+- `reports/data_quality/h3_definitive_no_nport_closure_integrity_audit.txt`
+
+Lumen (`LUMN`) received a documented Stage 3I V2 resolution rather than being silently forced through the N-PORT mapping path.
+
+### Decision
+
+The company-identity and historical-name prerequisite was closed across the complete H3 universe.
+
+The next stage was authorized to convert the closed evidence into production point-in-time attention aliases.
+
+Return/momentum/Winner/outcome fields remained prohibited throughout the closure process.
+
+---
+
+## 3.59 Point-in-Time Attention Alias Policy and Transition Safety — Stage 3J
+
+### Date
+
+2026-08-25
+
+### Objective
+
+Translate the closed issuer-name evidence into date-bounded production GDELT aliases while preventing ambiguous entity names, overlapping cross-issuer aliases, and unsupported transition timing from contaminating the attention measure.
+
+### Policy Evolution
+
+The Stage 3J alias policy was refined through explicitly versioned controls:
+
+- `h3_pit_attention_alias_policy_v1.json`
+- `h3_pit_attention_alias_policy_v2.json`
+- `h3_pit_attention_alias_policy_v3.json`
+- `h3_pit_attention_alias_policy_v4.json`
+- `h3_pit_attention_alias_policy_v5.json`
+
+The final H3 preregistration later froze:
+
+`H3_PIT_ATTENTION_ALIAS_POLICY_V5`
+
+### Production Builder and Audit
+
+Primary implementation:
+
+- `src/analysis/build_h3_pit_attention_alias_manifest.py`
+- `src/analysis/audit_h3_pit_attention_alias_manifest.py`
+
+Primary outputs included:
+
+- `h3_pit_attention_alias_intervals.csv`
+- `h3_pit_attention_alias_security_summary.csv`
+- `h3_pit_attention_alias_collision_diagnostics.csv`
+- `h3_pit_attention_alias_shared_issuer_collisions.csv`
+- `h3_pit_attention_alias_precision_control_diagnostics.csv`
+- `h3_pit_attention_alias_safety_diagnostics.csv`
+- `h3_pit_attention_alias_transition_events.csv`
+
+### Alias Safety Rules
+
+The final design:
+
+- preserves `security_key` as the security identity;
+- carries authoritative issuer CIK where available;
+- uses full authoritative names when shorter aliases would be ambiguous;
+- does not automatically promote bare tickers;
+- distinguishes same-issuer multi-security alias overlap from cross-issuer collision;
+- permits shared aliases only when both rows map to the same nonblank authoritative issuer CIK;
+- blocks unresolved or cross-issuer collisions;
+- preserves point-in-time alias validity intervals.
+
+### Transition Alignment Preflight
+
+A dedicated all-transition preflight audited:
+
+- collected authoritative transition evidence rows: `33`
+- securities with in-sample name transitions: `26`
+- final-state/source mismatches under Policy V2: `3`
+- sequential transition-chain nonmatches: `0`
+- display-only candidate mismatches: `1`
+
+Initial alignment classes:
+
+- `MATCH_POLICY_V2: 23`
+- `DISPLAY_PUNCTUATION_OR_TOKEN_SPACING_EQUIVALENT: 1`
+- `SEMANTIC_OR_UNEXPLAINED_MISMATCH: 2`
+
+The diagnostic did not auto-fix semantic mismatches.
+
+Subsequent authoritative re-research and policy-control memos closed the remaining alias-safety issues before Policy V5 was frozen.
+
+### Outcome Firewall
+
+Manifest builder and audit remained pre-outcome.
+
+Full-history GDELT extraction was not authorized until the final alias gate passed.
+
+Return/outcome fields read:
+
+`0`
+
+### Next Step
+
+Test the final alias policy against direct GDELT coverage and missingness before committing to the full 2021–2025 extraction.
+
+---
+
+## 3.60 Full-Universe GDELT Alias Coverage / Missingness Gate — Stage 3K
+
+### Date
+
+2026-08-25
+
+### Objective
+
+Validate that the production point-in-time alias manifest produces usable direct-GDELT historical attention coverage without modifying the alias policy based on any H3 return relationship.
+
+### Protocol
+
+Documentation:
+
+`docs/h3_stage3k_gdelt_alias_coverage_missingness_protocol.md`
+
+Primary implementation:
+
+- `src/analysis/run_h3_gdelt_alias_coverage_gate.py`
+- `src/analysis/audit_h3_gdelt_alias_coverage_gate.py`
+
+### Coverage Outputs
+
+Primary diagnostic outputs included:
+
+- `h3_gdelt_stage3k_source_files.csv`
+- `h3_gdelt_stage3k_daily_security_attention.csv`
+- `h3_gdelt_stage3k_window_security_coverage.csv`
+- `h3_gdelt_stage3k_window_summary.csv`
+- `h3_gdelt_stage3k_security_coverage_summary.csv`
+
+The gate reused frozen historical anchor windows rather than immediately downloading the full study interval.
+
+Stage 3K source files:
+
+`35`
+
+Stage 3K daily security-attention rows:
+
+`17,626`
+
+The coverage layer retained point-in-time active aliases and issuer metadata and checked for duplicate security-date records and invalid attention denominators.
+
+### Decision
+
+The final alias policy was considered operationally usable for full direct-GDELT historical extraction.
+
+No alias was widened because of a future return result.
+
+H3 return/outcome inference remained unauthorized.
+
+### Next Step
+
+Run the complete 2021–2025 direct GDELT extraction under a frozen extraction protocol and audit the resulting daily/monthly attention layer before preregistration.
+
+---
+
+## 3.61 Full 2021–2025 GDELT Attention Extraction and Source-Gap Reconciliation — Stage 3L
+
+### Date
+
+2026-08-25 to 2026-08-26
+
+### Objective
+
+Construct the full historical H3 news-attention layer from direct GDELT GKG 1.0 archives while preserving source provenance, point-in-time aliases, and explicit missing-source treatment.
+
+### Frozen Extraction Protocol
+
+Primary protocol:
+
+`data/reference/h3/h3_full_gdelt_attention_extraction_v1.json`
+
+Documentation:
+
+- `docs/h3_stage3l_full_gdelt_attention_protocol.md`
+- `docs/h3_stage3l_v2_resilient_source_acquisition.md`
+- `docs/h3_stage3l_v3_source_gap_reconciliation.md`
+- `docs/h3_stage3l_v4_transition_month_aggregation_fix.md`
+- `docs/h3_stage3l_v5_fail_closed_month_eligibility.md`
+
+Primary extraction:
+
+- `src/analysis/run_h3_full_gdelt_attention_extraction.py`
+- `src/analysis/audit_h3_full_gdelt_attention_extraction.py`
+
+### Attention Definition
+
+For each point-in-time active security/name state and GDELT source day:
+
+`attention_share = matched_source_document_weight / total_source_document_weight`
+
+GDELT GKG `NUMARTS` is used as document weight.
+
+True source-observed zero matches remain zero.
+
+Missing source days are not treated as zero-attention days.
+
+### Full Extraction Outputs
+
+The extraction produced yearly daily shards for:
+
+- 2021
+- 2022
+- 2023
+- 2024
+- 2025
+
+Full calendar source-file ledger:
+
+`1,826` calendar dates
+
+Full monthly security-attention rows:
+
+`30,301`
+
+Monthly range:
+
+`2021-01 through 2025-12`
+
+The full source-gap ledger identified:
+
+`21` documented source-gap days
+
+rather than silently converting failed/unavailable archives into zero attention.
+
+### Source-Gap Reconciliation
+
+Primary implementation:
+
+- `src/analysis/reconcile_h3_gdelt_source_gaps.py`
+- `src/analysis/finalize_h3_gdelt_source_gap_reconciliation.py`
+- `src/analysis/audit_h3_gdelt_source_gap_reconciliation.py`
+
+Frozen policy:
+
+`H3_GDELT_SOURCE_GAP_HANDLING_V1`
+
+The source-gap reconciliation preserved the observed data and attached explicit eligibility controls rather than backfilling missing GKG1 days from future information.
+
+### Transition-Month Aggregation Correction
+
+A transition-month diagnostic exposed the need to aggregate point-in-time name/security states without treating legitimate within-month security/name transitions as duplicate issuer exposure.
+
+The extraction/reconciliation logic was corrected before H3 statistical outcomes were read.
+
+This later became important again in the V1→V2 preregistration amendment at issuer level.
+
+### Outcome Firewall
+
+Stage 3L outputs contain no return, momentum, Winner, commonality-factor, or outcome fields.
+
+The no-outcome attention acquisition layer was closed before statistical H3 specification was finalized.
+
+### Next Step
+
+Freeze a fail-closed month-eligibility rule based only on source coverage, then preregister the H3 predictor, outcomes, models, inference, and robustness rules.
+
+---
+
+## 3.62 Fail-Closed GDELT Month Eligibility and June 2025 Exclusion
+
+### Date
+
+2026-08-26
+
+### Objective
+
+Prevent materially incomplete GDELT months from entering primary H3 inference while keeping source-coverage decisions independent of H3 outcomes.
+
+### Frozen Policy
+
+Reference:
+
+`data/reference/h3/h3_gdelt_fail_closed_month_eligibility_v1.json`
+
+Implementation:
+
+- `src/analysis/apply_h3_gdelt_fail_closed_month_eligibility.py`
+- `src/analysis/audit_h3_gdelt_fail_closed_month_eligibility.py`
+
+Primary monthly controls:
+
+- `h3_gdelt_primary_month_eligibility.csv`
+- `h3_gdelt_primary_excluded_months.csv`
+- `h3_gdelt_primary_monthly_security_attention.csv`
+
+### Coverage Rule
+
+Primary GKG1 month eligibility requires the frozen source-coverage threshold to be satisfied before any attention/outcome join.
+
+Frozen minimum source coverage:
+
+`90%`
+
+Any month with:
+
+`primary_attention_eligible_flag = 0`
+
+is excluded from every primary H3 specification.
+
+Attention is not imputed for an excluded month.
+
+### June 2025
+
+June 2025 contained:
+
+- calendar days: `30`
+- valid source days: `13`
+- documented GKG1 source-gap days: `17`
+- source coverage: approximately `43.3%`
+
+The month was therefore marked:
+
+`global_primary_attention_eligible_flag = 0`
+
+with exclusion reason:
+
+`GLOBAL_GKG1_SOURCE_COVERAGE_BELOW_FROZEN_90PCT`
+
+June 2025 is the only excluded primary attention month in the 2021-01 through 2025-12 eligibility table.
+
+The monthly security-attention values for June still exist as provenance; they are simply not authorized for primary H3 inference.
+
+### Important Timing Distinction
+
+The H3 predictor interval is:
+
+`2021-01 through 2025-11`
+
+December 2025 is not a predictor month because attention measured in December 2025 would require a January 2026 outcome outside the frozen project outcome sample.
+
+Therefore:
+
+- calendar months in predictor interval: `59`
+- source-coverage exclusions inside predictor interval: `1`
+- excluded predictor month: `2025-06`
+- authorized predictor months: `58`
+
+### Diagnostic Correction
+
+A later outcome-blind diagnostic initially assumed that every calendar month from 2021-01 through 2025-11 had to appear in the frozen predictor panel.
+
+That diagnostic correctly identified June 2025 as absent but incorrectly treated the absence as a construction failure.
+
+A dedicated source-only trace then proved that June's absence was the intended consequence of the already frozen 90% coverage gate.
+
+The diagnostic itself was corrected to compare the predictor month set against the **frozen eligible-month set**, not against the unconditional calendar set.
+
+This did not change the H3 preregistration, predictor, source-gap policy, or month eligibility.
+
+### Final Gate
+
+The corrected eligible-month audit confirmed:
+
+- 59 calendar months in the frozen predictor interval
+- exactly one preregistered fail-closed exclusion
+- June 2025 exclusion reason reproduced exactly
+- 58 authorized predictor months
+- no outcome/return data read
+
+Result:
+
+`H3_FROZEN_ELIGIBLE_MONTH_SET_GATE_PASSED`
+
+and:
+
+`H3_OUTCOME_JOIN_AUTHORIZED_BY_MONTH_SET_GATE`
+
+---
+
+## 3.63 H3 Statistical Preregistration, V1→V2 Issuer-Day Amendment, and Frozen Predictor
+
+### Date
+
+2026-08-26
+
+### Objective
+
+Freeze the H3 statistical design and attention transformation before allowing attention to touch return, momentum, Winner, or other outcome data.
+
+### Preregistration Files
+
+- `data/reference/h3/h3_statistical_preregistration_v1.json`
+- `data/reference/h3/h3_statistical_preregistration_v2.json`
+- `docs/h3_statistical_preregistration_v1.md`
+- `docs/h3_statistical_preregistration_v2.md`
+- `docs/h3_preregistration_v1_to_v2_amendment_memo.md`
+
+Current authoritative preregistration:
+
+`H3_STATISTICAL_PREREGISTRATION_V2`
+
+Version:
+
+`2026-08-26-v2`
+
+### Frozen Timing
+
+Predictor:
+
+`attention measured over calendar month t`
+
+Outcome:
+
+`one-month-ahead outcome over t to t+1 / ranking month t+1 as applicable`
+
+Lookahead:
+
+`false`
+
+Predictor month interval:
+
+`2021-01 through 2025-11`
+
+Undercovered attention months are excluded before any H3 outcome data are read.
+
+### Primary Attention Predictor
+
+Issuer identity:
+
+- SEC CIK when nonblank
+- deterministic `SECURITY::<security_key>` fallback otherwise
+
+Unit before security mapping:
+
+`issuer-month constructed from deduplicated issuer-days`
+
+Raw issuer-month attention:
+
+`sum(unique issuer-day matched NUMARTS) / sum(unique issuer-day total NUMARTS)`
+
+Log transform:
+
+`ln(1 + 1,000,000 × issuer_attention_share)`
+
+Primary standardization:
+
+Within each eligible predictor month, calculate the mean and sample standard deviation across unique eligible issuers and set:
+
+`attention_z = (attention_log - monthly issuer mean) / monthly issuer sample SD`
+
+Winsorization:
+
+`NO`
+
+True zero attention:
+
+`retained exactly`
+
+Missing attention imputation:
+
+`NO`
+
+The frozen issuer-month value is then mapped back to each eligible security row for that issuer.
+
+### Prespecified Robustness Predictor Transforms
+
+R1:
+
+issuer-month empirical midrank percentile of raw issuer attention.
+
+R2:
+
+unstandardized issuer `attention_log` with the same fixed effects.
+
+Robustness cannot upgrade a failed primary hypothesis to supported.
+
+### H3A
+
+Label:
+
+`Attention predicts next-month sector-relative return`
+
+Model:
+
+`sector_relative_return_i,t+1 = security_FE_i + outcome_month_FE_t+1 + current_momentum_decile_FE_t + beta_A * attention_z_i,t + error`
+
+Primary estimand:
+
+`beta_A`
+
+Expected sign:
+
+`positive`
+
+Sector-relative outcome:
+
+security one-month forward return minus the equal-weight mean forward return of all **other** valid securities in the same PIT GICS sector at predictor month `t`.
+
+Minimum other same-sector peers:
+
+`5`
+
+### H3B
+
+Label:
+
+`Attention predicts next-month Winner entry`
+
+Risk set:
+
+securities that are not D10 at month `t` and have a valid corrected H1 momentum assignment at `t+1`.
+
+Winner-entry outcome:
+
+`1` if corrected H1 momentum decile is D10 at `t+1`, otherwise `0`.
+
+Model type:
+
+`Linear probability model`
+
+Model:
+
+`winner_entry_i,t+1 = security_FE_i + outcome_month_FE_t+1 + current_momentum_decile_FE_t (D01-D09) + beta_B * attention_z_i,t + error`
+
+Primary estimand:
+
+`beta_B`
+
+Expected sign:
+
+`positive`
+
+### H3C
+
+Label:
+
+`Attention has an incremental effect for current Winners`
+
+Current Winner:
+
+corrected H1 D10 at predictor month `t`.
+
+Model:
+
+`sector_relative_return_i,t+1 = security_FE_i + outcome_month_FE_t+1 + current_momentum_decile_FE_t + beta_C * attention_z_i,t + theta * (attention_z_i,t * current_winner_i,t) + error`
+
+Primary estimand:
+
+`theta`
+
+Expected sign:
+
+`positive`
+
+Prespecified secondary linear combination:
+
+`beta_C + theta`
+
+This Winner attention slope is descriptive secondary inference and is not part of the Holm family.
+
+### Fixed Effects and Primary Inference
+
+Frozen fixed effects:
+
+- security FE: `YES`
+- outcome-month FE: `YES`
+- current momentum-decile FE: `YES`
+- sector FE: `NO`
+- post-hoc controls: `NOT ALLOWED`
+
+Primary covariance:
+
+`Two-way cluster-robust covariance by issuer_id and outcome_month`
+
+Small-sample correction:
+
+`YES`
+
+Reference degrees of freedom:
+
+`min(number of issuer clusters, number of outcome-month clusters) - 1`
+
+Tests:
+
+`two-sided`
+
+HAC lag-3 is not the primary H3 covariance estimator because H3 is a security-month panel rather than a portfolio time series.
+
+### Multiple Testing
+
+Frozen Holm family:
+
+1. `H3A_beta_A`
+2. `H3B_beta_B`
+3. `H3C_theta`
+
+Method:
+
+`Holm-Bonferroni`
+
+Familywise alpha:
+
+`0.05`
+
+Component support requires both:
+
+- Holm-adjusted two-sided p-value `< 0.05`
+- preregistered positive coefficient sign
+
+A significant negative coefficient is labeled:
+
+`CONTRADICTED`
+
+Otherwise:
+
+`NOT SUPPORTED`
+
+There is no post-hoc global H3 binary decision.
+
+### V1→V2 Issuer-Day Amendment
+
+The V1 predictor preparation incorrectly required security-month attention rows sharing one issuer CIK to be identical.
+
+That rule fails for a valid issuer whose security/name/ticker state changes inside a month because the separate security rows can cover different active-day subsets.
+
+Trigger case:
+
+- month: `2022-04`
+- issuer CIK: `0001437107`
+- security identities: `DISCA`, `DISCK`, `WBD`
+
+Observed V1 security-month attention range:
+
+- minimum: `0.0001412389797165`
+- maximum: `0.0001660893085939`
+
+The V2 amendment implemented the already intended issuer-level unit:
+
+1. verify same-issuer attention consistency on each calendar day;
+2. deduplicate to exactly one issuer-date;
+3. aggregate unique issuer-days to one issuer-month;
+4. standardize across unique issuers;
+5. map the issuer-month predictor back to eligible security rows.
+
+The amendment changed:
+
+- predictor aggregation implementation: `YES`
+
+The amendment did **not** change:
+
+- H3 models
+- inference
+- multiple-testing family
+- source-gap policy
+- timing
+- outcomes
+
+Outcomes read before amendment:
+
+`NO`
+
+### V2 Integrity Audit
+
+Script:
+
+`src/analysis/audit_h3_statistical_preregistration.py`
+
+Final result:
+
+- checks passed: `19`
+- checks failed: `0`
+- predictor months: `58`
+- predictor security-month rows: `29,287`
+- issuer-day rows: `887,018`
+- issuer-month rows: `29,078`
+- unique issuer clusters: `583`
+
+Key validations included:
+
+- zero unresolved same-issuer daily attention disagreements;
+- exact issuer-day uniqueness;
+- exact issuer-month uniqueness;
+- issuer-month reaggregation from unique issuer-days;
+- exact frozen `log1p` transform;
+- monthly `attention_z` mean zero;
+- monthly `attention_z` sample SD one;
+- at least 100 eligible issuers in every predictor month;
+- identical mapped issuer values across an issuer's eligible security identities;
+- no return/momentum/Winner/outcome fields in predictor outputs;
+- unchanged issuer × outcome-month primary clustering;
+- unchanged H3A/H3B/H3C Holm family;
+- outcome firewall preserved through the V2 amendment.
+
+Final token:
+
+`H3_STATISTICAL_PREREGISTRATION_V2_INTEGRITY_AUDIT_PASSED`
+
+### Decision
+
+The corrected issuer-level H3 attention predictor was frozen before outcome exposure.
+
+The deterministic attention/outcome join was authorized only after the V2 preregistration audit and the frozen eligible-month gate both passed.
+
+---
+
+## 3.64 H3 Predictor-to-Outcome Join and Structural Integrity Gate
+
+### Date
+
+2026-08-26
+
+### Objective
+
+Construct the exact preregistered H3 analytical panel using the already frozen attention predictor and the validated Azure SQL H1/GICS layers, then independently block model execution unless every structural alignment check passes.
+
+### SQL Binding Discovery
+
+Before reading outcome rows, schema-only discovery confirmed the existing Azure SQL objects required by the frozen H3 specification.
+
+Primary SQL sources selected:
+
+- `analytics.v_security_monthly_forward_return_1m`
+- `analytics.security_month_end_gics_sector`
+- `analytics.v_security_monthly_momentum_ranking`
+
+The discovery stage queried SQL catalog metadata only and executed no regression/inference.
+
+### Join Implementation
+
+Script:
+
+`src/analysis/build_and_audit_h3_preregistered_predictor_outcome_join.py`
+
+Frozen attention input:
+
+`reports/exploratory/h3_attention_feasibility/h3_preregistered_attention_predictor_panel.csv`
+
+Frozen predictor population:
+
+- rows: `29,287`
+- eligible months: `58`
+- issuer clusters: `583`
+
+### H3A / H3C Outcome Construction
+
+The corrected H1 one-month gross security forward-return layer is reused directly.
+
+No alternative price source is introduced.
+
+For each predictor security-month, PIT GICS sector is attached for month `t`.
+
+The leave-one-out sector benchmark is calculated from **all other valid securities in that same PIT sector**, not merely securities that possess an H3 attention observation.
+
+A row is H3A/H3C eligible only when:
+
+- one-month forward return is complete;
+- PIT sector exists;
+- current corrected H1 momentum decile is valid;
+- at least `5` other same-sector valid forward returns exist;
+- the leave-one-out sector-relative return is valid.
+
+### H3B Outcome Construction
+
+Current D10 rows are removed from the H3B risk set.
+
+Among current D01-D09 securities with a valid `t+1` corrected H1 momentum assignment:
+
+`winner_entry = 1`
+
+when the next-month decile is D10, otherwise:
+
+`winner_entry = 0`
+
+### Timing Control
+
+Every joined row must satisfy:
+
+`outcome_month = predictor_month + 1`
+
+Because June 2025 attention is frozen ineligible, no July 2025 H3 outcome observation is permitted.
+
+### Join Audit Result
+
+Passed checks:
+
+`26`
+
+Failed checks:
+
+`0`
+
+Final population:
+
+- joined predictor rows: `29,287`
+- H3A/H3C eligible rows: `29,114`
+- H3B eligible rows: `26,139`
+- H3B positive Winner-entry events: `807`
+
+The audit also confirmed:
+
+- predictor row count preserved exactly;
+- unique predictor-month/security keys;
+- unique canonical current-return source keys;
+- unique next-month momentum source keys;
+- exact `t+1` timing;
+- exact PIT GICS month alignment;
+- minimum model-row thresholds satisfied;
+- minimum issuer-cluster thresholds satisfied;
+- minimum outcome-month-cluster thresholds satisfied;
+- H3A/H3C peer minimum satisfied;
+- H3B risk set limited to D01-D09;
+- H3B next-month assignment valid;
+- Winner entry binary;
+- current-Winner indicator exactly reproduces corrected H1 D10.
+
+### Materialized Outputs
+
+CSV analytical panel:
+
+`reports/confirmatory/h3/h3_preregistered_predictor_outcome_panel.csv`
+
+Audit:
+
+`reports/confirmatory/h3/h3_preregistered_predictor_outcome_join_audit.txt`
+
+Manifest/checksum record:
+
+`reports/confirmatory/h3/h3_preregistered_predictor_outcome_join_manifest.json`
+
+Azure SQL analytical table:
+
+`analytics.h3_preregistered_predictor_outcome_panel`
+
+Final tokens:
+
+`H3_PREREGISTERED_PREDICTOR_OUTCOME_JOIN_INTEGRITY_AUDIT_PASSED`
+
+and:
+
+`H3_PRIMARY_MODEL_EXECUTION_AUTHORIZED`
+
+Regression/inference executed by the join script:
+
+`NO`
+
+### Decision
+
+The structural H3 analytical population is frozen and valid.
+
+The project has crossed the outcome-join boundary, but the actual H3 coefficients and p-values have still not been observed.
+
+---
+
+## 3.65 H3 Primary Confirmatory Inference Code Freeze — Pre-Execution Checkpoint
+
+### Date
+
+2026-08-26
+
+### Objective
+
+Freeze the exact code that will execute H3A, H3B, and H3C before the first confirmatory H3 coefficients or p-values are observed.
+
+### Script
+
+`src/analysis/run_h3_primary_confirmatory_inference.py`
+
+Script version:
+
+`2026-08-26-v1-h3-primary-confirmatory-inference`
+
+### Frozen Input Expectations
+
+The inference code refuses to run unless the preceding join artifacts and authorization tokens are present and unchanged.
+
+Expected analytical panel:
+
+- rows: `29,287`
+- predictor months: `58`
+- issuer clusters: `583`
+- H3A/H3C rows: `29,114`
+- H3B rows: `26,139`
+- H3B positive Winner-entry events: `807`
+
+The script validates the joined-panel checksum against the passed join manifest before model execution.
+
+### Frozen Models
+
+Only the three prespecified primary models are executed:
+
+- H3A `beta_A`
+- H3B `beta_B`
+- H3C interaction `theta`
+
+No post-hoc controls are permitted.
+
+Primary fixed effects and covariance remain exactly those in `H3_STATISTICAL_PREREGISTRATION_V2`.
+
+Holm adjustment is applied across exactly:
+
+`H3A_beta_A`, `H3B_beta_B`, `H3C_theta`
+
+The prespecified H3C Winner attention slope:
+
+`beta_C + theta`
+
+is reported only as secondary inference and is not added to the Holm family.
+
+### Intended Result Artifacts
+
+After execution, the script is designed to create:
+
+- `reports/confirmatory/h3/h3_primary_confirmatory_results.csv`
+- `reports/confirmatory/h3/h3_primary_confirmatory_report.txt`
+- `reports/confirmatory/h3/h3_primary_confirmatory_manifest.json`
+
+and SQL table:
+
+`analytics.h3_primary_confirmatory_results`
+
+### Current State
+
+At this checkpoint:
+
+`PRIMARY H3 CONFIRMATORY INFERENCE HAS NOT BEEN RUN`
+
+No H3 coefficient, confidence interval, p-value, Holm-adjusted p-value, or support decision has been observed.
+
+This is the final provenance boundary before confirmatory inference.
+
+### Required Git Boundary
+
+Commit the completed H3 source/identity/attention/preregistration/join work and this updated project log.
+
+Then commit the frozen primary inference script before executing it.
+
+The first H3 confirmatory result must be observed only after those code/specification checkpoints exist in Git history.
+
+---
+
 # Current Status
 
 Current phase:
 
-**H3 attention-data feasibility and point-in-time company-identity preparation**
+**H3 PRIMARY CONFIRMATORY INFERENCE — FROZEN AND AUTHORIZED, NOT YET EXECUTED**
 
 ## Closed Confirmatory Research
 
@@ -7374,94 +8607,165 @@ Phase 4A theme synchrony:
 
 `CLOSED — NO ADJUSTED THEME-SYNCHRONY SIGNAL`
 
-## H3 Attention Feasibility State
-
-Direct GDELT historical pilot:
-
-`PASSED`
-
-Pilot company coverage:
-
-`15 / 15 meet >=2/5 strict nonzero-window rule`
-
-High-ambiguity pilot review:
-
-`CLOSED — CONSERVATIVE STRICT-ALIAS POLICY RETAINED`
-
-Cloud architecture decision:
-
-- Google Cloud: `NO`
-- BigQuery: `NO`
-- direct GDELT downloads: `YES`
-- Azure SQL writes during feasibility: `NO`
-
-## Full-Universe H3 Identity State
+## H3 Identity / Alias State
 
 Canonical historical security identities:
 
 `593`
 
-Historical ticker segments:
+SEC identity/name-history resolution:
 
-`594`
+`COMPLETE`
 
-Candidate company-query rows:
+Point-in-time historical name evidence:
 
-`593`
+`COMPLETE`
 
-Duplicate exact normalized aliases:
+Exact transition resolution:
 
-`0`
+`COMPLETE`
 
-Structural ambiguity:
+Authoritative name-state closeout:
 
-- HIGH: `210`
-- MEDIUM: `220`
-- LOW: `163`
+`COMPLETE`
 
-Ticker-like exact company names:
+Full-universe name-resolution closure:
 
-`8`
+`COMPLETE`
 
-PIT/name-history review queue:
+No-NPORT definitive closure:
 
-`211`
+`COMPLETE`
 
-Current company names point-in-time validated:
+Final PIT attention alias policy:
 
-`NO`
+`H3_PIT_ATTENTION_ALIAS_POLICY_V5 — FROZEN`
 
-Final Stage 3A V4 integrity-audit confirmation:
+## H3 Attention Acquisition State
 
-`PENDING`
+Direct historical GDELT source:
 
-Stage 3B SEC resolution:
+`GKG 1.0 daily`
 
-`PREPARED — NOT YET EXECUTED`
+Full source calendar:
+
+`1,826 dates`
+
+Full monthly security-attention rows:
+
+`30,301`
+
+Documented source-gap days:
+
+`21`
+
+Fail-closed source-gap policy:
+
+`H3_GDELT_SOURCE_GAP_HANDLING_V1 — FROZEN`
+
+Fail-closed month eligibility:
+
+`H3_GDELT_FAIL_CLOSED_MONTH_ELIGIBILITY_V1 — FROZEN`
+
+June 2025:
+
+`EXCLUDED — GLOBAL_GKG1_SOURCE_COVERAGE_BELOW_FROZEN_90PCT`
+
+June 2025 source coverage:
+
+`13 / 30 days ≈ 43.3%`
+
+## H3 Statistical Preregistration State
+
+Current preregistration:
+
+`H3_STATISTICAL_PREREGISTRATION_V2`
+
+V2 preregistration integrity audit:
+
+`19 / 19 PASSED`
+
+Predictor months:
+
+`58`
+
+Predictor security-month rows:
+
+`29,287`
+
+Issuer-day rows:
+
+`887,018`
+
+Issuer-month rows:
+
+`29,078`
+
+Issuer clusters:
+
+`583`
+
+Outcome firewall before V2 amendment:
+
+`PRESERVED`
+
+## H3 Outcome-Join State
+
+Outcome join:
+
+`COMPLETE`
+
+Structural checks:
+
+`26 / 26 PASSED`
+
+Joined rows:
+
+`29,287`
+
+H3A/H3C eligible rows:
+
+`29,114`
+
+H3B eligible rows:
+
+`26,139`
+
+H3B positive Winner-entry events:
+
+`807`
+
+Azure SQL analytical table:
+
+`analytics.h3_preregistered_predictor_outcome_panel`
+
+Primary model execution:
+
+`AUTHORIZED`
 
 ## Interpretation Boundary
 
-No H3 predictive or return inference has been performed.
+H3 outcomes have now been structurally joined under the frozen preregistration, but confirmatory inference has not yet been executed.
 
-No attention transformation may be selected according to return performance.
+No H3 primary coefficient or significance result has been observed.
 
-No full-history attention dataset may be joined to future returns until:
+The following remain prohibited before the first frozen primary run:
 
-1. Stage 3A final candidate-manifest audit is confirmed;
-2. SEC company-name history is resolved and audited;
-3. PIT attention aliases are frozen;
-4. full attention coverage/missingness is audited;
-5. the usable H3 universe is frozen;
-6. the attention transformation is frozen;
-7. the residual-return/outcome model is frozen;
-8. H3 is formally preregistered.
+- changing the attention transformation;
+- changing the sample window;
+- changing June 2025 eligibility;
+- changing H3A/H3B/H3C definitions;
+- changing fixed effects;
+- changing the two-way issuer × outcome-month primary covariance estimator;
+- adding post-hoc controls;
+- changing the three-test Holm family.
 
 ## Immediate Next Step
 
-Confirm:
+Create the Git provenance checkpoint for all completed H3 pre-inference work.
 
-`H3_COMPANY_QUERY_MANIFEST_CANDIDATE_INTEGRITY_AUDIT_PASSED`
+Then create a separate Git commit containing the frozen:
 
-from the V4 Stage 3A audit.
+`src/analysis/run_h3_primary_confirmatory_inference.py`
 
-Then run Stage 3B SEC company identity/name-history resolution and inspect the resulting review queue before creating point-in-time alias intervals.
+Only after both commits exist should the first H3 confirmatory inference be executed.

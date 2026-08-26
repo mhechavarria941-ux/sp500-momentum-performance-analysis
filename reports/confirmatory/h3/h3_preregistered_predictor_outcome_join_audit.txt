@@ -1,0 +1,55 @@
+========================================================================================================================================
+H3 PREREGISTERED PREDICTOR → OUTCOME JOIN — INTEGRITY AUDIT
+========================================================================================================================================
+Script version: 2026-08-26-v1-h3-preregistered-predictor-outcome-join
+Preregistration ID: H3_STATISTICAL_PREREGISTRATION_V2
+Frozen predictor SHA-256: ef971765c18be4060bffe9a061784da06417d264274cd8c493eb14a8cd0c3f42
+Frozen preregistration SHA-256: 95e88d99f2b0c9beca50073844b9dadc32c11a6aa820fe04cf3ed12e94841506
+Joined panel SHA-256: 8ad29c02180efb9b2cc46ef640699a4c7e339cbd45ac7d1a9ab869d1c979729c
+
+PASS: Frozen predictor has exactly 29,287 rows.
+PASS: Frozen predictor has exactly 58 eligible months.
+PASS: Frozen predictor has exactly 583 issuer clusters.
+PASS: Frozen predictor has exactly one row per security-month.
+PASS: Frozen excluded month 2025-06 is absent from the predictor panel.
+PASS: Canonical H1 forward-return source is unique by predictor month and security.
+PASS: Canonical next-month momentum source is unique by outcome month and security.
+PASS: Outcome join preserves every frozen predictor row exactly once.
+PASS: Joined panel remains unique by predictor month and security.
+PASS: Every outcome month is exactly predictor month t + 1.
+PASS: PIT GICS sector rows align to the same predictor month as H1 ranking rows.
+PASS: H3A/H3C structural sample has at least 1,000 rows.
+PASS: H3A/H3C has at least 100 issuer clusters.
+PASS: H3A/H3C has at least 30 outcome-month clusters.
+PASS: Every H3A/H3C row has at least 5 valid OTHER same-sector return peers.
+PASS: Every H3A/H3C row has a valid leave-one-out sector-relative return.
+PASS: Every H3A/H3C row has a valid current corrected H1 momentum decile.
+PASS: H3B structural sample has at least 1,000 rows.
+PASS: H3B has at least 100 issuer clusters.
+PASS: H3B has at least 30 outcome-month clusters.
+PASS: Every H3B row is a current non-Winner (D01-D09).
+PASS: Every H3B row has a valid t+1 corrected H1 momentum assignment.
+PASS: H3B Winner-entry outcome is binary.
+PASS: H3B has at least 100 positive Winner-entry events.
+PASS: Current-Winner indicator reproduces corrected H1 D10 exactly.
+PASS: No July-2025 H3 outcome observation exists because June-2025 attention was frozen ineligible.
+
+Joined predictor rows: 29,287
+Current H1 join matches: 29,114
+Current H1 join misses: 173
+Next-month ranking join matches: 29,044
+Next-month ranking join misses: 243
+H3A/H3C eligible rows: 29,114
+H3A/H3C issuer clusters: 573
+H3A/H3C outcome-month clusters: 58
+H3B eligible rows: 26,139
+H3B issuer clusters: 567
+H3B outcome-month clusters: 58
+H3B positive Winner-entry events: 807
+
+Regression/inference executed: NO
+Coefficient inspection performed by this script: NO
+Primary H3 models remain blocked unless every structural join check passes.
+
+H3_PREREGISTERED_PREDICTOR_OUTCOME_JOIN_INTEGRITY_AUDIT_PASSED
+H3_PRIMARY_MODEL_EXECUTION_AUTHORIZED
