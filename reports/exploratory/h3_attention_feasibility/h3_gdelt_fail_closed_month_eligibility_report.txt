@@ -1,0 +1,27 @@
+================================================================================================================================
+H3 STAGE 3L — FAIL-CLOSED PRIMARY MONTH ELIGIBILITY
+================================================================================================================================
+Policy ID: H3_GDELT_FAIL_CLOSED_MONTH_ELIGIBILITY_V1
+Policy SHA-256: 9837f2d31b5da907f0ab17f7ef50d9b22d44d51f51689bae937ffa7e8ab84aac
+Calendar months evaluated: 60
+Globally eligible primary attention months: 59
+Globally excluded primary attention months: 1
+Excluded global months: 2025-06
+Security-month rows: 30301
+Eligible primary security-month rows: 29794
+Unavailable primary security-month rows: 507
+
+FROZEN THRESHOLDS:
+  Global calendar month >= 90.00%
+  Security-month >= 90.00%
+
+RETAINED COVERAGE:
+  Minimum retained global month coverage: 0.935484
+  Minimum retained security-month coverage: 0.935484
+
+Undercovered source months zero-filled: NO
+Undercovered source months partially retained cross-sectionally: NO
+GKG 2.x mixed into primary series: NO
+Return/outcome fields read: 0
+
+H3_GDELT_PRIMARY_MONTH_ELIGIBILITY_APPLIED

@@ -1,0 +1,18 @@
+========================================================================================================================
+H3 STAGE 3D — AUTHORITATIVE EXACT TRANSITION CLOSEOUT
+========================================================================================================================
+Stage 3C exact-date research rows: 22
+Authoritatively resolved true legal/company renames: 18
+Rejected false NPORT transitions: 4
+Unresolved exact-date rows remaining: 0
+Name-state reconciliation rows remaining: 119
+
+False-transition classes:
+  CSCO: jurisdiction/legal-suffix NPORT label variation; Cisco Systems, Inc. remained the registrant.
+  FRT: simultaneous parent/operating-partnership registrants; Federal Realty OP LP is not a parent-company rename.
+
+Production PIT alias intervals created: NO
+Full-history GDELT extraction performed: NO
+Return/outcome fields read: 0
+
+H3_AUTHORITATIVE_EXACT_TRANSITION_CLOSEOUT_COMPLETE

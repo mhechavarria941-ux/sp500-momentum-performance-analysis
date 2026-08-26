@@ -1,0 +1,27 @@
+================================================================================================================================
+H3 STAGE 3K — DIRECT GDELT ALIAS COVERAGE & MISSINGNESS GATE
+================================================================================================================================
+Gate ID: H3_GDELT_ALIAS_COVERAGE_MISSINGNESS_GATE_V1
+Gate SHA-256: 8184dbc3bfb147e1ba561b316c28e9b5c3a58c9e9d56951d1b6e4fe55a4b4533
+Stage 3J manifest SHA-256: 1924d4589afdf855fa03bc3637b273c6dd244a1827c48b620df29a1d6a157799
+Daily GDELT files: 35
+Eligible securities across anchor windows: 586
+Eligible security-window observations: 2519
+
+STRICT COVERAGE METRICS:
+  Any-nonzero security rate: 0.868601
+  Repeat nonzero rate among securities eligible >=2 windows: 0.829314
+  Nonzero security-window rate: 0.791584
+  HIGH-ambiguity any-nonzero security rate: 0.868293
+
+THRESHOLDS:
+  Any-nonzero security rate >= 0.85
+  Repeat nonzero rate among eligible >=2 windows >= 0.70
+  Nonzero security-window rate >= 0.50
+  HIGH-ambiguity any-nonzero security rate >= 0.65
+
+Raw daily GDELT zip retention: NONE after successful parse
+Full-history GDELT extraction performed: NO
+Return/outcome fields read: 0
+
+H3_GDELT_ALIAS_COVERAGE_MISSINGNESS_PILOT_COMPLETE

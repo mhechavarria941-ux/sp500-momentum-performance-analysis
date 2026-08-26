@@ -1,0 +1,2 @@
+security_key,from_name_key,to_name_key,last_observed_old_state_date,first_observed_new_state_date,resolution_status,exact_effective_date,resolution_source,source_type_pipe,source_url_pipe,source_event_type_pipe,candidate_event_count
+DAY,CERIDIAN HCM,DAYFORCE,2023-12-31,2024-03-31,RESOLVED_EXACT,2024-02-01,PROJECT_SECURITY_ALIASES_EXACT_EVENT,SEC Filing,https://www.sec.gov/Archives/edgar/data/1725057/000095017024050892/day-20240331.htm,ticker_and_name_change,1

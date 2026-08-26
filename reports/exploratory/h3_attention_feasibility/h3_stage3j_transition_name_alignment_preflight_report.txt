@@ -1,0 +1,30 @@
+================================================================================================================================
+H3 STAGE 3J — ALL-TRANSITION NAME ALIGNMENT PREFLIGHT AUDIT
+================================================================================================================================
+Collected authoritative transition evidence rows: 33
+Securities with in-sample name transitions audited: 26
+Final-state/source mismatches under current Policy V2: 3
+Sequential transition-chain nonmatches: 0
+Display-only candidate mismatches: 1
+
+Alignment class counts:
+  DISPLAY_PUNCTUATION_OR_TOKEN_SPACING_EQUIVALENT: 1
+  MATCH_POLICY_V2: 23
+  SEMANTIC_OR_UNEXPLAINED_MISMATCH: 2
+
+INTERPRETATION:
+MATCH_POLICY_V2 rows already pass the current Stage 3J normalization.
+DISPLAY_PUNCTUATION_OR_TOKEN_SPACING_EQUIVALENT rows are cases such as CAMPBELL S vs Campbell's where the compact alphanumeric diagnostic agrees. This is diagnostic evidence only; the audit does not modify policy.
+WORD_ORDER_ONLY_EQUIVALENT indicates exact token equivalence after ordering only.
+PREFIX_SUFFIX_OR_ABBREVIATION_DIFFERENCE and SEMANTIC_OR_UNEXPLAINED_MISMATCH must not be auto-fixed from this audit alone.
+
+Files:
+  h3_stage3j_transition_name_alignment_diagnostics.csv
+  h3_stage3j_transition_chain_diagnostics.csv
+
+Manifest builder executed: NO
+Alias policy modified: NO
+Full-history GDELT extraction performed: NO
+Return/outcome fields read: 0
+
+H3_STAGE3J_NAME_ALIGNMENT_PREFLIGHT_COMPLETE

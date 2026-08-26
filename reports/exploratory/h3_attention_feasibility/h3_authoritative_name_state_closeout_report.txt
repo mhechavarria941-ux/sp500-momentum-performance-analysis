@@ -1,0 +1,42 @@
+============================================================================================================================
+H3 STAGE 3G — AUTHORITATIVE NAME-STATE CLOSEOUT
+============================================================================================================================
+Input Stage 3F primary-source research identities: 34
+Authoritatively closed identities: 34
+Remaining external name-state research identities: 0
+
+Category counts:
+  JURISDICTION_LABEL_VARIANT_PUBLIC_SPIN: 1
+  JURISDICTION_OR_SOURCE_LABEL_VARIANT: 4
+  LEGAL_FORM_PUNCTUATION_VARIANT: 1
+  MISSING_CIK_MAPPING_RESOLVED: 1
+  POST_SAMPLE_BRAND_TICKER_CHANGE_NOT_PIT: 1
+  POST_SAMPLE_HOLDING_COMPANY_REORG_CURRENT_REFERENCE_NOT_PIT: 1
+  PREPUBLIC_TRANSACTION_NAME_NOT_ATTENTION_ALIAS: 7
+  PREWINDOW_FORMER_NAME: 1
+  PREWINDOW_FORMER_NAME_AND_SOURCE_LABEL_VARIANT: 1
+  PUBLIC_BRAND_CONTINUITY_HOLDING_COMPANY_REORG: 1
+  PUBLIC_BRAND_CONTINUITY_INTERNAL_REORG: 2
+  SEC_CONFORMED_OR_DISPLAY_NAME_VARIANT: 3
+  SEC_CONFORMED_WORD_ORDER_VARIANT: 3
+  SEC_FORMER_NAME_METADATA_NOT_PUBLIC_PARENT: 1
+  TRUE_PUBLIC_HOLDING_COMPANY_NAME_TRANSITION: 2
+  TRUE_PUBLIC_LEGAL_NAME_TRANSITION_BRAND_CONTINUITY: 1
+  TRUE_PUBLIC_NAME_TRANSITION: 2
+  TRUE_PUBLIC_NAME_TRANSITION_DUAL_DATE: 1
+
+CRITICAL PIT CORRECTIONS:
+  XOM: 2021-2025 public issuer is Exxon Mobil Corporation, CIK 0000034088. ExxonMobil Holdings Corporation / CIK 0002115436 is a post-sample 2026 successor parent.
+  TJX: Stage 3F missing CIK is resolved to official SEC CIK 0000109198.
+  MRSH: the Marsh brand / MRSH ticker change is effective 2026-01-14 and must not be backcast into the 2021-2025 sample.
+
+NAME-STATE CONTROLS:
+  Pre-public transaction shell names are retained as provenance but explicitly excluded from production attention aliases.
+  Internal holding-company reorganizations with continuous public branding are distinguished from genuine public-name changes.
+  Legal dates and public/trading dates are stored separately when authoritative sources distinguish them.
+
+Production PIT GDELT alias intervals created: NO
+Full-history GDELT extraction performed: NO
+Return/outcome fields read: 0
+
+H3_AUTHORITATIVE_NAME_STATE_CLOSEOUT_COMPLETE

@@ -1,0 +1,27 @@
+security_key,latest_project_ticker,transition_count_in_sample,final_transition_name,independent_source_name,independent_source_layer,final_core_policy_v2,source_core_policy_v2,final_compact_diagnostic,source_compact_diagnostic,alignment_class,builder_would_block_under_policy_v2,candidate_display_only_fix
+CPB,CPB,1,CAMPBELL S,Campbell's Company/The,LATEST_IN_MEMBERSHIP_SEC_NPORT_NAME,campbell s,campbells,campbells,campbells,DISPLAY_PUNCTUATION_OR_TOKEN_SPACING_EQUIVALENT,1,1
+FBHS,FBHS,1,"Fortune Brands Innovations, Inc.",Fortune Brands Home & Security,STAGE3I_MEMBERSHIP_NAME,fortune brands innovations,fortune brands home and security,fortunebrandsinnovations,fortunebrandshomeandsecurity,SEMANTIC_OR_UNEXPLAINED_MISMATCH,1,0
+PENN,PENN,1,"PENN Entertainment, Inc.",Penn National Gaming,STAGE3I_MEMBERSHIP_NAME,penn entertainment,penn national gaming,pennentertainment,pennnationalgaming,SEMANTIC_OR_UNEXPLAINED_MISMATCH,1,0
+BBWI,BBWI,1,"Bath & Body Works, Inc.",Bath & Body Works,STAGE3I_MEMBERSHIP_NAME,bath and body works,bath and body works,bathandbodyworks,bathandbodyworks,MATCH_POLICY_V2,0,0
+BXP,BXP,1,BXP,BXP Inc,LATEST_IN_MEMBERSHIP_SEC_NPORT_NAME,bxp,bxp,bxp,bxp,MATCH_POLICY_V2,0,0
+CCI,CCI,1,CROWN CASTLE,Crown Castle Inc,LATEST_IN_MEMBERSHIP_SEC_NPORT_NAME,crown castle,crown castle,crowncastle,crowncastle,MATCH_POLICY_V2,0,0
+CI,CI,1,CIGNA GROUP,Cigna Group/The,LATEST_IN_MEMBERSHIP_SEC_NPORT_NAME,cigna group,cigna group,cignagroup,cignagroup,MATCH_POLICY_V2,0,0
+COR,COR,1,CENCORA,Cencora Inc,LATEST_IN_MEMBERSHIP_SEC_NPORT_NAME,cencora,cencora,cencora,cencora,MATCH_POLICY_V2,0,0
+CPAY,CPAY,1,CORPAY,Corpay Inc,LATEST_IN_MEMBERSHIP_SEC_NPORT_NAME,corpay,corpay,corpay,corpay,MATCH_POLICY_V2,0,0
+CRM,CRM,1,SALESFORCE,Salesforce Inc,LATEST_IN_MEMBERSHIP_SEC_NPORT_NAME,salesforce,salesforce,salesforce,salesforce,MATCH_POLICY_V2,0,0
+CTRA,CTRA,1,COTERRA ENERGY,Coterra Energy Inc,LATEST_IN_MEMBERSHIP_SEC_NPORT_NAME,coterra energy,coterra energy,coterraenergy,coterraenergy,MATCH_POLICY_V2,0,0
+DAY,DAY,1,DAYFORCE,Dayforce Inc,LATEST_IN_MEMBERSHIP_SEC_NPORT_NAME,dayforce,dayforce,dayforce,dayforce,MATCH_POLICY_V2,0,0
+EG,EG,1,EVEREST GROUP,Everest Group Ltd,LATEST_IN_MEMBERSHIP_SEC_NPORT_NAME,everest group,everest group,everestgroup,everestgroup,MATCH_POLICY_V2,0,0
+ELV,ELV,1,ELEVANCE HEALTH,Elevance Health Inc,LATEST_IN_MEMBERSHIP_SEC_NPORT_NAME,elevance health,elevance health,elevancehealth,elevancehealth,MATCH_POLICY_V2,0,0
+FFIV,FFIV,1,F5,F5 Inc,LATEST_IN_MEMBERSHIP_SEC_NPORT_NAME,f5,f5,f5,f5,MATCH_POLICY_V2,0,0
+GEN,GEN,1,GEN DIGITAL,Gen Digital Inc,LATEST_IN_MEMBERSHIP_SEC_NPORT_NAME,gen digital,gen digital,gendigital,gendigital,MATCH_POLICY_V2,0,0
+HIG,HIG,1,HARTFORD INSURANCE GROUP,Hartford Insurance Group Inc/The,LATEST_IN_MEMBERSHIP_SEC_NPORT_NAME,hartford insurance group,hartford insurance group,hartfordinsurancegroup,hartfordinsurancegroup,MATCH_POLICY_V2,0,0
+J,J,1,Jacobs Solutions Inc.,Jacobs Solutions Inc.,STAGE3G_AUTHORITATIVE_SAMPLE_NAME,jacobs solutions,jacobs solutions,jacobssolutions,jacobssolutions,MATCH_POLICY_V2,0,0
+K,K,1,Kellanova,Kellanova,STAGE3I_MEMBERSHIP_NAME,kellanova,kellanova,kellanova,kellanova,MATCH_POLICY_V2,0,0
+LH,LH,1,Labcorp Holdings Inc.,Labcorp Holdings Inc.,STAGE3G_AUTHORITATIVE_SAMPLE_NAME,labcorp holdings,labcorp holdings,labcorpholdings,labcorpholdings,MATCH_POLICY_V2,0,0
+META,META,1,META PLATFORMS,Meta Platforms Inc,LATEST_IN_MEMBERSHIP_SEC_NPORT_NAME,meta platforms,meta platforms,metaplatforms,metaplatforms,MATCH_POLICY_V2,0,0
+RHI,RHI,1,Robert Half Inc.,Robert Half,STAGE3I_MEMBERSHIP_NAME,robert half,robert half,roberthalf,roberthalf,MATCH_POLICY_V2,0,0
+RTX,RTX,1,RTX,RTX Corp,LATEST_IN_MEMBERSHIP_SEC_NPORT_NAME,rtx,rtx,rtx,rtx,MATCH_POLICY_V2,0,0
+RVTY,RVTY,1,REVVITY,Revvity Inc,LATEST_IN_MEMBERSHIP_SEC_NPORT_NAME,revvity,revvity,revvity,revvity,MATCH_POLICY_V2,0,0
+SLB,SLB,1,SLB,SLB Ltd,LATEST_IN_MEMBERSHIP_SEC_NPORT_NAME,slb,slb,slb,slb,MATCH_POLICY_V2,0,0
+SRE,SRE,1,SEMPRA,Sempra,LATEST_IN_MEMBERSHIP_SEC_NPORT_NAME,sempra,sempra,sempra,sempra,MATCH_POLICY_V2,0,0

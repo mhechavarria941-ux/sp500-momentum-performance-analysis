@@ -1,0 +1,29 @@
+================================================================================================================================
+H3 STAGE 3L — FAIL-CLOSED PRIMARY MONTH ELIGIBILITY AUDIT
+================================================================================================================================
+H3 statistical inference authorized: NO
+
+PASS: All outputs reproduce the frozen fail-closed policy checksum.
+PASS: Global month eligibility is exactly the frozen 90% source-coverage rule.
+PASS: Excluded-month ledger exactly matches globally undercovered months.
+PASS: Primary monthly attention panel has exactly one row per security-month.
+PASS: Every security in a calendar month receives the same global month eligibility.
+PASS: Security-month coverage flag exactly follows the frozen 90% threshold.
+PASS: Primary attention eligibility equals global-month AND security-month coverage eligibility.
+PASS: Every retained security-month meets the frozen source-coverage threshold.
+PASS: No globally undercovered calendar month is retained in the primary H3 attention series.
+PASS: Every excluded security-month is explicitly marked unavailable.
+PASS: Fail-closed eligibility outputs contain no return/momentum/Winner/outcome fields.
+
+Passed checks: 11
+Failed checks: 0
+Calendar months: 60
+Globally excluded months: 1
+Excluded months: 2025-06
+Monthly security rows: 30301
+Primary eligible security-month rows: 29794
+
+H3_FULL_GDELT_ATTENTION_ACQUISITION_CLOSED_FAIL_CLOSED_MONTH_ELIGIBILITY
+
+A passing gate closes the primary GKG 1.0 attention acquisition layer without relaxing the frozen 90% coverage threshold.
+The next authorized task is H3 statistical preregistration before any attention/outcome join.

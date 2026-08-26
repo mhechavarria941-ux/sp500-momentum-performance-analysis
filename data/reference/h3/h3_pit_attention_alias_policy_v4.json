@@ -1,0 +1,32 @@
+{
+  "attention_timing_rule": "Attention through month t may later be related only to outcomes at t+1; the alias manifest itself contains no outcomes.",
+  "batch_preflight_rule": "Before interval construction, validate every in-sample transition chain, same-date conflict, and static-source-to-chain alignment in one batch. Write the complete diagnostics and block once if any issue remains; do not fail one security at a time.",
+  "collision_rule": "If the selected alias collides across different security_keys during overlapping intervals, escalate all colliding rows to normalized full authoritative company names. Any remaining overlapping collision blocks the manifest.",
+  "display_equivalence_rule": "When two authoritative names differ under Policy-V2 legal-core tokenization but their compact alphanumeric legal cores are identical, the difference is classified as deterministic punctuation/token-spacing presentation only. For the final alias interval, use the independently resolved authoritative source spelling. No fuzzy, substring, edit-distance, or semantic matching is permitted.",
+  "full_history_authorization": "Full 2021-2025 GDELT extraction remains blocked until the alias manifest passes its integrity audit and a separate coverage/missingness gate is frozen.",
+  "high_ambiguity_rule": "HIGH structural ambiguity, ticker-like exact issuer names, aliases shorter than four characters, and legal-core aliases equal to any historical ticker must use the normalized full authoritative company name instead of the core.",
+  "membership_rule": "Alias intervals are clipped to canonical S&P 500 membership intervals.",
+  "outcome_leakage_rule": "No returns, momentum, Winner labels, commonality factors, or H3 outcomes may be read while constructing or auditing aliases.",
+  "policy_id": "H3_PIT_ATTENTION_ALIAS_POLICY_V4",
+  "policy_revision_note": "V4 follows authoritative SEC re-verification of K, FBHS, PENN, CPB and CI. Kellogg->Kellanova was already present in the authoritative Stage 3I event ledger. The repeated runtime stops came from endpoint assumptions in the builder, not missing rename evidence. V4 makes the event chain the temporal source of truth and validates static names against any chain state.",
+  "policy_version": "2026-08-25-v4",
+  "prewindow_public_rebrand_rule": "If the public identity transition occurred before 2021-01-01, the post-transition public name is used from the sample start even if a later legal-name finalization occurs inside the sample.",
+  "primary_matching_mode": "EXACT_NORMALIZED_GKG_ORGANIZATION",
+  "sample_end_exclusive": "2026-01-01",
+  "sample_start": "2021-01-01",
+  "stable_name_source_precedence": [
+    "Stage 3G authoritative sample company name",
+    "Stage 3I official membership company name for no-NPORT identities",
+    "Latest in-membership SEC NPORT holding name",
+    "Canonical project company name as final fallback"
+  ],
+  "static_source_chain_validation_rule": "For a security with an authoritative transition chain, the independently resolved static source name must match at least one state in the event chain (first old-name or any subsequent new-name) under exact legal-core or the frozen deterministic display-equivalence rule. It is not required to match a particular endpoint.",
+  "strict_alias_rule": "Construct a conservative legal-core alias by normalizing case, punctuation, ampersands, leading THE, provider-style trailing /THE display notation, security-class labels, jurisdiction labels, and trailing legal forms only. Semantic words are retained.",
+  "terminal_state_validation_rule": "If an authoritative in-membership name transition exists, a static membership company name is treated as the pre-transition identity anchor, not as the terminal post-transition company name. The static membership name must align with the first transition old-name state. The terminal post-transition state is determined by the authoritative event chain.",
+  "ticker_rule": "Bare stock tickers are prohibited as production attention aliases.",
+  "transition_boundary_rule": "Use authoritative public/trading effective date when available; otherwise use authoritative legal effective date.",
+  "transition_month_rule": "No month-wide old/new overlap. The old alias is valid through the calendar day before the effective public boundary and the new alias is valid beginning on the effective boundary.",
+  "transition_state_authority_rule": "When one or more authoritative name-transition events exist inside a security's membership interval, the ordered event chain is the temporal authority for company-name states. Static membership, NPORT, Stage 3G, or project names are identity corroboration and are not assumed to be either the pre-transition or post-transition endpoint.",
+  "unit_of_assignment": "security_date",
+  "variant_rule": "No suffix-stripped broad variants, ticker variants, or manually broadened synonyms are included in the primary production alias manifest."
+}

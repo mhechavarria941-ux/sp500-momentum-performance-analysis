@@ -1,0 +1,2 @@
+effective_date,old_ticker,new_ticker,old_company_name,new_company_name,event_type,source_type,source_url,notes,old_name_key,new_name_key,security_key,mapping_status,project_period_event_flag
+2024-02-01,CDAY,DAY,Ceridian HCM Holding Inc.,Dayforce Inc.,ticker_and_name_change,SEC Filing,https://www.sec.gov/Archives/edgar/data/1725057/000095017024050892/day-20240331.htm,Corporate name changed January 31 2024; ticker changed from CDAY to DAY effective February 1 2024,CERIDIAN HCM,DAYFORCE,DAY,MAPPED_UNIQUE_TICKER_HISTORY,1

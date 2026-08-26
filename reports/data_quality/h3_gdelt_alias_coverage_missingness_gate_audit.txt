@@ -1,0 +1,38 @@
+================================================================================================================================
+H3 STAGE 3K — DIRECT GDELT ALIAS COVERAGE & MISSINGNESS GATE AUDIT
+================================================================================================================================
+Full-history GDELT extraction authorized only if this audit passes.
+H3 outcome analysis authorized: NO
+
+PASS: Exactly 35 frozen daily GDELT files are represented.
+PASS: Every daily source file parsed successfully or reused a valid cache.
+PASS: Every daily source file has a SHA-256 provenance hash.
+PASS: Every daily malformed-row rate is within the frozen 0.1000% ceiling.
+PASS: Every daily GKG denominator is positive.
+PASS: All source/daily rows reproduce the frozen Stage 3K gate checksum.
+PASS: Every source-file record reproduces the exact Stage 3J manifest checksum.
+PASS: Stage 3J alias manifest remains frozen at Policy V5.
+PASS: Every security-date has exactly one Stage 3K attention observation.
+PASS: Every daily attention share lies in [0, 1].
+PASS: Matched daily source-document weight never exceeds its denominator.
+PASS: Stage 3K daily rows exactly cover the active PIT alias security-date universe.
+PASS: Any-nonzero security coverage meets the frozen 85.00% threshold (86.86%).
+PASS: Repeat nonzero coverage among securities eligible >=2 windows meets threshold (82.93%).
+PASS: Strict nonzero security-window coverage meets threshold (79.16%).
+PASS: HIGH-ambiguity any-nonzero security coverage meets threshold (86.83%).
+PASS: Stage 3K outputs contain no return/momentum/Winner/outcome fields.
+
+Passed checks: 17
+Failed checks: 0
+Daily source files: 35
+Eligible securities: 586
+Eligible security-window rows: 2519
+Any-nonzero security rate: 0.868601
+Repeat nonzero rate (eligible >=2): 0.829314
+Nonzero security-window rate: 0.791584
+HIGH-ambiguity any-nonzero rate: 0.868293
+
+H3_GDELT_ALIAS_COVERAGE_MISSINGNESS_GATE_PASSED
+
+A passing Stage 3K gate authorizes design/execution of the checkpointed full 2021-2025 direct-GDELT attention extraction.
+H3 return/outcome inference remains unauthorized until the full attention panel is complete, audited, and the H3 statistical specification is separately frozen.

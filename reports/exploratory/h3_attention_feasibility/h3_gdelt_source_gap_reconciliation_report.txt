@@ -1,0 +1,22 @@
+================================================================================================================================
+H3 STAGE 3L — SOURCE-GAP RECONCILIATION FINALIZATION
+================================================================================================================================
+Source-gap policy: H3_GDELT_SOURCE_GAP_HANDLING_V1
+Source-gap policy SHA-256: 1284f9141657400869b7eaef1ce7a19eb6fdf6e26e34509f819c6e0920dfd135
+Calendar dates classified: 1826
+Available source dates: 1805
+Documented source-gap dates: 21
+Security-months with >1 PIT alias: 23
+Monthly security-attention rows: 30301
+
+COVERAGE:
+  Overall calendar source coverage: 0.988499
+  Minimum annual source coverage: 0.950685
+  Minimum calendar-month source coverage: 0.433333
+  Minimum security-month source coverage: 0.433333
+
+Source-gap days imputed as zero attention: NO
+Return/outcome fields read: 0
+Remote GDELT downloads performed by this finalizer: 0
+
+H3_FULL_GDELT_SOURCE_GAP_RECONCILIATION_FAILED_COVERAGE

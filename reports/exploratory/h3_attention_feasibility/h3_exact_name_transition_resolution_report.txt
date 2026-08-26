@@ -1,0 +1,22 @@
+========================================================================================================================
+H3 STAGE 3C — EXACT COMPANY-NAME TRANSITION RESOLUTION
+========================================================================================================================
+Stage 3B2 focused review identities: 233
+Bounded SEC NPORT name-transition candidates: 23
+Automatically exact-resolved transitions: 1
+Unresolved bounded transitions: 22
+Additional project-period name-state reconciliation cases: 119
+Targeted authoritative research manifest rows: 141
+Project-period relevant SEC former-name evidence rows: 100
+
+AUTOMATIC EXACT-DATE RULE:
+Only an explicit dated project security_aliases event with exact old/new normalized-name agreement AND a date inside the quarterly NPORT transition bound may auto-resolve an exact rename date.
+
+SEC formerNames remain corroborating evidence only in this stage;
+they are not treated as an exact rename date automatically.
+
+Production PIT alias intervals created: NO
+Full-history GDELT extraction performed: NO
+Return/outcome fields read: 0
+
+H3_EXACT_NAME_TRANSITION_RESOLUTION_COMPLETE

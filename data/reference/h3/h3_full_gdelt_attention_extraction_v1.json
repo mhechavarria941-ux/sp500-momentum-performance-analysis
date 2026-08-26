@@ -1,0 +1,72 @@
+{
+  "cache": {
+    "note": "Daily parsed caches are decoupled from the runner script version so audit/report-only patches do not force re-download.",
+    "parser_contract_version": "H3_GKG1_NUMARTS_ORGANIZATION_EXACT_V1",
+    "schema_version": "H3_GDELT_GKG_DAILY_SECURITY_CACHE_V1",
+    "validity_keys": [
+      "cache_schema_version",
+      "parser_contract_version",
+      "stage3j_manifest_sha256",
+      "protocol_sha256",
+      "date"
+    ]
+  },
+  "daily_output": {
+    "active_rule": "Stage 3J alias interval active on calendar date",
+    "storage": "five compressed yearly CSV shards plus compressed per-day caches",
+    "unit": "security_date"
+  },
+  "matching": {
+    "bare_ticker_matching": false,
+    "full_and_legal_core_exact_matching": true,
+    "fuzzy_matching": false,
+    "mode": "EXACT_DETERMINISTIC_DUAL_NORMALIZED_GKG_ORGANIZATION",
+    "row_weight_deduplication": "A GKG row contributes NUMARTS at most once to a matched production alias.",
+    "semantic_expansion": false,
+    "substring_regex": false
+  },
+  "monthly_output": {
+    "aggregation": "sum daily matched NUMARTS / sum daily total NUMARTS over eligible active days",
+    "partial_membership_months": "Retained with eligible_days reflecting only dates inside PIT membership/alias interval.",
+    "transition_months": "Retained; daily PIT aliases are aggregated across the month without backcasting.",
+    "unit": "security_calendar_month"
+  },
+  "next_if_pass": "Freeze H3 statistical specification and attention transformation before joining attention to any return/Winner outcomes.",
+  "outcome_firewall": {
+    "read_commonality": false,
+    "read_h3_outcomes": false,
+    "read_momentum": false,
+    "read_returns": false,
+    "read_winner_labels": false
+  },
+  "prerequisites": {
+    "stage3j_audit_token": "H3_PIT_ATTENTION_ALIAS_MANIFEST_INTEGRITY_AUDIT_PASSED",
+    "stage3j_policy_id": "H3_PIT_ATTENTION_ALIAS_POLICY_V5",
+    "stage3k_gate_token": "H3_GDELT_ALIAS_COVERAGE_MISSINGNESS_GATE_PASSED"
+  },
+  "protocol_id": "H3_FULL_GDELT_ATTENTION_EXTRACTION_V1",
+  "protocol_version": "2026-08-25-v1",
+  "source": {
+    "dataset": "GKG 1.0 daily",
+    "date_end_exclusive": "2026-01-01",
+    "date_start": "2021-01-01",
+    "delimiter": "\\t",
+    "expected_daily_files": 1826,
+    "numarts_field_index_zero_based": 1,
+    "organization_delimiter": ";",
+    "organization_field_index_zero_based": 6,
+    "provider": "GDELT",
+    "raw_retention": "DELETE_AFTER_SUCCESSFUL_PARSE",
+    "url_template": "https://data.gdeltproject.org/gkg/{YYYYMMDD}.gkg.csv.zip",
+    "weight_field": "NUMARTS"
+  },
+  "technical_gate": {
+    "maximum_malformed_row_rate_per_file": 0.001,
+    "require_all_1826_dates": true,
+    "require_exact_active_security_date_coverage": true,
+    "require_monthly_reaggregation_identity": true,
+    "require_no_outcome_fields": true,
+    "require_positive_daily_denominator": true,
+    "require_share_range_0_1": true
+  }
+}

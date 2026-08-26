@@ -1,0 +1,151 @@
+{
+  "analysis_timing": {
+    "lookahead": false,
+    "outcome": "one-month-ahead outcome over t to t+1 / ranking month t+1 as applicable",
+    "predictor": "attention measured over calendar month t",
+    "predictor_month_end": "2025-11",
+    "predictor_month_start": "2021-01",
+    "reason_predictor_end": "Attention in 2025-12 would require a 2026-01 outcome, outside the frozen 2021-2025 outcome sample.",
+    "undercovered_month_rule": "Any attention month with primary_attention_eligible_flag=0 is excluded before any H3 outcome data are read. The corresponding t->t+1 observation is ineligible in every H3 specification."
+  },
+  "attention_primary": {
+    "issuer_id": "SEC CIK when nonblank; otherwise deterministic SECURITY::<security_key> fallback",
+    "log_transform": "attention_log_it = ln(1 + 1,000,000 * attention_share_it)",
+    "primary_interpretation": "Coefficient effect of a +1 cross-sectional SD attention shock.",
+    "raw_variable": "monthly attention_share",
+    "same_issuer_consistency": "All simultaneously active security rows mapped to the same issuer-month must have identical monthly attention_share within absolute tolerance 1e-15. Otherwise preregistration preparation fails.",
+    "scale_constant": 1000000.0,
+    "security_mapping": "Map issuer-month attention_z back to every eligible security row of that issuer.",
+    "standardization": "Within each predictor month t, compute mean and sample standard deviation (ddof=1) across unique eligible issuers, then attention_z_it = (attention_log_it - mean_t) / sd_t.",
+    "unit_before_security_mapping": "issuer-month",
+    "winsorization": false,
+    "zero_treatment": "True source-observed zero attention remains exactly zero; no imputation."
+  },
+  "attention_robustness": {
+    "R1": "Issuer-month empirical midrank percentile of raw attention_share, (average_rank - 0.5) / N, mapped back to securities.",
+    "R2": "Unstandardized attention_log = ln(1 + 1,000,000 * attention_share) with the same fixed effects.",
+    "role": "Robustness only. Robustness results cannot upgrade a failed primary hypothesis to supported."
+  },
+  "economic_reporting": {
+    "H3A": "100 * beta_A percentage points next-month sector-relative return per +1 SD attention.",
+    "H3B": "100 * beta_B percentage-point change in Winner-entry probability per +1 SD attention.",
+    "H3C": "100 * theta percentage points incremental next-month sector-relative return for current Winners per +1 SD attention.",
+    "required": [
+      "coefficient",
+      "cluster-robust standard error",
+      "95% confidence interval",
+      "raw two-sided p-value",
+      "Holm-adjusted p-value",
+      "sample rows",
+      "issuer clusters",
+      "month clusters"
+    ]
+  },
+  "fixed_effects_and_controls": {
+    "additional_primary_controls": [],
+    "current_momentum_decile_fixed_effects": true,
+    "outcome_month_fixed_effects": true,
+    "post_hoc_controls_allowed": false,
+    "reason_sector_fe_false": "H3A/H3C dependent variable is already leave-one-out PIT sector-relative; security FE also absorb time-invariant sector affiliation.",
+    "sector_fixed_effects": false,
+    "security_fixed_effects": true
+  },
+  "hypotheses": {
+    "H3A": {
+      "estimand": "beta_A on attention_z",
+      "expected_sign": "positive",
+      "label": "Attention predicts next-month sector-relative return",
+      "model": "sector_relative_return_i,t+1 = security_FE_i + outcome_month_FE_t+1 + current_momentum_decile_FE_t + beta_A * attention_z_i,t + error",
+      "sample": "Eligible predictor security-months with valid one-month forward return, PIT GICS sector, and at least 5 valid leave-one-out sector peers."
+    },
+    "H3B": {
+      "entry_definition": "Among securities that are NOT D10 at month t and have a valid momentum assignment at t+1, entry_i,t+1 = 1 if D10 at t+1, otherwise 0.",
+      "estimand": "beta_B on attention_z",
+      "expected_sign": "positive",
+      "label": "Attention predicts next-month Winner entry",
+      "model": "winner_entry_i,t+1 = security_FE_i + outcome_month_FE_t+1 + current_momentum_decile_FE_t (D01-D09) + beta_B * attention_z_i,t + error",
+      "model_type": "Linear probability model",
+      "reason_lpm": "Preserves security and month fixed effects and a directly interpretable marginal probability effect without conditional-logit separation dropping large portions of the panel.",
+      "winner_definition": "Canonical corrected H1 12-1 momentum D10."
+    },
+    "H3C": {
+      "current_winner_definition": "Canonical corrected H1 D10 at month t.",
+      "estimand": "theta on attention_z * current_winner",
+      "expected_sign": "positive",
+      "label": "Attention has an incremental effect for current Winners",
+      "model": "sector_relative_return_i,t+1 = security_FE_i + outcome_month_FE_t+1 + current_momentum_decile_FE_t + beta_C * attention_z_i,t + theta * (attention_z_i,t * current_winner_i,t) + error",
+      "secondary_linear_combination": "Winner attention slope = beta_C + theta; report estimate/CI/p-value as descriptive secondary inference, not part of the Holm family."
+    }
+  },
+  "inference": {
+    "alpha": 0.05,
+    "cluster_structure": "Two-way cluster-robust covariance by issuer_id and outcome_month.",
+    "hac_primary": false,
+    "issuer_cluster": "SEC CIK when nonblank; deterministic security fallback otherwise.",
+    "minimum_H3B_positive_events": 100,
+    "minimum_issuer_clusters": 100,
+    "minimum_model_rows": 1000,
+    "minimum_outcome_month_clusters": 30,
+    "reason_no_hac_primary": "HAC lag-3 was appropriate for H1/H2 portfolio time series. H3 is a security-month panel with issuer and common-month dependence, so two-way clustering is the frozen primary covariance estimator.",
+    "reference_df": "min(number of issuer clusters, number of outcome-month clusters) - 1",
+    "robustness_inference": "Issuer-cluster-only, month-cluster-only, and wild-cluster/bootstrap methods may be reported as robustness but cannot replace the primary two-way clustered result.",
+    "small_sample_correction": true,
+    "tests": "two-sided"
+  },
+  "multiple_testing": {
+    "family": [
+      "H3A_beta_A",
+      "H3B_beta_B",
+      "H3C_theta"
+    ],
+    "familywise_alpha": 0.05,
+    "global_H3_binary_decision": false,
+    "method": "Holm-Bonferroni",
+    "reason": "H3A/H3B/H3C are reported as separate prespecified components rather than creating an arbitrary umbrella rule after observing results.",
+    "support_rule": "A component is SUPPORTED only if its Holm-adjusted two-sided p-value < 0.05 and the coefficient has the preregistered positive sign. Significant negative coefficients are CONTRADICTED; otherwise NOT SUPPORTED."
+  },
+  "outcome_firewall": {
+    "outcome_join_authorized_only_after_prereg_audit_passes": true,
+    "preregistration_preparation_may_read_attention": true,
+    "preregistration_preparation_may_read_momentum": false,
+    "preregistration_preparation_may_read_returns": false,
+    "preregistration_preparation_may_read_winner_labels": false
+  },
+  "preregistration_id": "H3_STATISTICAL_PREREGISTRATION_V1",
+  "preregistration_version": "2026-08-26-v1",
+  "prerequisites": {
+    "attention_alias_policy": "H3_PIT_ATTENTION_ALIAS_POLICY_V5",
+    "attention_source": "GDELT GKG 1.0 daily, aggregated monthly",
+    "fail_closed_month_policy": "H3_GDELT_FAIL_CLOSED_MONTH_ELIGIBILITY_V1",
+    "required_attention_audit_token": "H3_FULL_GDELT_ATTENTION_ACQUISITION_CLOSED_FAIL_CLOSED_MONTH_ELIGIBILITY",
+    "source_gap_policy": "H3_GDELT_SOURCE_GAP_HANDLING_V1"
+  },
+  "prespecified_robustness": [
+    "R1 attention percentile transform.",
+    "R2 unstandardized log attention transform.",
+    "Exclude HIGH structural-ambiguity alias rows.",
+    "Exclude PIT alias-transition months.",
+    "Leave-one-sector-out coefficient stability for H3A/H3C.",
+    "Future GKG 2.1 source-gap bridge may be examined only under a separately frozen source-only calibration protocol and may not replace the primary GKG 1.0 fail-closed result."
+  ],
+  "return_outcome": {
+    "leave_one_out": true,
+    "minimum_valid_sector_peers": 5,
+    "pit_sector": "Frozen PIT GICS sector at predictor month t.",
+    "risk_free_subtraction": false,
+    "sector_residual_definition": "sector_relative_return_i,t+1 = security_forward_return_i,t+1 - equal-weight mean forward return of all OTHER valid securities in the same PIT GICS sector at t.",
+    "source": "Corrected H1 one-month gross security forward-return layer; no recomputation from a different price source.",
+    "transaction_costs": false
+  },
+  "sample_and_missingness": {
+    "H3A_H3C_forward_return_missing": "Exclude only the affected security-month.",
+    "H3B_next_month_membership_assignment_missing": "Exclude because Winner entry is undefined without a valid t+1 index momentum assignment.",
+    "attention_missing_imputation": false,
+    "attention_primary_eligibility_required": true,
+    "december_2025_predictor_excluded": true,
+    "minimum_cross_section_for_attention_z": 100,
+    "point_in_time_membership": true,
+    "sector_peer_failure": "Exclude security-month when fewer than 5 valid other same-sector forward returns exist.",
+    "true_zero_attention_retained": true
+  }
+}

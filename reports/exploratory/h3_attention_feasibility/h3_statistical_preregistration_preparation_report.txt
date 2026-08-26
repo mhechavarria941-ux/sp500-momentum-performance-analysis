@@ -1,0 +1,25 @@
+================================================================================================================================
+H3 STATISTICAL PREREGISTRATION V2 — ATTENTION-ONLY PREPARATION
+================================================================================================================================
+Preregistration ID: H3_STATISTICAL_PREREGISTRATION_V2
+Preregistration SHA-256: 95e88d99f2b0c9beca50073844b9dadc32c11a6aa820fe04cf3ed12e94841506
+Predictor months: 58
+Predictor security-month rows: 29287
+Unique securities: 589
+Unique issuer clusters: 583
+Issuer-day rows: 887018
+Same-issuer/day disagreement rows: 0
+PIT alias-transition security-month rows: 23
+2022-04 CIK 0001437107 eligible security rows: 3
+
+Primary attention construction:
+  security-day -> same-issuer/day check -> one issuer-day -> issuer-month
+  log(1 + 1,000,000 * issuer_attention_share)
+  within-month z-score across unique eligible issuers
+
+Returns read: 0
+Momentum fields read: 0
+Winner fields read: 0
+Outcome joins performed: 0
+
+H3_PREREGISTERED_ATTENTION_PREDICTOR_V2_PREPARATION_COMPLETE

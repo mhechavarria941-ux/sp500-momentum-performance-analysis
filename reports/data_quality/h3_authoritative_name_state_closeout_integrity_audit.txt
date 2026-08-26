@@ -1,0 +1,31 @@
+==========================================================================================================================
+H3 STAGE 3G — AUTHORITATIVE NAME-STATE CLOSEOUT INTEGRITY AUDIT
+==========================================================================================================================
+Production PIT aliases authorized: NO
+Full-history GDELT extraction authorized: NO
+H3 outcome analysis authorized: NO
+
+PASS: Stage 3F research input contains exactly 34 identities.
+PASS: Stage 3G closeout contains all 34 identities.
+PASS: Every Stage 3G security_key is unique.
+PASS: Stage 3G security universe exactly matches the Stage 3F research universe.
+PASS: Every Stage 3G identity is authoritatively closed.
+PASS: No external name-state research identity remains after Stage 3G.
+PASS: Every identity has a nonblank authoritative sample name and 10-digit CIK.
+PASS: Every resolution has primary-source provenance and an evidence note.
+PASS: Every pre-public transaction name is explicitly excluded from attention aliases.
+PASS: Every post-sample identity change is dated 2026 or later.
+PASS: XOM is corrected to Exxon Mobil Corporation / CIK 0000034088 for the 2021-2025 sample.
+PASS: TJX missing Stage 3F CIK is resolved to 0000109198.
+PASS: Every dual-date transition preserves both legal and public dates.
+PASS: Stage 3G outputs contain no return/momentum/Winner/outcome fields.
+
+Passed checks: 14
+Failed checks: 0
+Authoritatively closed identities: 34
+Remaining external name-state research identities: 0
+
+H3_AUTHORITATIVE_NAME_STATE_CLOSEOUT_INTEGRITY_AUDIT_PASSED
+
+Passing this audit closes company-name research and authorizes construction of the proposed point-in-time attention-alias interval manifest.
+It does NOT yet authorize full-history GDELT extraction or H3 inference.

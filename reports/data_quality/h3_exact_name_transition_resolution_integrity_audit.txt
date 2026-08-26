@@ -1,0 +1,25 @@
+======================================================================================================================
+H3 STAGE 3C — EXACT NAME-TRANSITION RESOLUTION INTEGRITY AUDIT
+======================================================================================================================
+Production alias intervals authorized: NO
+Full-history GDELT extraction authorized: NO
+H3 outcome analysis authorized: NO
+
+PASS: Every bounded NPORT transition is classified as either exact-resolved or unresolved.
+PASS: Every resolution row is explicitly RESOLVED_EXACT.
+PASS: Every automatic exact date comes only from the frozen explicit project security_aliases event source.
+PASS: Every exact event date lies inside its NPORT old/new observation bound.
+PASS: Every nonresolved transition remains explicitly unresolved.
+PASS: Every unresolved bounded transition is represented in the authoritative research manifest.
+PASS: Stage 3C outputs contain no return/momentum/Winner/outcome fields.
+
+Passed checks: 7
+Failed checks: 0
+Exact-resolved bounded transitions: 1
+Unresolved bounded transitions: 22
+Targeted research manifest rows: 141
+
+H3_EXACT_NAME_TRANSITION_RESOLUTION_INTEGRITY_AUDIT_PASSED
+
+Passing this audit authorizes authoritative research for the remaining manifest rows and no broader inference.
+Production PIT alias intervals remain unauthorized until the remaining exact-name/date cases are resolved.

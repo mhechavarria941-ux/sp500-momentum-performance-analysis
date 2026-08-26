@@ -1,0 +1,35 @@
+========================================================================================================================
+H3 STAGE 3B2 — POINT-IN-TIME COMPANY-NAME EVIDENCE CONSOLIDATION
+========================================================================================================================
+Security identities: 593
+Mapped SEC NPORT name-observation rows: 9584
+Identities with at least one mapped SEC NPORT name state: 500
+Identities with exactly one SEC NPORT normalized name state: 479
+Identities with multiple SEC NPORT normalized name states: 21
+Identities with no mapped SEC NPORT name state: 93
+Mapped security_aliases events: 1
+Unmapped security_aliases events: 1
+Observation-bounded name transition candidates: 23
+READY stable-name identities: 360
+Remaining focused PIT-name review queue: 233
+
+Status counts:
+  READY_STABLE_SEC_NPORT_NAME: 360
+  REVIEW_MULTIPLE_SEC_NPORT_NAMES: 21
+  REVIEW_NO_MAPPED_SEC_NPORT_NAME: 93
+  REVIEW_PROJECT_NAME_DIFFERS_FROM_SEC_NPORT: 65
+  REVIEW_PROJECT_PERIOD_NAME_EVENT_EVIDENCE: 54
+
+SOURCE HIERARCHY FOR THIS STAGE:
+1. already validated SEC Select Sector NPORT holding-name states mapped to security_key by the audited GICS identifier bridge;
+2. explicit project security_aliases events;
+3. SEC submissions/formerNames as secondary identity/name-history evidence;
+4. current project company_name_reference as comparison evidence only.
+
+IMPORTANT:
+Quarterly SEC NPORT observations bound a possible name transition but do NOT provide an exact effective date by themselves.
+No production point-in-time alias interval is created in this stage.
+Return/outcome fields read: 0
+Full-history GDELT extraction performed: NO
+
+H3_PIT_NAME_EVIDENCE_CONSOLIDATION_COMPLETE

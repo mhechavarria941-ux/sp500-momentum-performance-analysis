@@ -1,0 +1,26 @@
+================================================================================================================================
+H3 STAGE 3J — PIT ATTENTION ALIAS MANIFEST
+================================================================================================================================
+Policy ID: H3_PIT_ATTENTION_ALIAS_POLICY_V5
+Policy SHA-256: c18b1ce9c421f52afb3d0d2ea85fe4e1e4f282fa5d14a85cefd9ccf21da2bb40
+Canonical identities in closure ledger: 593
+Identities overlapping 2021-2025 sample: 593
+Production alias intervals: 619
+Identities with >1 alias interval: 26
+Collected authoritative transition evidence rows: 33
+Initial blocking cross/unresolved-issuer collisions: 0
+Final blocking cross/unresolved-issuer collisions: 0
+Allowed same-issuer shared-alias overlaps: 5
+Bare-ticker production alias rows: 0
+
+PRIMARY MATCHING MODE:
+  EXACT_NORMALIZED_GKG_ORGANIZATION
+
+TRANSITION RULE:
+  Public/trading effective date has priority over legal date. Old alias ends immediately before the public boundary; new alias starts on the boundary.
+
+Production alias manifest created: YES
+Full-history GDELT extraction performed: NO
+Return/outcome fields read: 0
+
+H3_PIT_ATTENTION_ALIAS_MANIFEST_COMPLETE

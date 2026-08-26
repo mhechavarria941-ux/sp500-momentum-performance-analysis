@@ -1,0 +1,26 @@
+============================================================================================================================
+H3 STAGE 3F — AUTHORITATIVE NAME CONVERGENCE
+============================================================================================================================
+Input Stage 3E research identities: 118
+Automatically reconciled in Stage 3F: 84
+Remaining primary-source research identities: 34
+Project-overlapping SEC former-name detail rows inspected: 71
+
+Status counts:
+  RESEARCH_AUTHORITATIVE_NAME_CONVERGENCE_NOT_ESTABLISHED: 13
+  RESEARCH_MULTIPLE_UNEXPLAINED_NPORT_STATES: 1
+  RESEARCH_SUBSTANTIVE_OR_DISTINCT_SEC_FORMER_NAME: 20
+  RESOLVED_AUTHORITATIVE_SEC_NPORT_AGREEMENT_PROJECT_REFERENCE_PRESENTATION_DIFFERENCE: 41
+  RESOLVED_SEC_FORMER_NAMES_REGISTRY_STYLE_EQUIVALENT: 43
+
+KEY METHODOLOGICAL CORRECTION:
+A provider-style project company_name_reference does not have to equal the historical attention alias when authoritative SEC current identity and SEC-filed NPORT historical issuer name agree.
+Likewise, SEC former-name metadata does not force manual review when every project-overlapping former-name record collapses to the same conservative registry core as the authoritative issuer and has complete date boundaries.
+
+NO fuzzy matching is used.
+NO semantic company words are stripped to force agreement.
+Production PIT alias intervals created: NO
+Full-history GDELT extraction performed: NO
+Return/outcome fields read: 0
+
+H3_AUTHORITATIVE_NAME_CONVERGENCE_COMPLETE

@@ -1,0 +1,38 @@
+{
+  "base_extraction_protocol": "H3_FULL_GDELT_ATTENTION_EXTRACTION_V1",
+  "coverage_fields": [
+    "expected_active_calendar_days",
+    "source_available_days",
+    "source_missing_days",
+    "source_coverage_rate"
+  ],
+  "frozen_coverage_thresholds": {
+    "minimum_annual_source_coverage": 0.95,
+    "minimum_calendar_month_source_coverage": 0.9,
+    "minimum_overall_calendar_source_coverage": 0.98,
+    "minimum_security_month_source_coverage": 0.9
+  },
+  "measurement_rule": "A source-gap day is missing source coverage, never zero company attention. It contributes neither matched NUMARTS nor total NUMARTS to monthly attention denominators.",
+  "monthly_rule": "Monthly company attention is sum(matched NUMARTS) / sum(total NUMARTS) over source-available days that are also inside the security's PIT alias interval.",
+  "next_if_pass": "Close Stage 3L attention acquisition with documented source gaps and freeze the H3 statistical specification before any outcome join.",
+  "outcome_firewall": {
+    "commonality": false,
+    "h3_outcomes": false,
+    "momentum": false,
+    "returns": false,
+    "winner_labels": false
+  },
+  "policy_id": "H3_GDELT_SOURCE_GAP_HANDLING_V1",
+  "policy_version": "2026-08-26-v1",
+  "purpose": "Resolve the complete set of unavailable daily GDELT GKG sources without treating source absence as zero attention and without discarding successful Stage 3L caches.",
+  "reconciliation": {
+    "catalog_absent_direct_probe_attempts_per_endpoint": 2,
+    "catalog_listed_retry_attempts_per_endpoint": 6,
+    "https_and_http": true,
+    "reuse_existing_valid_caches": true
+  },
+  "source_gap_classes": {
+    "CATALOG_LISTED_BUT_UNDELIVERABLE_AFTER_RETRIES": "Daily GKG filename is listed in the refreshed official catalog but remains unavailable after the frozen reconciliation retry sequence.",
+    "OFFICIAL_CATALOG_ABSENT_AND_DIRECT_UNAVAILABLE": "Daily GKG filename is absent from the refreshed official GDELT GKG md5/filesize catalog union and a direct HTTPS/HTTP acquisition attempt also fails."
+  }
+}

@@ -1,0 +1,29 @@
+==========================================================================================================================
+H3 STAGE 3F — AUTHORITATIVE NAME CONVERGENCE INTEGRITY AUDIT
+==========================================================================================================================
+Production PIT aliases authorized: NO
+Full-history GDELT extraction authorized: NO
+H3 outcome analysis authorized: NO
+
+PASS: Stage 3E source research universe contains 118 identities.
+PASS: Stage 3F classification contains all 118 identities.
+PASS: Every Stage 3F security_key is unique.
+PASS: Stage 3F security universe exactly matches Stage 3E research universe.
+PASS: Resolved plus research partitions reconstruct all 118 identities.
+PASS: Resolved and research partitions are disjoint.
+PASS: Every project-reference auto-resolution has one NPORT registry core exactly agreeing with SEC current identity.
+PASS: Every former-name auto-resolution has exact SEC/NPORT authoritative current-name agreement.
+PASS: Every former-name auto-resolution has complete date boundaries and exact registry-core equivalence.
+PASS: Former-name detail evidence independently reproduces every former-name auto-resolution.
+PASS: Every remaining identity is explicitly RESEARCH_.
+PASS: Stage 3F outputs contain no return/momentum/Winner/outcome fields.
+
+Passed checks: 12
+Failed checks: 0
+Automatically reconciled Stage 3F identities: 84
+Remaining primary-source research identities: 34
+
+H3_AUTHORITATIVE_NAME_CONVERGENCE_INTEGRITY_AUDIT_PASSED
+
+Passing this audit authorizes external primary-source research only for the reduced Stage 3F research manifest.
+Production PIT aliases and full-history GDELT extraction remain unauthorized.

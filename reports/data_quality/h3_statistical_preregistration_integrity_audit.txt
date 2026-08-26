@@ -1,0 +1,36 @@
+================================================================================================================================
+H3 STATISTICAL PREREGISTRATION V2 — INTEGRITY AUDIT
+================================================================================================================================
+H3 outcome join authorized only if this gate passes.
+
+PASS: Same-issuer DAILY attention has zero unresolved simultaneous-security disagreements.
+PASS: Predictor outputs reproduce the frozen V2 preregistration checksum.
+PASS: Issuer-day panel has exactly one row per issuer-date.
+PASS: Issuer attention panel has exactly one row per issuer-month.
+PASS: Predictor panel has exactly one row per eligible security-month.
+PASS: Issuer-month attention exactly reaggregates from unique issuer-days.
+PASS: Issuer attention_log exactly reproduces the frozen V2 log1p transform.
+PASS: Issuer-level attention_z has zero mean in every predictor month.
+PASS: Issuer-level attention_z has sample SD 1 in every predictor month.
+PASS: Every predictor month contains at least 100 eligible issuers.
+PASS: All eligible securities of an issuer-month receive identical frozen issuer attention values.
+PASS: Every predictor security-month passed the fail-closed attention eligibility gate.
+PASS: Every predictor month lies in the frozen 2021-01 through 2025-11 interval.
+PASS: Prespecified issuer percentile robustness transform lies in [0, 1].
+PASS: 2022-04 CIK 0001437107 maps one issuer-month predictor across its eligible security identities.
+PASS: V2 preregistration outputs contain no return/momentum/Winner/outcome fields.
+PASS: Primary inference remains frozen to two-way issuer × outcome-month clustering.
+PASS: H3A/H3B/H3C remain the frozen three-test Holm family at alpha 0.05.
+PASS: V2 records that no outcomes were read before the issuer-day amendment.
+
+Passed checks: 19
+Failed checks: 0
+Predictor months: 58
+Predictor security-month rows: 29287
+Issuer-day rows: 887018
+Issuer-month rows: 29078
+Unique issuer clusters: 583
+
+H3_STATISTICAL_PREREGISTRATION_V2_INTEGRITY_AUDIT_PASSED
+
+A passing V2 gate freezes the corrected issuer-level attention construction and authorizes the deterministic H3 attention/outcome join.

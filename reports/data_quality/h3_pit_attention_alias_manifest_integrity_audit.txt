@@ -1,0 +1,32 @@
+==============================================================================================================================
+H3 STAGE 3J — PIT ATTENTION ALIAS MANIFEST INTEGRITY AUDIT
+==============================================================================================================================
+Full-history GDELT extraction authorized: NO until this gate passes.
+H3 outcome analysis authorized: NO
+
+PASS: Alias manifest security universe exactly equals the set of membership identities overlapping 2021-2025.
+PASS: Every alias interval has a nonblank production alias.
+PASS: Every row uses the frozen exact normalized GKG organization mode.
+PASS: Every manifest row reproduces the frozen policy checksum.
+PASS: Every alias interval has positive duration.
+PASS: Alias intervals exactly partition every security's clipped membership interval with no gaps or overlaps.
+PASS: No blocking overlapping cross-issuer or unresolved-issuer production alias collision remains.
+PASS: Every allowed shared alias overlap is explicitly tied to the same nonblank authoritative issuer CIK.
+PASS: Alias-safety preflight contains zero unresolved qualification issues.
+PASS: All authoritative transition chains and static-source-to-chain alignments passed the batch preflight.
+PASS: No production alias is an explicitly detected bare stock ticker.
+PASS: Every HIGH-ambiguity row uses either its full normalized state name or a qualified full authoritative alias with the exact same legal core.
+PASS: Every ticker-like issuer-name row uses either its full normalized state name or a qualified full authoritative alias with the exact same legal core.
+PASS: Alias manifest contains no return/momentum/Winner/outcome fields.
+
+Passed checks: 14
+Failed checks: 0
+Alias security identities: 593
+Alias intervals: 619
+Identities with >1 interval: 26
+Precision-control diagnostic rows: 0
+
+H3_PIT_ATTENTION_ALIAS_MANIFEST_INTEGRITY_AUDIT_PASSED
+
+Passing Stage 3J freezes the primary PIT attention-alias construction policy.
+The next authorized step is a no-outcome GDELT coverage/missingness gate. Full-history H3 inference is still not authorized.

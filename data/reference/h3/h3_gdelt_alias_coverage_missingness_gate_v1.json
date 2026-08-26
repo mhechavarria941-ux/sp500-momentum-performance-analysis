@@ -1,0 +1,81 @@
+{
+  "authorization": {
+    "full_history_gdelt_before_gate_pass": false,
+    "h3_outcome_analysis_before_gate_pass": false,
+    "next_if_fail": "Diagnose strict-alias recall/coverage by frozen alias class before changing any alias policy. Do not use return/outcome information.",
+    "next_if_pass": "Design and authorize checkpointed full 2021-2025 direct-GDELT attention extraction."
+  },
+  "coverage_thresholds": {
+    "minimum_any_nonzero_security_rate": 0.85,
+    "minimum_high_ambiguity_any_nonzero_rate": 0.65,
+    "minimum_nonzero_security_window_rate": 0.5,
+    "minimum_repeat_nonzero_rate_among_securities_eligible_2plus_windows": 0.7
+  },
+  "gate_id": "H3_GDELT_ALIAS_COVERAGE_MISSINGNESS_GATE_V1",
+  "gate_version": "2026-08-25-v1",
+  "matching": {
+    "bare_tickers": "PROHIBITED_BY_STAGE3J",
+    "fuzzy_matching": false,
+    "mode": "EXACT_DETERMINISTIC_DUAL_NORMALIZED_GKG_ORGANIZATION",
+    "regex_substring": false,
+    "rule": "For every GKG ORGANIZATIONS token, construct both the frozen full normalized form and conservative legal-core normalized form. A production alias matches only by exact equality to one of those two deterministic representations. Count a GKG row at most once per alias.",
+    "semantic_expansion": false
+  },
+  "metric": {
+    "attention_share": "matched_source_document_weight / total_source_document_weight",
+    "daily_matched_source_document_weight": "sum(NUMARTS) for rows whose ORGANIZATIONS set exactly matches the active production alias",
+    "daily_total_source_document_weight": "sum(NUMARTS) over successfully parsed GKG rows",
+    "note": "NUMARTS is used as the GKG source-document weight, consistent with the prior direct-GDELT pilot. Zero strict matches are observations, not source-file missingness."
+  },
+  "sample": {
+    "anchor_windows": [
+      {
+        "end_exclusive": "2021-01-18",
+        "start": "2021-01-11",
+        "window_id": "W2021"
+      },
+      {
+        "end_exclusive": "2022-04-18",
+        "start": "2022-04-11",
+        "window_id": "W2022"
+      },
+      {
+        "end_exclusive": "2023-07-17",
+        "start": "2023-07-10",
+        "window_id": "W2023"
+      },
+      {
+        "end_exclusive": "2024-10-14",
+        "start": "2024-10-07",
+        "window_id": "W2024"
+      },
+      {
+        "end_exclusive": "2025-12-15",
+        "start": "2025-12-08",
+        "window_id": "W2025"
+      }
+    ],
+    "end_exclusive": "2026-01-01",
+    "expected_daily_files": 35,
+    "reason": "Reuse the five previously frozen representative 7-day windows, now against the complete PIT alias universe. This tests all active aliases while avoiding premature full-history extraction.",
+    "start": "2021-01-01"
+  },
+  "source": {
+    "dataset": "GKG 1.0 daily",
+    "delimiter": "\\t",
+    "numarts_field_index_zero_based": 1,
+    "organization_delimiter": ";",
+    "organization_field_index_zero_based": 6,
+    "provider": "GDELT",
+    "raw_file_retention": "DELETE_AFTER_SUCCESSFUL_PARSE",
+    "url_template": "https://data.gdeltproject.org/gkg/{YYYYMMDD}.gkg.csv.zip",
+    "weight_field": "NUMARTS"
+  },
+  "technical_thresholds": {
+    "maximum_malformed_row_rate_per_file": 0.001,
+    "required_alias_assignment_partition_rate": 1.0,
+    "required_attention_share_range_rate": 1.0,
+    "required_positive_denominator_rate": 1.0,
+    "required_source_file_success_rate": 1.0
+  }
+}

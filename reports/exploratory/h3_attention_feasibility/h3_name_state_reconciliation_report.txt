@@ -1,0 +1,27 @@
+==========================================================================================================================
+H3 STAGE 3E — DETERMINISTIC NAME-STATE RECONCILIATION
+==========================================================================================================================
+Input NAME_STATE_RECONCILIATION identities: 119
+Automatically reconciled identities: 1
+Remaining targeted research identities: 118
+Combined already-resolved name-transition rows used as evidence: 23
+
+Status counts:
+  RESEARCH_MULTIPLE_UNEXPLAINED_NPORT_STATES: 1
+  RESEARCH_PROJECT_PERIOD_SEC_FORMER_NAME_EVIDENCE: 63
+  RESEARCH_PROJECT_VS_NPORT_NAME_CORE_CONFLICT: 54
+  RESOLVED_STABLE_LEGAL_STYLE_EQUIVALENT: 1
+
+AUTOMATIC RESOLUTION RULES:
+- already-authoritative true transition history explains all observed NPORT states;
+- already-rejected false transitions explain all observed NPORT state variation; or
+- one stable NPORT name state equals the project/SEC name after conservative legal-form normalization and there is no project-period SEC former-name evidence.
+
+NO fuzzy matching is used.
+Semantic words such as GROUP, HOLDINGS, INTERNATIONAL, TECHNOLOGIES, ENERGY, FINANCIAL, SYSTEMS, HEALTH, etc. are NOT stripped merely to force agreement.
+
+Production PIT alias intervals created: NO
+Full-history GDELT extraction performed: NO
+Return/outcome fields read: 0
+
+H3_DETERMINISTIC_NAME_STATE_RECONCILIATION_COMPLETE

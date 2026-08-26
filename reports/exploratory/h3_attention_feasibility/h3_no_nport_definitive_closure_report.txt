@@ -1,0 +1,26 @@
+==============================================================================================================================
+H3 STAGE 3I V2 — DEFINITIVE NO-NPORT NAME-STATE CLOSURE
+==============================================================================================================================
+Stage 3H carry-forward identities: 93
+Known primary-source event rows in ledger: 9
+Known event rows intersecting membership: 7
+Unexpected distinct SEC former-name signals: 0
+Full 593-universe unresolved identities after Stage 3I V2: 0
+
+LUMN SAFETY EXCEPTION RESOLVED:
+  Lumen brand launch: 2020-09-14 (pre-window); ticker LUMN began 2020-09-18 (pre-window); legal CenturyLink -> Lumen Technologies change: 2021-01-22.
+  Therefore LUMN is not an unexplained in-window public rebrand. It is a pre-window public rebrand with in-window legal-name finalization.
+
+Final 93-row disposition counts:
+  PREWINDOW_PUBLIC_REBRAND_WITH_INWINDOW_LEGAL_NAME_FINALIZATION: 1
+  STABLE_PUBLIC_NAME_OFFICIAL_MEMBERSHIP_PLUS_SEC_IDENTITY: 73
+  STABLE_PUBLIC_NAME_OFFICIAL_SP500_MEMBERSHIP_IDENTITY: 3
+  STABLE_PUBLIC_NAME_UNTIL_VALIDATED_MARKET_TERMINATION: 10
+  TRUE_PIT_PUBLIC_NAME_STATE_TRANSITION: 6
+
+FULL-UNIVERSE NAME-RESEARCH CLOSURE: PASSED
+Production GDELT alias intervals created: NO
+Full-history GDELT extraction performed: NO
+Return/outcome fields read: 0
+
+H3_DEFINITIVE_NO_NPORT_CLOSURE_COMPLETE

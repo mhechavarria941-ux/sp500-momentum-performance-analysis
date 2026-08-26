@@ -1,0 +1,26 @@
+{
+  "attention_timing_rule": "Attention through month t may later be related only to outcomes at t+1; the alias manifest itself contains no outcomes.",
+  "collision_rule": "If the selected alias collides across different security_keys during overlapping intervals, escalate all colliding rows to normalized full authoritative company names. Any remaining overlapping collision blocks the manifest.",
+  "full_history_authorization": "Full 2021-2025 GDELT extraction remains blocked until the alias manifest passes its integrity audit and a separate coverage/missingness gate is frozen.",
+  "high_ambiguity_rule": "HIGH structural ambiguity, ticker-like exact issuer names, aliases shorter than four characters, and legal-core aliases equal to any historical ticker must use the normalized full authoritative company name instead of the core.",
+  "membership_rule": "Alias intervals are clipped to canonical S&P 500 membership intervals.",
+  "outcome_leakage_rule": "No returns, momentum, Winner labels, commonality factors, or H3 outcomes may be read while constructing or auditing aliases.",
+  "policy_id": "H3_PIT_ATTENTION_ALIAS_POLICY_V1",
+  "policy_version": "2026-08-25-v1",
+  "prewindow_public_rebrand_rule": "If the public identity transition occurred before 2021-01-01, the post-transition public name is used from the sample start even if a later legal-name finalization occurs inside the sample.",
+  "primary_matching_mode": "EXACT_NORMALIZED_GKG_ORGANIZATION",
+  "sample_end_exclusive": "2026-01-01",
+  "sample_start": "2021-01-01",
+  "stable_name_source_precedence": [
+    "Stage 3G authoritative sample company name",
+    "Stage 3I official membership company name for no-NPORT identities",
+    "Latest in-membership SEC NPORT holding name",
+    "Canonical project company name as final fallback"
+  ],
+  "strict_alias_rule": "Construct a conservative legal-core alias by normalizing case, punctuation, ampersands, leading THE, security-class labels, jurisdiction labels, and trailing legal forms only. Semantic words are retained.",
+  "ticker_rule": "Bare stock tickers are prohibited as production attention aliases.",
+  "transition_boundary_rule": "Use authoritative public/trading effective date when available; otherwise use authoritative legal effective date.",
+  "transition_month_rule": "No month-wide old/new overlap. The old alias is valid through the calendar day before the effective public boundary and the new alias is valid beginning on the effective boundary.",
+  "unit_of_assignment": "security_date",
+  "variant_rule": "No suffix-stripped broad variants, ticker variants, or manually broadened synonyms are included in the primary production alias manifest."
+}

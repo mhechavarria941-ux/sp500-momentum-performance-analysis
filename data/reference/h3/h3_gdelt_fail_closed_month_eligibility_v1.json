@@ -1,0 +1,30 @@
+{
+  "cross_version_policy": {
+    "future_use": "GKG 2.1 may be evaluated later as a source-only robustness bridge under a separately frozen calibration protocol.",
+    "gdelt_gkg_2_1_primary_bridge": false,
+    "reason": "GKG 2.x is structurally document-level and retains V1ORGANIZATIONS, but its monitored document population includes GDELT 2.x source/translation features. Mixing only gap dates into the primary series would create a localized source-generation regime change."
+  },
+  "next_if_pass": "Close primary GKG 1.0 attention acquisition with fail-closed month eligibility, then freeze the H3 statistical specification before any outcome join.",
+  "outcome_firewall": {
+    "commonality": false,
+    "h3_outcomes": false,
+    "momentum": false,
+    "returns": false,
+    "winner_labels": false
+  },
+  "policy_id": "H3_GDELT_FAIL_CLOSED_MONTH_ELIGIBILITY_V1",
+  "policy_version": "2026-08-26-v1",
+  "prerequisite_source_gap_policy": "H3_GDELT_SOURCE_GAP_HANDLING_V1",
+  "primary_month_rule": {
+    "global_calendar_month_eligible": "calendar-month GKG 1.0 source coverage >= 0.90",
+    "security_month_eligible": "global calendar month is eligible AND security-month PIT-active source coverage >= 0.90",
+    "undercovered_month_treatment": "UNAVAILABLE_FOR_PRIMARY_H3; never zero-filled and never partially retained cross-sectionally"
+  },
+  "primary_source": "GDELT GKG 1.0 daily",
+  "purpose": "Preserve the previously frozen 90% source-coverage threshold without imputing, relaxing thresholds, or mixing GDELT product generations in the primary H3 attention series.",
+  "thresholds": {
+    "minimum_calendar_month_source_coverage": 0.9,
+    "minimum_security_month_source_coverage": 0.9
+  },
+  "timing_consequence": "When attention at month t is unavailable, every H3 specification using attention_t to predict an outcome at t+1 must exclude that t->t+1 observation before outcomes are read."
+}
