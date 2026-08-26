@@ -101,6 +101,7 @@ The purpose is to make the project reproducible
 * Frozen issuer-level attention predictor
 * H3 predictor-to-outcome analytical-panel construction
 * H3 primary confirmatory inference freeze
+* H4 intraday price-location and market-structure preregistration
 
 ## Phase 8 — SQL Analytics
 
@@ -8940,11 +8941,328 @@ After that commit, execute the already prespecified H3 robustness suite without 
 
 ---
 
+---
+
+## 3.67 H4 Intraday Price-Location and Market-Structure Research Design — Pre-Outcome Freeze
+
+### Date
+
+2026-08-26
+
+### Objective
+
+Open a new research branch after the H1, H2, and H3 primary analyses without retuning any completed hypothesis.
+
+H4 shifts the project from monthly cross-sectional return prediction toward short-horizon intraday market structure.
+
+The central design principle is:
+
+**location first, trigger second, outcome last.**
+
+Support/resistance, liquidity, volume, and volatility are used to define where analysis should occur.
+
+ICT-style structures are then treated as objectively coded event triggers inside those pre-existing states rather than as discretionary chart labels.
+
+### Primary Instrument
+
+Initial H4 instrument:
+
+`SPY`
+
+The first intraday experiment is intentionally restricted to one highly liquid investable S&P 500 proxy.
+
+This reduces:
+
+- cross-sectional identity complexity;
+- data volume;
+- multiple-testing burden;
+- event-definition ambiguity.
+
+The full S&P 500 security universe is not included in the first H4 experiment.
+
+### Primary Data Frequency
+
+Required raw data:
+
+`1-minute consolidated U.S. equity bars`
+
+Primary analytical frequency:
+
+`5-minute bars`
+
+Primary session:
+
+`regular U.S. equity trading hours only`
+
+Premarket and after-hours observations are excluded from the initial primary test.
+
+### Consolidated-Market Source Requirement
+
+A single-exchange feed is not acceptable for the primary H4 volume/liquidity analysis.
+
+The source must provide consolidated U.S. market coverage.
+
+Candidate primary route:
+
+`Massive / Polygon U.S. Stocks aggregate bars`
+
+The source must pass a historical coverage and structural feasibility gate before full acquisition.
+
+Free IEX-only historical data is not authorized as the primary H4 source because its volume is not consolidated U.S. market volume.
+
+### Primary Location Engine
+
+The first confirmatory H4 location layer uses only price levels known before the current session:
+
+Resistance:
+
+- previous-day high (`PDH`);
+- previous-week high (`PWH`);
+- previous-month high (`PMH`).
+
+Support:
+
+- previous-day low (`PDL`);
+- previous-week low (`PWL`);
+- previous-month low (`PML`).
+
+No hand-drawn or outcome-informed support/resistance level is permitted.
+
+### Volatility-Normalized Zones
+
+Daily volatility normalizer:
+
+`prior-day ATR(14)`
+
+Zone half-width:
+
+`0.10 × prior-day ATR(14)`
+
+Each historical level is therefore treated as a zone rather than an infinitely precise price line.
+
+Same-direction overlapping zones are merged.
+
+Merged zones retain their contributing level families so confluence can be measured without double-counting one price interaction.
+
+### Primary H4 Trigger
+
+The first ICT-style trigger is limited to:
+
+`same-bar liquidity sweep / rejection`
+
+Bearish resistance sweep:
+
+- 5-minute high exceeds resistance level by at least `0.02 × ATR(14)`;
+- same 5-minute bar closes back below the resistance level.
+
+Bullish support sweep:
+
+- 5-minute low exceeds support level downward by at least `0.02 × ATR(14)`;
+- same 5-minute bar closes back above the support level.
+
+Only the first interaction with a merged zone on a session is eligible for the primary H4A event.
+
+Later revisits of the same zone cannot become additional primary events.
+
+### Primary H4 Outcome
+
+Primary forward horizon:
+
+`30 minutes`
+
+Signed-return convention:
+
+- bullish support sweep: ordinary forward return;
+- bearish resistance sweep: negative of ordinary forward return.
+
+Therefore:
+
+`positive signed return = subsequent movement in the preregistered rejection direction`
+
+The primary test will evaluate whether mean signed 30-minute return after qualifying first-interaction sweep/rejection events is positive.
+
+The exact inference estimator will be frozen after source/event-count feasibility is known and before any H4 forward-return result is inspected.
+
+Same-day event dependence must be accounted for.
+
+### Secondary Horizons
+
+Prespecified descriptive/robustness horizons:
+
+- 15 minutes;
+- 60 minutes.
+
+Additional descriptive outcomes may include:
+
+- maximum favorable excursion;
+- maximum adverse excursion;
+- directional success rate;
+- results by support versus resistance;
+- results by day/week/month level family;
+- confluence versus single-source zones.
+
+These cannot replace the 30-minute primary outcome.
+
+### Price-Discovery / No-Prior-Resistance Branch
+
+Historical resistance is never fabricated above price.
+
+When SPY is above every historical completed-session high available before the observation, the state is classified:
+
+`PRICE DISCOVERY / NO PRIOR OVERHEAD RESISTANCE`
+
+The separate price-discovery context will use deterministic variables such as:
+
+- ATR-normalized extension above prior all-time high;
+- ATR-normalized distance from session VWAP;
+- time-of-day-adjusted relative volume;
+- opening-range extension;
+- rolling intraday realized volatility;
+- recent displacement.
+
+These variables are context features only at this checkpoint.
+
+The price-discovery branch requires a separate frozen inference specification before predictive testing.
+
+### Relative Volume
+
+Primary relative-volume context:
+
+`current 5-minute volume / median same-time-bucket volume across prior 20 valid sessions`
+
+Elevated-volume diagnostic:
+
+`RVOL >= 1.50`
+
+Raw volume is not treated as order flow.
+
+True order-flow or order-book imbalance would require trade/quote or depth data and a separate methodology.
+
+### VWAP
+
+If reliable trade-based minute VWAP is available from the approved source, session VWAP is accumulated using only observations available through the current time.
+
+No future bar may enter VWAP.
+
+If trade-based VWAP is unavailable, the project will not silently substitute a typical-price approximation in the primary specification.
+
+### Deferred ICT Structures
+
+The following are deliberately excluded from the first H4 primary test:
+
+- fair value gaps;
+- market structure shifts;
+- breaks of structure;
+- displacement filters;
+- order blocks;
+- volume-profile nodes;
+- anchored VWAP;
+- true trade/quote order imbalance;
+- Level II/order-book imbalance.
+
+They may be opened later only under separate frozen rules.
+
+This restriction is intended to prevent combinatorial pattern mining.
+
+### H4 Outcome Firewall
+
+Before the H4 event methodology is fully frozen and audited, development scripts may inspect:
+
+- OHLCV structure;
+- timestamps;
+- session completeness;
+- historical levels;
+- ATR distributions;
+- volume distributions;
+- VWAP availability;
+- counts of candidate zones;
+- counts of qualifying sweep events.
+
+They may not inspect:
+
+- post-trigger returns;
+- directional hit rates;
+- MFE/MAE;
+- performance by alternative thresholds.
+
+No threshold may be selected because it produced superior future returns.
+
+### Files Created
+
+Formal H4 design:
+
+`docs/h4_intraday_market_structure_preregistration_v1.md`
+
+Initial source probe:
+
+`src/analysis/probe_h4_intraday_data_source.py`
+
+Expected reports:
+
+- `reports/data_quality/h4_intraday_source_feasibility.txt`
+- `reports/data_quality/h4_intraday_source_feasibility.json`
+
+### Current H4 State
+
+Location hierarchy:
+
+`FROZEN V1`
+
+Primary instrument:
+
+`SPY`
+
+Primary analytical interval:
+
+`5 MINUTES`
+
+Primary location families:
+
+`PDH / PDL / PWH / PWL / PMH / PML`
+
+Primary trigger:
+
+`SAME-BAR LIQUIDITY SWEEP / REJECTION`
+
+Primary forward horizon:
+
+`30 MINUTES`
+
+Price-discovery fallback:
+
+`DEFINED — INFERENCE NOT YET AUTHORIZED`
+
+H4 forward-return results observed:
+
+`NO`
+
+Full intraday acquisition:
+
+`NOT AUTHORIZED`
+
+### Next Step
+
+Run the consolidated-minute source feasibility probe against representative dates from every study year.
+
+The source gate must establish:
+
+- access to 2021–2025 history;
+- complete regular-session minute coverage;
+- valid OHLC;
+- valid consolidated volume;
+- unique timestamps;
+- deterministic Eastern-time conversion;
+- availability status for trade-based VWAP and transaction count.
+
+Only after this gate passes should the full SPY 2021–2025 intraday history be acquired.
+
+---
+
 # Current Status
 
 Current phase:
 
-**H3 PRIMARY CONFIRMATORY INFERENCE — COMPLETE; PRESPECIFIED ROBUSTNESS PENDING**
+**H4 INTRADAY MARKET-STRUCTURE SOURCE FEASIBILITY — PRE-OUTCOME**
 
 ## Closed Confirmatory Research
 
@@ -8956,306 +9274,72 @@ H2 sector-relative 12-1 momentum:
 
 `CLOSED — NOT SUPPORTED IN THE PREREGISTERED 2021-2025 SAMPLE`
 
-## Closed Exploratory Theme Branch
+H3 primary confirmatory inference:
 
-Post-H2 residual commonality:
+`COMPLETE — H3A/H3B/H3C NOT SUPPORTED UNDER THE FROZEN HOLM FAMILY`
 
-`EXPLORATORY — CONSTRUCTED AND ATTRIBUTED`
+H3 robustness:
 
-Frozen evidence taxonomy:
+`PRESPECIFIED — NOT YET EXECUTED`
 
-`COMPLETED`
+## H4 Research State
 
-Phase 4A theme synchrony:
+Primary instrument:
 
-`CLOSED — NO ADJUSTED THEME-SYNCHRONY SIGNAL`
+`SPY`
 
-## H3 Identity / Alias State
+Raw intraday target:
 
-Canonical historical security identities:
+`1-MINUTE CONSOLIDATED U.S. EQUITY DATA`
 
-`593`
+Primary analytical bar:
 
-SEC identity/name-history resolution:
+`5 MINUTES`
 
-`COMPLETE`
+Primary session:
 
-Point-in-time historical name evidence:
+`REGULAR TRADING HOURS`
 
-`COMPLETE`
+Primary location engine:
 
-Exact transition resolution:
+`PDH / PDL / PWH / PWL / PMH / PML + ATR-NORMALIZED ZONES`
 
-`COMPLETE`
+Primary trigger:
 
-Authoritative name-state closeout:
+`SAME-BAR LIQUIDITY SWEEP / REJECTION`
 
-`COMPLETE`
+Primary forward horizon:
 
-Full-universe name-resolution closure:
+`30 MINUTES`
 
-`COMPLETE`
+Price-discovery fallback:
 
-No-NPORT definitive closure:
+`DEFINED — NO FABRICATED OVERHEAD RESISTANCE`
 
-`COMPLETE`
+Full H4 intraday acquisition:
 
-Final PIT attention alias policy:
+`NOT AUTHORIZED UNTIL SOURCE FEASIBILITY PASSES`
 
-`H3_PIT_ATTENTION_ALIAS_POLICY_V5 — FROZEN`
+H4 forward-return outcomes observed:
 
-## H3 Attention Acquisition State
-
-Direct historical GDELT source:
-
-`GKG 1.0 daily`
-
-Full source calendar:
-
-`1,826 dates`
-
-Full monthly security-attention rows:
-
-`30,301`
-
-Documented source-gap days:
-
-`21`
-
-Fail-closed source-gap policy:
-
-`H3_GDELT_SOURCE_GAP_HANDLING_V1 — FROZEN`
-
-Fail-closed month eligibility:
-
-`H3_GDELT_FAIL_CLOSED_MONTH_ELIGIBILITY_V1 — FROZEN`
-
-June 2025:
-
-`EXCLUDED — GLOBAL_GKG1_SOURCE_COVERAGE_BELOW_FROZEN_90PCT`
-
-June 2025 source coverage:
-
-`13 / 30 days ≈ 43.3%`
-
-## H3 Statistical Preregistration State
-
-Current preregistration:
-
-`H3_STATISTICAL_PREREGISTRATION_V2`
-
-V2 preregistration integrity audit:
-
-`19 / 19 PASSED`
-
-Predictor months:
-
-`58`
-
-Predictor security-month rows:
-
-`29,287`
-
-Issuer-day rows:
-
-`887,018`
-
-Issuer-month rows:
-
-`29,078`
-
-Issuer clusters:
-
-`583`
-
-Outcome firewall before V2 amendment:
-
-`PRESERVED`
-
-## H3 Outcome-Join State
-
-Outcome join:
-
-`COMPLETE`
-
-Structural checks:
-
-`26 / 26 PASSED`
-
-Joined rows:
-
-`29,287`
-
-H3A/H3C eligible rows:
-
-`29,114`
-
-H3B eligible rows:
-
-`26,139`
-
-H3B positive Winner-entry events:
-
-`807`
-
-Azure SQL analytical table:
-
-`analytics.h3_preregistered_predictor_outcome_panel`
-
-## H3 Primary Confirmatory Results
-
-Primary inference:
-
-`COMPLETE`
-
-Executed script version:
-
-`2026-08-26-v2-h3-primary-confirmatory-inference-pre-model-gate-fix`
-
-Primary covariance:
-
-`two-way issuer × outcome-month cluster-robust`
-
-Reference df rule:
-
-`min(issuer clusters, outcome-month clusters) - 1`
-
-Multiple testing:
-
-`Holm-Bonferroni across H3A, H3B, and H3C`
-
-Familywise alpha:
-
-`0.05`
-
-### H3A
-
-Coefficient:
-
-`-0.00195918387663`
-
-Economic effect:
-
-`-0.19591839 percentage points per +1 SD attention`
-
-Raw p-value:
-
-`0.360708306955`
-
-Holm-adjusted p-value:
-
-`0.360708306955`
-
-Decision:
-
-`NOT SUPPORTED`
-
-### H3B
-
-Coefficient:
-
-`+0.00713020049062`
-
-Economic effect:
-
-`+0.71302005 percentage points in next-month D10-entry probability per +1 SD attention`
-
-Raw p-value:
-
-`0.0448539853732`
-
-Holm-adjusted p-value:
-
-`0.13456195612`
-
-Decision:
-
-`NOT SUPPORTED`
-
-Interpretive note:
-
-`POSITIVE NOMINAL / UNADJUSTED SIGNAL ONLY — DOES NOT SURVIVE FROZEN HOLM ADJUSTMENT`
-
-### H3C
-
-Interaction coefficient:
-
-`-0.00287813829612`
-
-Economic effect:
-
-`-0.28781383 percentage points per +1 SD attention for current Winners`
-
-Raw p-value:
-
-`0.140471654115`
-
-Holm-adjusted p-value:
-
-`0.280943308231`
-
-Decision:
-
-`NOT SUPPORTED`
-
-### H3C Secondary Winner Slope
-
-`beta_C + theta = -0.00456932295679`
-
-Economic effect:
-
-`-0.45693230 percentage points`
-
-Raw p-value:
-
-`0.137484018992`
-
-Classification:
-
-`PRESPECIFIED SECONDARY INFERENCE — NOT PART OF HOLM FAMILY`
-
-## Primary H3 Interpretation
-
-The correct frozen primary conclusion is:
-
-**None of the three preregistered H3 confirmatory components is supported in the primary analysis.**
-
-H3B shows a positive nominal association with next-month Winner entry, but it does not survive the preregistered Holm multiple-testing adjustment.
-
-H3A and H3C have point estimates opposite their preregistered positive directions.
-
-The primary result must not be retuned after observation.
-
-## Interpretation Boundary
-
-The following remain prohibited:
-
-- changing the attention transformation and relabeling it as primary;
-- changing the sample window;
-- changing June 2025 eligibility;
-- changing H3A/H3B/H3C definitions;
-- changing fixed effects;
-- changing the two-way issuer × outcome-month primary covariance estimator;
-- adding post-hoc controls to the primary specification;
-- changing the three-test Holm family;
-- treating H3B's raw p-value as confirmatory support.
-
-Prespecified robustness may characterize stability but cannot upgrade a failed primary component to supported.
+`NO`
 
 ## Immediate Next Step
 
-Commit:
+Place:
 
-- `reports/confirmatory/h3/h3_primary_confirmatory_results.csv`
-- `reports/confirmatory/h3/h3_primary_confirmatory_report.txt`
-- `reports/confirmatory/h3/h3_primary_confirmatory_manifest.json`
-- updated `docs/project_log.md`
+`docs/h4_intraday_market_structure_preregistration_v1.md`
 
-Then execute the frozen H3 robustness suite:
+and:
 
-1. issuer attention percentile transform;
-2. unstandardized issuer `attention_log`;
-3. HIGH structural-ambiguity exclusion;
-4. PIT alias-transition-month exclusion;
-5. leave-one-sector-out H3A/H3C stability;
-6. permitted covariance robustness.
+`src/analysis/probe_h4_intraday_data_source.py`
+
+into the repository.
+
+Set the candidate consolidated-data API key in the local environment.
+
+Run:
+
+`python src/analysis/probe_h4_intraday_data_source.py`
+
+Do not proceed to H4 forward-return testing until the source feasibility gate is reviewed and passed.
