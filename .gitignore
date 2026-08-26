@@ -68,3 +68,13 @@ reports/data_quality/sec_select_sector_nport_probe.txt
 reports/data_quality/sec_select_sector_snapshot_coverage.csv
 reports/data_quality/sec_select_sector_submission_text_failures.csv
 reports/data_quality/sec_select_sector_transition_candidates.csv
+
+# H3 reproducible GDELT daily attention shards
+reports/exploratory/h3_attention_feasibility/h3_gdelt_full_daily_security_2021.csv.gz
+reports/exploratory/h3_attention_feasibility/h3_gdelt_full_daily_security_2022.csv.gz
+reports/exploratory/h3_attention_feasibility/h3_gdelt_full_daily_security_2023.csv.gz
+reports/exploratory/h3_attention_feasibility/h3_gdelt_full_daily_security_2024.csv.gz
+reports/exploratory/h3_attention_feasibility/h3_gdelt_full_daily_security_2025.csv.gz
+
+# H3 reproducible issuer-day attention panel
+reports/exploratory/h3_attention_feasibility/h3_preregistered_attention_issuer_day_panel.csv.gz
