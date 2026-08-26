@@ -1,0 +1,76 @@
+============================================================================================================================================
+H3 PRIMARY CONFIRMATORY INFERENCE
+============================================================================================================================================
+Script version: 2026-08-26-v2-h3-primary-confirmatory-inference-pre-model-gate-fix
+Preregistration: H3_STATISTICAL_PREREGISTRATION_V2
+Preregistration SHA-256: 95e88d99f2b0c9beca50073844b9dadc32c11a6aa820fe04cf3ed12e94841506
+Joined-panel SHA-256: 8ad29c02180efb9b2cc46ef640699a4c7e339cbd45ac7d1a9ab869d1c979729c
+
+PRIMARY INFERENCE
+Two-way cluster-robust covariance by issuer_id and outcome_month.
+Small-sample correction: TRUE.
+Reference df = min(issuer clusters, outcome-month clusters) - 1.
+Tests: two-sided.
+Holm family: H3A_beta_A, H3B_beta_B, H3C_theta.
+Familywise alpha: 0.05.
+
+H3A
+  Estimand: attention_z
+  Coefficient: -0.00195918387663
+  Two-way clustered SE: 0.00212623687722
+  95% CI: [-0.00621689978153, 0.00229853202827]
+  t statistic: -0.92143255
+  Reference df: 57
+  Raw two-sided p-value: 0.360708306955
+  Holm-adjusted p-value: 0.360708306955
+  Economic effect: -0.19591839 percentage points
+  Sample rows: 29,114
+  Issuer clusters: 573
+  Outcome-month clusters: 58
+  Decision: NOT SUPPORTED
+
+H3B
+  Estimand: attention_z
+  Coefficient: 0.00713020049062
+  Two-way clustered SE: 0.00347612000556
+  95% CI: [0.000169390247139, 0.0140910107341]
+  t statistic: 2.05119515
+  Reference df: 57
+  Raw two-sided p-value: 0.0448539853732
+  Holm-adjusted p-value: 0.13456195612
+  Economic effect: 0.71302005 percentage points
+  Sample rows: 26,139
+  Issuer clusters: 567
+  Outcome-month clusters: 58
+  Decision: NOT SUPPORTED
+
+H3C
+  Estimand: attention_x_current_winner
+  Coefficient: -0.00287813829612
+  Two-way clustered SE: 0.00192537935189
+  95% CI: [-0.00673364394433, 0.000977367352076]
+  t statistic: -1.49484219
+  Reference df: 57
+  Raw two-sided p-value: 0.140471654115
+  Holm-adjusted p-value: 0.280943308231
+  Economic effect: -0.28781383 percentage points
+  Sample rows: 29,114
+  Issuer clusters: 573
+  Outcome-month clusters: 58
+  Decision: NOT SUPPORTED
+
+H3C PRESPECIFIED SECONDARY LINEAR COMBINATION
+Winner attention slope = beta_C + theta.
+Descriptive secondary inference only; NOT part of Holm family.
+  Estimate: -0.00456932295679
+  Two-way clustered SE: 0.00303325163356
+  95% CI: [-0.0106433045823, 0.00150465866875]
+  t statistic: -1.50641078
+  Reference df: 57
+  Raw two-sided p-value: 0.137484018992
+  Economic effect: -0.45693230 percentage points
+
+ROBUSTNESS EXECUTED IN THIS SCRIPT: NO
+R1/R2/ambiguity/transition/leave-one-sector-out robustness remains separate.
+
+H3_PRIMARY_CONFIRMATORY_INFERENCE_COMPLETE

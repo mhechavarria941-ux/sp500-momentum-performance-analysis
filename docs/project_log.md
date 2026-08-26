@@ -8577,11 +8577,374 @@ The first H3 confirmatory result must be observed only after those code/specific
 
 ---
 
+---
+
+## 3.66 H3 Primary Confirmatory Inference — Frozen Preregistered Results
+
+### Date
+
+2026-08-26
+
+### Objective
+
+Execute the first confirmatory H3 inference exactly as frozen in:
+
+`H3_STATISTICAL_PREREGISTRATION_V2`
+
+after the prerequisite attention-predictor, eligible-month, predictor-to-outcome join, and pre-model structural gates had passed.
+
+No H3 coefficient, confidence interval, p-value, or support decision had been observed before this run.
+
+### Primary Inference Script
+
+`src/analysis/run_h3_primary_confirmatory_inference.py`
+
+Initial frozen version:
+
+`2026-08-26-v1-h3-primary-confirmatory-inference`
+
+Executed version:
+
+`2026-08-26-v2-h3-primary-confirmatory-inference-pre-model-gate-fix`
+
+### Pre-Model Gate Correction Before First Result Exposure
+
+The first execution attempt failed before model estimation because the Python environment did not yet contain:
+
+`statsmodels`
+
+The dependency was added to the project environment and requirements without changing the inference specification.
+
+A subsequent V1 execution reached the structural revalidation gate and stopped before regression because the script required every one of the 29,287 frozen predictor rows to match the current H1 layer.
+
+That assertion was stricter than the frozen preregistration.
+
+The preregistered missingness rules require only that rows entering a given primary model possess the inputs required by that model.
+
+Therefore the pre-model gate was corrected so that:
+
+- every H3A/H3C eligible row must match the required current H1 layer;
+- every H3B eligible row must match the required current H1 layer;
+- every H3B eligible row must match the required `t+1` momentum-assignment layer;
+- predictor rows lacking the current H1 join must be excluded from all primary H3 model samples;
+- predictor rows lacking the `t+1` momentum join must be excluded from H3B.
+
+The correction changed only the software validation gate.
+
+It did **not** change:
+
+- H3A, H3B, or H3C model formulas;
+- the frozen attention predictor;
+- the outcome definitions;
+- sample/missingness rules;
+- fixed effects;
+- cluster structure;
+- reference degrees-of-freedom rule;
+- Holm family;
+- familywise alpha;
+- expected coefficient signs.
+
+Both failed attempts stopped before any H3 regression coefficient or p-value was produced.
+
+The V2 gate correction was committed before the first successful confirmatory run.
+
+### Frozen Input Checksums
+
+Preregistration SHA-256:
+
+`95e88d99f2b0c9beca50073844b9dadc32c11a6aa820fe04cf3ed12e94841506`
+
+Joined analytical-panel SHA-256:
+
+`8ad29c02180efb9b2cc46ef640699a4c7e339cbd45ac7d1a9ab869d1c979729c`
+
+### Primary Inference Convention
+
+Primary covariance:
+
+`two-way cluster-robust covariance by issuer_id and outcome_month`
+
+Small-sample correction:
+
+`TRUE`
+
+Reference degrees of freedom:
+
+`min(issuer clusters, outcome-month clusters) - 1`
+
+Tests:
+
+`two-sided`
+
+Frozen Holm family:
+
+1. `H3A_beta_A`
+2. `H3B_beta_B`
+3. `H3C_theta`
+
+Familywise alpha:
+
+`0.05`
+
+A component is supported only when:
+
+- its Holm-adjusted two-sided p-value is below `0.05`; and
+- its coefficient has the preregistered positive sign.
+
+A statistically significant negative coefficient would be classified:
+
+`CONTRADICTED`
+
+Otherwise the component is:
+
+`NOT SUPPORTED`
+
+### H3A — Attention Predicts Next-Month Sector-Relative Return
+
+Primary estimand:
+
+`beta_A on attention_z`
+
+Sample:
+
+- rows: `29,114`
+- issuer clusters: `573`
+- outcome-month clusters: `58`
+- reference df: `57`
+
+Result:
+
+- coefficient: `-0.00195918387663`
+- economic effect: `-0.19591839 percentage points` per +1 SD issuer attention
+- two-way clustered SE: `0.00212623687722`
+- 95% CI: `[-0.00621689978153, 0.00229853202827]`
+- t statistic: `-0.92143255`
+- raw two-sided p-value: `0.360708306955`
+- Holm-adjusted p-value: `0.360708306955`
+
+Decision:
+
+`NOT SUPPORTED`
+
+### H3A Interpretation
+
+The point estimate is opposite the preregistered positive sign and statistically indistinguishable from zero.
+
+The primary H3A result therefore provides no confirmatory evidence that higher issuer attention predicts higher next-month leave-one-out sector-relative return.
+
+---
+
+### H3B — Attention Predicts Next-Month Winner Entry
+
+Primary estimand:
+
+`beta_B on attention_z`
+
+Sample:
+
+- rows: `26,139`
+- issuer clusters: `567`
+- outcome-month clusters: `58`
+- reference df: `57`
+
+Positive Winner-entry events:
+
+`807`
+
+Result:
+
+- coefficient: `0.00713020049062`
+- economic effect: `+0.71302005 percentage points` in next-month D10-entry probability per +1 SD issuer attention
+- two-way clustered SE: `0.00347612000556`
+- 95% CI: `[0.000169390247139, 0.0140910107341]`
+- t statistic: `2.05119515`
+- raw two-sided p-value: `0.0448539853732`
+- Holm-adjusted p-value: `0.13456195612`
+
+Decision:
+
+`NOT SUPPORTED`
+
+### H3B Interpretation
+
+H3B is the only primary component with:
+
+- the preregistered positive sign; and
+- an unadjusted two-sided p-value below `0.05`.
+
+However, H3B belongs to the frozen three-test Holm family.
+
+After the required Holm-Bonferroni adjustment:
+
+`Holm p = 0.13456195612`
+
+which exceeds the familywise alpha of `0.05`.
+
+Therefore the positive H3B estimate is a:
+
+`NOMINAL / UNADJUSTED POSITIVE SIGNAL`
+
+but it is **not confirmatory support**.
+
+The raw p-value must not replace the preregistered Holm-adjusted decision rule.
+
+---
+
+### H3C — Incremental Attention Effect for Current Winners
+
+Primary estimand:
+
+`theta on attention_z × current_winner`
+
+Sample:
+
+- rows: `29,114`
+- issuer clusters: `573`
+- outcome-month clusters: `58`
+- reference df: `57`
+
+Result:
+
+- interaction coefficient: `-0.00287813829612`
+- economic effect: `-0.28781383 percentage points` incremental next-month sector-relative return per +1 SD attention for current Winners
+- two-way clustered SE: `0.00192537935189`
+- 95% CI: `[-0.00673364394433, 0.000977367352076]`
+- t statistic: `-1.49484219`
+- raw two-sided p-value: `0.140471654115`
+- Holm-adjusted p-value: `0.280943308231`
+
+Decision:
+
+`NOT SUPPORTED`
+
+### H3C Interpretation
+
+The interaction estimate is negative, opposite the preregistered positive sign, and statistically indistinguishable from zero.
+
+The primary H3C result therefore provides no confirmatory evidence that current Winners receive an additional positive return effect from higher issuer attention.
+
+---
+
+### H3C Prespecified Secondary Winner-Attention Slope
+
+Secondary linear combination:
+
+`beta_C + theta`
+
+This quantity was preregistered as descriptive secondary inference and is not part of the Holm family.
+
+Result:
+
+- estimate: `-0.00456932295679`
+- economic effect: `-0.45693230 percentage points`
+- two-way clustered SE: `0.00303325163356`
+- 95% CI: `[-0.0106433045823, 0.00150465866875]`
+- t statistic: `-1.50641078`
+- reference df: `57`
+- raw two-sided p-value: `0.137484018992`
+
+Interpretation:
+
+The estimated total attention slope among current Winners is negative and statistically indistinguishable from zero.
+
+Because this is secondary inference, it cannot alter the H3C primary decision.
+
+### Primary Confirmatory Decision
+
+Frozen component decisions:
+
+- H3A: `NOT SUPPORTED`
+- H3B: `NOT SUPPORTED`
+- H3C: `NOT SUPPORTED`
+
+The preregistration explicitly does not define a post-hoc global H3 binary decision.
+
+Accordingly, the correct primary conclusion is:
+
+**None of the three preregistered H3 confirmatory components is supported in the primary analysis.**
+
+H3B exhibits a positive nominal association with next-month Winner entry before multiple-testing correction, but the association does not survive the frozen Holm adjustment and therefore cannot be reported as confirmatory support.
+
+H3A and H3C both have point estimates opposite their preregistered positive directions.
+
+### Result Artifacts
+
+Primary results:
+
+`reports/confirmatory/h3/h3_primary_confirmatory_results.csv`
+
+Primary report:
+
+`reports/confirmatory/h3/h3_primary_confirmatory_report.txt`
+
+Primary manifest:
+
+`reports/confirmatory/h3/h3_primary_confirmatory_manifest.json`
+
+Azure SQL result table:
+
+`analytics.h3_primary_confirmatory_results`
+
+Final execution token:
+
+`H3_PRIMARY_CONFIRMATORY_INFERENCE_COMPLETE`
+
+### Interpretation Boundary
+
+The primary H3 confirmatory analysis is now historically frozen.
+
+The following are prohibited:
+
+- dropping H3A or H3C from the Holm family because their results were unfavorable;
+- treating H3B's raw p-value as the confirmatory decision;
+- replacing `attention_z` with a robustness transform because the primary result was not supported;
+- changing the June 2025 exclusion;
+- changing fixed effects or cluster structure based on these results;
+- adding post-hoc controls and relabeling them as primary;
+- redefining Winner entry or sector-relative return;
+- changing the sample window after observing the primary results.
+
+### Prespecified Robustness Still Pending
+
+The primary inference script did not execute robustness analyses.
+
+The remaining preregistered robustness work includes:
+
+1. R1 issuer-month empirical midrank percentile attention;
+2. R2 unstandardized issuer `attention_log`;
+3. exclusion of HIGH structural-ambiguity alias rows;
+4. exclusion of PIT alias-transition months;
+5. leave-one-sector-out coefficient stability for H3A and H3C;
+6. permitted covariance robustness such as issuer-only and month-only clustering, clearly labeled as robustness.
+
+These tests may characterize sensitivity and stability.
+
+They cannot upgrade a failed primary H3 component to `SUPPORTED`.
+
+### Result
+
+H3 primary confirmatory inference is complete.
+
+Current primary evidence:
+
+- H3A: not supported;
+- H3B: positive nominal association, but not supported after Holm adjustment;
+- H3C: not supported;
+- secondary Winner attention slope: negative and statistically indistinguishable from zero.
+
+### Next Step
+
+Commit the H3 primary result artifacts and this project-log checkpoint.
+
+After that commit, execute the already prespecified H3 robustness suite without changing the frozen primary interpretation.
+
+---
+
 # Current Status
 
 Current phase:
 
-**H3 PRIMARY CONFIRMATORY INFERENCE — FROZEN AND AUTHORIZED, NOT YET EXECUTED**
+**H3 PRIMARY CONFIRMATORY INFERENCE — COMPLETE; PRESPECIFIED ROBUSTNESS PENDING**
 
 ## Closed Confirmatory Research
 
@@ -8739,33 +9102,160 @@ Azure SQL analytical table:
 
 `analytics.h3_preregistered_predictor_outcome_panel`
 
-Primary model execution:
+## H3 Primary Confirmatory Results
 
-`AUTHORIZED`
+Primary inference:
+
+`COMPLETE`
+
+Executed script version:
+
+`2026-08-26-v2-h3-primary-confirmatory-inference-pre-model-gate-fix`
+
+Primary covariance:
+
+`two-way issuer × outcome-month cluster-robust`
+
+Reference df rule:
+
+`min(issuer clusters, outcome-month clusters) - 1`
+
+Multiple testing:
+
+`Holm-Bonferroni across H3A, H3B, and H3C`
+
+Familywise alpha:
+
+`0.05`
+
+### H3A
+
+Coefficient:
+
+`-0.00195918387663`
+
+Economic effect:
+
+`-0.19591839 percentage points per +1 SD attention`
+
+Raw p-value:
+
+`0.360708306955`
+
+Holm-adjusted p-value:
+
+`0.360708306955`
+
+Decision:
+
+`NOT SUPPORTED`
+
+### H3B
+
+Coefficient:
+
+`+0.00713020049062`
+
+Economic effect:
+
+`+0.71302005 percentage points in next-month D10-entry probability per +1 SD attention`
+
+Raw p-value:
+
+`0.0448539853732`
+
+Holm-adjusted p-value:
+
+`0.13456195612`
+
+Decision:
+
+`NOT SUPPORTED`
+
+Interpretive note:
+
+`POSITIVE NOMINAL / UNADJUSTED SIGNAL ONLY — DOES NOT SURVIVE FROZEN HOLM ADJUSTMENT`
+
+### H3C
+
+Interaction coefficient:
+
+`-0.00287813829612`
+
+Economic effect:
+
+`-0.28781383 percentage points per +1 SD attention for current Winners`
+
+Raw p-value:
+
+`0.140471654115`
+
+Holm-adjusted p-value:
+
+`0.280943308231`
+
+Decision:
+
+`NOT SUPPORTED`
+
+### H3C Secondary Winner Slope
+
+`beta_C + theta = -0.00456932295679`
+
+Economic effect:
+
+`-0.45693230 percentage points`
+
+Raw p-value:
+
+`0.137484018992`
+
+Classification:
+
+`PRESPECIFIED SECONDARY INFERENCE — NOT PART OF HOLM FAMILY`
+
+## Primary H3 Interpretation
+
+The correct frozen primary conclusion is:
+
+**None of the three preregistered H3 confirmatory components is supported in the primary analysis.**
+
+H3B shows a positive nominal association with next-month Winner entry, but it does not survive the preregistered Holm multiple-testing adjustment.
+
+H3A and H3C have point estimates opposite their preregistered positive directions.
+
+The primary result must not be retuned after observation.
 
 ## Interpretation Boundary
 
-H3 outcomes have now been structurally joined under the frozen preregistration, but confirmatory inference has not yet been executed.
+The following remain prohibited:
 
-No H3 primary coefficient or significance result has been observed.
-
-The following remain prohibited before the first frozen primary run:
-
-- changing the attention transformation;
+- changing the attention transformation and relabeling it as primary;
 - changing the sample window;
 - changing June 2025 eligibility;
 - changing H3A/H3B/H3C definitions;
 - changing fixed effects;
 - changing the two-way issuer × outcome-month primary covariance estimator;
-- adding post-hoc controls;
-- changing the three-test Holm family.
+- adding post-hoc controls to the primary specification;
+- changing the three-test Holm family;
+- treating H3B's raw p-value as confirmatory support.
+
+Prespecified robustness may characterize stability but cannot upgrade a failed primary component to supported.
 
 ## Immediate Next Step
 
-Create the Git provenance checkpoint for all completed H3 pre-inference work.
+Commit:
 
-Then create a separate Git commit containing the frozen:
+- `reports/confirmatory/h3/h3_primary_confirmatory_results.csv`
+- `reports/confirmatory/h3/h3_primary_confirmatory_report.txt`
+- `reports/confirmatory/h3/h3_primary_confirmatory_manifest.json`
+- updated `docs/project_log.md`
 
-`src/analysis/run_h3_primary_confirmatory_inference.py`
+Then execute the frozen H3 robustness suite:
 
-Only after both commits exist should the first H3 confirmatory inference be executed.
+1. issuer attention percentile transform;
+2. unstandardized issuer `attention_log`;
+3. HIGH structural-ambiguity exclusion;
+4. PIT alias-transition-month exclusion;
+5. leave-one-sector-out H3A/H3C stability;
+6. permitted covariance robustness.

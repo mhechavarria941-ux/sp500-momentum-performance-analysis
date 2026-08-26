@@ -1,0 +1,36 @@
+{
+  "script_version": "2026-08-26-v2-h3-primary-confirmatory-inference-pre-model-gate-fix",
+  "preregistration_id": "H3_STATISTICAL_PREREGISTRATION_V2",
+  "preregistration_version": "2026-08-26-v2",
+  "preregistration_sha256": "95e88d99f2b0c9beca50073844b9dadc32c11a6aa820fe04cf3ed12e94841506",
+  "joined_panel_sha256": "8ad29c02180efb9b2cc46ef640699a4c7e339cbd45ac7d1a9ab869d1c979729c",
+  "sql_panel": "analytics.h3_preregistered_predictor_outcome_panel",
+  "sql_results": "analytics.h3_primary_confirmatory_results",
+  "results_csv": "reports\\confirmatory\\h3\\h3_primary_confirmatory_results.csv",
+  "results_csv_sha256": "d482c5f059be42dcc56aed8c3ff0fc9e68913dbd5dbf60eab1efa4dc9fd7658b",
+  "report": "reports\\confirmatory\\h3\\h3_primary_confirmatory_report.txt",
+  "primary_covariance": "Two-way cluster-robust covariance by issuer_id and outcome_month.",
+  "reference_df_rule": "min(number of issuer clusters, number of outcome-month clusters) - 1",
+  "small_sample_correction": true,
+  "holm_family": [
+    "H3A_beta_A",
+    "H3B_beta_B",
+    "H3C_theta"
+  ],
+  "familywise_alpha": 0.05,
+  "primary_models_executed": [
+    "H3A",
+    "H3B",
+    "H3C"
+  ],
+  "prespecified_robustness_executed": false,
+  "h3c_secondary_linear_combination": {
+    "estimate": -0.004569322956785033,
+    "cluster_se": 0.003033251633558876,
+    "t_stat": -1.5064107791887689,
+    "reference_df": 57.0,
+    "ci_low": -0.010643304582324705,
+    "ci_high": 0.0015046586687546392,
+    "raw_p_value": 0.13748401899186702
+  }
+}
