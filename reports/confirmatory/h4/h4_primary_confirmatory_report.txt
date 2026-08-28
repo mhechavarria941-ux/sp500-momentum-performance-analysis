@@ -1,0 +1,62 @@
+H4 PRIMARY CONFIRMATORY INFERENCE
+============================================================================================================================
+Script version: 2026-08-28-v1-h4-primary-confirmatory-inference
+Preregistration: H4_PRIMARY_LIQUIDITY_SWEEP_INFERENCE_V1
+Preregistration SHA-256: 60d955f3ae6e625034c7cac41c08e20c0ce19bba4324e3877fdcaa824ef4eb88
+Outcome-join SHA-256: e60adb310d91c3ed9c0a391585d47cb8387dc2ff6731d467670684a039a23227
+
+PRIMARY H4A
+Event-level signed 30-minute return.
+Positive signed return = movement in preregistered sweep/rejection direction.
+Intercept-only OLS with session-clustered covariance.
+Small-sample correction: TRUE.
+Reference df = eligible session clusters - 1.
+Test: two-sided.
+Alpha: 0.05.
+
+Coefficient / mean signed return: -0.000613142249862
+Session-clustered SE: 0.000288872659684
+95% CI: [-0.00118377758432, -4.25069154093e-05]
+t statistic: -2.12253472
+Reference df: 155
+Two-sided p-value: 0.0353817887367
+Economic effect: -0.06131422 percentage points
+Eligible events: 164
+Eligible session clusters: 156
+Decision: CONTRADICTED
+
+PRESPECIFIED SESSION-COLLAPSED ROBUSTNESS
+Mean event return within each eligible session; HAC(5) on session means.
+Estimate: -0.000714406861288
+HAC SE: 0.000295674059384
+95% CI: [-0.00129847759318, -0.000130336129393]
+Two-sided p-value: 0.016845956579
+Sessions: 156
+Robustness cannot upgrade the primary decision.
+
+SECONDARY HORIZONS
+15m mean signed return: -0.000430881979037
+15m clustered SE: 0.000244668210791
+15m 95% CI: [-0.000914196414012, 5.24324559382e-05]
+15m two-sided p-value: 0.0801956168738
+15m events: 164
+Decision: DESCRIPTIVE ONLY
+60m mean signed return: -0.000627461384966
+60m clustered SE: 0.000397586123332
+60m 95% CI: [-0.00141288802373, 0.000157965253796]
+60m two-sided p-value: 0.116576794009
+60m events: 163
+Decision: DESCRIPTIVE ONLY
+
+YEAR-BY-YEAR DESCRIPTIVE STABILITY
+2021: events=40, sessions=36, mean signed 30m return=0.000177223482077
+2022: events=28, sessions=27, mean signed 30m return=-0.00117197235429
+2023: events=20, sessions=20, mean signed 30m return=-0.00126661232021
+2024: events=34, sessions=32, mean signed 30m return=-0.000122929076312
+2025: events=42, sessions=41, mean signed 30m return=-0.00107898112718
+
+IMPORTANT
+This is a gross price-return signal test.
+No deployable strategy claim is authorized without separate spread/slippage/cost analysis.
+
+H4_PRIMARY_CONFIRMATORY_INFERENCE_COMPLETE

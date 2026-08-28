@@ -1,0 +1,17 @@
+RUNNING SCRIPT VERSION: 2026-08-28-v1-h4-alpaca-sip-full-acquisition
+==============================================================================================================
+H4 SPY ALPACA SIP FULL 1-MINUTE ACQUISITION
+==============================================================================================================
+Study interval: 2021-01-01 through 2025-12-31
+Calendar sessions: 1,255
+Monthly raw files: 60
+New monthly files this run: 60
+Total raw bars: 1,025,947
+Feed: sip
+Adjustment: raw
+H4 event triggers calculated: NO
+H4 forward outcomes calculated: NO
+
+No analytical-use authorization is granted until the independent minute-history audit passes.
+
+H4_ALPACA_SIP_FULL_ACQUISITION_COMPLETE

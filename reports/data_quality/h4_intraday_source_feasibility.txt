@@ -1,0 +1,110 @@
+RUNNING SCRIPT VERSION: 2026-08-26-v1-h4-intraday-source-feasibility
+==============================================================================================================
+H4 INTRADAY CONSOLIDATED-MINUTE SOURCE FEASIBILITY
+==============================================================================================================
+Symbol: SPY
+Candidate source API: https://api.massive.com
+Requested bar: 1 minute
+Primary analytical target after approval: 5-minute bars derived from 1-minute data
+Primary session: regular U.S. equity session
+
+IMPORTANT:
+This probe inspects source structure and historical coverage only.
+It does NOT calculate post-trigger H4 forward returns or test any H4 hypothesis.
+
+--------------------------------------------------------------------------------------------------------------
+Date: 2021-01-04
+HTTP status: 403
+Total API bars: 0
+RTH bars: 0 / expected 390
+First RTH timestamp ET: None
+Last RTH timestamp ET: None
+Duplicate RTH timestamps: 0
+Invalid OHLC rows: 0
+Missing volume rows: 0
+Nonpositive volume rows: 0
+Missing provider VWAP rows: 0
+Missing transaction-count rows: 0
+Historical access: FAIL
+Full ordinary-session coverage: FAIL
+Source message: Your plan doesn't include this data timeframe. Please upgrade your plan at https://polygon.io/pricing
+--------------------------------------------------------------------------------------------------------------
+Date: 2022-06-15
+HTTP status: 403
+Total API bars: 0
+RTH bars: 0 / expected 390
+First RTH timestamp ET: None
+Last RTH timestamp ET: None
+Duplicate RTH timestamps: 0
+Invalid OHLC rows: 0
+Missing volume rows: 0
+Nonpositive volume rows: 0
+Missing provider VWAP rows: 0
+Missing transaction-count rows: 0
+Historical access: FAIL
+Full ordinary-session coverage: FAIL
+Source message: Your plan doesn't include this data timeframe. Please upgrade your plan at https://polygon.io/pricing
+--------------------------------------------------------------------------------------------------------------
+Date: 2023-10-02
+HTTP status: 403
+Total API bars: 0
+RTH bars: 0 / expected 390
+First RTH timestamp ET: None
+Last RTH timestamp ET: None
+Duplicate RTH timestamps: 0
+Invalid OHLC rows: 0
+Missing volume rows: 0
+Nonpositive volume rows: 0
+Missing provider VWAP rows: 0
+Missing transaction-count rows: 0
+Historical access: FAIL
+Full ordinary-session coverage: FAIL
+Source message: Your plan doesn't include this data timeframe. Please upgrade your plan at https://polygon.io/pricing
+--------------------------------------------------------------------------------------------------------------
+Date: 2024-03-15
+HTTP status: 403
+Total API bars: 0
+RTH bars: 0 / expected 390
+First RTH timestamp ET: None
+Last RTH timestamp ET: None
+Duplicate RTH timestamps: 0
+Invalid OHLC rows: 0
+Missing volume rows: 0
+Nonpositive volume rows: 0
+Missing provider VWAP rows: 0
+Missing transaction-count rows: 0
+Historical access: FAIL
+Full ordinary-session coverage: FAIL
+Source message: Your plan doesn't include this data timeframe. Please upgrade your plan at https://polygon.io/pricing
+--------------------------------------------------------------------------------------------------------------
+Date: 2025-12-31
+HTTP status: 200
+Total API bars: 867
+RTH bars: 390 / expected 390
+First RTH timestamp ET: 2025-12-31T09:30:00-05:00
+Last RTH timestamp ET: 2025-12-31T15:59:00-05:00
+Duplicate RTH timestamps: 0
+Invalid OHLC rows: 0
+Missing volume rows: 0
+Nonpositive volume rows: 0
+Missing provider VWAP rows: 0
+Missing transaction-count rows: 0
+Historical access: PASS
+Full ordinary-session coverage: PASS
+Source message: OK
+
+==============================================================================================================
+SOURCE GATE SUMMARY
+==============================================================================================================
+Historical access across all sample years: FAIL
+Full 390-minute RTH coverage on all probe dates: FAIL
+OHLC integrity: PASS
+Volume integrity: PASS
+Timestamp uniqueness: PASS
+Provider trade-based VWAP present on all probe RTH rows: YES
+Transaction count present on all probe RTH rows: YES
+
+FINAL SOURCE FEASIBILITY: FAIL / REVIEW REQUIRED
+
+NO FULL H4 INTRADAY ACQUISITION IS AUTHORIZED BY THIS RUN.
+Resolve source/history/session completeness first.

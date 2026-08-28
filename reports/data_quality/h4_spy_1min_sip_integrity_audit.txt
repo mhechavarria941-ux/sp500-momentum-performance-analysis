@@ -1,0 +1,32 @@
+RUNNING SCRIPT VERSION: 2026-08-28-v1-h4-alpaca-sip-minute-integrity-audit
+========================================================================================================================
+H4 SPY ALPACA SIP 1-MINUTE INTEGRITY AUDIT
+========================================================================================================================
+Calendar sessions: 1,255
+Early-close sessions: 10
+Expected RTH minutes: 487,650
+Observed unique RTH minutes: 487,641
+Raw provider bars: 1,025,947
+RTH provider bars examined: 487,641
+Missing expected RTH minutes: 9
+Unexpected RTH minutes: 0
+Duplicate RTH timestamps: 0
+Invalid OHLC rows: 0
+Invalid/nonpositive volume rows: 0
+Missing provider VWAP rows: 0
+Missing/invalid transaction-count rows: 0
+H4 event triggers calculated: NO
+H4 forward outcomes calculated: NO
+
+FINAL INTRADAY MINUTE-HISTORY QUALITY GATE: FAIL
+
+FAILURE SAMPLE:
+- Missing expected RTH minute: 2021-05-05T11:27:00-04:00
+- Missing expected RTH minute: 2021-05-05T11:28:00-04:00
+- Missing expected RTH minute: 2021-05-05T11:29:00-04:00
+- Missing expected RTH minute: 2021-05-05T11:30:00-04:00
+- Missing expected RTH minute: 2021-05-05T11:31:00-04:00
+- Missing expected RTH minute: 2023-06-05T09:52:00-04:00
+- Missing expected RTH minute: 2023-06-05T09:53:00-04:00
+- Missing expected RTH minute: 2023-06-05T09:54:00-04:00
+- Missing expected RTH minute: 2023-06-05T09:55:00-04:00

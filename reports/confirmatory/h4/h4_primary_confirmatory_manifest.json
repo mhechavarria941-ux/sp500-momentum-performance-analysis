@@ -1,0 +1,16 @@
+{
+  "script_version": "2026-08-28-v1-h4-primary-confirmatory-inference",
+  "preregistration": "data/reference/h4/h4_primary_liquidity_sweep_inference_v1.json",
+  "preregistration_sha256": "60d955f3ae6e625034c7cac41c08e20c0ce19bba4324e3877fdcaa824ef4eb88",
+  "outcome_join": "data/interim/h4_spy_primary_liquidity_sweep_outcome_join.csv",
+  "outcome_join_sha256": "e60adb310d91c3ed9c0a391585d47cb8387dc2ff6731d467670684a039a23227",
+  "results_csv": "reports/confirmatory/h4/h4_primary_confirmatory_results.csv",
+  "results_csv_sha256": "f7ade3f668df54a0ae6ec84729bcf685a414816a56a6bce63b6fc319b91bbf25",
+  "report_txt": "reports/confirmatory/h4/h4_primary_confirmatory_report.txt",
+  "report_txt_sha256": "8b6d45e2a735f58b52726eee46563506bd0e7938fd9e8d2570e8dcfdcc97711d",
+  "primary_decision": "CONTRADICTED",
+  "primary_estimate": -0.0006131422498621542,
+  "primary_p_two_sided": 0.03538178873666804,
+  "primary_events": 164,
+  "primary_session_clusters": 156
+}

@@ -1,0 +1,17 @@
+RUNNING SCRIPT VERSION: 2026-08-28-v1-h4-primary-outcome-join-audit
+============================================================================================================================
+H4 PRIMARY OUTCOME-JOIN INTEGRITY AUDIT
+============================================================================================================================
+Primary event rows: 164
+Primary session clusters: 156
+15/30/60-minute endpoint offsets independently recomputed: PASS
+Signed-direction convention independently recomputed: PASS
+30-minute MFE/MAE independently recomputed: PASS
+Inferential statistics calculated: NO
+Mean returns printed: NO
+P-values printed: NO
+
+FINAL H4 PRIMARY OUTCOME-JOIN QUALITY GATE: PASS
+
+H4_PRIMARY_OUTCOME_JOIN_INTEGRITY_AUDIT_PASSED
+H4_PRIMARY_CONFIRMATORY_INFERENCE_AUTHORIZED

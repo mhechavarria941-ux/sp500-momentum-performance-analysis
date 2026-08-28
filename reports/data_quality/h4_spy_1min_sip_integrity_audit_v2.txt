@@ -1,0 +1,37 @@
+RUNNING SCRIPT VERSION: 2026-08-28-v2-h4-alpaca-sip-minute-integrity-audit-exception-policy
+============================================================================================================================
+H4 SPY ALPACA SIP 1-MINUTE INTEGRITY AUDIT V2 — FROZEN EXCEPTION POLICY
+============================================================================================================================
+Calendar sessions: 1,255
+Frozen excluded infrastructure-exception sessions: 2
+Primary-eligible sessions: 1,253
+Early-close sessions in complete calendar: 10
+Expected RTH minutes, all sessions: 487,650
+Observed unique RTH minutes, all sessions: 487,641
+Frozen missing minutes, all sessions: 9
+Missing minutes inside frozen exception sessions: 9
+Unexplained missing minutes outside exception sessions: 0
+Expected primary-eligible RTH minutes: 486,870
+Observed primary-eligible RTH minutes: 486,870
+Missing primary-eligible minutes: 0
+Unexpected RTH minutes: 0
+Duplicate RTH timestamps: 0
+Invalid OHLC rows: 0
+Invalid/nonpositive volume rows: 0
+Missing provider VWAP rows: 0
+Missing/invalid transaction-count rows: 0
+H4 event triggers calculated: NO
+H4 forward-return outcomes calculated: NO
+
+Frozen exception sessions:
+- 2021-05-05
+- 2023-06-05
+
+FINAL PRIMARY-ELIGIBLE MINUTE-HISTORY QUALITY GATE: PASS
+
+Primary-eligible canonical output: data\interim\h4_spy_1min_sip_2021_2025_primary_eligible.csv.gz
+Primary-eligible canonical rows: 486,870
+Canonical output SHA-256: b01f73148991f40dbb3e9334fcb3ae5941cd031269ba7c3af98aff19bf259a25
+
+H4_SPY_ALPACA_SIP_PRIMARY_ELIGIBLE_MINUTE_HISTORY_AUDIT_PASSED
+H4_5MIN_LOCATION_LAYER_CONSTRUCTION_AUTHORIZED

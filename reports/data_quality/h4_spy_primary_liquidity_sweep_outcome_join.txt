@@ -1,0 +1,18 @@
+RUNNING SCRIPT VERSION: 2026-08-28-v1-h4-primary-outcome-join
+============================================================================================================================
+H4 PRIMARY LIQUIDITY-SWEEP OUTCOME JOIN
+============================================================================================================================
+Primary 30-minute eligible event rows: 164
+Unique session clusters: 156
+Support-event rows: 78
+Resistance-event rows: 86
+15-minute complete outcomes: 164
+30-minute complete outcomes: 164
+60-minute complete outcomes: 163
+Inference calculated: NO
+Mean returns printed: NO
+Directional success rates printed: NO
+MFE/MAE summaries printed: NO
+
+H4_PRIMARY_OUTCOME_JOIN_COMPLETE
+H4_PRIMARY_OUTCOME_JOIN_AUDIT_REQUIRED

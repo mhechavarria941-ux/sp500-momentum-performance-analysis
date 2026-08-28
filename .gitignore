@@ -78,3 +78,4 @@ reports/exploratory/h3_attention_feasibility/h3_gdelt_full_daily_security_2025.c
 
 # H3 reproducible issuer-day attention panel
 reports/exploratory/h3_attention_feasibility/h3_preregistered_attention_issuer_day_panel.csv.gz
+data/raw/source/intraday/

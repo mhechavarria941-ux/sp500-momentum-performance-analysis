@@ -10654,64 +10654,384 @@ Threshold retuning after outcomes:
 
 `PROHIBITED`
 
+---
+
+## 3.75 H4 Primary Confirmatory Inference — Frozen Result
+
+### Date
+
+2026-08-28
+
+### Result Status
+
+The preregistered H4A primary confirmatory inference executed successfully after:
+
+- the Alpaca SIP source gate passed;
+- the two infrastructure-exception sessions were frozen and excluded;
+- the one-minute primary-eligible history passed its exception-aware audit;
+- the five-minute location layer passed independent audit;
+- the liquidity-sweep/rejection trigger layer passed independent audit;
+- the exact primary 30-minute outcome specification and inference method were frozen before outcome access;
+- the outcome join passed independent integrity audit.
+
+Final completion token:
+
+`H4_PRIMARY_CONFIRMATORY_INFERENCE_COMPLETE`
+
+### Provenance
+
+Script version:
+
+`2026-08-28-v1-h4-primary-confirmatory-inference`
+
+Preregistration:
+
+`H4_PRIMARY_LIQUIDITY_SWEEP_INFERENCE_V1`
+
+Preregistration SHA-256:
+
+`60d955f3ae6e625034c7cac41c08e20c0ce19bba4324e3877fdcaa824ef4eb88`
+
+Outcome-join SHA-256:
+
+`e60adb310d91c3ed9c0a391585d47cb8387dc2ff6731d467670684a039a23227`
+
+### Primary H4A Question
+
+Does an objectively defined first-contact support/resistance liquidity sweep and same-bar rejection predict price movement in the preregistered rejection direction over the next 30 minutes?
+
+Primary signed-return convention:
+
+`positive = movement in the preregistered rejection direction`
+
+Primary model:
+
+`intercept-only OLS on event-level signed 30-minute returns`
+
+Covariance:
+
+`session-cluster robust`
+
+Small-sample correction:
+
+`TRUE`
+
+Reference degrees of freedom:
+
+`eligible session clusters - 1`
+
+Test:
+
+`two-sided`
+
+Alpha:
+
+`0.05`
+
+Support rule:
+
+- statistically significant positive estimate -> `SUPPORTED`
+- statistically significant negative estimate -> `CONTRADICTED`
+- otherwise -> `NOT SUPPORTED`
+
+### Primary H4A Result
+
+Mean signed 30-minute return:
+
+`-0.000613142249862`
+
+Economic effect:
+
+`-0.06131422 percentage points`
+
+Session-clustered standard error:
+
+`0.000288872659684`
+
+95% confidence interval:
+
+`[-0.00118377758432, -0.0000425069154093]`
+
+t statistic:
+
+`-2.12253472`
+
+Reference df:
+
+`155`
+
+Two-sided p-value:
+
+`0.0353817887367`
+
+Eligible events:
+
+`164`
+
+Eligible session clusters:
+
+`156`
+
+Final preregistered decision:
+
+`CONTRADICTED`
+
+### Interpretation
+
+The preregistered same-bar liquidity-sweep/rejection event did not predict a subsequent move in the expected rejection direction.
+
+Instead, the average 30-minute signed return was significantly negative.
+
+Because the sign convention assigns positive values to movement in the expected rejection direction, the negative estimate means that, on average, price moved approximately:
+
+`0.0613 percentage points`
+
+in the opposite direction over the next 30 minutes.
+
+Therefore the frozen H4A rejection hypothesis is not merely unsupported; it is statistically contradicted in this sample under the exact preregistered mechanical definition.
+
+This result does not establish that all ICT concepts are invalid.
+
+It establishes that this specific mechanically coded structure:
+
+`first contact with PDH/PDL/PWH/PWL/PMH/PML ATR-scaled zone + same-bar 0.02×ATR sweep/rejection`
+
+did not behave as the reversal hypothesis predicted.
+
+### Prespecified Session-Collapsed Robustness
+
+Session-collapsed estimate:
+
+`-0.000714406861288`
+
+Economic scale:
+
+approximately `-0.07144 percentage points`
+
+HAC(5) standard error:
+
+`0.000295674059384`
+
+95% confidence interval:
+
+`[-0.00129847759318, -0.000130336129393]`
+
+Two-sided p-value:
+
+`0.016845956579`
+
+Sessions:
+
+`156`
+
+Interpretation:
+
+The session-collapsed robustness is also significantly negative and therefore reinforces the primary contradicted direction.
+
+Per preregistration, robustness cannot replace or upgrade the primary decision.
+
+### Secondary 15-Minute Horizon
+
+Mean signed return:
+
+`-0.000430881979037`
+
+Economic effect:
+
+approximately `-0.04309 percentage points`
+
+Session-clustered SE:
+
+`0.000244668210791`
+
+95% CI:
+
+`[-0.000914196414012, 0.0000524324559382]`
+
+Two-sided p-value:
+
+`0.0801956168738`
+
+Events:
+
+`164`
+
+Status:
+
+`DESCRIPTIVE ONLY`
+
+Interpretation:
+
+The 15-minute estimate is also negative, but the confidence interval includes zero and the two-sided p-value exceeds 0.05.
+
+### Secondary 60-Minute Horizon
+
+Mean signed return:
+
+`-0.000627461384966`
+
+Economic effect:
+
+approximately `-0.06275 percentage points`
+
+Session-clustered SE:
+
+`0.000397586123332`
+
+95% CI:
+
+`[-0.00141288802373, 0.000157965253796]`
+
+Two-sided p-value:
+
+`0.116576794009`
+
+Events:
+
+`163`
+
+Status:
+
+`DESCRIPTIVE ONLY`
+
+Interpretation:
+
+The 60-minute estimate remains negative but is not statistically significant.
+
+### Year-by-Year Descriptive Stability
+
+2021:
+
+- events: `40`
+- sessions: `36`
+- mean signed 30-minute return: `+0.000177223482077`
+
+2022:
+
+- events: `28`
+- sessions: `27`
+- mean signed 30-minute return: `-0.00117197235429`
+
+2023:
+
+- events: `20`
+- sessions: `20`
+- mean signed 30-minute return: `-0.00126661232021`
+
+2024:
+
+- events: `34`
+- sessions: `32`
+- mean signed 30-minute return: `-0.000122929076312`
+
+2025:
+
+- events: `42`
+- sessions: `41`
+- mean signed 30-minute return: `-0.00107898112718`
+
+Four of five years are negative.
+
+Only 2021 is positive.
+
+The year-by-year results are descriptive and do not change the frozen H4A primary decision.
+
+### Economic and Strategy Boundary
+
+This is a gross price-return signal test.
+
+No execution costs were applied.
+
+Therefore no deployable long/short trading strategy claim is authorized from this result.
+
+The statistically significant negative signed-return result is nevertheless informative because transaction costs would not reverse the sign in favor of the preregistered rejection hypothesis.
+
+### Research Implication
+
+The specific H4A formulation:
+
+`support/resistance first contact -> same-bar liquidity sweep/rejection -> 30-minute reversal`
+
+is contradicted.
+
+The result suggests that the event may behave more like a continuation/failed-rejection state than the hypothesized reversal state.
+
+This continuation interpretation is a new hypothesis and must not be retroactively substituted for H4A.
+
+If studied, it requires a separately frozen specification.
+
+Likewise, FVG, MSS/BOS, displacement, RVOL confirmation, VWAP context, confluence, and price-discovery structures remain separate research extensions and may not be used to rescue H4A after the fact.
+
+### Frozen H4A Conclusion
+
+`CLOSED — CONTRADICTED UNDER THE PREREGISTERED 2021-2025 SPY INTRADAY SPECIFICATION`
+
+---
+
 # Current Status
 
 Current phase:
 
-**H4 PRIMARY OUTCOME + INFERENCE SPECIFICATION — FROZEN BEFORE OUTCOME ACCESS**
+**H4A PRIMARY LIQUIDITY-SWEEP/REJECTION TEST — COMPLETE AND CONTRADICTED**
 
-## H4 Research State
+## Closed Confirmatory Research
 
-Primary instrument:
+H1 canonical market-wide 12-1 momentum:
 
-`SPY`
+`CLOSED — NOT SUPPORTED IN THE CORRECTED 2021-2025 SAMPLE`
 
-Primary intraday source:
+H2 sector-relative 12-1 momentum:
 
-`ALPACA SIP`
+`CLOSED — NOT SUPPORTED IN THE PREREGISTERED 2021-2025 SAMPLE`
 
-Five-minute location layer:
+H3 primary attention hypotheses:
 
-`PASSED`
+`COMPLETE — H3A/H3B/H3C NOT SUPPORTED UNDER THE FROZEN HOLM FAMILY`
 
-Liquidity-sweep trigger layer:
+H3 robustness:
 
-`PASSED`
+`PRESPECIFIED — NOT YET EXECUTED`
 
-Primary H4A outcome:
+H4A deterministic S/R liquidity-sweep/rejection reversal:
 
-`SIGNED 30-MINUTE RETURN`
+`CLOSED — CONTRADICTED UNDER THE PREREGISTERED 2021-2025 SPY INTRADAY SPECIFICATION`
 
-Primary inference:
+## H4A Primary Result
 
-`EVENT-LEVEL INTERCEPT-ONLY OLS WITH SESSION-CLUSTERED COVARIANCE`
+Mean signed 30-minute return:
 
-Primary test:
+`-0.06131422 percentage points`
 
-`TWO-SIDED α=0.05 + POSITIVE SIGN REQUIREMENT`
+Session-clustered p-value:
 
-Secondary horizons:
+`0.0353817887367`
 
-`15 MINUTES / 60 MINUTES — DESCRIPTIVE ONLY`
+Eligible events:
 
-H4 forward-return results observed:
+`164`
 
-`NO AT SPECIFICATION FREEZE`
+Eligible sessions:
+
+`156`
+
+Prespecified session-collapsed HAC robustness:
+
+`-0.07144 percentage points, p=0.016845956579`
+
+## Research Interpretation
+
+The frozen same-bar sweep/rejection rule did not produce the expected 30-minute reversal.
+
+The average subsequent move was significantly in the opposite direction.
+
+No post-hoc reinterpretation may convert this contradicted reversal test into confirmation of a continuation strategy.
+
+A continuation hypothesis, FVG/MSS/displacement conditions, RVOL confirmation, VWAP conditioning, confluence effects, or price-discovery models require separate pre-outcome specifications.
 
 ## Immediate Next Step
 
-Commit the frozen preregistration and all outcome/inference scripts.
+Commit the H4 primary result artifacts and updated project log.
 
-Then run:
+Do not modify the completed H4A decision.
 
-`python src/analysis/build_h4_primary_outcome_join.py`
-
-followed by:
-
-`python src/analysis/audit_h4_primary_outcome_join.py`
-
-Only after the audit issues:
-
-`H4_PRIMARY_CONFIRMATORY_INFERENCE_AUTHORIZED`
-
-may the first H4 confirmatory result be calculated.
+Then choose the next separately frozen H4 extension, with the most natural candidate being a mechanism test of whether additional structure such as MSS/displacement distinguishes true rejection from failed rejection/continuation.
