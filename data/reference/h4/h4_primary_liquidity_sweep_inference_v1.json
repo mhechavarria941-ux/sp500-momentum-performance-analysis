@@ -1,0 +1,81 @@
+{
+  "preregistration_name": "H4_PRIMARY_LIQUIDITY_SWEEP_INFERENCE_V1",
+  "frozen_date": "2026-08-28",
+  "status": "PRE_OUTCOME_FREEZE",
+  "instrument": "SPY",
+  "source": "Alpaca SIP",
+  "event_source": "data/interim/h4_spy_liquidity_sweep_triggers_preoutcome.csv",
+  "bar_source": "data/interim/h4_spy_5min_sip_primary_eligible_preoutcome.csv.gz",
+  "primary_component": {
+    "label": "H4A liquidity sweep/rejection predicts signed 30-minute reversal return",
+    "eligible_event": "liquidity_sweep_trigger == 1 and horizon_30m_clock_eligible == 1",
+    "trigger_time": "close of the qualifying first-contact five-minute bar",
+    "endpoint_rule": "close of the five-minute bar exactly 6 five-minute bars after the trigger bar (30 clock minutes after trigger-bar end)",
+    "raw_return": "endpoint_close / trigger_close - 1",
+    "sign_rule": {
+      "SUPPORT": 1,
+      "RESISTANCE": -1
+    },
+    "signed_return": "direction_sign * raw_return",
+    "interpretation": "positive signed return means price moved in the preregistered sweep/rejection direction",
+    "estimand": "mean signed_forward_return_30m across eligible trigger events",
+    "null": "mean signed_forward_return_30m = 0",
+    "expected_sign": "positive",
+    "test_sidedness": "two-sided",
+    "alpha": 0.05,
+    "support_rule": "SUPPORTED only if two-sided p < 0.05 and estimated mean signed return > 0; CONTRADICTED only if two-sided p < 0.05 and estimated mean signed return < 0; otherwise NOT SUPPORTED"
+  },
+  "primary_inference": {
+    "model": "intercept-only OLS on event-level signed_forward_return_30m",
+    "covariance": "cluster-robust by session_date",
+    "small_sample_correction": true,
+    "reference_df": "number of unique eligible session_date clusters - 1",
+    "confidence_interval": 0.95,
+    "minimum_events": 100,
+    "minimum_session_clusters": 100,
+    "reason": "multiple qualifying merged-zone events may occur within one trading session; session clustering prevents treating same-day event returns as independent"
+  },
+  "outcome_join": {
+    "15m_endpoint_offset_bars": 3,
+    "30m_endpoint_offset_bars": 6,
+    "60m_endpoint_offset_bars": 12,
+    "same_session_required": true,
+    "official_clock_eligibility_required": true,
+    "no_overnight_extension": true,
+    "no_next_session_carry": true
+  },
+  "secondary_descriptive_outcomes": {
+    "horizons_minutes": [
+      15,
+      60
+    ],
+    "directional_success": "signed_forward_return_horizon > 0",
+    "mfe_30m": "maximum favorable signed price excursion over bars t+1 through t+6 relative to trigger_close",
+    "mae_30m": "maximum adverse signed price excursion over bars t+1 through t+6 relative to trigger_close",
+    "family_status": "descriptive/robustness only; not part of H4A primary support decision"
+  },
+  "prespecified_robustness": {
+    "session_collapsed": "average signed 30-minute return within each eligible session, then test mean session return with Newey-West HAC lag 5",
+    "year_by_year": "report annual event counts and annual mean signed 30-minute returns",
+    "support_resistance_split": "report separately as descriptive stability",
+    "confluence_split": "report confluence versus single-source as descriptive stability",
+    "rvol_split": "report elevated versus non-elevated RVOL descriptively",
+    "rule": "robustness cannot upgrade a failed H4A primary result to SUPPORTED"
+  },
+  "economic_reporting": {
+    "primary_effect": "100 * mean signed_forward_return_30m percentage points",
+    "gross_or_net": "gross price return before spread, slippage, commissions, or market impact",
+    "strategy_claim": "no deployable trading-strategy claim is permitted from the gross signal test alone; execution-cost analysis is required separately"
+  },
+  "multiple_testing": {
+    "primary_family_size": 1,
+    "adjustment": "none required for single frozen H4A primary test",
+    "secondary_horizons": "not allowed to replace or upgrade primary decision"
+  },
+  "outcome_firewall": {
+    "forward_outcomes_observed_before_freeze": false,
+    "threshold_retuning_after_outcome_access": false,
+    "sample_window_retuning_after_outcome_access": false,
+    "trigger_definition_retuning_after_outcome_access": false
+  }
+}

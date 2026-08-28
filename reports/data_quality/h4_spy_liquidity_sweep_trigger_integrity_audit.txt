@@ -1,0 +1,18 @@
+RUNNING SCRIPT VERSION: 2026-08-28-v1-h4-liquidity-sweep-trigger-integrity-audit
+============================================================================================================================
+H4 LIQUIDITY SWEEP / REJECTION TRIGGER INTEGRITY AUDIT — PRE-OUTCOME
+============================================================================================================================
+Contacted zones: 1,919
+Trigger-layer rows: 1,919
+Independently recomputed qualifying triggers: 164
+Resistance triggers: 86
+Support triggers: 78
+30-minute clock-eligible triggers: 164
+Frozen penetration threshold: 0.02 × prior ATR(14)
+Same-bar penetration/rejection recomputation: PASS
+Future-return fields present: NO
+
+FINAL H4 LIQUIDITY-SWEEP TRIGGER QUALITY GATE: PASS
+
+H4_LIQUIDITY_SWEEP_TRIGGER_INTEGRITY_AUDIT_PASSED
+H4_PRIMARY_OUTCOME_JOIN_SPECIFICATION_AUTHORIZED

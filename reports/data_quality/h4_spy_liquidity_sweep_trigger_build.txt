@@ -1,0 +1,22 @@
+RUNNING SCRIPT VERSION: 2026-08-28-v1-h4-liquidity-sweep-trigger-pre-outcome
+============================================================================================================================
+H4 LIQUIDITY SWEEP / REJECTION TRIGGER BUILD — PRE-OUTCOME
+============================================================================================================================
+Contacted merged zones evaluated: 1,919
+Qualifying sweep/rejection triggers: 164
+30-minute clock-eligible triggers: 164
+Resistance triggers: 86
+Support triggers: 78
+Confluence triggers: 40
+Single-source triggers: 124
+Sweep threshold: 0.02 × prior ATR(14)
+Merged-zone trigger rule: ANY constituent level may qualify.
+Multiple qualifying levels: highest resistance / lowest support is the deterministic reference.
+Later revisits after a failed first contact: NOT ELIGIBLE.
+15/30/60-minute forward returns calculated: NO
+Directional success calculated: NO
+MFE / MAE calculated: NO
+
+Trigger build complete. Independent trigger audit required.
+
+H4_LIQUIDITY_SWEEP_TRIGGER_BUILD_COMPLETE

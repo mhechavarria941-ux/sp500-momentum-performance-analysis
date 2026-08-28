@@ -10424,29 +10424,241 @@ and:
 
 At that point the project may freeze the exact forward-outcome join and inference specification before calculating the first H4 result.
 
+---
+
+## 3.74 H4 Primary Outcome and Confirmatory Inference — Pre-Outcome Freeze
+
+### Date
+
+2026-08-28
+
+### Authorization
+
+The H4 liquidity-sweep trigger layer passed its independent integrity audit and issued:
+
+`H4_PRIMARY_OUTCOME_JOIN_SPECIFICATION_AUTHORIZED`
+
+No H4 forward-return result had been observed before this specification was frozen.
+
+### Primary H4A Question
+
+Does an objectively defined first-contact support/resistance liquidity sweep and same-bar rejection predict price movement in the preregistered rejection direction over the next 30 minutes?
+
+### Primary Eligible Event
+
+An event enters H4A only when:
+
+- `liquidity_sweep_trigger == 1`
+- `horizon_30m_clock_eligible == 1`
+
+No overnight extension and no next-session carry are allowed.
+
+### Exact 30-Minute Endpoint
+
+The trigger occurs at the close of the qualifying first-contact five-minute bar.
+
+The 30-minute endpoint is:
+
+`trigger_bar_index + 6`
+
+using the close of that five-minute bar.
+
+Secondary endpoints:
+
+- 15 minutes = `trigger_bar_index + 3`
+- 60 minutes = `trigger_bar_index + 12`
+
+Every endpoint must remain in the same official regular session.
+
+### Signed Return
+
+Raw return:
+
+`endpoint_close / trigger_close - 1`
+
+Direction sign:
+
+- support sweep = `+1`
+- resistance sweep = `-1`
+
+Primary signed return:
+
+`direction_sign × raw_forward_return_30m`
+
+Thus a positive value always means movement in the preregistered rejection direction.
+
+### Primary Estimand
+
+`mean signed_forward_return_30m`
+
+across all frozen eligible H4A events.
+
+### Primary Inference
+
+Model:
+
+`intercept-only OLS on event-level signed_forward_return_30m`
+
+Covariance:
+
+`cluster-robust by session_date`
+
+Small-sample correction:
+
+`TRUE`
+
+Reference degrees of freedom:
+
+`number of unique eligible session clusters - 1`
+
+Primary test:
+
+`two-sided`
+
+Alpha:
+
+`0.05`
+
+Frozen minimum sample:
+
+- events >= `100`
+- unique session clusters >= `100`
+
+### Support Rule
+
+`SUPPORTED`
+
+only if:
+
+- two-sided p-value < `0.05`
+- estimated mean signed return > `0`
+
+`CONTRADICTED`
+
+only if:
+
+- two-sided p-value < `0.05`
+- estimated mean signed return < `0`
+
+Otherwise:
+
+`NOT SUPPORTED`
+
+### Why Session Clustering
+
+Multiple merged-zone triggers can occur within one trading session.
+
+They are not treated as independent for inference.
+
+Session clustering allows event-level estimation while accounting for arbitrary within-session dependence.
+
+### Secondary Outcomes
+
+Prespecified descriptive/robustness horizons:
+
+- 15 minutes
+- 60 minutes
+
+They cannot replace or upgrade the 30-minute primary decision.
+
+### MFE / MAE
+
+For the six five-minute bars immediately following the trigger bar:
+
+- MFE = maximum favorable signed price excursion relative to trigger close
+- MAE = maximum adverse signed price excursion relative to trigger close
+
+These are descriptive and not part of the H4A primary significance test.
+
+### Session-Collapsed Robustness
+
+Prespecified robustness:
+
+1. average signed 30-minute return across all eligible events within each session;
+2. test the mean session return using Newey-West HAC with lag `5`.
+
+This robustness cannot upgrade a failed primary result.
+
+### Additional Descriptive Stability
+
+The confirmatory report may show:
+
+- year-by-year event count and mean signed 30-minute return;
+- support versus resistance stability;
+- confluence versus single-source stability;
+- elevated versus non-elevated RVOL stability.
+
+These are not separate confirmatory H4A tests unless separately preregistered later.
+
+### Gross Return Boundary
+
+H4A is a gross price-return signal test.
+
+It does not include:
+
+- spread;
+- slippage;
+- commissions;
+- market impact.
+
+No deployable trading-strategy claim is permitted until execution costs are analyzed separately.
+
+### Frozen Preregistration
+
+`data/reference/h4/h4_primary_liquidity_sweep_inference_v1.json`
+
+### New Scripts
+
+Outcome join:
+
+`src/analysis/build_h4_primary_outcome_join.py`
+
+Independent outcome audit:
+
+`src/analysis/audit_h4_primary_outcome_join.py`
+
+Confirmatory inference:
+
+`src/analysis/run_h4_primary_confirmatory_inference.py`
+
+### Required Execution Order
+
+1. commit this preregistration and all three scripts before outcome access;
+2. run the outcome join;
+3. run the independent outcome audit;
+4. only after `H4_PRIMARY_CONFIRMATORY_INFERENCE_AUTHORIZED`, run confirmatory inference.
+
+### Outcome Firewall at Freeze
+
+Forward-return outcomes observed:
+
+`NO`
+
+Mean signed return observed:
+
+`NO`
+
+Hit rate observed:
+
+`NO`
+
+MFE / MAE observed:
+
+`NO`
+
+P-value observed:
+
+`NO`
+
+Threshold retuning after outcomes:
+
+`PROHIBITED`
+
 # Current Status
 
 Current phase:
 
-**H4 LIQUIDITY-SWEEP TRIGGER LAYER — PRE-OUTCOME**
-
-## Closed Confirmatory Research
-
-H1 canonical market-wide 12-1 momentum:
-
-`CLOSED — NOT SUPPORTED IN THE CORRECTED 2021-2025 SAMPLE`
-
-H2 sector-relative 12-1 momentum:
-
-`CLOSED — NOT SUPPORTED IN THE PREREGISTERED 2021-2025 SAMPLE`
-
-H3 primary confirmatory inference:
-
-`COMPLETE — H3A/H3B/H3C NOT SUPPORTED UNDER THE FROZEN HOLM FAMILY`
-
-H3 robustness:
-
-`PRESPECIFIED — NOT YET EXECUTED`
+**H4 PRIMARY OUTCOME + INFERENCE SPECIFICATION — FROZEN BEFORE OUTCOME ACCESS**
 
 ## H4 Research State
 
@@ -10460,38 +10672,46 @@ Primary intraday source:
 
 Five-minute location layer:
 
-`PASSED INDEPENDENT INTEGRITY AUDIT`
+`PASSED`
 
-Liquidity-sweep trigger:
+Liquidity-sweep trigger layer:
 
-`AUTHORIZED — PRE-OUTCOME`
+`PASSED`
 
-Sweep penetration:
+Primary H4A outcome:
 
-`0.02 × PRIOR-SESSION ATR(14)`
+`SIGNED 30-MINUTE RETURN`
 
-Merged-zone qualification:
+Primary inference:
 
-`ANY CONSTITUENT LEVEL`
+`EVENT-LEVEL INTERCEPT-ONLY OLS WITH SESSION-CLUSTERED COVARIANCE`
 
-Primary horizon:
+Primary test:
 
-`30 MINUTES — OUTCOME NOT YET OPENED`
+`TWO-SIDED α=0.05 + POSITIVE SIGN REQUIREMENT`
 
-H4 forward-return outcomes observed:
+Secondary horizons:
 
-`NO`
+`15 MINUTES / 60 MINUTES — DESCRIPTIVE ONLY`
+
+H4 forward-return results observed:
+
+`NO AT SPECIFICATION FREEZE`
 
 ## Immediate Next Step
 
-Commit the trigger builder and audit before execution.
+Commit the frozen preregistration and all outcome/inference scripts.
 
 Then run:
 
-`python src/analysis/build_h4_liquidity_sweep_trigger_layer.py`
+`python src/analysis/build_h4_primary_outcome_join.py`
 
 followed by:
 
-`python src/analysis/audit_h4_liquidity_sweep_trigger_layer.py`
+`python src/analysis/audit_h4_primary_outcome_join.py`
 
-Only after the trigger audit passes may the exact primary outcome-join and inference specification be frozen.
+Only after the audit issues:
+
+`H4_PRIMARY_CONFIRMATORY_INFERENCE_AUTHORIZED`
+
+may the first H4 confirmatory result be calculated.
