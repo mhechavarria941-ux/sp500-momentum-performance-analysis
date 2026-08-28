@@ -9258,11 +9258,302 @@ Only after this gate passes should the full SPY 2021–2025 intraday history be 
 
 ---
 
+---
+
+## 3.68 H4 Massive/Polygon Source-Gate Failure and Alpaca SIP Fallback Authorization
+
+### Date
+
+2026-08-26
+
+### Objective
+
+Evaluate the first candidate consolidated intraday source without exposing any H4 forward-return result, then select the next source-feasibility route based only on historical coverage and source structure.
+
+### Massive / Polygon Probe
+
+Script:
+
+`src/analysis/probe_h4_intraday_data_source.py`
+
+Script version:
+
+`2026-08-26-v1-h4-intraday-source-feasibility`
+
+Probe dates:
+
+- `2021-01-04`
+- `2022-06-15`
+- `2023-10-02`
+- `2024-03-15`
+- `2025-12-31`
+
+Result:
+
+- 2021: `403 — plan timeframe unavailable`
+- 2022: `403 — plan timeframe unavailable`
+- 2023: `403 — plan timeframe unavailable`
+- 2024-03: `403 — plan timeframe unavailable`
+- 2025-12-31: `200`
+
+The accessible 2025 session returned:
+
+- 390 / 390 regular-session minute bars;
+- first bar: `09:30 ET`;
+- last bar: `15:59 ET`;
+- duplicate timestamps: `0`;
+- invalid OHLC rows: `0`;
+- missing volume rows: `0`;
+- nonpositive volume rows: `0`;
+- missing provider VWAP rows: `0`;
+- missing transaction-count rows: `0`.
+
+Therefore the candidate source structure is suitable for H4, but the current subscription does not expose the complete frozen 2021-2025 study period.
+
+Final gate:
+
+`FAIL / REVIEW REQUIRED`
+
+Full H4 acquisition remained unauthorized.
+
+### Current Massive Plan Constraint
+
+The failure is classified:
+
+`SUBSCRIPTION HISTORY DEPTH — NOT DATA QUALITY`
+
+No H4 threshold, trigger, location rule, or outcome definition changed because of this failure.
+
+### Authorized Fallback Test
+
+Before purchasing a deeper Massive history plan, the project will test:
+
+`Alpaca historical SIP minute bars`
+
+The fallback remains methodologically compatible because the required source properties are:
+
+- consolidated U.S. equity market coverage;
+- historical 1-minute OHLCV;
+- deterministic timestamps;
+- adequate 2021-2025 history.
+
+The fallback is a source-access change only.
+
+H4 forward outcomes remain unread.
+
+Fallback probe:
+
+`src/analysis/probe_h4_alpaca_sip_source.py`
+
+Expected reports:
+
+- `reports/data_quality/h4_alpaca_sip_source_feasibility.txt`
+- `reports/data_quality/h4_alpaca_sip_source_feasibility.json`
+
+### Outcome Firewall
+
+H4 post-trigger returns observed:
+
+`NO`
+
+H4 event success rates observed:
+
+`NO`
+
+MFE / MAE observed:
+
+`NO`
+
+Primary H4 thresholds changed:
+
+`NO`
+
+### Next Step
+
+Run the Alpaca SIP historical-minute source gate over representative dates in every study year.
+
+Only if the source passes will full 2021-2025 SPY minute acquisition be authorized.
+
+---
+
+## 3.69 Alpaca SIP Source Gate Passed and Full H4 Minute-History Acquisition Authorization
+
+### Date
+
+2026-08-28
+
+### Objective
+
+Close the intraday source-feasibility stage after the Massive / Polygon plan-depth failure and authorize full SPY 2021–2025 minute-history acquisition using the independently tested Alpaca SIP route.
+
+### Source-Gate Result
+
+Fallback source:
+
+`Alpaca historical SIP stock bars`
+
+Probe:
+
+`src/analysis/probe_h4_alpaca_sip_source.py`
+
+Probe script version:
+
+`2026-08-26-v2-h4-alpaca-sip-source-feasibility`
+
+The five-date source gate covering representative dates in:
+
+- 2021
+- 2022
+- 2023
+- 2024
+- 2025
+
+passed.
+
+Because the probe exits successfully only when every sample date has complete ordinary-session coverage, the pass establishes:
+
+- historical SIP access across all five study years;
+- complete regular-session 1-minute coverage on the frozen probe dates;
+- valid OHLC structure;
+- positive/nonmissing volume;
+- unique minute timestamps.
+
+The detailed source-gate report and JSON artifact remain the authoritative record for provider VWAP and transaction-count availability.
+
+H4 forward outcomes observed during the source gate:
+
+`NO`
+
+### Source Decision
+
+Primary H4 intraday source:
+
+`ALPACA SIP`
+
+Massive / Polygon remains structurally suitable but is not the selected primary route under the current subscription because its available historical depth did not cover the frozen 2021–2025 study interval.
+
+No H4 location threshold, sweep threshold, forward horizon, or outcome definition changed in response to the source substitution.
+
+### Full Acquisition Design
+
+Full SPY acquisition is now authorized for:
+
+`2021-01-01 through 2025-12-31`
+
+Raw frequency:
+
+`1 minute`
+
+Feed:
+
+`SIP`
+
+Adjustment:
+
+`raw`
+
+Acquisition script:
+
+`src/analysis/download_h4_spy_alpaca_sip_1min_history.py`
+
+The downloader:
+
+- verifies the passed source-gate JSON before continuing;
+- downloads Alpaca's official market calendar for the complete study interval;
+- downloads SPY bars in restartable monthly blocks;
+- follows `next_page_token` pagination;
+- retries rate-limit and transient server responses;
+- preserves monthly raw provider payloads under the local raw-data tree;
+- records SHA-256 checksums and request metadata;
+- calculates no ICT trigger or forward-return outcome.
+
+Expected raw directory:
+
+`data/raw/source/intraday/alpaca/spy_1min_sip/`
+
+Acquisition manifest:
+
+`data/interim/h4_spy_alpaca_1min_acquisition_manifest.json`
+
+Acquisition report:
+
+`reports/data_quality/h4_spy_alpaca_1min_acquisition.txt`
+
+### Independent Minute-History Audit
+
+Audit script:
+
+`src/analysis/audit_h4_spy_alpaca_sip_1min_history.py`
+
+The audit reconstructs the exact expected minute grid from the Alpaca market calendar.
+
+This explicitly handles early-close sessions rather than requiring 390 minutes on every trading date.
+
+The audit blocks downstream use unless it confirms:
+
+- all 60 monthly raw files and checksums;
+- exact market-calendar reconciliation;
+- no missing expected RTH minutes;
+- no unexpected RTH minutes;
+- no duplicate RTH timestamps;
+- valid OHLC relationships;
+- positive volume;
+- provider VWAP availability state;
+- transaction-count availability state.
+
+Only after the audit passes is the canonical RTH-only minute layer materialized:
+
+`data/interim/h4_spy_1min_sip_2021_2025.csv.gz`
+
+Canonical manifest:
+
+`data/interim/h4_spy_1min_sip_standardized_manifest.json`
+
+Audit:
+
+`reports/data_quality/h4_spy_1min_sip_integrity_audit.txt`
+
+Required success tokens:
+
+`H4_SPY_ALPACA_SIP_MINUTE_HISTORY_INTEGRITY_AUDIT_PASSED`
+
+and:
+
+`H4_5MIN_LOCATION_LAYER_CONSTRUCTION_AUTHORIZED`
+
+### Outcome Firewall
+
+During acquisition and the independent raw-history audit:
+
+- support/resistance events calculated: `NO`
+- liquidity sweeps calculated: `NO`
+- 15/30/60-minute forward returns calculated: `NO`
+- directional hit rates calculated: `NO`
+- MFE / MAE calculated: `NO`
+
+Therefore the H4 outcome firewall remains intact.
+
+### Decision
+
+Full raw intraday acquisition is authorized.
+
+H4 market-structure event construction remains blocked until the complete 2021–2025 SIP minute-history integrity audit passes.
+
+### Next Step
+
+Run the full acquisition script.
+
+Then run the independent minute-history audit.
+
+Only after both complete successfully should the project derive audited 5-minute bars and deterministic support/resistance location states.
+
+---
+
 # Current Status
 
 Current phase:
 
-**H4 INTRADAY MARKET-STRUCTURE SOURCE FEASIBILITY — PRE-OUTCOME**
+**H4 SPY 2021–2025 ALPACA SIP FULL MINUTE-HISTORY ACQUISITION / INTEGRITY AUDIT**
 
 ## Closed Confirmatory Research
 
@@ -9282,43 +9573,39 @@ H3 robustness:
 
 `PRESPECIFIED — NOT YET EXECUTED`
 
-## H4 Research State
+## H4 Source State
 
 Primary instrument:
 
 `SPY`
 
-Raw intraday target:
+Primary source:
 
-`1-MINUTE CONSOLIDATED U.S. EQUITY DATA`
+`ALPACA SIP`
 
-Primary analytical bar:
+Historical source-feasibility gate:
+
+`PASSED`
+
+Full study interval:
+
+`2021-01-01 through 2025-12-31`
+
+Raw frequency:
+
+`1 MINUTE`
+
+Primary analytical frequency after audit:
 
 `5 MINUTES`
 
-Primary session:
+Full raw acquisition:
 
-`REGULAR TRADING HOURS`
+`AUTHORIZED`
 
-Primary location engine:
+5-minute location-layer construction:
 
-`PDH / PDL / PWH / PWL / PMH / PML + ATR-NORMALIZED ZONES`
-
-Primary trigger:
-
-`SAME-BAR LIQUIDITY SWEEP / REJECTION`
-
-Primary forward horizon:
-
-`30 MINUTES`
-
-Price-discovery fallback:
-
-`DEFINED — NO FABRICATED OVERHEAD RESISTANCE`
-
-Full H4 intraday acquisition:
-
-`NOT AUTHORIZED UNTIL SOURCE FEASIBILITY PASSES`
+`BLOCKED UNTIL COMPLETE MINUTE-HISTORY AUDIT PASSES`
 
 H4 forward-return outcomes observed:
 
@@ -9326,20 +9613,14 @@ H4 forward-return outcomes observed:
 
 ## Immediate Next Step
 
-Place:
-
-`docs/h4_intraday_market_structure_preregistration_v1.md`
-
-and:
-
-`src/analysis/probe_h4_intraday_data_source.py`
-
-into the repository.
-
-Set the candidate consolidated-data API key in the local environment.
-
 Run:
 
-`python src/analysis/probe_h4_intraday_data_source.py`
+`python src/analysis/download_h4_spy_alpaca_sip_1min_history.py`
 
-Do not proceed to H4 forward-return testing until the source feasibility gate is reviewed and passed.
+Then, after acquisition completes:
+
+`python src/analysis/audit_h4_spy_alpaca_sip_1min_history.py`
+
+Do not calculate H4 event forward returns before the audit produces:
+
+`H4_5MIN_LOCATION_LAYER_CONSTRUCTION_AUTHORIZED`

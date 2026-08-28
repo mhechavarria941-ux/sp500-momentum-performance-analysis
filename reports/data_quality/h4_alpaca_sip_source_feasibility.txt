@@ -1,0 +1,115 @@
+RUNNING SCRIPT VERSION: 2026-08-26-v2-h4-alpaca-sip-source-feasibility
+==============================================================================================================
+H4 ALPACA SIP HISTORICAL-MINUTE SOURCE FEASIBILITY
+==============================================================================================================
+Symbol: SPY
+Candidate source API: https://data.alpaca.markets
+Requested feed: sip
+Requested bar: 1 minute
+Adjustment: raw
+Primary analytical target after approval: 5-minute bars derived from 1-minute data
+Primary session: regular U.S. equity session
+
+IMPORTANT:
+This probe inspects source structure and historical coverage only.
+It does NOT calculate post-trigger H4 forward returns or test any H4 hypothesis.
+
+--------------------------------------------------------------------------------------------------------------
+Date: 2021-01-04
+HTTP status: 200
+Total API bars: 853
+RTH bars: 390 / expected 390
+First RTH timestamp ET: 2021-01-04T09:30:00-05:00
+Last RTH timestamp ET: 2021-01-04T15:59:00-05:00
+Duplicate RTH timestamps: 0
+Invalid OHLC rows: 0
+Missing volume rows: 0
+Nonpositive volume rows: 0
+Missing provider VWAP rows: 0
+Missing transaction-count rows: 0
+Historical SIP access: PASS
+Full ordinary-session coverage: PASS
+Source message: OK
+--------------------------------------------------------------------------------------------------------------
+Date: 2022-06-15
+HTTP status: 200
+Total API bars: 895
+RTH bars: 390 / expected 390
+First RTH timestamp ET: 2022-06-15T09:30:00-04:00
+Last RTH timestamp ET: 2022-06-15T15:59:00-04:00
+Duplicate RTH timestamps: 0
+Invalid OHLC rows: 0
+Missing volume rows: 0
+Nonpositive volume rows: 0
+Missing provider VWAP rows: 0
+Missing transaction-count rows: 0
+Historical SIP access: PASS
+Full ordinary-session coverage: PASS
+Source message: OK
+--------------------------------------------------------------------------------------------------------------
+Date: 2023-10-02
+HTTP status: 200
+Total API bars: 850
+RTH bars: 390 / expected 390
+First RTH timestamp ET: 2023-10-02T09:30:00-04:00
+Last RTH timestamp ET: 2023-10-02T15:59:00-04:00
+Duplicate RTH timestamps: 0
+Invalid OHLC rows: 0
+Missing volume rows: 0
+Nonpositive volume rows: 0
+Missing provider VWAP rows: 0
+Missing transaction-count rows: 0
+Historical SIP access: PASS
+Full ordinary-session coverage: PASS
+Source message: OK
+--------------------------------------------------------------------------------------------------------------
+Date: 2024-03-15
+HTTP status: 200
+Total API bars: 792
+RTH bars: 390 / expected 390
+First RTH timestamp ET: 2024-03-15T09:30:00-04:00
+Last RTH timestamp ET: 2024-03-15T15:59:00-04:00
+Duplicate RTH timestamps: 0
+Invalid OHLC rows: 0
+Missing volume rows: 0
+Nonpositive volume rows: 0
+Missing provider VWAP rows: 0
+Missing transaction-count rows: 0
+Historical SIP access: PASS
+Full ordinary-session coverage: PASS
+Source message: OK
+--------------------------------------------------------------------------------------------------------------
+Date: 2025-12-31
+HTTP status: 200
+Total API bars: 867
+RTH bars: 390 / expected 390
+First RTH timestamp ET: 2025-12-31T09:30:00-05:00
+Last RTH timestamp ET: 2025-12-31T15:59:00-05:00
+Duplicate RTH timestamps: 0
+Invalid OHLC rows: 0
+Missing volume rows: 0
+Nonpositive volume rows: 0
+Missing provider VWAP rows: 0
+Missing transaction-count rows: 0
+Historical SIP access: PASS
+Full ordinary-session coverage: PASS
+Source message: OK
+
+==============================================================================================================
+SOURCE GATE SUMMARY
+==============================================================================================================
+Historical SIP access across all sample years: PASS
+Full 390-minute RTH coverage on all probe dates: PASS
+OHLC integrity: PASS
+Volume integrity: PASS
+Timestamp uniqueness: PASS
+Provider minute VWAP present on all probe RTH rows: YES
+Transaction count present on all probe RTH rows: YES
+
+FINAL SOURCE FEASIBILITY: PASS
+
+H4_ALPACA_SIP_MINUTE_SOURCE_FEASIBILITY_GATE_PASSED
+
+Next authorized action:
+Build and audit the full SPY 2021-01-01 through 2025-12-31
+1-minute regular-session acquisition layer before deriving H4 events.
