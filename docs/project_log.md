@@ -10968,70 +10968,167 @@ Likewise, FVG, MSS/BOS, displacement, RVOL confirmation, VWAP context, confluenc
 
 ---
 
+---
+
+## 3.76 Azure SQL Research-Warehouse and Statistical-Reference Foundation
+
+### Date
+
+2026-08-28
+
+### Objective
+
+Begin the final database-consolidation phase before Power BI and publication.
+
+The objective is to make H1 through H4 educationally queryable and reproducible from Azure SQL while preserving the frozen Python analyses as the independent computational/audit reference.
+
+### Architecture Decision
+
+Existing schemas remain authoritative and unchanged:
+
+- `raw`
+- `staging`
+- `core`
+- `analytics`
+
+New non-destructive schemas:
+
+- `ref`
+- `research`
+- `results`
+- `audit`
+- `bi`
+
+### Statistical Reference Requirement
+
+Azure SQL does not rely on SciPy at query time.
+
+A precomputed statistical reference layer is therefore required.
+
+Student-t lookup:
+
+`ref.student_t_two_sided_lookup`
+
+Degrees of freedom:
+
+`1 through 600`
+
+The table contains an adaptive two-sided p-value grid and the corresponding absolute Student-t critical value generated with SciPy.
+
+SQL interpolation function:
+
+`ref.fn_student_t_two_sided_p`
+
+Critical-value function:
+
+`ref.fn_student_t_critical`
+
+Normal lookup:
+
+`ref.normal_two_sided_lookup`
+
+Normal p-value function:
+
+`ref.fn_normal_two_sided_p`
+
+The persisted statistical lookup is designed to allow SQL to reproduce inferential p-values/critical values without requiring statistical libraries inside Azure SQL.
+
+The application script independently validates the SQL Student-t interpolation against the frozen H3A, H3B, and H4A t statistics and p-values.
+
+### Educational Metadata
+
+New tables:
+
+- `ref.hypothesis`
+- `ref.variable_catalog`
+- `ref.hypothesis_variable_map`
+
+These explain what each hypothesis tests, which variables it uses, the grain and formula of each variable, and whether the variable is look-ahead safe.
+
+### Result Storage
+
+New normalized tables:
+
+- `results.hypothesis_result`
+- `results.result_breakdown`
+
+### Audit / Provenance
+
+New tables:
+
+- `audit.pipeline_run`
+- `audit.quality_check`
+- `audit.exclusion`
+- `audit.artifact`
+
+### Initial BI Contract
+
+Initial semantic views:
+
+- `bi.vw_research_summary`
+- `bi.vw_variable_catalog`
+
+Additional H1-H4 Power BI views will be created after the existing Azure SQL object inventory is reconciled to the frozen Python results.
+
+### New Files
+
+Migration:
+
+`sql/schema/002_create_research_warehouse_foundation.sql`
+
+Application/audit script:
+
+`src/analysis/apply_research_warehouse_foundation.py`
+
+Read-only SQL object inventory:
+
+`src/analysis/inventory_azure_sql_research_objects.py`
+
+Architecture document:
+
+`docs/sql_research_warehouse_design.md`
+
+### Execution Gate
+
+Required success tokens:
+
+`AZURE_SQL_RESEARCH_WAREHOUSE_FOUNDATION_PASSED`
+
+`SQL_STATISTICAL_REFERENCE_LAYER_READY`
+
+`SQL_H1_H4_EDUCATIONAL_BINDING_AUTHORIZED`
+
+Only after this gate passes should the project materialize/bind the complete H1-H4 educational panels and Power BI semantic views.
+
 # Current Status
 
 Current phase:
 
-**H4A PRIMARY LIQUIDITY-SWEEP/REJECTION TEST — COMPLETE AND CONTRADICTED**
+**AZURE SQL RESEARCH CONSOLIDATION — FOUNDATION READY TO APPLY**
 
-## Closed Confirmatory Research
+H1:
 
-H1 canonical market-wide 12-1 momentum:
+`CLOSED — NOT SUPPORTED`
 
-`CLOSED — NOT SUPPORTED IN THE CORRECTED 2021-2025 SAMPLE`
+H2:
 
-H2 sector-relative 12-1 momentum:
+`CLOSED — NOT SUPPORTED`
 
-`CLOSED — NOT SUPPORTED IN THE PREREGISTERED 2021-2025 SAMPLE`
+H3:
 
-H3 primary attention hypotheses:
+`PRIMARY COMPONENTS COMPLETE — NOT SUPPORTED`
 
-`COMPLETE — H3A/H3B/H3C NOT SUPPORTED UNDER THE FROZEN HOLM FAMILY`
+H4A:
 
-H3 robustness:
+`CLOSED — CONTRADICTED`
 
-`PRESPECIFIED — NOT YET EXECUTED`
+Database-completion objective:
 
-H4A deterministic S/R liquidity-sweep/rejection reversal:
+`SQL-QUERYABLE H1-H4 + PRELOADED STATISTICAL REFERENCE + POWER BI SEMANTIC LAYER`
 
-`CLOSED — CONTRADICTED UNDER THE PREREGISTERED 2021-2025 SPY INTRADAY SPECIFICATION`
+Immediate next step:
 
-## H4A Primary Result
-
-Mean signed 30-minute return:
-
-`-0.06131422 percentage points`
-
-Session-clustered p-value:
-
-`0.0353817887367`
-
-Eligible events:
-
-`164`
-
-Eligible sessions:
-
-`156`
-
-Prespecified session-collapsed HAC robustness:
-
-`-0.07144 percentage points, p=0.016845956579`
-
-## Research Interpretation
-
-The frozen same-bar sweep/rejection rule did not produce the expected 30-minute reversal.
-
-The average subsequent move was significantly in the opposite direction.
-
-No post-hoc reinterpretation may convert this contradicted reversal test into confirmation of a continuation strategy.
-
-A continuation hypothesis, FVG/MSS/displacement conditions, RVOL confirmation, VWAP conditioning, confluence effects, or price-discovery models require separate pre-outcome specifications.
-
-## Immediate Next Step
-
-Commit the H4 primary result artifacts and updated project log.
-
-Do not modify the completed H4A decision.
-
-Then choose the next separately frozen H4 extension, with the most natural candidate being a mechanism test of whether additional structure such as MSS/displacement distinguishes true rejection from failed rejection/continuation.
+1. apply the non-destructive research-warehouse foundation;
+2. validate the Student-t/normal statistical reference tables;
+3. run the read-only Azure SQL object inventory;
+4. bind H1-H4 analytical panels and frozen results into `research`, `results`, and `bi`.
