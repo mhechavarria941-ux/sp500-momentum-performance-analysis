@@ -11100,35 +11100,249 @@ Required success tokens:
 
 Only after this gate passes should the project materialize/bind the complete H1-H4 educational panels and Power BI semantic views.
 
+---
+
+## 3.77 SQL H1-H4 Research Binding and H4 Relational Materialization
+
+### Date
+
+2026-08-28
+
+### Foundation Gate
+
+The Azure SQL research-warehouse foundation passed.
+
+Validated statistical-reference state:
+
+- Student-t probability points per df: `935`
+- Student-t df range: `1-600`
+- Student-t rows: `561,000`
+- standard-normal lookup rows: `935`
+
+Known frozen p-value reconciliation:
+
+- H3A absolute error: approximately `1.87e-07`
+- H3B absolute error: approximately `4.99e-07`
+- H4A absolute error: approximately `5.50e-07`
+
+Final foundation tokens:
+
+`AZURE_SQL_RESEARCH_WAREHOUSE_FOUNDATION_PASSED`
+
+`SQL_STATISTICAL_REFERENCE_LAYER_READY`
+
+`SQL_H1_H4_EDUCATIONAL_BINDING_AUTHORIZED`
+
+### Existing SQL Inventory
+
+The read-only database inventory found:
+
+- catalog column rows: `832`
+- tables/views: `66`
+- research-keyword objects: `34`
+
+Existing analytical assets already include:
+
+- H1 momentum ranking, forward-return, performance, wealth, drawdown and turnover views;
+- H2 within-sector ranking and forward-return views;
+- H3 preregistered analytical panel;
+- H3 primary confirmatory result table.
+
+The new warehouse therefore binds to these existing validated objects rather than duplicating them.
+
+### H1 Binding
+
+New educational views:
+
+- `research.v_h1_monthly_performance`
+- `research.v_h1_performance_summary`
+- `research.v_h1_primary_monthly`
+
+`research.v_h1_primary_monthly` exposes the three frozen primary monthly quantities:
+
+- WML monthly return;
+- D10 minus SPY monthly return;
+- cross-decile monthly return slope.
+
+### H2 Binding
+
+The loader inspects the exact existing H2 WML view schema and creates:
+
+`research.v_h2_primary_monthly`
+
+It also creates:
+
+`bi.vw_h2_wml`
+
+and:
+
+`bi.vw_h2_quintile`
+
+No H2 return construction is replaced.
+
+### H3 Binding
+
+New educational views:
+
+- `research.v_h3_panel`
+- `research.v_h3_results`
+- `bi.vw_h3_panel`
+- `bi.vw_h3_results`
+
+The H3 analytical panel remains the already validated SQL population of:
+
+`29,287 rows`
+
+### H4 SQL Materialization
+
+Unlike H1-H3, H4 was primarily constructed from audited local provider artifacts.
+
+The database-completion phase therefore materializes H4 relationally.
+
+New tables:
+
+- `research.h4_minute`
+- `research.h4_daily_level`
+- `research.h4_bar_5m`
+- `research.h4_zone`
+- `research.h4_trigger`
+- `research.h4_outcome`
+
+Expected primary-eligible minute rows:
+
+`486,870`
+
+Expected five-minute rows:
+
+`97,374`
+
+Expected primary H4A outcome rows:
+
+`164`
+
+The database stores market context, not only final events.
+
+### H4 BI Views
+
+New views:
+
+- `bi.vw_h4_events`
+- `bi.vw_h4_yearly`
+
+The primary economic H4 result must be reproducible with ordinary SQL:
+
+`COUNT(*) = 164`
+
+`COUNT(DISTINCT session_date) = 156`
+
+`AVG(signed_forward_return_30m) = -0.000613142249862` approximately
+
+### Unified Results
+
+The binding loader populates:
+
+`results.hypothesis_result`
+
+with frozen H1, H2, H3 and H4 components.
+
+It populates:
+
+`results.result_breakdown`
+
+with educational/chart-ready breakdowns including:
+
+- H1 series performance;
+- H2 aggregate quintile means;
+- H4 yearly mean signed returns.
+
+### H4 Audit / Provenance
+
+The H4 infrastructure exclusions are materialized in:
+
+`audit.exclusion`
+
+for:
+
+- `2021-05-05`
+- `2023-06-05`
+
+H4 source/result artifact checksums are materialized in:
+
+`audit.artifact`
+
+### Student Query Layer
+
+New documentation:
+
+`docs/sql_student_queries.md`
+
+The query set covers:
+
+- H1 portfolio performance and primary quantities;
+- H2 sector-neutral WML and quintile exploration;
+- H3 attention-return and Winner-entry exploration;
+- H4 primary result, yearly stability and descriptive confluence;
+- Student-t p-value and critical-value lookups;
+- unified H1-H4 final-result query.
+
+### New Files
+
+SQL migration:
+
+`sql/analytics/013_research_bindings.sql`
+
+Application/materialization script:
+
+`src/analysis/load_research_data.py`
+
+Student query guide:
+
+`docs/sql_student_queries.md`
+
+### Required Quality Gate
+
+Expected final tokens:
+
+`SQL_H1_H4_RESEARCH_DATA_BINDING_PASSED`
+
+`SQL_H4_FROZEN_RESULT_REPRODUCED`
+
+`POWER_BI_SEMANTIC_MODEL_BUILD_AUTHORIZED`
+
+Only after this binding gate passes should the Power BI semantic model and DAX layer be constructed.
+
 # Current Status
 
 Current phase:
 
-**AZURE SQL RESEARCH CONSOLIDATION — FOUNDATION READY TO APPLY**
+**SQL H1-H4 RESEARCH BINDING — READY TO FREEZE AND EXECUTE**
 
-H1:
+Research conclusions remain unchanged:
 
-`CLOSED — NOT SUPPORTED`
+- H1: `CLOSED — NOT SUPPORTED`
+- H2: `CLOSED — NOT SUPPORTED`
+- H3A/H3B/H3C: `NOT SUPPORTED`
+- H4A: `CLOSED — CONTRADICTED`
 
-H2:
+Database foundation:
 
-`CLOSED — NOT SUPPORTED`
+`PASSED`
 
-H3:
+Statistical lookup:
 
-`PRIMARY COMPONENTS COMPLETE — NOT SUPPORTED`
+`READY`
 
-H4A:
+Next authorized phase:
 
-`CLOSED — CONTRADICTED`
+`H1-H4 SQL BINDING + H4 RELATIONAL MATERIALIZATION`
 
-Database-completion objective:
+Expected result:
 
-`SQL-QUERYABLE H1-H4 + PRELOADED STATISTICAL REFERENCE + POWER BI SEMANTIC LAYER`
+A student or Power BI user can move from hypothesis definitions and market variables to the same H1-H4 economic conclusions through Azure SQL without relying on Python-generated presentation files.
 
 Immediate next step:
 
-1. apply the non-destructive research-warehouse foundation;
-2. validate the Student-t/normal statistical reference tables;
-3. run the read-only Azure SQL object inventory;
-4. bind H1-H4 analytical panels and frozen results into `research`, `results`, and `bi`.
+1. commit `013_research_bindings.sql`, `load_research_data.py`, the student query guide, and this log;
+2. run `python src/analysis/load_research_data.py`;
+3. require all three SQL binding success tokens;
+4. only then begin Power BI semantic-model design and DAX measures.
