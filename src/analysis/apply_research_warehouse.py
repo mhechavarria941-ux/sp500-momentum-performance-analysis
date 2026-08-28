@@ -19,7 +19,7 @@ from dotenv import load_dotenv
 SCRIPT_VERSION = "2026-08-28-v1-research-warehouse-foundation-stat-reference"
 ROOT = Path(__file__).resolve().parents[2]
 
-SQL_PATH = ROOT / "sql" / "schema" / "002_create_research_warehouse_foundation.sql"
+SQL_PATH = ROOT / "sql" / "schema" / "012_research_warehouse.sql"
 REPORT_PATH = (
     ROOT
     / "reports"
