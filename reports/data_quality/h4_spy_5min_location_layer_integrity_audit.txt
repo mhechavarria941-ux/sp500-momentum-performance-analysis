@@ -1,0 +1,22 @@
+RUNNING SCRIPT VERSION: 2026-08-28-v1-h4-5min-location-layer-integrity-audit
+============================================================================================================================
+H4 SPY 5-MINUTE LOCATION LAYER INTEGRITY AUDIT — PRE-OUTCOME
+============================================================================================================================
+Primary-eligible sessions: 1,253
+Canonical source minutes: 486,870
+Expected 5-minute bars: 97,374
+Observed 5-minute bars: 97,374
+Merged location zones: 6,724
+Contact rows: 6,724
+Contacted zones: 1,919
+Confluence zones: 731
+Full 1m→5m OHLCV/VWAP/transaction recomputation: PASS
+Wilder ATR and higher-timeframe level recomputation: PASS
+Zone merge / first-contact audit: PASS
+H4 liquidity-sweep trigger calculated: NO
+H4 forward-return outcomes calculated: NO
+
+FINAL H4 5-MINUTE LOCATION-LAYER QUALITY GATE: PASS
+
+H4_5MIN_LOCATION_LAYER_INTEGRITY_AUDIT_PASSED
+H4_LIQUIDITY_SWEEP_TRIGGER_CONSTRUCTION_AUTHORIZED

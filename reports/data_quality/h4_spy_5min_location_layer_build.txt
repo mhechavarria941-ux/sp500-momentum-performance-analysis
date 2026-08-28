@@ -1,0 +1,25 @@
+RUNNING SCRIPT VERSION: 2026-08-28-v2-h4-5min-location-layer-serialization-order-fix
+============================================================================================================================
+H4 SPY 5-MINUTE LOCATION LAYER BUILD — PRE-OUTCOME
+============================================================================================================================
+Primary-eligible sessions: 1,253
+Canonical 1-minute rows: 486,870
+Expected 5-minute rows: 97,374
+Constructed 5-minute rows: 97,374
+Merged support/resistance zones: 6,724
+Zones contacted at least once: 1,919
+Confluence zones: 731
+Sessions entering price-discovery state: 172
+ATR: Wilder(14), prior completed session only
+Zone half-width: 0.10 × prior ATR(14)
+Primary level families: PDH/PDL/PWH/PWL/PMH/PML
+Excluded intraday infrastructure sessions remain excluded.
+Complete daily SIP bars from excluded sessions remain eligible for later higher-timeframe levels.
+Liquidity-sweep trigger calculated: NO
+15/30/60-minute forward returns calculated: NO
+Directional hit rate calculated: NO
+MFE/MAE calculated: NO
+
+Build complete. Independent location-layer audit is required.
+
+H4_5MIN_LOCATION_LAYER_BUILD_COMPLETE

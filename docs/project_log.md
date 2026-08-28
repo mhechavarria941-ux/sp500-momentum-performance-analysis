@@ -10217,11 +10217,218 @@ and, only after a successful build token, run:
 
 `python src/analysis/audit_h4_5min_location_layer.py`
 
+---
+
+## 3.73 H4 Liquidity-Sweep Trigger Layer — Pre-Outcome Freeze
+
+### Date
+
+2026-08-28
+
+### Authorization
+
+The independently audited five-minute location layer passed and issued:
+
+`H4_LIQUIDITY_SWEEP_TRIGGER_CONSTRUCTION_AUTHORIZED`
+
+The project is therefore authorized to construct the frozen H4 liquidity-sweep/rejection trigger.
+
+Forward-return outcomes remain unopened.
+
+### Eligible Trigger Population
+
+Only:
+
+`first-contact bars from the independently audited merged S/R zone layer`
+
+are eligible.
+
+Later revisits of a merged zone on the same session are not eligible for the H4A primary trigger.
+
+### Frozen Penetration Threshold
+
+The first-contact five-minute bar must penetrate an eligible constituent level by at least:
+
+`0.02 × prior-session Wilder ATR(14)`
+
+### Resistance Trigger
+
+For constituent resistance level `L`:
+
+`first_contact_high >= L + 0.02 × prior_ATR14`
+
+and:
+
+`first_contact_close < L`
+
+Expected rejection direction:
+
+`DOWN`
+
+### Support Trigger
+
+For constituent support level `L`:
+
+`first_contact_low <= L - 0.02 × prior_ATR14`
+
+and:
+
+`first_contact_close > L`
+
+Expected rejection direction:
+
+`UP`
+
+### Merged-Zone Rule
+
+A merged zone contains one or more constituent PDH/PWH/PMH or PDL/PWL/PML levels.
+
+The merged zone triggers if:
+
+`AT LEAST ONE CONSTITUENT LEVEL`
+
+satisfies the corresponding same-bar sweep/rejection rule.
+
+This rule is frozen before opening any H4 forward outcome.
+
+### Multiple Qualifying Constituent Levels
+
+If multiple constituent levels inside one merged zone qualify on the same first-contact bar, the zone remains:
+
+`ONE EVENT`
+
+The deterministic reference level is:
+
+- resistance: highest qualifying constituent level;
+- support: lowest qualifying constituent level.
+
+This selects the most extreme qualifying swept/rejected level without creating duplicate events.
+
+### Trigger Time
+
+Trigger time:
+
+`close of the qualifying first-contact five-minute bar`
+
+No information after that bar may enter trigger construction.
+
+### Horizon Clock Eligibility
+
+Before outcome access, the trigger layer records whether sufficient official regular-session clock time remains for:
+
+- 15 minutes;
+- 30 minutes;
+- 60 minutes.
+
+A horizon is clock-eligible only when:
+
+`trigger_bar_end + horizon <= official session close`
+
+Primary horizon remains:
+
+`30 minutes`
+
+Secondary horizons remain:
+
+- `15 minutes`
+- `60 minutes`
+
+Clock eligibility is not an outcome and is frozen before the future-return join.
+
+### Context Preserved on Trigger Rows
+
+Contemporaneous pre-outcome context may be carried forward from the audited location layer, including:
+
+- confluence status;
+- contributing level families;
+- first-contact OHLCV;
+- provider VWAP;
+- session VWAP;
+- RVOL;
+- realized-volatility state;
+- opening-range extension;
+- three-bar displacement;
+- price-discovery indicators.
+
+These fields do not alter the H4A primary trigger definition.
+
+### New Scripts
+
+Trigger builder:
+
+`src/analysis/build_h4_liquidity_sweep_trigger_layer.py`
+
+Independent trigger audit:
+
+`src/analysis/audit_h4_liquidity_sweep_trigger_layer.py`
+
+### Expected Outputs
+
+Trigger layer:
+
+`data/interim/h4_spy_liquidity_sweep_triggers_preoutcome.csv`
+
+Manifest:
+
+`data/interim/h4_spy_liquidity_sweep_trigger_manifest.json`
+
+Build report:
+
+`reports/data_quality/h4_spy_liquidity_sweep_trigger_build.txt`
+
+Independent audit:
+
+`reports/data_quality/h4_spy_liquidity_sweep_trigger_integrity_audit.txt`
+
+Audit manifest:
+
+`data/interim/h4_spy_liquidity_sweep_trigger_audit_manifest.json`
+
+### Outcome Firewall
+
+15-minute forward return:
+
+`NOT CALCULATED`
+
+30-minute forward return:
+
+`NOT CALCULATED`
+
+60-minute forward return:
+
+`NOT CALCULATED`
+
+Signed forward return:
+
+`NOT CALCULATED`
+
+Directional success:
+
+`NOT CALCULATED`
+
+MFE / MAE:
+
+`NOT CALCULATED`
+
+No trigger threshold may be changed after future returns are opened.
+
+### Next Authorization
+
+Only a successful independent trigger audit may issue:
+
+`H4_LIQUIDITY_SWEEP_TRIGGER_INTEGRITY_AUDIT_PASSED`
+
+and:
+
+`H4_PRIMARY_OUTCOME_JOIN_SPECIFICATION_AUTHORIZED`
+
+At that point the project may freeze the exact forward-outcome join and inference specification before calculating the first H4 result.
+
 # Current Status
 
 Current phase:
 
-**H4 FIVE-MINUTE PRICE-LOCATION LAYER — V2 IMPLEMENTATION CORRECTION FROZEN, PRE-OUTCOME**
+**H4 LIQUIDITY-SWEEP TRIGGER LAYER — PRE-OUTCOME**
 
 ## Closed Confirmatory Research
 
@@ -10251,21 +10458,25 @@ Primary intraday source:
 
 `ALPACA SIP`
 
-Infrastructure-exception policy:
+Five-minute location layer:
 
-`FROZEN — TWO WHOLE SESSIONS EXCLUDED`
-
-V1 five-minute location builder:
-
-`FAILED BEFORE OUTPUT RESULTS — TIMESTAMP SERIALIZATION ORDER`
-
-V2 five-minute location builder:
-
-`CORRECTED — IMPLEMENTATION ONLY`
+`PASSED INDEPENDENT INTEGRITY AUDIT`
 
 Liquidity-sweep trigger:
 
-`NOT CALCULATED`
+`AUTHORIZED — PRE-OUTCOME`
+
+Sweep penetration:
+
+`0.02 × PRIOR-SESSION ATR(14)`
+
+Merged-zone qualification:
+
+`ANY CONSTITUENT LEVEL`
+
+Primary horizon:
+
+`30 MINUTES — OUTCOME NOT YET OPENED`
 
 H4 forward-return outcomes observed:
 
@@ -10273,12 +10484,14 @@ H4 forward-return outcomes observed:
 
 ## Immediate Next Step
 
-Replace the canonical location builder with V2 and commit the correction.
+Commit the trigger builder and audit before execution.
 
 Then run:
 
-`python src/analysis/build_h4_5min_location_layer.py`
+`python src/analysis/build_h4_liquidity_sweep_trigger_layer.py`
 
-followed, after successful build completion, by:
+followed by:
 
-`python src/analysis/audit_h4_5min_location_layer.py`
+`python src/analysis/audit_h4_liquidity_sweep_trigger_layer.py`
+
+Only after the trigger audit passes may the exact primary outcome-join and inference specification be frozen.
