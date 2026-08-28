@@ -16,7 +16,7 @@ from scipy import stats
 from dotenv import load_dotenv
 
 
-SCRIPT_VERSION = "2026-08-28-v1-research-warehouse-foundation-stat-reference"
+SCRIPT_VERSION = "2026-08-28-v2-research-warehouse-foundation-stat-reference-grid-fix"
 ROOT = Path(__file__).resolve().parents[2]
 
 SQL_PATH = ROOT / "sql" / "schema" / "012_research_warehouse.sql"
@@ -31,24 +31,36 @@ ODBC_DRIVER = "ODBC Driver 18 for SQL Server"
 
 MIN_DF = 1
 MAX_DF = 600
-STAT_REFERENCE_VERSION = "2026-08-28-v1-adaptive-two-sided-grid"
+STAT_REFERENCE_VERSION = "2026-08-28-v2-bounded-adaptive-two-sided-grid"
 
 # Adaptive p grid:
 # - exact small tail anchors;
 # - fine resolution near common significance thresholds;
 # - coarser resolution where p is large;
 # - SQL uses linear interpolation between adjacent critical values.
+_P_GRID_RAW = np.concatenate(
+    [
+        np.array([1e-8, 1e-7, 1e-6, 1e-5, 5e-5], dtype=float),
+        np.arange(0.0001, 0.0100001, 0.0001, dtype=float),
+        np.arange(0.0105, 0.1000001, 0.0005, dtype=float),
+        np.arange(0.101, 0.5000001, 0.001, dtype=float),
+        np.arange(0.502, 1.0000001, 0.002, dtype=float),
+    ]
+)
+
+# np.arange can overshoot the terminal endpoint by a tiny floating-point
+# amount. Bound and round before loading SQL, whose CHECK constraint requires
+# 0 < two_sided_p <= 1.
 P_GRID = np.unique(
-    np.concatenate(
-        [
-            np.array([1e-8, 1e-7, 1e-6, 1e-5, 5e-5], dtype=float),
-            np.arange(0.0001, 0.0100001, 0.0001, dtype=float),
-            np.arange(0.0105, 0.1000001, 0.0005, dtype=float),
-            np.arange(0.101, 0.5000001, 0.001, dtype=float),
-            np.arange(0.502, 1.0000001, 0.002, dtype=float),
-        ]
+    np.round(
+        np.clip(_P_GRID_RAW, 1e-12, 1.0),
+        12,
     )
 )
+P_GRID = P_GRID[(P_GRID > 0.0) & (P_GRID <= 1.0)]
+
+if len(P_GRID) == 0 or float(P_GRID.min()) <= 0.0 or float(P_GRID.max()) > 1.0:
+    raise RuntimeError("Statistical probability grid is outside (0, 1].")
 
 HYPOTHESES = [
     (
@@ -382,6 +394,7 @@ def main() -> None:
     connection = connect_with_retry(server, database, username, password)
     cursor = connection.cursor()
     failures: list[str] = []
+    run_id: int | None = None
 
     started = datetime.now(timezone.utc).replace(microsecond=0)
     current_git = git_commit()
@@ -396,7 +409,27 @@ def main() -> None:
             print(f"Applied SQL batch {i} / {len(batches)}.")
         connection.commit()
 
-        # 2. Start an audit run after the audit schema exists.
+        # 2. Recover any prior interrupted foundation run, then start a
+        # fresh audit run. V1 could leave status=STARTED when lookup loading
+        # failed after the audit row had already been committed.
+        cursor.execute(
+            """
+            UPDATE audit.pipeline_run
+            SET
+                completed_at_utc = COALESCE(completed_at_utc, SYSUTCDATETIME()),
+                status = 'FAILED',
+                notes = CONCAT(
+                    COALESCE(notes, ''),
+                    CASE WHEN notes IS NULL OR notes = '' THEN '' ELSE ' | ' END,
+                    'Marked FAILED by V2 recovery after interrupted lookup load.'
+                )
+            WHERE pipeline_name = 'Research warehouse foundation'
+              AND status = 'STARTED';
+            """
+        )
+        connection.commit()
+
+        # 3. Start the current audit run after the audit schema exists.
         cursor.execute(
             """
             INSERT INTO audit.pipeline_run
@@ -422,7 +455,7 @@ def main() -> None:
         run_id = int(cursor.fetchone()[0])
         connection.commit()
 
-        # 3. Seed hypothesis metadata. Parent H3 must exist before H3A/B/C.
+        # 4. Seed hypothesis metadata. Parent H3 must exist before H3A/B/C.
         ordered_hypotheses = sorted(
             HYPOTHESES,
             key=lambda x: (x[1] is not None, x[0]),
@@ -482,7 +515,7 @@ def main() -> None:
         for row in ordered_hypotheses:
             cursor.execute(merge_h, row)
 
-        # 4. Seed variable catalog.
+        # 5. Seed variable catalog.
         merge_v = """
         MERGE ref.variable_catalog AS target
         USING
@@ -528,7 +561,7 @@ def main() -> None:
         for row in VARIABLES:
             cursor.execute(merge_v, row)
 
-        # 5. Seed hypothesis-variable mapping.
+        # 6. Seed hypothesis-variable mapping.
         cursor.execute(
             "SELECT variable_id, variable_name FROM ref.variable_catalog;"
         )
@@ -567,7 +600,7 @@ def main() -> None:
 
         connection.commit()
 
-        # 6. Generate and populate statistical references.
+        # 7. Generate and populate statistical references.
         print(
             f"Generating Student-t lookup: df {MIN_DF}-{MAX_DF}, "
             f"{len(P_GRID):,} probability points per df."
@@ -577,9 +610,11 @@ def main() -> None:
 
         expected_t_rows = (MAX_DF - MIN_DF + 1) * len(P_GRID)
 
+        # Replace both lookup tables atomically. Do not commit the DELETEs
+        # separately; rollback must preserve the previously valid population
+        # if generation or insertion fails.
         cursor.execute("DELETE FROM ref.student_t_two_sided_lookup;")
         cursor.execute("DELETE FROM ref.normal_two_sided_lookup;")
-        connection.commit()
 
         insert_t = """
         INSERT INTO ref.student_t_two_sided_lookup
@@ -593,15 +628,12 @@ def main() -> None:
             loaded += len(chunk)
             if loaded % 100000 < len(chunk):
                 print(f"  Student-t rows staged: {loaded:,} / {expected_t_rows:,}")
-        connection.commit()
-
         insert_n = """
         INSERT INTO ref.normal_two_sided_lookup
         (two_sided_p, critical_abs_z)
         VALUES (?, ?);
         """
         cursor.executemany(insert_n, normal_rows)
-        connection.commit()
 
         now = datetime.now(timezone.utc).replace(microsecond=0).replace(tzinfo=None)
 
@@ -668,7 +700,7 @@ def main() -> None:
             )
         connection.commit()
 
-        # 7. Validation.
+        # 8. Validation.
         cursor.execute(
             "SELECT COUNT_BIG(*) FROM ref.student_t_two_sided_lookup;"
         )
@@ -918,11 +950,40 @@ def main() -> None:
                 "Research warehouse foundation quality gate failed."
             )
 
-    except Exception:
+    except Exception as exc:
         try:
             connection.rollback()
         except Exception:
             pass
+
+        # Preserve failure provenance for the current audit run whenever the
+        # audit row was already created successfully.
+        if run_id is not None:
+            try:
+                cursor.execute(
+                    """
+                    UPDATE audit.pipeline_run
+                    SET
+                        completed_at_utc = SYSUTCDATETIME(),
+                        status = 'FAILED',
+                        notes = CONCAT(
+                            COALESCE(notes, ''),
+                            CASE WHEN notes IS NULL OR notes = '' THEN '' ELSE ' | ' END,
+                            ?
+                        )
+                    WHERE run_id = ?;
+                    """,
+                    (
+                        f"Execution failed: {type(exc).__name__}: {str(exc)[:1500]}",
+                        run_id,
+                    ),
+                )
+                connection.commit()
+            except Exception:
+                try:
+                    connection.rollback()
+                except Exception:
+                    pass
         raise
     finally:
         try:
