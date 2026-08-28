@@ -14,7 +14,7 @@ import numpy as np
 import pandas as pd
 import requests
 
-SCRIPT_VERSION = "2026-08-28-v1-h4-5min-location-layer-pre-outcome"
+SCRIPT_VERSION = "2026-08-28-v2-h4-5min-location-layer-serialization-order-fix"
 
 SYMBOL = "SPY"
 FEED = "sip"
@@ -1008,7 +1008,19 @@ def main() -> None:
     print("Attaching PIT daily levels and pre-outcome context ...")
     bar5 = attach_daily_and_context(bar5, daily)
 
-    # Serialize datetimes consistently.
+    print("Constructing merged deterministic S/R zones ...")
+    zones = build_zones(bar5)
+
+    # IMPORTANT:
+    # First-contact construction requires timezone-aware datetime objects
+    # because the contact layer serializes the first-contact timestamps with
+    # .isoformat().  Do not convert the 5-minute timestamp columns to strings
+    # until after the contact layer has been built.
+    print("Identifying first contact with each merged zone ...")
+    contacts = build_first_contacts(bar5, zones)
+
+    # Serialize datetimes consistently only after all in-memory pre-outcome
+    # calculations that require datetime semantics have completed.
     for col in [
         "bar_start_et",
         "bar_end_et",
@@ -1016,14 +1028,6 @@ def main() -> None:
         "session_close_et",
     ]:
         bar5[col] = bar5[col].map(lambda x: x.isoformat())
-
-    print("Constructing merged deterministic S/R zones ...")
-    zones = build_zones(bar5)
-
-    # build_first_contacts requires parsed bar timestamps only for output,
-    # not arithmetic. Strings are sufficient.
-    print("Identifying first contact with each merged zone ...")
-    contacts = build_first_contacts(bar5, zones)
 
     BAR5_OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     REPORT_OUTPUT.parent.mkdir(parents=True, exist_ok=True)
@@ -1052,6 +1056,12 @@ def main() -> None:
 
     manifest = {
         "script_version": SCRIPT_VERSION,
+        "implementation_note": (
+            "V2 changes only timestamp serialization order: first-contact "
+            "construction occurs before datetime columns are converted to ISO "
+            "strings. No H4 definition, threshold, input population, trigger, "
+            "or outcome rule changed."
+        ),
         "source_minute_manifest": str(MINUTE_MANIFEST).replace("\\", "/"),
         "source_minute_manifest_sha256": sha256_file(MINUTE_MANIFEST),
         "source_minute_audit": str(MINUTE_AUDIT).replace("\\", "/"),

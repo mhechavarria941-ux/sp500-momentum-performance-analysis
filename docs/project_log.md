@@ -10081,11 +10081,147 @@ and:
 
 Only then may the project construct the frozen liquidity-sweep/rejection trigger, still before opening the forward-return outcomes.
 
+---
+
+## 3.72 H4 Five-Minute Location Builder V1 Failure — Timestamp Serialization Order Corrected Before Outcomes
+
+### Date
+
+2026-08-28
+
+### Failed Execution
+
+Script:
+
+`src/analysis/build_h4_5min_location_layer.py`
+
+Version:
+
+`2026-08-28-v1-h4-5min-location-layer-pre-outcome`
+
+The script passed the V2 one-minute authorization gate and successfully completed:
+
+- daily PIT support/resistance construction;
+- canonical primary-eligible one-minute loading;
+- deterministic five-minute aggregation;
+- pre-outcome context attachment;
+- merged S/R zone construction.
+
+It then failed during first-contact construction with:
+
+`AttributeError: 'str' object has no attribute 'isoformat'`
+
+The fault occurred because the builder converted:
+
+- `bar_start_et`
+- `bar_end_et`
+- `session_open_et`
+- `session_close_et`
+
+from timezone-aware datetime objects into ISO strings before calling `build_first_contacts()`.
+
+`build_first_contacts()` then attempted to serialize `bar_start_et` and `bar_end_et` using `.isoformat()`, which is a datetime method and is not available on an already serialized string.
+
+### Outcome Firewall
+
+At the time of failure:
+
+Liquidity-sweep trigger calculated:
+
+`NO`
+
+15-minute forward return calculated:
+
+`NO`
+
+30-minute forward return calculated:
+
+`NO`
+
+60-minute forward return calculated:
+
+`NO`
+
+Directional hit rate calculated:
+
+`NO`
+
+MFE / MAE calculated:
+
+`NO`
+
+No H4 predictive result was exposed.
+
+### Corrective Action
+
+Replacement version:
+
+`2026-08-28-v2-h4-5min-location-layer-serialization-order-fix`
+
+The correction is implementation-only.
+
+V2 now performs the operations in this order:
+
+1. maintain timezone-aware datetime values in memory;
+2. construct deterministic S/R zones;
+3. identify first contacts while datetime semantics remain intact;
+4. serialize datetime columns to ISO strings only after first-contact construction;
+5. write the pre-outcome artifacts.
+
+### Frozen Research Decisions Unchanged
+
+The correction changes none of the following:
+
+- SPY as primary instrument;
+- Alpaca SIP as primary intraday source;
+- the two frozen infrastructure-session exclusions;
+- five-minute bar definition;
+- Wilder ATR(14);
+- prior-day ATR usage;
+- PDH/PDL/PWH/PWL/PMH/PML definitions;
+- `0.10 × ATR` zone half-width;
+- deterministic same-direction zone merging;
+- first-contact definition;
+- RVOL definition;
+- price-discovery definition;
+- opening-range context;
+- realized-volatility context;
+- displacement context;
+- any future liquidity-sweep threshold;
+- any forward-return horizon;
+- any inference rule.
+
+No post-outcome tuning occurred.
+
+### Canonical Script
+
+The V2 file should replace:
+
+`src/analysis/build_h4_5min_location_layer.py`
+
+The independent audit remains:
+
+`src/analysis/audit_h4_5min_location_layer.py`
+
+because the audit methodology is unaffected by the serialization-order bug.
+
+### Next Step
+
+Commit the V2 implementation correction before successful location-layer results are observed.
+
+Then rerun:
+
+`python src/analysis/build_h4_5min_location_layer.py`
+
+and, only after a successful build token, run:
+
+`python src/analysis/audit_h4_5min_location_layer.py`
+
 # Current Status
 
 Current phase:
 
-**H4 FIVE-MINUTE PRICE-LOCATION LAYER — PRE-OUTCOME**
+**H4 FIVE-MINUTE PRICE-LOCATION LAYER — V2 IMPLEMENTATION CORRECTION FROZEN, PRE-OUTCOME**
 
 ## Closed Confirmatory Research
 
@@ -10119,29 +10255,17 @@ Infrastructure-exception policy:
 
 `FROZEN — TWO WHOLE SESSIONS EXCLUDED`
 
-Current authorized construction:
+V1 five-minute location builder:
 
-`5-MINUTE BARS + PIT S/R LOCATION ZONES + FIRST CONTACTS`
+`FAILED BEFORE OUTPUT RESULTS — TIMESTAMP SERIALIZATION ORDER`
 
-Primary S/R families:
+V2 five-minute location builder:
 
-`PDH / PDL / PWH / PWL / PMH / PML`
-
-Volatility normalizer:
-
-`PRIOR-SESSION WILDER ATR(14)`
-
-Zone half-width:
-
-`0.10 × ATR(14)`
-
-Price-discovery context:
-
-`AUTHORIZED PRE-OUTCOME`
+`CORRECTED — IMPLEMENTATION ONLY`
 
 Liquidity-sweep trigger:
 
-`NOT YET AUTHORIZED UNTIL LOCATION AUDIT PASSES`
+`NOT CALCULATED`
 
 H4 forward-return outcomes observed:
 
@@ -10149,14 +10273,12 @@ H4 forward-return outcomes observed:
 
 ## Immediate Next Step
 
-First confirm the V2 one-minute exception-aware audit passes.
+Replace the canonical location builder with V2 and commit the correction.
 
 Then run:
 
 `python src/analysis/build_h4_5min_location_layer.py`
 
-followed by:
+followed, after successful build completion, by:
 
 `python src/analysis/audit_h4_5min_location_layer.py`
-
-Do not construct or inspect H4 forward outcomes until the subsequent trigger layer is separately frozen and audited.
