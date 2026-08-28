@@ -1,0 +1,40 @@
+{
+  "version": "H4_INTRADAY_DATA_EXCEPTIONS_V1",
+  "frozen_date": "2026-08-28",
+  "instrument": "SPY",
+  "source": "Alpaca SIP 1-minute historical bars",
+  "policy": "Exclude the entire affected regular-trading session from all H4 intraday event construction and outcome measurement. Do not reconstruct, interpolate, forward-fill, or otherwise synthesize missing minute data.",
+  "exceptions": [
+    {
+      "session_date": "2021-05-05",
+      "classification": "DOCUMENTED_MARKET_DATA_INFRASTRUCTURE_EXCEPTION",
+      "observed_missing_minutes_et": [
+        "11:27",
+        "11:28",
+        "11:29",
+        "11:30",
+        "11:31"
+      ],
+      "missing_minute_count": 5,
+      "reason": "Missing SPY SIP minute bars align with a documented consolidated-tape/CTA software incident. Underlying Alpaca SIP trades are also absent for the affected intervals, so same-provider reconstruction is not authorized.",
+      "reconstruction_authorized": false,
+      "exclude_entire_session": true
+    },
+    {
+      "session_date": "2023-06-05",
+      "classification": "DOCUMENTED_MARKET_DATA_INFRASTRUCTURE_EXCEPTION",
+      "observed_missing_minutes_et": [
+        "09:52",
+        "09:53",
+        "09:54",
+        "09:55"
+      ],
+      "missing_minute_count": 4,
+      "reason": "Missing SPY SIP minute bars align with a documented NYSE/NYSE American technical-latency incident near the market open. Underlying Alpaca SIP trades are also absent for the affected intervals, so same-provider reconstruction is not authorized.",
+      "reconstruction_authorized": false,
+      "exclude_entire_session": true
+    }
+  ],
+  "h4_forward_outcomes_observed": false,
+  "h4_event_triggers_observed": false
+}

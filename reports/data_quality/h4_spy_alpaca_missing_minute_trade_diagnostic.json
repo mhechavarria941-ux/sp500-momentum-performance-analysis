@@ -1,0 +1,121 @@
+{
+  "script_version": "2026-08-28-v1-h4-alpaca-sip-missing-minute-trade-diagnostic",
+  "symbol": "SPY",
+  "feed": "sip",
+  "expected_rth_minutes": 487650,
+  "observed_rth_minutes": 487641,
+  "missing_rth_minutes": 9,
+  "all_missing_minutes_have_trades": false,
+  "results": [
+    {
+      "minute_et": "2021-05-05T11:27:00-04:00",
+      "trade_count": 0,
+      "total_reported_share_size": 0,
+      "min_trade_price": null,
+      "max_trade_price": null,
+      "earliest_trade_timestamp": null,
+      "latest_trade_timestamp": null,
+      "condition_sets": {},
+      "tapes": {},
+      "exchanges": {}
+    },
+    {
+      "minute_et": "2021-05-05T11:28:00-04:00",
+      "trade_count": 0,
+      "total_reported_share_size": 0,
+      "min_trade_price": null,
+      "max_trade_price": null,
+      "earliest_trade_timestamp": null,
+      "latest_trade_timestamp": null,
+      "condition_sets": {},
+      "tapes": {},
+      "exchanges": {}
+    },
+    {
+      "minute_et": "2021-05-05T11:29:00-04:00",
+      "trade_count": 0,
+      "total_reported_share_size": 0,
+      "min_trade_price": null,
+      "max_trade_price": null,
+      "earliest_trade_timestamp": null,
+      "latest_trade_timestamp": null,
+      "condition_sets": {},
+      "tapes": {},
+      "exchanges": {}
+    },
+    {
+      "minute_et": "2021-05-05T11:30:00-04:00",
+      "trade_count": 0,
+      "total_reported_share_size": 0,
+      "min_trade_price": null,
+      "max_trade_price": null,
+      "earliest_trade_timestamp": null,
+      "latest_trade_timestamp": null,
+      "condition_sets": {},
+      "tapes": {},
+      "exchanges": {}
+    },
+    {
+      "minute_et": "2021-05-05T11:31:00-04:00",
+      "trade_count": 0,
+      "total_reported_share_size": 0,
+      "min_trade_price": null,
+      "max_trade_price": null,
+      "earliest_trade_timestamp": null,
+      "latest_trade_timestamp": null,
+      "condition_sets": {},
+      "tapes": {},
+      "exchanges": {}
+    },
+    {
+      "minute_et": "2023-06-05T09:52:00-04:00",
+      "trade_count": 0,
+      "total_reported_share_size": 0,
+      "min_trade_price": null,
+      "max_trade_price": null,
+      "earliest_trade_timestamp": null,
+      "latest_trade_timestamp": null,
+      "condition_sets": {},
+      "tapes": {},
+      "exchanges": {}
+    },
+    {
+      "minute_et": "2023-06-05T09:53:00-04:00",
+      "trade_count": 0,
+      "total_reported_share_size": 0,
+      "min_trade_price": null,
+      "max_trade_price": null,
+      "earliest_trade_timestamp": null,
+      "latest_trade_timestamp": null,
+      "condition_sets": {},
+      "tapes": {},
+      "exchanges": {}
+    },
+    {
+      "minute_et": "2023-06-05T09:54:00-04:00",
+      "trade_count": 0,
+      "total_reported_share_size": 0,
+      "min_trade_price": null,
+      "max_trade_price": null,
+      "earliest_trade_timestamp": null,
+      "latest_trade_timestamp": null,
+      "condition_sets": {},
+      "tapes": {},
+      "exchanges": {}
+    },
+    {
+      "minute_et": "2023-06-05T09:55:00-04:00",
+      "trade_count": 0,
+      "total_reported_share_size": 0,
+      "min_trade_price": null,
+      "max_trade_price": null,
+      "earliest_trade_timestamp": null,
+      "latest_trade_timestamp": null,
+      "condition_sets": {},
+      "tapes": {},
+      "exchanges": {}
+    }
+  ],
+  "h4_event_triggers_calculated": false,
+  "h4_forward_outcomes_calculated": false
+}

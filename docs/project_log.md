@@ -9549,11 +9549,307 @@ Only after both complete successfully should the project derive audited 5-minute
 
 ---
 
+---
+
+## 3.69 H4 Full SIP Minute-History Integrity Gate — Nine Isolated Missing Bars
+
+### Date
+
+2026-08-28
+
+### Objective
+
+Independently validate the complete 2021–2025 SPY Alpaca SIP one-minute history before constructing any H4 market-structure event or forward outcome.
+
+### Audit
+
+Script:
+
+`src/analysis/audit_h4_spy_alpaca_sip_1min_history.py`
+
+Script version:
+
+`2026-08-28-v1-h4-alpaca-sip-minute-integrity-audit`
+
+### Population
+
+Official Alpaca market-calendar sessions:
+
+`1,255`
+
+Early-close sessions:
+
+`10`
+
+Expected regular-session minutes:
+
+`487,650`
+
+Observed unique regular-session minutes:
+
+`487,641`
+
+Raw provider bars:
+
+`1,025,947`
+
+Regular-session provider bars examined:
+
+`487,641`
+
+### Structural Validation
+
+Unexpected RTH minutes:
+
+`0`
+
+Duplicate RTH timestamps:
+
+`0`
+
+Invalid OHLC rows:
+
+`0`
+
+Invalid/nonpositive volume rows:
+
+`0`
+
+Missing provider VWAP rows:
+
+`0`
+
+Missing/invalid transaction-count rows:
+
+`0`
+
+### Missing-Minute Result
+
+Exactly:
+
+`9`
+
+expected regular-session minute bars were absent.
+
+Missing intervals:
+
+`2021-05-05 11:27 through 11:31 ET`
+
+and:
+
+`2023-06-05 09:52 through 09:55 ET`
+
+No H4 event trigger or forward outcome was calculated.
+
+Final minute-history quality gate:
+
+`FAIL`
+
+### Interpretation
+
+The missing population represents approximately:
+
+`9 / 487,650 ≈ 0.00185%`
+
+of expected regular-session minutes.
+
+Because SPY is an extremely liquid security and the gaps occur in two short contiguous clusters, the project does not assume that these are genuine no-trade intervals.
+
+The audit remains fail-closed.
+
+No synthetic carry-forward, interpolation, zero-volume bar, or silent deletion is permitted.
+
+### Same-Provider Resolution Path
+
+Alpaca documents that stock minute bars are aggregated from underlying SIP trades and that trade conditions determine whether individual trades update bar price fields and/or volume.
+
+Therefore the next authorized diagnostic queries the underlying Alpaca historical SIP trades for each missing minute.
+
+Diagnostic:
+
+`src/analysis/diagnose_h4_alpaca_missing_minutes_with_sip_trades.py`
+
+Expected outputs:
+
+- `reports/data_quality/h4_spy_alpaca_missing_minute_trade_diagnostic.txt`
+- `reports/data_quality/h4_spy_alpaca_missing_minute_trade_diagnostic.json`
+
+If all nine intervals contain underlying SIP trades, the gaps may be treated as provider minute-aggregate omissions and a same-provider reconstruction may be designed using Alpaca's published aggregation-condition rules.
+
+If any interval lacks underlying SIP trades, no reconstruction is authorized from this diagnostic.
+
+### Outcome Firewall
+
+Support/resistance events calculated:
+
+`NO`
+
+Liquidity sweeps calculated:
+
+`NO`
+
+Forward returns calculated:
+
+`NO`
+
+Hit rates calculated:
+
+`NO`
+
+MFE / MAE calculated:
+
+`NO`
+
+H4 thresholds changed:
+
+`NO`
+
+### Next Step
+
+Run the underlying SIP-trade diagnostic for the nine missing minute intervals.
+
+Do not alter or bypass the failed raw minute-history gate before the diagnostic is reviewed.
+
+---
+
+## 3.70 H4 Intraday Data-Exception Policy — Two Infrastructure Sessions Excluded
+
+### Date
+
+2026-08-28
+
+### Decision
+
+Freeze two whole-session exclusions before constructing any H4 event or forward outcome.
+
+Excluded sessions:
+
+- `2021-05-05`
+- `2023-06-05`
+
+Classification:
+
+`DOCUMENTED MARKET-DATA INFRASTRUCTURE EXCEPTIONS`
+
+### Evidence
+
+The first H4 full-history integrity audit found exactly nine missing regular-session SPY minute bars:
+
+- `2021-05-05 11:27–11:31 ET`
+- `2023-06-05 09:52–09:55 ET`
+
+The subsequent same-provider Alpaca SIP trade diagnostic returned:
+
+- missing intervals with at least one underlying SIP trade: `0 / 9`
+- total underlying SIP trades returned: `0`
+- total reported share size returned: `0`
+
+Therefore same-provider minute-bar reconstruction is not authorized.
+
+Contemporaneous infrastructure evidence indicates that the two missing clusters align with documented market-data/venue technology incidents rather than an ordinary no-trade state in SPY.
+
+### Frozen Policy
+
+The project will:
+
+- preserve all raw Alpaca files unchanged;
+- not synthesize the nine missing bars;
+- not interpolate;
+- not carry prices forward;
+- not insert zero-volume observations;
+- not mix an alternate provider into those nine minutes;
+- exclude the entire affected sessions from H4 primary and robustness intraday event/outcome analysis.
+
+The whole-session exclusion is deliberately more conservative than excluding only the missing intervals.
+
+### Frozen Exception File
+
+`data/reference/h4/h4_intraday_data_exceptions_v1.json`
+
+The file contains the exact two excluded dates and explicitly prohibits reconstruction.
+
+### Revised Integrity Gate
+
+Script:
+
+`src/analysis/audit_h4_spy_alpaca_sip_1min_history_v2.py`
+
+The revised gate is allowed to pass only if:
+
+1. the current raw-data missing population remains exactly the same frozen nine minutes;
+2. every missing minute belongs to one of the two frozen exception sessions;
+3. there are zero missing minutes in every other session;
+4. there are zero unexpected RTH minutes;
+5. there are zero duplicate RTH timestamps;
+6. OHLC integrity passes;
+7. volume integrity passes;
+8. the frozen exception policy has not changed.
+
+The revised canonical H4 minute layer excludes both complete sessions.
+
+### Expected Primary Population
+
+Complete calendar sessions:
+
+`1,255`
+
+Excluded infrastructure-exception sessions:
+
+`2`
+
+Expected primary-eligible sessions:
+
+`1,253`
+
+Expected full-calendar RTH minutes:
+
+`487,650`
+
+The two excluded sessions are ordinary 390-minute sessions, so expected primary-eligible RTH minutes are:
+
+`486,870`
+
+### Outcome Firewall
+
+Support/resistance events calculated:
+
+`NO`
+
+Liquidity sweeps calculated:
+
+`NO`
+
+Forward returns calculated:
+
+`NO`
+
+Directional hit rates calculated:
+
+`NO`
+
+MFE / MAE calculated:
+
+`NO`
+
+H4 thresholds changed:
+
+`NO`
+
+### Next Step
+
+Run the V2 exception-aware minute-history integrity audit.
+
+Only after the token:
+
+`H4_5MIN_LOCATION_LAYER_CONSTRUCTION_AUTHORIZED`
+
+may the project derive five-minute bars and construct the H4 pre-outcome location layer.
+
 # Current Status
 
 Current phase:
 
-**H4 SPY 2021–2025 ALPACA SIP FULL MINUTE-HISTORY ACQUISITION / INTEGRITY AUDIT**
+**H4 SPY INTRADAY DATA QUALITY — FROZEN INFRASTRUCTURE-EXCEPTION POLICY**
 
 ## Closed Confirmatory Research
 
@@ -9573,39 +9869,36 @@ H3 robustness:
 
 `PRESPECIFIED — NOT YET EXECUTED`
 
-## H4 Source State
+## H4 Research State
 
 Primary instrument:
 
 `SPY`
 
-Primary source:
+Primary intraday source:
 
 `ALPACA SIP`
 
-Historical source-feasibility gate:
+Complete market-calendar sessions:
 
-`PASSED`
+`1,255`
 
-Full study interval:
+Frozen infrastructure-exception sessions:
 
-`2021-01-01 through 2025-12-31`
+- `2021-05-05`
+- `2023-06-05`
 
-Raw frequency:
+Primary-eligible sessions after exclusions:
 
-`1 MINUTE`
+`1,253`
 
-Primary analytical frequency after audit:
+Frozen raw missing-minute population:
 
-`5 MINUTES`
+`9`
 
-Full raw acquisition:
+Reconstruction authorized:
 
-`AUTHORIZED`
-
-5-minute location-layer construction:
-
-`BLOCKED UNTIL COMPLETE MINUTE-HISTORY AUDIT PASSES`
+`NO`
 
 H4 forward-return outcomes observed:
 
@@ -9615,12 +9908,6 @@ H4 forward-return outcomes observed:
 
 Run:
 
-`python src/analysis/download_h4_spy_alpaca_sip_1min_history.py`
+`python src/analysis/audit_h4_spy_alpaca_sip_1min_history_v2.py`
 
-Then, after acquisition completes:
-
-`python src/analysis/audit_h4_spy_alpaca_sip_1min_history.py`
-
-Do not calculate H4 event forward returns before the audit produces:
-
-`H4_5MIN_LOCATION_LAYER_CONSTRUCTION_AUTHORIZED`
+Only a full V2 pass authorizes five-minute H4 location-layer construction.

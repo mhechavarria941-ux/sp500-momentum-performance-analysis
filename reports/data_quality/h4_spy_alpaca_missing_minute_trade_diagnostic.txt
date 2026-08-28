@@ -1,0 +1,95 @@
+RUNNING SCRIPT VERSION: 2026-08-28-v1-h4-alpaca-sip-missing-minute-trade-diagnostic
+========================================================================================================================
+H4 ALPACA SIP MISSING-MINUTE UNDERLYING-TRADE DIAGNOSTIC
+========================================================================================================================
+Expected RTH minutes: 487,650
+Observed RTH minutes: 487,641
+Missing RTH minutes: 9
+Missing minutes with at least one underlying SIP trade: 0
+Total underlying trades across missing minutes: 0
+Total reported share size across missing minutes: 0
+H4 event triggers calculated: NO
+H4 forward outcomes calculated: NO
+
+------------------------------------------------------------------------------------------------------------------------
+Minute ET: 2021-05-05T11:27:00-04:00
+Underlying SIP trades: 0
+Reported share size: 0
+Trade-price range: [None, None]
+Earliest trade: None
+Latest trade: None
+Condition-set counts:
+------------------------------------------------------------------------------------------------------------------------
+Minute ET: 2021-05-05T11:28:00-04:00
+Underlying SIP trades: 0
+Reported share size: 0
+Trade-price range: [None, None]
+Earliest trade: None
+Latest trade: None
+Condition-set counts:
+------------------------------------------------------------------------------------------------------------------------
+Minute ET: 2021-05-05T11:29:00-04:00
+Underlying SIP trades: 0
+Reported share size: 0
+Trade-price range: [None, None]
+Earliest trade: None
+Latest trade: None
+Condition-set counts:
+------------------------------------------------------------------------------------------------------------------------
+Minute ET: 2021-05-05T11:30:00-04:00
+Underlying SIP trades: 0
+Reported share size: 0
+Trade-price range: [None, None]
+Earliest trade: None
+Latest trade: None
+Condition-set counts:
+------------------------------------------------------------------------------------------------------------------------
+Minute ET: 2021-05-05T11:31:00-04:00
+Underlying SIP trades: 0
+Reported share size: 0
+Trade-price range: [None, None]
+Earliest trade: None
+Latest trade: None
+Condition-set counts:
+------------------------------------------------------------------------------------------------------------------------
+Minute ET: 2023-06-05T09:52:00-04:00
+Underlying SIP trades: 0
+Reported share size: 0
+Trade-price range: [None, None]
+Earliest trade: None
+Latest trade: None
+Condition-set counts:
+------------------------------------------------------------------------------------------------------------------------
+Minute ET: 2023-06-05T09:53:00-04:00
+Underlying SIP trades: 0
+Reported share size: 0
+Trade-price range: [None, None]
+Earliest trade: None
+Latest trade: None
+Condition-set counts:
+------------------------------------------------------------------------------------------------------------------------
+Minute ET: 2023-06-05T09:54:00-04:00
+Underlying SIP trades: 0
+Reported share size: 0
+Trade-price range: [None, None]
+Earliest trade: None
+Latest trade: None
+Condition-set counts:
+------------------------------------------------------------------------------------------------------------------------
+Minute ET: 2023-06-05T09:55:00-04:00
+Underlying SIP trades: 0
+Reported share size: 0
+Trade-price range: [None, None]
+Earliest trade: None
+Latest trade: None
+Condition-set counts:
+
+========================================================================================================================
+DIAGNOSTIC DECISION
+========================================================================================================================
+At least one missing minute contains no returned underlying SIP trades.
+
+Do not reconstruct missing bars yet.
+Cross-source or provider-support review remains required.
+
+H4_ALPACA_MISSING_MINUTE_TRADE_DIAGNOSTIC_REVIEW_REQUIRED
