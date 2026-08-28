@@ -16,7 +16,7 @@ import pyodbc
 from dotenv import load_dotenv
 
 
-SCRIPT_VERSION = "2026-08-28-v1-load-research-data"
+SCRIPT_VERSION = "2026-08-28-v3-load-research-data-h3-result-map-preflight"
 ROOT = Path(__file__).resolve().parents[2]
 
 SQL_PATH = ROOT / "sql" / "analytics" / "013_research_bindings.sql"
@@ -175,6 +175,79 @@ def replace_table(cursor, table: str, insert_sql: str, rows, chunk_size: int = 2
         count += len(chunk)
     print(f"  {table}: {count:,} total rows staged")
     return count
+
+
+
+def preflight_sources(cursor) -> None:
+    """
+    Fail before the expensive H4 materialization if any frozen result source
+    cannot be mapped safely into the unified warehouse.
+    """
+    cursor.execute(
+        """
+        SELECT component
+        FROM analytics.h3_primary_confirmatory_results
+        ORDER BY component;
+        """
+    )
+    h3_components = [str(r[0]) for r in cursor.fetchall()]
+    print(f"H3 result components discovered: {h3_components}")
+
+    if len(h3_components) != 3:
+        raise RuntimeError(
+            "Expected exactly 3 H3 primary confirmatory result rows. "
+            f"Observed components={h3_components}"
+        )
+
+    mapped = []
+    for component in h3_components:
+        upper = component.strip().upper()
+        if upper.startswith("H3A"):
+            mapped.append("H3A")
+        elif upper.startswith("H3B"):
+            mapped.append("H3B")
+        elif upper.startswith("H3C"):
+            mapped.append("H3C")
+        else:
+            raise RuntimeError(
+                "Unrecognized H3 confirmatory component before H4 load: "
+                f"{component!r}"
+            )
+
+    if sorted(mapped) != ["H3A", "H3B", "H3C"]:
+        raise RuntimeError(
+            "H3 confirmatory mapping is not one-to-one across H3A/H3B/H3C. "
+            f"Mapped={mapped}; raw={h3_components}"
+        )
+
+    required_h4_result_columns = {
+        "component",
+        "primary_or_secondary",
+        "estimand",
+        "estimate",
+        "cluster_se",
+        "ci_95_low",
+        "ci_95_high",
+        "t_stat",
+        "reference_df",
+        "p_two_sided",
+        "events",
+        "session_clusters",
+        "economic_effect_percentage_points",
+        "decision",
+    }
+    if not H4_RESULTS.exists():
+        raise RuntimeError(f"Missing H4 result CSV: {H4_RESULTS}")
+
+    h4_header = set(pd.read_csv(H4_RESULTS, nrows=0).columns)
+    missing = sorted(required_h4_result_columns - h4_header)
+    if missing:
+        raise RuntimeError(
+            "H4 result CSV schema mismatch before H4 load. "
+            f"Missing columns={missing}; observed={sorted(h4_header)}"
+        )
+
+    print("Preflight source-result mapping: PASS")
 
 
 def load_h4(cursor) -> dict[str, int]:
@@ -377,6 +450,7 @@ def create_h2_views(cursor) -> tuple[str, str]:
     value_col = choose(
         cols,
         [
+            "winner_minus_loser_forward_return_1m",
             "winner_minus_loser_return_1m",
             "sector_neutral_wml_return_1m",
             "wml_forward_return_1m",
@@ -502,10 +576,10 @@ def seed_results(cursor) -> None:
          n_clusters_primary,n_clusters_secondary,economic_effect,economic_effect_unit,
          decision,primary_secondary,covariance_method,preregistration_sha256)
         SELECT
-            CASE component
-                WHEN 'H3A_beta_A' THEN 'H3A'
-                WHEN 'H3B_beta_B' THEN 'H3B'
-                WHEN 'H3C_theta' THEN 'H3C'
+            CASE
+                WHEN UPPER(LTRIM(RTRIM(component))) LIKE 'H3A%' THEN 'H3A'
+                WHEN UPPER(LTRIM(RTRIM(component))) LIKE 'H3B%' THEN 'H3B'
+                WHEN UPPER(LTRIM(RTRIM(component))) LIKE 'H3C%' THEN 'H3C'
             END,
             component,
             'H3_PRIMARY_SQL_COPY_2026_08_28',
@@ -530,7 +604,11 @@ def seed_results(cursor) -> None:
             'PRIMARY',
             inference_method,
             '95e88d99f2b0c9beca50073844b9dadc32c11a6aa820fe04cf3ed12e94841506'
-        FROM analytics.h3_primary_confirmatory_results;
+        FROM analytics.h3_primary_confirmatory_results
+        WHERE
+            UPPER(LTRIM(RTRIM(component))) LIKE 'H3A%'
+            OR UPPER(LTRIM(RTRIM(component))) LIKE 'H3B%'
+            OR UPPER(LTRIM(RTRIM(component))) LIKE 'H3C%';
         """
     )
 
@@ -795,6 +873,22 @@ def validate(cursor, counts: dict[str, int]) -> list[str]:
     if h3_rows != 29287:
         failures.append(f"H3 panel rows={h3_rows}; expected 29,287")
 
+    h3_result_rows = int(
+        scalar(
+            cursor,
+            """
+            SELECT COUNT_BIG(*)
+            FROM results.hypothesis_result
+            WHERE result_version = 'H3_PRIMARY_SQL_COPY_2026_08_28'
+              AND hypothesis_id IN ('H3A','H3B','H3C');
+            """,
+        )
+    )
+    if h3_result_rows != 3:
+        failures.append(
+            f"Unified H3 primary result rows={h3_result_rows}; expected 3"
+        )
+
     result_rows = int(scalar(cursor, "SELECT COUNT_BIG(*) FROM results.hypothesis_result;"))
     if result_rows < 8:
         failures.append(f"Unified result rows={result_rows}; expected at least 8")
@@ -855,6 +949,8 @@ def main() -> None:
             "H2 binding discovered: "
             f"value={value_col}; complete={complete_col}"
         )
+
+        preflight_sources(cur)
 
         counts = load_h4(cur)
         seed_results(cur)
