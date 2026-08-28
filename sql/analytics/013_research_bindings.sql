@@ -9,7 +9,7 @@ without replacing the validated core/analytics layer.
 H1-H3 remain sourced from existing validated Azure SQL objects.
 H4 is materialized into relational research tables by load_research_data.py.
 
-Version: 2026-08-28-v1
+Version: 2026-08-28-v2-h1-primary-cte-fix
 */
 
 SET NOCOUNT ON;
@@ -75,6 +75,7 @@ WITH complete AS
         analysis_month_number,
         ranking_month_end_date,
         series_code,
+        series_type,
         momentum_decile,
         monthly_return
     FROM analytics.v_momentum_monthly_return_panel
@@ -102,6 +103,7 @@ decile_stats AS
         AVG(monthly_return) AS mean_y
     FROM complete
     WHERE series_type = 'DECILE'
+      AND momentum_decile BETWEEN 1 AND 10
     GROUP BY
         analysis_month_number,
         ranking_month_end_date
@@ -129,6 +131,7 @@ slopes AS
       ON s.analysis_month_number = c.analysis_month_number
     WHERE
         c.series_type = 'DECILE'
+        AND c.momentum_decile BETWEEN 1 AND 10
         AND s.decile_count = 10
     GROUP BY
         c.analysis_month_number,
