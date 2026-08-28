@@ -9845,11 +9845,247 @@ Only after the token:
 
 may the project derive five-minute bars and construct the H4 pre-outcome location layer.
 
+---
+
+## 3.71 H4 Five-Minute Location Layer — Pre-Outcome Construction Authorization
+
+### Date
+
+2026-08-28
+
+### Status
+
+This stage remains fully behind the H4 outcome firewall.
+
+The construction script refuses to execute unless the revised exception-aware one-minute audit contains both authorization tokens:
+
+`H4_SPY_ALPACA_SIP_PRIMARY_ELIGIBLE_MINUTE_HISTORY_AUDIT_PASSED`
+
+and:
+
+`H4_5MIN_LOCATION_LAYER_CONSTRUCTION_AUTHORIZED`
+
+No H4 forward-return outcome is calculated in either the builder or the independent audit.
+
+### Source Architecture
+
+Primary intraday source:
+
+`Alpaca SIP raw one-minute SPY bars`
+
+Primary-eligible intraday sessions:
+
+`1,253`, conditional on the passed V2 audit.
+
+Frozen excluded infrastructure sessions:
+
+- `2021-05-05`
+- `2023-06-05`
+
+Raw intraday files remain unchanged.
+
+### Higher-Timeframe Support Data
+
+Higher-timeframe location levels are sourced separately from:
+
+`Alpaca SIP raw daily SPY bars`
+
+using:
+
+`adjustment = raw`
+
+Support-history interval:
+
+`2020-11-01 through 2025-12-31`
+
+The additional 2020 support history provides pre-2021 ATR, prior-week, and prior-month state without using future H4 observations.
+
+The two excluded intraday infrastructure sessions remain eligible to contribute to later PDH/PWH/PMH or PDL/PWL/PML calculations only if their complete daily SIP bars exist and pass daily OHLC validation.
+
+No missing one-minute bar is reconstructed.
+
+### Five-Minute Aggregation
+
+The primary analytical bar is deterministically aggregated from the audited one-minute layer.
+
+Each five-minute bar must contain exactly:
+
+`5`
+
+consecutive primary-eligible one-minute observations.
+
+Aggregation:
+
+- open = first one-minute open;
+- high = maximum one-minute high;
+- low = minimum one-minute low;
+- close = last one-minute close;
+- volume = sum of one-minute volume;
+- transactions = sum of one-minute transaction count;
+- five-minute VWAP = volume-weighted combination of provider one-minute VWAP.
+
+The independent audit fully recomputes these fields from the one-minute source.
+
+### Daily Volatility and Major Levels
+
+ATR:
+
+`Wilder ATR(14)`
+
+The intraday session may use only:
+
+`ATR(14) calculated through the prior completed trading session`
+
+Primary resistance families:
+
+- `PDH`
+- `PWH`
+- `PMH`
+
+Primary support families:
+
+- `PDL`
+- `PWL`
+- `PML`
+
+Previous week means the immediately previous completed Monday–Sunday calendar week containing trading sessions.
+
+Previous month means the immediately previous completed calendar month.
+
+### Location Zones
+
+Every source level receives half-width:
+
+`0.10 × prior-session ATR(14)`
+
+Same-direction intervals that overlap are deterministically merged.
+
+Merged zones preserve:
+
+- contributing level families;
+- constituent price levels;
+- lower and upper boundaries;
+- confluence count;
+- `SINGLE_SOURCE` versus `CONFLUENCE`.
+
+### First Contact
+
+For each merged zone and session:
+
+`first contact = earliest five-minute bar whose high-low range intersects the merged zone`
+
+Only the first interaction is retained for the primary H4 architecture.
+
+No liquidity-sweep success condition is calculated at this stage.
+
+### Pre-Outcome Price-Discovery Context
+
+The five-minute layer also records deterministic state variables requested for sessions with little or no historical overhead resistance:
+
+- prior completed-session all-time high;
+- close above prior all-time high;
+- intrabar break above prior all-time high;
+- ATR-normalized extension above prior all-time high;
+- session VWAP through the current completed bar;
+- ATR-normalized distance from VWAP;
+- same-time-bucket relative volume versus the median of the prior 20 valid sessions;
+- elevated RVOL diagnostic at `RVOL >= 1.50`;
+- rolling 30-minute realized volatility from six completed five-minute returns;
+- time-of-day realized-volatility ratio versus the prior-20-session median;
+- 30-minute opening-range extension normalized by ATR;
+- three-bar displacement normalized by ATR.
+
+These are context variables only.
+
+They do not alter H4A's frozen primary S/R sweep definition.
+
+### New Scripts
+
+Builder:
+
+`src/analysis/build_h4_5min_location_layer.py`
+
+Independent audit:
+
+`src/analysis/audit_h4_5min_location_layer.py`
+
+### Expected Outputs
+
+Daily support layer:
+
+`data/interim/h4_spy_daily_sip_support_levels_2020_2025.csv`
+
+Five-minute pre-outcome layer:
+
+`data/interim/h4_spy_5min_sip_primary_eligible_preoutcome.csv.gz`
+
+Merged zones:
+
+`data/interim/h4_spy_5min_location_zones_preoutcome.csv`
+
+First contacts:
+
+`data/interim/h4_spy_5min_first_contacts_preoutcome.csv`
+
+Build manifest:
+
+`data/interim/h4_spy_5min_location_layer_manifest.json`
+
+Build report:
+
+`reports/data_quality/h4_spy_5min_location_layer_build.txt`
+
+Independent audit:
+
+`reports/data_quality/h4_spy_5min_location_layer_integrity_audit.txt`
+
+### Outcome Firewall
+
+Liquidity-sweep trigger:
+
+`NOT CALCULATED`
+
+15-minute forward return:
+
+`NOT CALCULATED`
+
+30-minute primary forward return:
+
+`NOT CALCULATED`
+
+60-minute forward return:
+
+`NOT CALCULATED`
+
+Directional success:
+
+`NOT CALCULATED`
+
+MFE / MAE:
+
+`NOT CALCULATED`
+
+Threshold selection from outcomes:
+
+`PROHIBITED`
+
+### Next Authorization
+
+Only a passed independent five-minute location-layer audit may issue:
+
+`H4_5MIN_LOCATION_LAYER_INTEGRITY_AUDIT_PASSED`
+
+and:
+
+`H4_LIQUIDITY_SWEEP_TRIGGER_CONSTRUCTION_AUTHORIZED`
+
+Only then may the project construct the frozen liquidity-sweep/rejection trigger, still before opening the forward-return outcomes.
+
 # Current Status
 
 Current phase:
 
-**H4 SPY INTRADAY DATA QUALITY — FROZEN INFRASTRUCTURE-EXCEPTION POLICY**
+**H4 FIVE-MINUTE PRICE-LOCATION LAYER — PRE-OUTCOME**
 
 ## Closed Confirmatory Research
 
@@ -9879,26 +10115,33 @@ Primary intraday source:
 
 `ALPACA SIP`
 
-Complete market-calendar sessions:
+Infrastructure-exception policy:
 
-`1,255`
+`FROZEN — TWO WHOLE SESSIONS EXCLUDED`
 
-Frozen infrastructure-exception sessions:
+Current authorized construction:
 
-- `2021-05-05`
-- `2023-06-05`
+`5-MINUTE BARS + PIT S/R LOCATION ZONES + FIRST CONTACTS`
 
-Primary-eligible sessions after exclusions:
+Primary S/R families:
 
-`1,253`
+`PDH / PDL / PWH / PWL / PMH / PML`
 
-Frozen raw missing-minute population:
+Volatility normalizer:
 
-`9`
+`PRIOR-SESSION WILDER ATR(14)`
 
-Reconstruction authorized:
+Zone half-width:
 
-`NO`
+`0.10 × ATR(14)`
+
+Price-discovery context:
+
+`AUTHORIZED PRE-OUTCOME`
+
+Liquidity-sweep trigger:
+
+`NOT YET AUTHORIZED UNTIL LOCATION AUDIT PASSES`
 
 H4 forward-return outcomes observed:
 
@@ -9906,8 +10149,14 @@ H4 forward-return outcomes observed:
 
 ## Immediate Next Step
 
-Run:
+First confirm the V2 one-minute exception-aware audit passes.
 
-`python src/analysis/audit_h4_spy_alpaca_sip_1min_history_v2.py`
+Then run:
 
-Only a full V2 pass authorizes five-minute H4 location-layer construction.
+`python src/analysis/build_h4_5min_location_layer.py`
+
+followed by:
+
+`python src/analysis/audit_h4_5min_location_layer.py`
+
+Do not construct or inspect H4 forward outcomes until the subsequent trigger layer is separately frozen and audited.
