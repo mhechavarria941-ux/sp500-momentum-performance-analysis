@@ -11311,11 +11311,130 @@ Expected final tokens:
 
 Only after this binding gate passes should the Power BI semantic model and DAX layer be constructed.
 
+---
+
+## 3.78 SQL Research Binding Closed; Power BI Semantic Model Authorized
+
+### Date
+
+2026-08-28
+
+### SQL Research-Data Binding Gate
+
+The H1-H4 SQL research-data binding passed.
+
+Final tokens:
+
+`SQL_H1_H4_RESEARCH_DATA_BINDING_PASSED`
+
+`SQL_H4_FROZEN_RESULT_REPRODUCED`
+
+`POWER_BI_SEMANTIC_MODEL_BUILD_AUTHORIZED`
+
+### H4 SQL Reconciliation
+
+The relational H4 layer reproduced the frozen event population and primary economic result.
+
+Materialized H4 layers include:
+
+- `research.h4_minute`
+- `research.h4_daily_level`
+- `research.h4_bar_5m`
+- `research.h4_zone`
+- `research.h4_trigger`
+- `research.h4_outcome`
+
+The H4A SQL gate confirmed:
+
+- primary eligible events: `164`
+- primary session clusters: `156`
+- mean signed 30-minute return: approximately `-0.000613142249862`
+
+This matches the frozen Python confirmatory result and therefore closes the SQL-reproduction requirement for H4A.
+
+### Unified Research Warehouse Status
+
+H1-H4 are now represented through:
+
+- `ref` for hypotheses, variables and statistical lookup references;
+- `research` for educational analytical panels;
+- `results` for frozen inferential outputs and breakdowns;
+- `audit` for runs, quality checks, exclusions and artifacts;
+- `bi` for report-facing semantic views.
+
+### Power BI Semantic Model Phase
+
+New migration:
+
+`sql/analytics/014_bi_semantic_model.sql`
+
+New application/audit script:
+
+`src/analysis/apply_bi_semantic_model.py`
+
+New documentation:
+
+- `docs/power_bi_semantic_model.md`
+- `docs/power_bi_dax_measures.md`
+
+The SQL semantic model exposes dimensions, bridges and facts under the `bi` schema.
+
+Primary reporting objects include:
+
+- `bi.dim_date`
+- `bi.dim_hypothesis`
+- `bi.dim_variable`
+- `bi.bridge_hypothesis_variable`
+- `bi.fact_results`
+- `bi.fact_result_breakdown`
+- `bi.fact_h1_monthly`
+- `bi.fact_h1_summary`
+- `bi.fact_h1_primary_monthly`
+- `bi.fact_h2_monthly`
+- `bi.fact_h3_panel`
+- `bi.dim_h4_session`
+- `bi.fact_h4_events`
+- `bi.fact_h4_yearly`
+- `bi.fact_data_quality`
+- `bi.fact_exclusions`
+- `bi.fact_artifacts`
+
+### Modeling Rule
+
+Official inferential statistics and frozen hypothesis decisions remain SQL-owned.
+
+DAX is restricted to:
+
+- filtered averages;
+- counts;
+- rates;
+- presentation metrics;
+- interactive filter-context calculations.
+
+Official p-values and decisions must not be recomputed in DAX.
+
+### Power BI Gate
+
+The semantic-model application script validates:
+
+- expected BI objects exist;
+- H2 monthly rows = `59`;
+- H3 panel rows = `29,287`;
+- H4 event rows = `164`;
+- H4 sessions = `156`;
+- H4 mean signed 30-minute return matches the frozen value.
+
+Required tokens:
+
+`POWER_BI_SQL_SEMANTIC_MODEL_PASSED`
+
+`POWER_BI_DESKTOP_MODELING_AUTHORIZED`
+
 # Current Status
 
 Current phase:
 
-**SQL H1-H4 RESEARCH BINDING — READY TO FREEZE AND EXECUTE**
+**POWER BI SEMANTIC MODEL — READY TO FREEZE AND APPLY**
 
 Research conclusions remain unchanged:
 
@@ -11324,25 +11443,21 @@ Research conclusions remain unchanged:
 - H3A/H3B/H3C: `NOT SUPPORTED`
 - H4A: `CLOSED — CONTRADICTED`
 
-Database foundation:
+Database research binding:
 
 `PASSED`
 
-Statistical lookup:
+H4 SQL frozen-result reproduction:
 
-`READY`
+`PASSED`
 
-Next authorized phase:
+Power BI semantic-model build:
 
-`H1-H4 SQL BINDING + H4 RELATIONAL MATERIALIZATION`
-
-Expected result:
-
-A student or Power BI user can move from hypothesis definitions and market variables to the same H1-H4 economic conclusions through Azure SQL without relying on Python-generated presentation files.
+`AUTHORIZED`
 
 Immediate next step:
 
-1. commit `013_research_bindings.sql`, `load_research_data.py`, the student query guide, and this log;
-2. run `python src/analysis/load_research_data.py`;
-3. require all three SQL binding success tokens;
-4. only then begin Power BI semantic-model design and DAX measures.
+1. commit `014_bi_semantic_model.sql`, `apply_bi_semantic_model.py`, the Power BI documentation, and this log;
+2. run `python src/analysis/apply_bi_semantic_model.py`;
+3. require both Power BI SQL semantic-model success tokens;
+4. then construct the Power BI Desktop relationships, measures, and report pages from the documented `bi` reporting contract.
