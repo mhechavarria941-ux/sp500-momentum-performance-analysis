@@ -11430,34 +11430,63 @@ Required tokens:
 
 `POWER_BI_DESKTOP_MODELING_AUTHORIZED`
 
+---
+
+## 3.79 Power BI SQL Semantic Model Passed
+
+### Date
+
+2026-08-28
+
+### Gate
+
+The Power BI SQL semantic-model audit passed.
+
+Final tokens:
+
+`POWER_BI_SQL_SEMANTIC_MODEL_PASSED`
+
+`POWER_BI_DESKTOP_MODELING_AUTHORIZED`
+
+### Status
+
+The Azure SQL reporting contract is now complete and validated for Power BI Desktop.
+
+The next phase is Power BI Desktop model construction using only curated `bi` objects for the default reporting model.
+
+Official inferential statistics and frozen decisions remain SQL-owned.
+
+DAX is restricted to filter-context and presentation calculations.
+
+### Desktop Build Files
+
+- `docs/power_bi_desktop_build.md`
+- `sql/analytics/power_bi_validation.sql`
+
+### Immediate Next Step
+
+1. connect Power BI Desktop to `sp500_analytics`;
+2. use Import mode;
+3. load the documented `bi` dimensions, bridge and facts;
+4. create the documented one-to-many relationships;
+5. create `_Measures`;
+6. add the documented DAX measures;
+7. validate H2, H3 and H4 checkpoints before visual styling.
+
 # Current Status
 
 Current phase:
 
-**POWER BI SEMANTIC MODEL — READY TO FREEZE AND APPLY**
-
-Research conclusions remain unchanged:
-
-- H1: `CLOSED — NOT SUPPORTED`
-- H2: `CLOSED — NOT SUPPORTED`
-- H3A/H3B/H3C: `NOT SUPPORTED`
-- H4A: `CLOSED — CONTRADICTED`
+**POWER BI DESKTOP MODELING — AUTHORIZED**
 
 Database research binding:
 
 `PASSED`
 
-H4 SQL frozen-result reproduction:
+Power BI SQL semantic model:
 
 `PASSED`
 
-Power BI semantic-model build:
-
-`AUTHORIZED`
-
 Immediate next step:
 
-1. commit `014_bi_semantic_model.sql`, `apply_bi_semantic_model.py`, the Power BI documentation, and this log;
-2. run `python src/analysis/apply_bi_semantic_model.py`;
-3. require both Power BI SQL semantic-model success tokens;
-4. then construct the Power BI Desktop relationships, measures, and report pages from the documented `bi` reporting contract.
+Build the Power BI Desktop relationships and measures from the curated `bi` schema, validate the frozen H1-H4 checkpoints, and then construct the report pages.
