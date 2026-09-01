@@ -1,0 +1,22 @@
+RUNNING SCRIPT VERSION: 2026-08-28-v3-load-research-data-h3-result-map-preflight
+============================================================================================================================
+SQL RESEARCH DATA BINDING + H4 MATERIALIZATION
+============================================================================================================================
+Database: sp500_analytics
+H2 WML source value column: winner_minus_loser_forward_return_1m
+H2 WML completeness column: forward_return_1m_complete
+H4 minute rows: 486,870
+H4 daily-level rows: 1,297
+H4 5-minute rows: 97,374
+H4 zone rows: 6,724
+H4 trigger rows: 164
+H4 outcome rows: 164
+H4 SQL mean signed 30m return: -0.000613142249862
+Unified result rows: 10
+Result-breakdown rows: 36
+
+FINAL SQL RESEARCH-DATA BINDING GATE: PASS
+
+SQL_H1_H4_RESEARCH_DATA_BINDING_PASSED
+SQL_H4_FROZEN_RESULT_REPRODUCED
+POWER_BI_SEMANTIC_MODEL_BUILD_AUTHORIZED

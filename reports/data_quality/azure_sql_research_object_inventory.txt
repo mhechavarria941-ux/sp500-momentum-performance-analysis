@@ -1,0 +1,57 @@
+RUNNING SCRIPT VERSION: 2026-08-28-v1-research-sql-object-inventory
+============================================================================================================================
+AZURE SQL RESEARCH OBJECT INVENTORY
+============================================================================================================================
+Database: sp500_analytics
+Catalog column rows: 832
+Tables/views: 66
+Research-keyword objects: 34
+
+RELEVANT OBJECTS
+- analytics.h3_preregistered_predictor_outcome_panel [USER_TABLE; 29,287 rows]
+- analytics.h3_primary_confirmatory_results [USER_TABLE; 3 rows]
+- analytics.security_month_end_gics_sector [USER_TABLE; 30,211 rows]
+- analytics.v_benchmark_monthly_forward_return_1m [VIEW; view]
+- analytics.v_h2_sector_extreme_forward_return_1m [VIEW; view]
+- analytics.v_h2_sector_neutral_leg_forward_return_1m [VIEW; view]
+- analytics.v_h2_sector_neutral_wml_forward_return_1m [VIEW; view]
+- analytics.v_h2_sector_quintile_forward_return_1m [VIEW; view]
+- analytics.v_h2_security_monthly_forward_return_1m [VIEW; view]
+- analytics.v_momentum_cumulative_wealth [VIEW; view]
+- analytics.v_momentum_decile_forward_return_1m [VIEW; view]
+- analytics.v_momentum_decile_monthly_summary [VIEW; view]
+- analytics.v_momentum_decile_turnover [VIEW; view]
+- analytics.v_momentum_long_short_forward_return_1m [VIEW; view]
+- analytics.v_momentum_monthly_performance_1m [VIEW; view]
+- analytics.v_momentum_monthly_return_panel [VIEW; view]
+- analytics.v_momentum_performance_summary [VIEW; view]
+- analytics.v_momentum_turnover_summary [VIEW; view]
+- analytics.v_momentum_wealth_drawdown [VIEW; view]
+- analytics.v_sector_momentum_quintile_monthly_summary [VIEW; view]
+- analytics.v_security_monthly_forward_return_1m [VIEW; view]
+- analytics.v_security_monthly_momentum_portfolio [VIEW; view]
+- analytics.v_security_monthly_momentum_ranking [VIEW; view]
+- analytics.v_security_monthly_sector_momentum_portfolio [VIEW; view]
+- analytics.v_security_monthly_sector_momentum_ranking [VIEW; view]
+- analytics.v_spy_month_end_calendar [VIEW; view]
+- analytics.v_spy_trading_calendar [VIEW; view]
+- bi.vw_variable_catalog [VIEW; view]
+- ref.hypothesis [USER_TABLE; 7 rows]
+- ref.hypothesis_variable_map [USER_TABLE; 31 rows]
+- ref.statistical_reference_metadata [USER_TABLE; 2 rows]
+- ref.variable_catalog [USER_TABLE; 22 rows]
+- results.hypothesis_result [USER_TABLE; 0 rows]
+- results.result_breakdown [USER_TABLE; 0 rows]
+
+SCHEMA COUNTS
+- analytics: 37 objects
+- audit: 4 objects
+- bi: 2 objects
+- core: 8 objects
+- ref: 6 objects
+- results: 2 objects
+- staging: 7 objects
+
+No database modifications performed.
+
+AZURE_SQL_RESEARCH_OBJECT_INVENTORY_COMPLETE

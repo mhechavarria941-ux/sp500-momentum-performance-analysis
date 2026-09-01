@@ -1,0 +1,19 @@
+RUNNING SCRIPT VERSION: 2026-08-28-v1-apply-bi-semantic-model
+============================================================================================================================
+POWER BI SQL SEMANTIC MODEL
+============================================================================================================================
+Database: sp500_analytics
+bi.dim_hypothesis rows: 7
+bi.dim_variable rows: 22
+bi.dim_date rows: 1,315
+bi.fact_results rows: 10
+bi.fact_h2_monthly rows: 59
+bi.fact_h3_panel rows: 29,287
+bi.fact_h4_events rows: 164
+H4 primary sessions: 156
+H4 mean signed 30m return: -0.000613142249862
+
+FINAL POWER BI SQL SEMANTIC MODEL GATE: PASS
+
+POWER_BI_SQL_SEMANTIC_MODEL_PASSED
+POWER_BI_DESKTOP_MODELING_AUTHORIZED

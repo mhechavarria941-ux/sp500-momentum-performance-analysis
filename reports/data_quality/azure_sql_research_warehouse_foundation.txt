@@ -1,0 +1,42 @@
+RUNNING SCRIPT VERSION: 2026-08-28-v2-research-warehouse-foundation-stat-reference-grid-fix
+============================================================================================================================
+AZURE SQL RESEARCH WAREHOUSE + STATISTICAL REFERENCE FOUNDATION
+============================================================================================================================
+Database: sp500_analytics
+Git commit: 4fdcb356558fedfa4d5ba69ad5cee155cefa7a8c
+New schemas: ref, research, results, audit, bi
+Probability grid points: 935
+Student-t df range: 1-600
+Expected Student-t lookup rows: 561,000
+Observed Student-t lookup rows: 561,000
+Normal lookup rows: 935
+Hypothesis metadata rows: 7
+Variable catalog rows: 22
+
+STATISTICAL LOOKUP VALIDATION
+H3A: t=-0.92143255, df=57, SciPy p=0.360708306955, SQL lookup p=0.360708493664, abs error=1.87e-07
+H3B: t=2.05119515, df=57, SciPy p=0.0448539853732, SQL lookup p=0.044854484452, abs error=4.99e-07
+H4A: t=-2.12253472, df=155, SciPy p=0.0353817887367, SQL lookup p=0.0353823390968, abs error=5.5e-07
+
+QUALITY CHECKS
+PASS: Student-t lookup row count [expected=561000; observed=561000]
+PASS: Normal lookup row count [expected=935; observed=935]
+PASS: Research/reporting schemas present [expected=audit,bi,ref,research,results; observed=audit,bi,ref,research,results]
+PASS: Hypothesis metadata seeded [expected=>=7; observed=7]
+PASS: Variable catalog seeded [expected=>=22; observed=22]
+PASS: H3A Student-t p lookup [expected=0.360708306955 ± 0.00001; observed=0.360708493664]
+PASS: H3B Student-t p lookup [expected=0.0448539853732 ± 0.00001; observed=0.044854484452]
+PASS: H4A Student-t p lookup [expected=0.0353817887367 ± 0.00001; observed=0.0353823390968]
+PASS: Student-t 95% critical value df=155 [expected=1.97538713106; observed=1.97538713106]
+PASS: Existing dependency analytics.v_security_monthly_return_features [expected=present; observed=present]
+PASS: Existing dependency analytics.v_security_monthly_momentum_ranking [expected=present; observed=present]
+PASS: Existing dependency analytics.v_security_monthly_forward_return_1m [expected=present; observed=present]
+PASS: Existing dependency analytics.security_month_end_gics_sector [expected=present; observed=present]
+PASS: Existing dependency analytics.v_security_monthly_sector_momentum_ranking [expected=present; observed=present]
+PASS: Existing dependency analytics.h3_preregistered_predictor_outcome_panel [expected=present; observed=present]
+
+FINAL RESEARCH-WAREHOUSE FOUNDATION GATE: PASS
+
+AZURE_SQL_RESEARCH_WAREHOUSE_FOUNDATION_PASSED
+SQL_STATISTICAL_REFERENCE_LAYER_READY
+SQL_H1_H4_EDUCATIONAL_BINDING_AUTHORIZED

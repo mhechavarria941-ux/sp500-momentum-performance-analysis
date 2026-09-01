@@ -11473,13 +11473,190 @@ DAX is restricted to filter-context and presentation calculations.
 6. add the documented DAX measures;
 7. validate H2, H3 and H4 checkpoints before visual styling.
 
+---
+
+## 3.80 Power BI Date-Dimension Continuity Fix
+
+### Date
+
+2026-08-31
+
+### Issue Discovered
+
+During Power BI Desktop model construction, the existing SQL view:
+
+`bi.dim_date`
+
+could not be marked as the Power BI Date Table.
+
+Power BI reported that the selected `date` column contained gaps.
+
+### Root Cause
+
+The original `bi.dim_date` semantic-model view was built from the union of dates observed in the research tables.
+
+That design was sufficient for SQL filtering but was not a valid Power BI Date Table because:
+
+- weekends were absent;
+- market holidays were absent;
+- other non-observed calendar dates were absent.
+
+Power BI requires the designated date column to contain:
+
+- one row per date;
+- no duplicates;
+- no nulls;
+- no gaps between the minimum and maximum date.
+
+### Resolution
+
+A new SQL migration was added:
+
+`sql/analytics/015_bi_date.sql`
+
+The migration replaces `bi.dim_date` with a continuous calendar generated from the minimum through maximum research date.
+
+The calendar preserves the existing reporting fields:
+
+- `date`
+- `year`
+- `quarter_number`
+- `quarter_label`
+- `month_number`
+- `month_name`
+- `year_month`
+- `month_start`
+- `month_end`
+- `iso_week`
+- `weekday_name`
+
+### Validation Script
+
+New script:
+
+`src/analysis/apply_bi_date.py`
+
+The validation checks:
+
+- total row count;
+- distinct date count;
+- minimum date;
+- maximum date;
+- expected number of calendar days calculated as:
+
+`DATEDIFF(DAY, MIN(date), MAX(date)) + 1`
+
+The gate passes only when:
+
+`row_count = distinct_date_count = expected_continuous_calendar_days`
+
+### Required Success Tokens
+
+`FINAL BI DATE DIMENSION GATE: PASS`
+
+`BI_DATE_DIMENSION_CONTINUOUS`
+
+`POWER_BI_DATE_TABLE_MARKING_AUTHORIZED`
+
+### Power BI Modeling Consequence
+
+After this migration passes:
+
+1. refresh the Power BI Desktop model;
+2. select `bi.dim_date`;
+3. mark it as the Date Table;
+4. use the `date` column as the canonical date key;
+5. create one-to-many, single-direction relationships from `dim_date[date]` to the relevant fact-table date fields.
+
+This correction does not alter any H1-H4 research result, statistical conclusion, or frozen analytical output.
+
+It affects only the Power BI semantic-model calendar design.
+
+---
+
+## 3.81 Power BI Desktop Model Validation Passed
+
+### Date
+
+2026-08-31
+
+### Model Construction
+
+The curated Azure SQL `bi` objects were imported into Power BI Desktop.
+
+Automatic fact-to-fact relationships were removed.
+
+The model was rebuilt using dimension-to-fact relationships, including:
+
+- `dim_hypothesis` to result/audit facts;
+- `dim_variable` to the hypothesis-variable bridge;
+- `dim_date[date]` to the appropriate H1, H2, H3 and H4 fact dates.
+
+Cross-filter direction is single.
+
+The model does not use direct fact-to-fact relationships.
+
+### Date Dimension
+
+The continuous SQL calendar migration was applied and refreshed in Power BI.
+
+`bi.dim_date[date]` was accepted as the model Date Table.
+
+### Validation Measures
+
+Temporary Power BI measures were created to validate the imported semantic model.
+
+Observed results matched the frozen SQL checkpoints:
+
+- H2 months: `59`
+- H3A/H3C eligible rows: `29,114`
+- H3B eligible rows: `26,139`
+- H4 primary events: `164`
+- H4 primary sessions: `156`
+- H4 mean signed 30-minute return: approximately `-0.061314%`
+
+The H3 and H4 eligibility flags imported from Azure SQL `bit` columns as Power BI Boolean values and therefore require DAX comparisons to `TRUE()` rather than integer `1`.
+
+### Validation Decision
+
+`POWER BI DESKTOP MODEL VALIDATION: PASS`
+
+The imported model reproduces the expected H2/H3/H4 analytical population and H4 primary economic result.
+
+### Next Authorized Phase
+
+Construct the permanent Power BI report pages.
+
+First page:
+
+`Executive Research Summary`
+
+Subsequent pages:
+
+1. H1 — Canonical Momentum
+2. H2 — Sector-Relative Momentum
+3. H3 — News Attention
+4. H4 — Intraday Market Structure
+5. Cross-Hypothesis Comparison
+6. Data Quality / Provenance
+7. Variable Explorer
+
+Official inferential values and decisions remain sourced from `bi.fact_results`.
+
 # Current Status
 
 Current phase:
 
-**POWER BI DESKTOP MODELING — AUTHORIZED**
+**POWER BI REPORT CONSTRUCTION — AUTHORIZED**
 
-Database research binding:
+Research conclusions:
+
+- H1: `CLOSED — NOT SUPPORTED`
+- H2: `CLOSED — NOT SUPPORTED`
+- H3A/H3B/H3C: `NOT SUPPORTED`
+- H4A: `CLOSED — CONTRADICTED`
+
+Azure SQL research binding:
 
 `PASSED`
 
@@ -11487,6 +11664,10 @@ Power BI SQL semantic model:
 
 `PASSED`
 
+Power BI Desktop model validation:
+
+`PASSED`
+
 Immediate next step:
 
-Build the Power BI Desktop relationships and measures from the curated `bi` schema, validate the frozen H1-H4 checkpoints, and then construct the report pages.
+Build the Executive Research Summary page using the validated `bi` semantic model.
