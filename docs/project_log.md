@@ -114,21 +114,24 @@ The purpose is to make the project reproducible
 
 ## Phase 9 — Power BI
 
-* Azure SQL connection
-* Semantic model
-* Market overview
-* Sector performance
-* Momentum explorer
-* Risk-return analysis
+* Azure SQL reporting semantic model
+* Power BI Desktop model validation
+* Executive Research Summary
+* H1 — Canonical Momentum
+* H2 — Sector-Relative Momentum
+* H3 — Issuer Attention and Momentum
+* H4 — Intraday Liquidity Sweeps
+* Interpretation & Research Limits
+* Report-wide visual design and interaction audit
+* Permanent DAX / presentation-layer documentation
 
-## Phase 10 — Publication
+## Phase 10 — Publication and Release
 
-* Final analytical notebook
-* Kaggle publication
-* GitHub documentation
-* Data-source documentation
-* Reproducibility testing
-* Final project release
+* Root GitHub `README.md`
+* Final static research report
+* Data-source and methodology documentation
+* Reproducibility / release audit
+* Git release and version tag
 
 ---
 
@@ -11643,11 +11646,643 @@ Subsequent pages:
 
 Official inferential values and decisions remain sourced from `bi.fact_results`.
 
+---
+
+## 3.82 Power BI Research Report Construction Completed
+
+### Date
+
+2026-09-04
+
+### Objective
+
+Construct the permanent Power BI research report from the validated Azure SQL `bi` semantic layer while preserving the frozen H1-H4 inferential results.
+
+Power BI is used for:
+
+- presentation;
+- descriptive visualization;
+- filter-context exploration;
+- research-result communication.
+
+Power BI is not used to redefine the preregistered statistical tests.
+
+Official inferential values remain sourced from:
+
+`bi.fact_results`
+
+### Power BI Report File
+
+Canonical report:
+
+`dashboards/sp500_momentum_analysis_report.pbix`
+
+The PBIX file is now the official interactive reporting artifact for the project.
+
+### Semantic-Model Rules Preserved
+
+The report continues to use the validated Power BI model established in Step 3.81.
+
+Key modeling rules remain:
+
+- curated Azure SQL `bi` objects only for the default reporting model;
+- dimension-to-fact relationships;
+- single-direction cross-filtering;
+- no direct fact-to-fact relationships;
+- `bi.dim_date[date]` as the model Date Table;
+- official p-values and hypothesis decisions remain SQL-owned;
+- DAX is restricted to presentation and filter-context calculations.
+
+The imported H3 and H4 eligibility flags are Boolean Power BI fields and are therefore evaluated using:
+
+`TRUE()`
+
+rather than integer `1`.
+
+### Model Validation Checkpoints Retained
+
+The permanent report was constructed only after the validated model reproduced the frozen analytical checkpoints:
+
+- H2 completed months: `59`
+- H3A/H3C eligible rows: `29,114`
+- H3B eligible rows: `26,139`
+- H4 eligible liquidity-sweep events: `164`
+- H4 primary session clusters: `156`
+- H4 mean signed 30-minute return: approximately `-0.061314%`
+
+### Primary-Test Summary
+
+The report exposes eight frozen primary tests:
+
+- H1: `3`
+- H2: `1`
+- H3A/H3B/H3C: `3`
+- H4A: `1`
+
+Final decision counts:
+
+- total primary tests: `8`
+- supported: `0`
+- not supported: `7`
+- contradicted: `1`
+
+### Executive Research Summary
+
+The first report page was completed as:
+
+`Executive Research Summary`
+
+Primary elements:
+
+- H1 status card;
+- H2 status card;
+- H3 status card;
+- H4A status card;
+- primary hypothesis-result matrix;
+- total-primary-test card;
+- supported-test card;
+- contradicted-test card;
+- not-supported-test card;
+- synchronized Year slicer.
+
+The primary-result matrix is filtered to:
+
+`bi.fact_results[primary_secondary] = "PRIMARY"`
+
+and exposes:
+
+- hypothesis;
+- component;
+- estimate;
+- raw p-value;
+- adjusted p-value;
+- economic effect;
+- decision.
+
+H1 is expanded to expose its three separate primary components.
+
+The Year slicer is prevented from redefining the frozen inferential cards and matrix.
+
+### H1 — Canonical Momentum
+
+Report page:
+
+`H1 — Canonical Momentum`
+
+Primary visuals include:
+
+- annualized return by momentum decile;
+- annualized volatility by momentum decile;
+- maximum drawdown by momentum decile;
+- D10 versus SPY monthly returns;
+- Winner-minus-Loser monthly returns;
+- full-period cumulative-return comparison;
+- frozen H1 primary-test result table;
+- H1 interpretation/conclusion panel.
+
+The D01-D10 ordering is explicitly maintained.
+
+The Year slicer affects monthly descriptive charts but does not redefine full-period frozen summary statistics.
+
+Final H1 interpretation remains:
+
+`CLOSED — NOT SUPPORTED`
+
+### H2 — Sector-Relative Momentum
+
+Report page:
+
+`H2 — Sector-Relative Momentum`
+
+Primary visual:
+
+`Sector-Neutral Winner-minus-Loser Monthly Return`
+
+A zero-return Y-axis reference line is included.
+
+Frozen result cards include:
+
+- completed months: `59`
+- mean monthly sector-neutral WML return: approximately `0.186%`
+- raw p-value: approximately `0.6043`
+- decision: `NOT SUPPORTED`
+
+Additional economic-context cards include approximately:
+
+- annualized arithmetic mean: `2.24%`
+- annualized volatility: `11.40%`
+- maximum drawdown: `-13.23%`
+
+The Year slicer affects the descriptive monthly series but not the frozen result cards.
+
+Final H2 interpretation remains:
+
+`CLOSED — NOT SUPPORTED`
+
+### H3 — Issuer Attention and Momentum
+
+Report page:
+
+`H3 — Attention and Momentum`
+
+The report preserves H3A, H3B and H3C as separate primary components.
+
+Frozen result panels expose each component's:
+
+- coefficient estimate;
+- adjusted p-value;
+- decision.
+
+Analytical sample cards expose:
+
+- H3A/H3C eligible rows: `29,114`
+- H3B eligible rows: `26,139`
+
+Descriptive visualizations include:
+
+- H3 primary coefficient comparison;
+- Winner-entry rate by attention level;
+- average sector-relative return by attention level;
+- sector-relative return by attention level and current-winner status.
+
+Presentation-only calculated fields were added for readable attention grouping and current-winner labeling.
+
+The H3 descriptive visuals may respond to the Year slicer.
+
+Frozen H3 coefficient, p-value and decision cards do not.
+
+Important inferential distinction retained:
+
+- H3B raw p-value ≈ `0.0449`
+- H3B multiplicity-adjusted p-value ≈ `0.1346`
+- final H3B decision: `NOT SUPPORTED`
+
+Final H3 component decisions remain:
+
+- H3A: `NOT SUPPORTED`
+- H3B: `NOT SUPPORTED`
+- H3C: `NOT SUPPORTED`
+
+### H4 — Intraday Liquidity Sweeps
+
+Report page:
+
+`H4 — Intraday Liquidity Sweeps`
+
+Frozen context cards expose:
+
+- eligible events: `164`
+- primary sessions: `156`
+- mean signed 30-minute return: approximately `-0.061314%`
+- H4A status: `CLOSED_CONTRADICTED`
+
+Primary descriptive visuals include:
+
+- signed 30-minute return through event time;
+- sweep penetration versus signed 30-minute return;
+- average signed 30-minute return by sweep direction.
+
+H4 event-level visuals use:
+
+`bi.fact_h4_events`
+
+and the canonical event date field:
+
+`session_date`
+
+Eligibility-aware DAX measures enforce:
+
+- `liquidity_sweep_trigger = TRUE()`
+- `horizon_30m_clock_eligible = TRUE()`
+
+where required.
+
+A Y-axis constant line at:
+
+`0`
+
+is displayed as:
+
+`Zero Return`
+
+The event-level descriptive views do not replace or redefine the frozen H4A confirmatory result.
+
+Final H4A interpretation remains:
+
+`CLOSED — CONTRADICTED`
+
+### Interpretation and Research Limits
+
+A final page was constructed as:
+
+`Interpretation & Research Limits`
+
+This page intentionally does not repeat the Executive Research Summary matrix or status cards.
+
+It instead documents:
+
+- overall research interpretation;
+- what unsupported results do and do not imply;
+- sample and methodological limitations;
+- future-research opportunities;
+- research-integrity boundaries.
+
+The page explicitly distinguishes:
+
+`absence of confirmatory support`
+
+from:
+
+`proof that an effect can never exist`
+
+### Year-Slicer Policy
+
+The Year slicer is synchronized across applicable analytical pages.
+
+Its interaction policy is:
+
+Descriptive/time-series visuals:
+
+`FILTERING ALLOWED`
+
+Frozen inferential statistics, official decisions and full-sample summary outputs:
+
+`FILTERING DISABLED`
+
+This preserves consistency between interactive reporting and the preregistered research design.
+
+### Research Integrity
+
+The completed report continues to enforce the central reporting rule:
+
+`POWER BI DOES NOT REDEFINE FROZEN INFERENCE`
+
+Official:
+
+- coefficient estimates;
+- raw p-values;
+- multiplicity-adjusted p-values;
+- inferential decisions
+
+remain anchored to the validated SQL research layer.
+
+### Visual Design Phase
+
+Functional report construction is complete.
+
+A report-wide visual-design pass has begun.
+
+Planned styling standard:
+
+- light neutral canvas;
+- white analytical panels;
+- restrained navy/blue research palette;
+- semantic colors reserved for supported / not-supported / contradicted states;
+- consistent page-title hierarchy;
+- consistent card, axis and chart typography;
+- consistent border and spacing treatment.
+
+Visual styling is presentation-only and does not alter any analytical result.
+
+### Validation Decision
+
+`POWER BI FUNCTIONAL REPORT CONSTRUCTION: COMPLETE`
+
+`POWER BI FROZEN-INFERENCE BOUNDARY: PRESERVED`
+
+`POWER BI VISUAL DESIGN / POLISH: IN PROGRESS`
+
+### Output
+
+Canonical interactive dashboard:
+
+`dashboards/sp500_momentum_analysis_report.pbix`
+
+### Issues / Limitations
+
+The PBIX file contains report-layer DAX measures and presentation calculations that should also be reflected in project documentation to maximize reproducibility.
+
+The current visual-design pass is not yet complete.
+
+### Next Step
+
+1. complete report-wide visual styling;
+2. document all permanent Power BI DAX measures and presentation calculated columns;
+3. perform a final interaction and number-format audit;
+4. validate the PBIX against the frozen H1-H4 checkpoints;
+5. prepare publication-facing project documentation and final release artifacts.
+
+### Git Commit
+
+Recommended commit message:
+
+`feat: add functional Power BI H1-H4 research report`
+---
+
+## 3.83 Power BI Visual Closeout, Final Report Audit, and Publication README
+
+### Date
+
+2026-09-04
+
+### Objective
+
+Close the remaining Power BI presentation and reproducibility tasks after functional report construction, validate the final interactive report against the frozen H1-H4 research checkpoints, and create the publication-facing root project README.
+
+This checkpoint completes the remaining Power BI tasks identified in Step 3.82:
+
+1. report-wide visual design;
+2. permanent DAX / presentation-layer documentation;
+3. final report-wide interaction and number-format audit.
+
+It also establishes the initial GitHub-facing publication document for the project.
+
+### Final Power BI Report Structure
+
+Canonical dashboard:
+
+`dashboards/sp500_momentum_analysis_report.pbix`
+
+Final report pages:
+
+1. `Executive Research Summary`
+2. `H1 — Canonical Momentum`
+3. `H2 — Sector-Relative Momentum`
+4. `H3 — Attention and Momentum`
+5. `H4 — Intraday Liquidity Sweeps`
+6. `Interpretation & Research Limits`
+
+The final interpretation page intentionally avoids duplicating the Executive Research Summary and instead focuses on research interpretation, limitations, and research-integrity boundaries.
+
+### Report-Wide Visual Design
+
+The complete Power BI report received a consistent presentation pass.
+
+The final design standard uses:
+
+- a restrained institutional / research-oriented visual style;
+- consistent page-title and subtitle hierarchy;
+- consistent visual spacing and alignment;
+- consistent chart-title, axis, card, and matrix typography;
+- consistent analytical-panel treatment;
+- semantic status styling for supported / not-supported / contradicted research states;
+- restrained chart styling to prevent decorative formatting from implying statistical significance;
+- consistent Year-slicer placement and behavior across applicable pages.
+
+The visual-design pass is presentation-only.
+
+No analytical result, SQL object, model specification, p-value, or inferential decision was changed.
+
+### Permanent DAX and Presentation-Layer Documentation
+
+The permanent Power BI calculation layer has been documented in:
+
+`docs/power_bi_dax_measures.md`
+
+The documentation now reflects the permanent measures and presentation calculations used by the final report rather than the temporary model-validation measures used during initial Desktop construction.
+
+The documented Power BI layer includes the permanent report logic used for:
+
+- primary-test counts;
+- hypothesis status displays;
+- H2 summary / context metrics;
+- H3 result and descriptive measures;
+- H3 attention-group presentation fields;
+- H4 eligible-event descriptive measures;
+- frozen-result display logic;
+- filter-context-safe report calculations.
+
+Power BI continues to follow the project rule:
+
+`DAX MAY PRESENT OR SUMMARIZE; DAX MAY NOT REDEFINE FROZEN INFERENCE`
+
+Official p-values, multiplicity-adjusted p-values, coefficient estimates, and confirmatory decisions remain SQL-owned.
+
+### Final Interaction Audit
+
+The final report was audited page by page.
+
+The Year slicer was tested in:
+
+- full-sample / All state;
+- applicable individual-year states across the 2021-2025 reporting window.
+
+Interaction policy was confirmed:
+
+Descriptive and time-series visuals:
+
+`YEAR FILTERING ALLOWED`
+
+Frozen inferential statistics, official decisions, primary-result matrices, and full-sample summary cards:
+
+`YEAR FILTERING DISABLED`
+
+This prevents an interactive report filter from creating a visually filtered number that could be mistaken for a new confirmatory hypothesis result.
+
+### Frozen Checkpoint Revalidation
+
+The final PBIX continues to reproduce the established reporting anchors.
+
+H2:
+
+- completed months: `59`
+- mean monthly sector-neutral WML: approximately `0.186%`
+- primary raw p-value: approximately `0.6043`
+- final decision: `NOT SUPPORTED`
+
+H3:
+
+- H3A/H3C eligible rows: `29,114`
+- H3B eligible rows: `26,139`
+- H3A decision: `NOT SUPPORTED`
+- H3B decision: `NOT SUPPORTED`
+- H3C decision: `NOT SUPPORTED`
+
+H4:
+
+- eligible events: `164`
+- primary session clusters: `156`
+- mean signed 30-minute return: approximately `-0.061314%`
+- H4A decision: `CONTRADICTED`
+
+Overall frozen primary-test summary:
+
+- total primary tests: `8`
+- supported: `0`
+- not supported: `7`
+- contradicted: `1`
+
+### Number-Format and Presentation Audit
+
+Final report formatting was checked for consistency across:
+
+- percentages;
+- p-values;
+- coefficient estimates;
+- event / observation counts;
+- axis titles;
+- date fields;
+- chart legends;
+- matrix column labels;
+- conclusion text;
+- status labels.
+
+The purpose of the formatting audit is communicative consistency only.
+
+Displayed rounding does not alter the underlying frozen SQL values.
+
+### Root README
+
+A publication-facing root README was created as:
+
+`README.md`
+
+The README provides a concise entry point to the project and documents:
+
+- the research objective;
+- final H1-H4 conclusions;
+- the analytical architecture;
+- point-in-time membership methodology;
+- historical market-data controls;
+- external GICS, attention, risk-free, and intraday sources;
+- preregistration and outcome-firewall principles;
+- Azure SQL / Python / Power BI responsibilities;
+- final dashboard structure;
+- repository organization;
+- reproducibility guidance;
+- limitations;
+- project status.
+
+The README is intentionally much shorter than `docs/project_log.md`.
+
+The project log remains the detailed technical audit trail.
+
+### Final Reporting Validation Decision
+
+`POWER BI VISUAL DESIGN: COMPLETE`
+
+`POWER BI PERMANENT DAX DOCUMENTATION: COMPLETE`
+
+`POWER BI FINAL INTERACTION / FORMAT AUDIT: PASSED`
+
+`POWER BI FROZEN-INFERENCE BOUNDARY: PRESERVED`
+
+`PUBLICATION README: COMPLETE`
+
+### Research Status
+
+The H1-H4 research program is closed.
+
+Frozen conclusions:
+
+- H1: `CLOSED — NOT SUPPORTED`
+- H2: `CLOSED — NOT SUPPORTED`
+- H3A: `NOT SUPPORTED`
+- H3B: `NOT SUPPORTED`
+- H3C: `NOT SUPPORTED`
+- H4A: `CLOSED — CONTRADICTED`
+
+No additional hypothesis is required for Version 1.0 completion.
+
+Any future H5, extended historical sample, alternative factor model, or post-2025 update must be treated as new / Version 2 research rather than as a requirement to obtain a favorable Version 1 result.
+
+### Outputs
+
+Canonical Power BI report:
+
+`dashboards/sp500_momentum_analysis_report.pbix`
+
+Permanent DAX documentation:
+
+`docs/power_bi_dax_measures.md`
+
+Publication entry point:
+
+`README.md`
+
+Detailed audit trail:
+
+`docs/project_log.md`
+
+### Issues / Limitations
+
+The scientific and reporting work is complete, but final release engineering remains.
+
+Remaining publication/release tasks are:
+
+- optional static research-report packaging;
+- final Git status / staging review;
+- confirmation that raw/licensed datasets and secrets remain excluded;
+- PBIX size / Git-LFS decision if required;
+- final release commit;
+- Version 1.0 tag.
+
+These tasks do not require reopening H1-H4 inference.
+
+### Next Step
+
+Prepare the final repository release.
+
+Recommended sequence:
+
+1. review `git status --short`;
+2. review documentation and dashboard files to be committed;
+3. confirm `.env`, credentials, raw provider data, and reproducible interim datasets remain excluded;
+4. create the final release commit;
+5. optionally generate the static research report;
+6. tag the completed research release as Version 1.0.
+
+### Git Commit
+
+Recommended checkpoint message:
+
+`docs: finalize Power BI report and publication README`
+
 # Current Status
 
 Current phase:
 
-**POWER BI REPORT CONSTRUCTION — AUTHORIZED**
+**VERSION 1.0 PUBLICATION AND RELEASE PREPARATION**
 
 Research conclusions:
 
@@ -11668,6 +12303,41 @@ Power BI Desktop model validation:
 
 `PASSED`
 
+Power BI functional report construction:
+
+`COMPLETE`
+
+Power BI visual design:
+
+`COMPLETE`
+
+Power BI permanent DAX documentation:
+
+`COMPLETE`
+
+Power BI final interaction / number-format audit:
+
+`PASSED`
+
+Publication README:
+
+`COMPLETE`
+
+Canonical dashboard:
+
+`dashboards/sp500_momentum_analysis_report.pbix`
+
+Current primary-test summary:
+
+- total primary tests: `8`
+- supported: `0`
+- not supported: `7`
+- contradicted: `1`
+
+Scientific / analytical status:
+
+`CONCLUDED FOR VERSION 1.0`
+
 Immediate next step:
 
-Build the Executive Research Summary page using the validated `bi` semantic model.
+Perform the final Git/release review, optionally package a static research report, create the release commit, and tag the completed Version 1.0 research project.
