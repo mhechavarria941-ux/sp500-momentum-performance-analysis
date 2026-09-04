@@ -12278,11 +12278,148 @@ Recommended checkpoint message:
 
 `docs: finalize Power BI report and publication README`
 
+---
+
+## 3.84 Static Version 1.0 Research Report Completed
+
+### Date
+
+2026-09-04
+
+### Objective
+
+Create a concise publication-ready static research report that complements the interactive Power BI dashboard and summarizes the validated Version 1.0 H1-H4 research program without replacing the detailed technical audit trail.
+
+### Publication Files
+
+Canonical static report:
+
+`reports/publication/sp500_momentum_research_report_v1.0.pdf`
+
+Editable source:
+
+`reports/publication/sp500_momentum_research_report_v1.0.docx`
+
+### Report Scope
+
+The final static report contains 11 pages covering:
+
+1. Executive Summary;
+2. Research Design and Analytical Architecture;
+3. Data, Point-in-Time Controls, and Quality Gates;
+4. H1 - Canonical 12-1 Momentum;
+5. H2 - Sector-Relative Momentum;
+6. H3 - Issuer Attention and Momentum Outcomes;
+7. H4 - Intraday Liquidity Sweeps;
+8. Integrated Interpretation;
+9. Limitations, Reproducibility, and Reporting;
+10. Conclusion and Version 1.0 Closeout;
+11. project data/evidence sources and primary internal references integrated into the conclusion page.
+
+### Research Results Preserved
+
+The report preserves the frozen Version 1.0 decision counts:
+
+- total primary tests: `8`
+- supported: `0`
+- not supported: `7`
+- contradicted: `1`
+
+The report does not introduce or recompute any alternative confirmatory result.
+
+H1 remains:
+
+`CLOSED - NOT SUPPORTED`
+
+H2 remains:
+
+`CLOSED - NOT SUPPORTED`
+
+H3A/H3B/H3C remain:
+
+`NOT SUPPORTED`
+
+H4A remains:
+
+`CLOSED - CONTRADICTED`
+
+### Figures Included
+
+The publication report includes presentation-level figures for:
+
+- Version 1.0 primary decision counts;
+- H1 annualized momentum-decile returns and primary HAC p-values;
+- H3 primary coefficient estimates with 95% confidence intervals;
+- H4 descriptive yearly mean signed 30-minute returns.
+
+These figures summarize already validated project results and do not create new inferential tests.
+
+### H4 P-Value Reporting
+
+The static report displays the H4A two-sided p-value rounded to:
+
+`0.0354`
+
+This is consistent with the frozen H4A mean, session-clustered standard error, 156 session clusters, and the preregistered Student-t reference rule.
+
+### Visual / PDF Quality Assurance
+
+The DOCX was rendered to page images and visually inspected page by page.
+
+Final page count:
+
+`11`
+
+The final PDF was independently rendered again for PDF-level visual QA.
+
+Validation confirmed:
+
+- no clipped text;
+- no overflow pages;
+- no broken tables;
+- no missing glyphs;
+- no chart clipping;
+- consistent page headers and footers;
+- consistent page numbering;
+- all H1-H4 conclusions remain aligned with the frozen project record.
+
+### Publication Boundary
+
+The static report is a communication artifact.
+
+It does not replace:
+
+- `docs/project_log.md` as the complete audit trail;
+- frozen preregistrations;
+- confirmatory result artifacts;
+- Azure SQL frozen result tables;
+- the canonical Power BI report.
+
+### Final Publication Decision
+
+`STATIC VERSION 1.0 RESEARCH REPORT: COMPLETE`
+
+`PDF VISUAL QA: PASSED`
+
+`VERSION 1.0 RESEARCH CONCLUSIONS: UNCHANGED`
+
+### Next Step
+
+Add the PDF and DOCX under `reports/publication/`, update the root README and project log, then commit and push the publication package.
+
+If the `v1.0.0` Git tag was already pushed before the static report was created, preserve that historical tag rather than force-moving it; publish the report in the next documentation/release commit or a subsequent patch release as appropriate.
+
+### Git Commit
+
+Recommended commit message:
+
+`docs: add Version 1.0 static research report`
+
 # Current Status
 
 Current phase:
 
-**VERSION 1.0 PUBLICATION AND RELEASE PREPARATION**
+**VERSION 1.0 PUBLICATION PACKAGE COMPLETE**
 
 Research conclusions:
 
@@ -12323,6 +12460,14 @@ Publication README:
 
 `COMPLETE`
 
+Static research report:
+
+`COMPLETE`
+
+Static report PDF visual QA:
+
+`PASSED`
+
 Canonical dashboard:
 
 `dashboards/sp500_momentum_analysis_report.pbix`
@@ -12340,4 +12485,4 @@ Scientific / analytical status:
 
 Immediate next step:
 
-Perform the final Git/release review, optionally package a static research report, create the release commit, and tag the completed Version 1.0 research project.
+Commit and push the static publication report and documentation updates. If the Version 1.0 tag already exists, preserve it and treat this as a documentation/publication follow-up rather than rewriting the tagged research history.

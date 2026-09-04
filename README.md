@@ -8,7 +8,8 @@ The project was designed to answer a research question rather than to manufactur
 
 **Research status:** concluded for Version 1.0  
 **Reporting status:** complete  
-**Canonical dashboard:** `dashboards/sp500_momentum_analysis_report.pbix`
+**Canonical dashboard:** `dashboards/sp500_momentum_analysis_report.pbix`  
+**Static research report:** `reports/publication/sp500_momentum_research_report_v1.0.pdf`
 
 Final confirmatory conclusions:
 
@@ -301,6 +302,18 @@ Permanent report-layer DAX and presentation fields are documented in:
 docs/power_bi_dax_measures.md
 ```
 
+A publication-ready static companion report is available at:
+
+```text
+reports/publication/sp500_momentum_research_report_v1.0.pdf
+```
+
+The editable source is retained as:
+
+```text
+reports/publication/sp500_momentum_research_report_v1.0.docx
+```
+
 ---
 
 ## Repository Structure
@@ -324,7 +337,10 @@ sp500-momentum-performance-analysis/
 │   ├── analysis/
 │   ├── confirmatory/
 │   ├── data_quality/
-│   └── exploratory/
+│   ├── exploratory/
+│   └── publication/
+│       ├── sp500_momentum_research_report_v1.0.pdf
+│       └── sp500_momentum_research_report_v1.0.docx
 ├── sql/
 │   ├── schema/
 │   └── analytics/
